@@ -26,7 +26,7 @@ void main() {
   test('yerel açılış işleri ilk uzak await öncesinde başlatılır', () {
     final mainSource = File('lib/main.dart').readAsStringSync();
     final firstRemoteAwait = mainSource.indexOf(
-      'final firebaseReady = await initializeFirebaseForBoot(',
+      'final firebaseFuture = initializeFirebaseForBoot(',
     );
 
     expect(firstRemoteAwait, greaterThan(-1));

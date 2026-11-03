@@ -52,6 +52,7 @@ import 'src/services/firebase_push_token_source.dart';
 import 'src/theme/app_theme.dart';
 import 'src/utils/app_route.dart';
 import 'src/utils/error_reporter.dart';
+import 'src/widgets/boot_host.dart';
 import 'src/widgets/foreground_push_banner.dart';
 import 'src/widgets/responsive_wrapper.dart';
 import 'src/services/app_haptics.dart';
@@ -70,7 +71,16 @@ Future<void> _warmUpShell() => SharedPreferences.getInstance();
 /// güncellenir. Varsayılan Kurmancî'dir (uygulamanın varsayılan dili).
 bool errorScreenIsKu = true;
 
+/// Açılış kritik yolunun süre ölçeri (yalnız debug günlüğü). Kurulum
+/// `main()` başında başlar; her işaret, o ana dek geçen ms'yi yazar.
+final Stopwatch _bootClock = Stopwatch();
+void _bootMark(String label) {
+  if (kDebugMode)
+    debugPrint('[boot ${_bootClock.elapsedMilliseconds} ms] $label');
+}
+
 Future<void> main() async {
+  _bootClock.start();
   runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
@@ -136,299 +146,17 @@ Future<void> main() async {
         return;
       }
 
-      // Birbirinden bağımsız açılış işleri ilk uzak beklemeden önce başlar.
-      // Her future kendi zaman aşımı/fallback sınırına burada bağlanır; böylece
-      // erken tamamlanan bir hata event loop'ta sahipsiz kalmaz ve başlangıç
-      // süresi bu işlerin toplamına değil en yavaş zorunlu işe yaklaşır.
-      final languageFuture = bootStep(
-        LanguageProvider.load(),
-        reason: 'LanguageProvider load',
-        fallback: LanguageProvider.new,
-      );
-      final themeFuture = bootStep(
-        ThemeProvider.load(),
-        reason: 'ThemeProvider load',
-        fallback: ThemeProvider.new,
-      );
-      final soundFuture = bootStep(
-        SoundProvider.load(),
-        reason: 'SoundProvider load',
-        fallback: SoundProvider.new,
-      );
-      final reducedMotionFuture = bootStep(
-        ReducedMotionProvider.load(),
-        reason: 'ReducedMotionProvider load',
-        fallback: ReducedMotionProvider.new,
-      );
-      final bilingualLabelsFuture = bootStep(
-        BilingualLabelsProvider.load(),
-        reason: 'BilingualLabelsProvider load',
-        fallback: BilingualLabelsProvider.new,
-      );
-      final untimedModeFuture = bootStep(
-        UntimedModeProvider.load(),
-        reason: 'UntimedModeProvider load',
-        fallback: UntimedModeProvider.new,
-      );
-      // Titreşim ayarı (yoksa açık); hata olursa varsayılan kalır.
-      final hapticsFuture = bootStepVoid(
-        AppHaptics.load(),
-        reason: 'AppHaptics load',
-      );
-      final analyticsConsentFuture = bootStep(
-        AnalyticsConsentProvider.load(),
-        reason: 'AnalyticsConsentProvider load',
-        fallback: AnalyticsConsentProvider.new,
-      );
-      final questionBankFuture = bootStepVoid(
-        QuestionBankLoader.instance.load(),
-        reason: 'question bank load',
-        timeout: const Duration(seconds: 8),
-      );
-      final premiumFuture = bootStep(
-        PremiumService.load(),
-        reason: 'premium load',
-        fallback: PremiumService.fallback,
-      );
-      // Ham başlatma AYRI tutulur: `bootStep` 4 sn'lik sınırda düşerse
-      // bile `Supabase.initialize` arka planda kendi yoluna sürer ve bu
-      // future, sonradan yapılan ulaşılabiliğer yoklamasının (probe)
-      // kaynağıdır. `bootStep` yalnız İLK KARE kararını verir — kararın
-      // ömrü oturum boyunca değildir (bkz. [RemoteAvailability]).
-      //
-      // Başlatma ÖMÜR BOYU tek future'da tutulur ([SupabaseBoot]): probe
-      // başarısız olunca `Supabase.initialize` BİR DAHA çağrılmaz. Eski
-      // düzende ikinci bir başlatma "already initialized" hatasıyla
-      // `Supabase.instance`'ı hiç kurdurmadan uygulamayı kalıcı çevrimdışı
-      // bırakabiliyordu.
-      final SupabaseBoot? supabaseBoot = AppConfig.hasSupabaseConfig
-          ? SupabaseBoot(
-              start: () => Supabase.initialize(
-                url: AppConfig.supabaseUrl,
-                publishableKey: AppConfig.supabaseAnonKey,
-                httpClient: TimeoutHttpClient(),
-                // Web'de implicit: şifre sıfırlama bağlantısı uygulamadan
-                // istenir ve başka bir tarayıcıda açılabilir; PKCE kodu orada
-                // açılamaz (bkz. AuthProvider.passwordResetRedirectUri).
-                authOptions: const FlutterAuthClientOptions(
-                  authFlowType: kIsWeb
-                      ? AuthFlowType.implicit
-                      : AuthFlowType.pkce,
-                ),
-              ),
-              ping: _pingSupabase,
-            )
-          : null;
-      final Future<Supabase>? supabaseInit = supabaseBoot?.boot;
-      final remoteReadyFuture = supabaseInit != null
-          ? bootStep(
-              supabaseInit.then((_) => true),
-              reason: 'supabase init',
-              fallback: () => false,
-            )
-          : Future<bool>.value(false);
-
-      // Crash raporlama (web'de Crashlytics desteklenmez).
-      // Zaman sınırlı: Firebase'in yanıt vermemesi uygulamanın açılmasını
-      // engellememeli. `catch` yalnız fırlatmayı yakalar, asılı kalmayı
-      // yakalamaz — bkz. `bootStep`.
-      final firebaseReady = await initializeFirebaseForBoot(
-        initialize: () async {
-          await Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform,
-          );
-        },
-        // Kurulur kurulmaz İKİ ölçüm de kapatılır; rıza varsa aşağıda
-        // açılır. 2.1.1+41 ve öncesinde rıza varsayılan açıktı ve SDK'lar
-        // `true`yu KALICI saklıyordu; yükseltilen iOS kurulumunda plist
-        // varsayılanı ezilir (Android'de MainActivity bunu daha önce yapar).
-        disableCrashlytics: () async {
-          if (!kIsWeb) {
-            await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
-              false,
-            );
-          }
-          await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(false);
-        },
-      );
-      // Bildirime dokununca doğru ekrana yönlendirme yalnız Firebase gerçekten
-      // kurulduysa anlamlıdır (`onMessageOpenedApp`/`getInitialMessage`
-      // Firebase App'e ihtiyaç duyar). Başlatma başarısız olduysa
-      // (`firebaseReady == false`) çağrılmaz; mevcut çevrimdışı/hatasız
-      // açılış akışı bundan etkilenmemeli.
-      if (firebaseReady) {
-        unawaited(PushTapRouter.wireFirebase());
-        // Uygulama açıkken gelen push'u üstte bant olarak gösterir.
-        ForegroundPushCenter.wire();
-      }
-
-      // Abonelik kimliği, AuthProvider mevcut oturumu eşlemeden önce hazır
-      // olmalı; aksi halde ilk açılıştaki kullanıcı eşleşmesi kaçabilir.
-      final premiumService = await premiumFuture;
-
-      final ZanKurdRepository repository;
-      final AuthProvider authProvider;
-      // Supabase açılamazsa uygulama ÇEVRİMDIŞI açılır. Banka cihazda
-      // olduğu için bu tam bir deneyim sunar; alternatif olan "hiç açılmama"
-      // ise hiçbir şey sunmaz.
-      final remoteReady = await remoteReadyFuture;
-      if (remoteReady) {
-        repository = SupabaseZanKurdRepository(Supabase.instance.client);
-        authProvider = AuthProvider(Supabase.instance.client);
-      } else {
-        repository = OfflineZanKurdRepository();
-        authProvider = AuthProvider.offline();
-      }
-      // Depo kaynağı ağaç boyunca TEK nesne olur. Sonradan gelen uzak
-      // başlatmada ağaç TAZELENMEZ; yalnız bu nesne değişir ve kabuk
-      // bir sonraki çizimde okur (bkz. [RepositoryHolder]).
-      final repositoryHolder = RepositoryHolder(repository);
-
-      // Zaman aşımı KALICI ÇEVRİMDIŞI karar değildir: `reachable: false`
-      // yalnız açılış anlıktır, arka plan geriçekilmesiyle yeniden
-      // denenir. `probe` (bkz. [SupabaseBoot.probe]) başlatmayı bitirir ve
-      // ardından sunucuya gerçek bir ağ turu atar — ikisinden biri
-      // başarısızsa kilit yerinde kalır, yani gerçek çevrimdışı
-      // davranış korunur. Başlatma tek future'da paylaşıldığı için
-      // eşzamanlı denemeler tek uçuşta birleşir.
-      final remoteAvailability = RemoteAvailability(
-        reachable: remoteReady,
-        probe: supabaseBoot?.probe,
-        // Init bekleme + ping aynı pencereye sığsın: boot'ta zaten 4 sn
-        // harcanmış olan bir başlatma, 6 sn daha sürebilir.
-        probeTimeout: const Duration(seconds: 8),
-      );
-      if (!remoteReady) remoteAvailability.startRetries();
-
-      await bootStepVoid(
-        SyncManager.initialize(repository),
-        reason: 'sync init',
-      );
-      await bootStepVoid(
-        authProvider.bindLocalProgressScope(),
-        reason: 'local progress scope',
-      );
-
-      // İlk kare için gerçekten gereken iş: soru bankası ve dil/tema/ses
-      // tercihleri. `AnalyticsService.initialize()` ve
-      // `NotificationService.load()` buradan ÇIKARILDI — ikisi de ilk
-      // karenin ne çizileceğini etkilemiyor, ama ikisi de bekletiyordu.
-      //
-      // NotificationService özellikle pahalıydı: `tz.initializeTimeZones()`
-      // bütün saat dilimi veritabanını okuyor ve cihaz saat dilimi için
-      // platform kanalına iniyor — bildirimler kapalı olsa bile
-      // (2026-07-31 denetimi).
-      // Soru bankasına daha geniş bir pay veriliyor: yerel varlık okuması
-      // ağdan bağımsızdır ve içeriğin gelmemesi boş kategori demektir.
-      // Yine de sınırsız değil — hiç açılmayan bir uygulama, eksik içerikli
-      // bir uygulamadan kötüdür.
-      await questionBankFuture;
-
-      final languageProvider = await languageFuture;
-      errorScreenIsKu = languageProvider.isKu;
-      languageProvider.addListener(() {
-        errorScreenIsKu = languageProvider.isKu;
-      });
-      final themeProvider = await themeFuture;
-      final soundProvider = await soundFuture;
-      final reducedMotionProvider = await reducedMotionFuture;
-      final untimedModeProvider = await untimedModeFuture;
-      await hapticsFuture;
-      final bilingualLabelsProvider = await bilingualLabelsFuture;
-      final analyticsConsentProvider = await analyticsConsentFuture;
-
-      // İlk kareyi bekletmeyen işler. Hatalar yutulmaz, bildirilir; ama
-      // hiçbiri uygulamanın açılmasını engellemez.
-      void startInBackground(Future<void> future, String reason) {
-        unawaited(
-          future.catchError((Object error, StackTrace stack) {
-            ErrorReporter.record(error, stack, reason: reason);
-          }),
-        );
-      }
-
-      startInBackground(premiumService.warmUp(), 'premium warmUp');
-      // İki rıza ayrı (2026-10-29): kullanım analizi ve hata raporları
-      // seçim yokken kapalı; açık olan yalnız kendi hizmetini başlatır.
-      if (analyticsConsentProvider.enabled) {
-        startInBackground(
-          AnalyticsService.instance.initialize(enabled: true),
-          'analytics init',
-        );
-      }
-      if (analyticsConsentProvider.crashReportsEnabled &&
-          firebaseReady &&
-          !kIsWeb) {
-        startInBackground(
-          ErrorReporter.setCollectionEnabled(true),
-          'crashlytics enable',
-        );
-      }
-      startInBackground(
-        // Servis kurulunca seri uyarısı bir sonraki akşama kurulur (tek atış).
-        NotificationService.load().then((_) async {
-          await NotificationService.syncStreakWarning();
-          // Tercihler sunucuyla eşitlenir, günün yarışması hatırlatması kurulur.
-          await NotificationSync.run(repositoryHolder.repository);
-        }),
-        'notifications load',
-      );
-      // Zamanlanmış bildirim metinleri zamanlama anındaki dilde donar; dil
-      // değişince yeniden kurulur (soğuk açılış beklenmez).
-      languageProvider.addListener(() {
-        final isKu = languageProvider.isKu;
-        startInBackground(
-          NotificationService.load().then(
-            (service) => service.applyLanguage(isKu: isKu),
-          ),
-          'notifications language',
-        );
-      });
-
-      // Açılış çevrimdışı kararına rağmen Supabase sonradan açıldıysa,
-      // ÇEVRİMDIŞI depoyla kurulan oturum uzak oturumla yeniden kurulur.
-      // Kancalar yalnız bu durumda bağlanır: zaten uzak açılan bir
-      // oturumda yeniden kurulum gereksizdir ve ara sıra tetiklenen
-      // bir kök ağaç tazelemesi olurdu.
-      //
-      // `isUpgradeSafe`: kullanıcı üstünde bir ekran (oda, quiz, alt sayfa)
-      // açıkkken kök değişmez; kurtarma, kabuğa dönüldüğünde ya da
-      // uygulama ön plana çıktığında uygulanır (bkz. AppShell).
-      if (!remoteReady && supabaseInit != null) {
-        remoteAvailability.onUpgradeRequest = () {
-          unawaited(
-            _upgradeToRemote(
-              authProvider: authProvider,
-              repositoryHolder: repositoryHolder,
-            ).then((applied) {
-              if (applied) {
-                remoteAvailability.completeUpgrade();
-              } else {
-                // Uzak oturum yoksa kurtarma VAZGEÇER: karar geri alınır,
-                // bant yerinde kalır ve geri çekilmeli deneme sürer.
-                remoteAvailability.upgradeDeclined();
-              }
-            }),
-          );
-        };
-        remoteAvailability.isUpgradeSafe = () =>
-            !(_navigatorKey.currentState?.canPop() ?? false);
-      }
-
+      // İlk kare HEMEN: marka karesi, ağ/Firebase/Supabase/soru bankası
+      // beklenmeden çizilir; gerçek kök hazır olunca yerine geçer.
+      _bootMark('runApp (ilk kare: marka karesi)');
       runApp(
-        ZanKurdApp(
-          repository: repository,
-          repositoryHolder: repositoryHolder,
-          authProvider: authProvider,
-          languageProvider: languageProvider,
-          themeProvider: themeProvider,
-          soundProvider: soundProvider,
-          reducedMotionProvider: reducedMotionProvider,
-          untimedModeProvider: untimedModeProvider,
-          bilingualLabelsProvider: bilingualLabelsProvider,
-          analyticsConsentProvider: analyticsConsentProvider,
-          remoteAvailability: remoteAvailability,
-          premiumService: premiumService,
+        BootHost(
+          app: _bootApp(),
+          themeMode: ThemeProvider.load().then((p) => p.mode),
+          onError: (_) => ZanKurdApp(
+            repository: OfflineZanKurdRepository(),
+            authProvider: AuthProvider.offline(),
+          ),
         ),
       );
     },
@@ -439,6 +167,300 @@ Future<void> main() async {
         reason: 'Uncaught error in runZonedGuarded',
       );
     },
+  );
+}
+
+/// Uygulamanın gerçek köküne ulaşan açılış zinciri.
+///
+/// `runApp` bunu BEKLEMEZ: [BootHost] ilk kareyi marka karesiyle hemen çizer,
+/// bu future tamamlanınca kökü değiştirir (bkz. `main`).
+Future<Widget> _bootApp() async {
+  // Birbirinden bağımsız açılış işleri ilk uzak beklemeden önce başlar.
+  // Her future kendi zaman aşımı/fallback sınırına burada bağlanır; böylece
+  // erken tamamlanan bir hata event loop'ta sahipsiz kalmaz ve başlangıç
+  // süresi bu işlerin toplamına değil en yavaş zorunlu işe yaklaşır.
+  final languageFuture = bootStep(
+    LanguageProvider.load(),
+    reason: 'LanguageProvider load',
+    fallback: LanguageProvider.new,
+  );
+  final themeFuture = bootStep(
+    ThemeProvider.load(),
+    reason: 'ThemeProvider load',
+    fallback: ThemeProvider.new,
+  );
+  final soundFuture = bootStep(
+    SoundProvider.load(),
+    reason: 'SoundProvider load',
+    fallback: SoundProvider.new,
+  );
+  final reducedMotionFuture = bootStep(
+    ReducedMotionProvider.load(),
+    reason: 'ReducedMotionProvider load',
+    fallback: ReducedMotionProvider.new,
+  );
+  final bilingualLabelsFuture = bootStep(
+    BilingualLabelsProvider.load(),
+    reason: 'BilingualLabelsProvider load',
+    fallback: BilingualLabelsProvider.new,
+  );
+  final untimedModeFuture = bootStep(
+    UntimedModeProvider.load(),
+    reason: 'UntimedModeProvider load',
+    fallback: UntimedModeProvider.new,
+  );
+  // Titreşim ayarı (yoksa açık); hata olursa varsayılan kalır.
+  final hapticsFuture = bootStepVoid(
+    AppHaptics.load(),
+    reason: 'AppHaptics load',
+  );
+  final analyticsConsentFuture = bootStep(
+    AnalyticsConsentProvider.load(),
+    reason: 'AnalyticsConsentProvider load',
+    fallback: AnalyticsConsentProvider.new,
+  );
+  final questionBankFuture = bootStepVoid(
+    QuestionBankLoader.instance.load(),
+    reason: 'question bank load',
+    timeout: const Duration(seconds: 8),
+  );
+  final premiumFuture = bootStep(
+    PremiumService.load(),
+    reason: 'premium load',
+    fallback: PremiumService.fallback,
+  );
+  // Ham başlatma AYRI tutulur: `bootStep` 4 sn'lik sınırda düşerse
+  // bile `Supabase.initialize` arka planda kendi yoluna sürer ve bu
+  // future, sonradan yapılan ulaşılabiliğer yoklamasının (probe)
+  // kaynağıdır. `bootStep` yalnız İLK KARE kararını verir — kararın
+  // ömrü oturum boyunca değildir (bkz. [RemoteAvailability]).
+  //
+  // Başlatma ÖMÜR BOYU tek future'da tutulur ([SupabaseBoot]): probe
+  // başarısız olunca `Supabase.initialize` BİR DAHA çağrılmaz. Eski
+  // düzende ikinci bir başlatma "already initialized" hatasıyla
+  // `Supabase.instance`'ı hiç kurdurmadan uygulamayı kalıcı çevrimdışı
+  // bırakabiliyordu.
+  final SupabaseBoot? supabaseBoot = AppConfig.hasSupabaseConfig
+      ? SupabaseBoot(
+          start: () => Supabase.initialize(
+            url: AppConfig.supabaseUrl,
+            publishableKey: AppConfig.supabaseAnonKey,
+            httpClient: TimeoutHttpClient(),
+            // Web'de implicit: şifre sıfırlama bağlantısı uygulamadan
+            // istenir ve başka bir tarayıcıda açılabilir; PKCE kodu orada
+            // açılamaz (bkz. AuthProvider.passwordResetRedirectUri).
+            authOptions: const FlutterAuthClientOptions(
+              authFlowType: kIsWeb ? AuthFlowType.implicit : AuthFlowType.pkce,
+            ),
+          ),
+          ping: _pingSupabase,
+        )
+      : null;
+  final Future<Supabase>? supabaseInit = supabaseBoot?.boot;
+  final remoteReadyFuture = supabaseInit != null
+      ? bootStep(
+          supabaseInit.then((_) => true),
+          reason: 'supabase init',
+          fallback: () => false,
+        )
+      : Future<bool>.value(false);
+
+  // Crash raporlama (web'de Crashlytics desteklenmez).
+  // Zaman sınırlı: Firebase'in yanıt vermemesi uygulamanın açılmasını
+  // engellememeli. `catch` yalnız fırlatmayı yakalar, asılı kalmayı
+  // yakalamaz — bkz. `bootStep`.
+  final firebaseFuture = initializeFirebaseForBoot(
+    initialize: () async {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    },
+    // Kurulur kurulmaz İKİ ölçüm de kapatılır; rıza varsa aşağıda
+    // açılır. 2.1.1+41 ve öncesinde rıza varsayılan açıktı ve SDK'lar
+    // `true`yu KALICI saklıyordu; yükseltilen iOS kurulumunda plist
+    // varsayılanı ezilir (Android'de MainActivity bunu daha önce yapar).
+    disableCrashlytics: () async {
+      if (!kIsWeb) {
+        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+          false,
+        );
+      }
+      await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(false);
+    },
+  );
+  // Abonelik kimliği, AuthProvider mevcut oturumu eşlemeden önce hazır
+  // olmalı; aksi halde ilk açılıştaki kullanıcı eşleşmesi kaçabilir.
+  final premiumService = await premiumFuture;
+
+  final ZanKurdRepository repository;
+  final AuthProvider authProvider;
+  // Supabase açılamazsa uygulama ÇEVRİMDIŞI açılır. Banka cihazda
+  // olduğu için bu tam bir deneyim sunar; alternatif olan "hiç açılmama"
+  // ise hiçbir şey sunmaz.
+  final remoteReady = await remoteReadyFuture;
+  _bootMark('supabase/oturum hazır (remote=$remoteReady)');
+  if (remoteReady) {
+    repository = SupabaseZanKurdRepository(Supabase.instance.client);
+    authProvider = AuthProvider(Supabase.instance.client);
+  } else {
+    repository = OfflineZanKurdRepository();
+    authProvider = AuthProvider.offline();
+  }
+  // Depo kaynağı ağaç boyunca TEK nesne olur. Sonradan gelen uzak
+  // başlatmada ağaç TAZELENMEZ; yalnız bu nesne değişir ve kabuk
+  // bir sonraki çizimde okur (bkz. [RepositoryHolder]).
+  final repositoryHolder = RepositoryHolder(repository);
+
+  // Zaman aşımı KALICI ÇEVRİMDIŞI karar değildir: `reachable: false`
+  // yalnız açılış anlıktır, arka plan geriçekilmesiyle yeniden
+  // denenir. `probe` (bkz. [SupabaseBoot.probe]) başlatmayı bitirir ve
+  // ardından sunucuya gerçek bir ağ turu atar — ikisinden biri
+  // başarısızsa kilit yerinde kalır, yani gerçek çevrimdışı
+  // davranış korunur. Başlatma tek future'da paylaşıldığı için
+  // eşzamanlı denemeler tek uçuşta birleşir.
+  final remoteAvailability = RemoteAvailability(
+    reachable: remoteReady,
+    probe: supabaseBoot?.probe,
+    // Init bekleme + ping aynı pencereye sığsın: boot'ta zaten 4 sn
+    // harcanmış olan bir başlatma, 6 sn daha sürebilir.
+    probeTimeout: const Duration(seconds: 8),
+  );
+  if (!remoteReady) remoteAvailability.startRetries();
+
+  await bootStepVoid(SyncManager.initialize(repository), reason: 'sync init');
+  await bootStepVoid(
+    authProvider.bindLocalProgressScope(),
+    reason: 'local progress scope',
+  );
+
+  // İlk kare için gerçekten gereken iş: soru bankası ve dil/tema/ses
+  // tercihleri. `AnalyticsService.initialize()` ve
+  // `NotificationService.load()` buradan ÇIKARILDI — ikisi de ilk
+  // karenin ne çizileceğini etkilemiyor, ama ikisi de bekletiyordu.
+  //
+  // NotificationService özellikle pahalıydı: `tz.initializeTimeZones()`
+  // bütün saat dilimi veritabanını okuyor ve cihaz saat dilimi için
+  // platform kanalına iniyor — bildirimler kapalı olsa bile
+  // (2026-07-31 denetimi).
+  // Soru bankasına daha geniş bir pay veriliyor: yerel varlık okuması
+  // ağdan bağımsızdır ve içeriğin gelmemesi boş kategori demektir.
+  // Yine de sınırsız değil — hiç açılmayan bir uygulama, eksik içerikli
+  // bir uygulamadan kötüdür.
+  await questionBankFuture;
+  _bootMark('soru bankası hazır');
+
+  final languageProvider = await languageFuture;
+  errorScreenIsKu = languageProvider.isKu;
+  languageProvider.addListener(() {
+    errorScreenIsKu = languageProvider.isKu;
+  });
+  final themeProvider = await themeFuture;
+  final soundProvider = await soundFuture;
+  final reducedMotionProvider = await reducedMotionFuture;
+  final untimedModeProvider = await untimedModeFuture;
+  await hapticsFuture;
+  final bilingualLabelsProvider = await bilingualLabelsFuture;
+  final analyticsConsentProvider = await analyticsConsentFuture;
+
+  // İlk kareyi bekletmeyen işler. Hatalar yutulmaz, bildirilir; ama
+  // hiçbiri uygulamanın açılmasını engellemez.
+  void startInBackground(Future<void> future, String reason) {
+    unawaited(
+      future.catchError((Object error, StackTrace stack) {
+        ErrorReporter.record(error, stack, reason: reason);
+      }),
+    );
+  }
+
+  startInBackground(premiumService.warmUp(), 'premium warmUp');
+  // İki rıza ayrı (2026-10-29): kullanım analizi ve hata raporları
+  // seçim yokken kapalı; açık olan yalnız kendi hizmetini başlatır.
+  if (analyticsConsentProvider.enabled) {
+    startInBackground(
+      AnalyticsService.instance.initialize(enabled: true),
+      'analytics init',
+    );
+  }
+  startInBackground(
+    firebaseFuture.then((firebaseReady) async {
+      if (!firebaseReady) return;
+      // Bildirime dokununca doğru ekrana yönlendirme yalnız Firebase
+      // gerçekten kurulduysa anlamlıdır (`onMessageOpenedApp`/
+      // `getInitialMessage` Firebase App'e ihtiyaç duyar).
+      unawaited(PushTapRouter.wireFirebase());
+      // Uygulama açıkken gelen push'u üstte bant olarak gösterir.
+      ForegroundPushCenter.wire();
+      if (analyticsConsentProvider.crashReportsEnabled && !kIsWeb) {
+        return ErrorReporter.setCollectionEnabled(true);
+      }
+    }),
+    'firebase wire / crashlytics enable',
+  );
+  startInBackground(
+    // Servis kurulunca seri uyarısı bir sonraki akşama kurulur (tek atış).
+    NotificationService.load().then((_) async {
+      await NotificationService.syncStreakWarning();
+      // Tercihler sunucuyla eşitlenir, günün yarışması hatırlatması kurulur.
+      await NotificationSync.run(repositoryHolder.repository);
+    }),
+    'notifications load',
+  );
+  // Zamanlanmış bildirim metinleri zamanlama anındaki dilde donar; dil
+  // değişince yeniden kurulur (soğuk açılış beklenmez).
+  languageProvider.addListener(() {
+    final isKu = languageProvider.isKu;
+    startInBackground(
+      NotificationService.load().then(
+        (service) => service.applyLanguage(isKu: isKu),
+      ),
+      'notifications language',
+    );
+  });
+
+  // Açılış çevrimdışı kararına rağmen Supabase sonradan açıldıysa,
+  // ÇEVRİMDIŞI depoyla kurulan oturum uzak oturumla yeniden kurulur.
+  // Kancalar yalnız bu durumda bağlanır: zaten uzak açılan bir
+  // oturumda yeniden kurulum gereksizdir ve ara sıra tetiklenen
+  // bir kök ağaç tazelemesi olurdu.
+  //
+  // `isUpgradeSafe`: kullanıcı üstünde bir ekran (oda, quiz, alt sayfa)
+  // açıkkken kök değişmez; kurtarma, kabuğa dönüldüğünde ya da
+  // uygulama ön plana çıktığında uygulanır (bkz. AppShell).
+  if (!remoteReady && supabaseInit != null) {
+    remoteAvailability.onUpgradeRequest = () {
+      unawaited(
+        _upgradeToRemote(
+          authProvider: authProvider,
+          repositoryHolder: repositoryHolder,
+        ).then((applied) {
+          if (applied) {
+            remoteAvailability.completeUpgrade();
+          } else {
+            // Uzak oturum yoksa kurtarma VAZGEÇER: karar geri alınır,
+            // bant yerinde kalır ve geri çekilmeli deneme sürer.
+            remoteAvailability.upgradeDeclined();
+          }
+        }),
+      );
+    };
+    remoteAvailability.isUpgradeSafe = () =>
+        !(_navigatorKey.currentState?.canPop() ?? false);
+  }
+
+  _bootMark('gerçek kök hazır');
+  return ZanKurdApp(
+    repository: repository,
+    repositoryHolder: repositoryHolder,
+    authProvider: authProvider,
+    languageProvider: languageProvider,
+    themeProvider: themeProvider,
+    soundProvider: soundProvider,
+    reducedMotionProvider: reducedMotionProvider,
+    untimedModeProvider: untimedModeProvider,
+    bilingualLabelsProvider: bilingualLabelsProvider,
+    analyticsConsentProvider: analyticsConsentProvider,
+    remoteAvailability: remoteAvailability,
+    premiumService: premiumService,
   );
 }
 
