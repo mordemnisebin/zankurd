@@ -24,7 +24,7 @@
 /// * Gövde canlı (✅) `duello_inceleme_rovans` gövdesiyle, tek INSERT farkıyla
 ///   aynıdır.
 /// * Basit biçim: küçük harf `begin;`/`commit;`, SECURITY DEFINER, sabit
-///   search_path, anon çalıştıramaz; geri alma dosyası var; applied.md ⏳.
+///   search_path, anon çalıştıramaz; geri alma dosyası var; applied.md ✅ (canlıda).
 /// * 48 saatten uzun süre etiketi gün olarak yazılır ("168 sa" değil).
 library;
 
@@ -94,14 +94,14 @@ void main() {
     expect(sql, contains('raise exception'));
   });
 
-  test('geri alma dosyası ve applied.md ⏳ kaydı var', () {
+  test('geri alma dosyası ve applied.md ✅ kaydı var', () {
     final geri = File(
       'supabase/geri_al/2026-11-04_meydan_okuma_suresi_geri.sql',
     ).readAsStringSync();
     expect(geri, isNot(contains('7 days')));
     final applied = File('supabase/applied.md').readAsStringSync();
     expect(
-      RegExp(r'\| 2026-11-04_meydan_okuma_suresi\.sql \| ⏳').hasMatch(applied),
+      RegExp(r'\| 2026-11-04_meydan_okuma_suresi\.sql \| ✅').hasMatch(applied),
       isTrue,
     );
   });
