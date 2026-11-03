@@ -1154,6 +1154,81 @@ class SupabaseZanKurdRepository
     return _roomFromCreateSnapshot(snapshot);
   }
 
+  /// `room_heartbeat` / `update_room_settings` göçü (2026-11-03) canlıda yoksa
+  /// bir kez görülünce kalıcı `true`: ekran eski yoklamayla sürer, her 3 sn'de
+  /// başarısız RPC denemez.
+  bool _roomHeartbeatMissing = false;
+  bool _roomSettingsMissing = false;
+
+  static bool _isMissingRpc(Object error) =>
+      error is PostgrestException &&
+      (error.code == 'PGRST202' || error.code == '42883');
+
+  @override
+  bool get roomSettingsEditable => !_roomSettingsMissing;
+
+  @override
+  Future<RoomLobbyState?> roomHeartbeat(GameRoom room) async {
+    final roomId = room.id;
+    if (roomId == null || _roomHeartbeatMissing) return null;
+    try {
+      final response = await client.rpc(
+        'room_heartbeat',
+        params: {'p_room_id': roomId},
+      );
+      final raw = response is List ? response.firstOrNull : response;
+      return RoomLobbyState.fromJson(
+        _requiredJsonObject(raw, 'room_heartbeat'),
+      );
+    } on PostgrestException catch (error, stack) {
+      if (_isMissingRpc(error)) {
+        _roomHeartbeatMissing = true;
+        return null;
+      }
+      _recordError(error, stack, reason: 'roomHeartbeat failed');
+      return null;
+    }
+  }
+
+  @override
+  Future<RoomLobbyState> updateRoomSettings({
+    required GameRoom room,
+    required String category,
+    required int secondsPerQuestion,
+    required int questionCount,
+  }) async {
+    final roomId = room.id;
+    if (roomId == null || _roomSettingsMissing) {
+      throw const RoomLiveUnsupported();
+    }
+    // Karışık = boş dizi (sunucuda category_id/category_ids NULL).
+    final names = category == 'Tevlihev'
+        ? <String>[]
+        : category.split(', ').where((n) => n.isNotEmpty).toList();
+    try {
+      final response = await client.rpc(
+        'update_room_settings',
+        params: {
+          'p_room_id': roomId,
+          'p_category_names': names,
+          'p_seconds_per_question': secondsPerQuestion,
+          'p_question_count': questionCount,
+        },
+      );
+      final raw = response is List ? response.firstOrNull : response;
+      return RoomLobbyState.fromJson(
+        _requiredJsonObject(raw, 'update_room_settings'),
+      );
+    } on PostgrestException catch (error, stack) {
+      if (_isMissingRpc(error)) {
+        _roomSettingsMissing = true;
+        throw const RoomLiveUnsupported();
+      }
+      _recordError(error, stack, reason: 'updateRoomSettings rejected');
+      throw RoomSettingsException(error.message);
+    }
+  }
+
   @override
   Future<GameRoom> joinOnlineRoom(String code) async {
     final normalizedCode = normalizeRoomCode(code);

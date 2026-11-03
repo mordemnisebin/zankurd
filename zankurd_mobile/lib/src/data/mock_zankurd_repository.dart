@@ -1913,6 +1913,27 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  bool get roomSettingsEditable => true;
+
+  @override
+  Future<RoomLobbyState?> roomHeartbeat(GameRoom room) async => null;
+
+  @override
+  Future<RoomLobbyState> updateRoomSettings({
+    required GameRoom room,
+    required String category,
+    required int secondsPerQuestion,
+    required int questionCount,
+  }) async => RoomLobbyState(
+    hostId: room.hostId,
+    status: room.status,
+    category: category,
+    secondsPerQuestion: secondsPerQuestion,
+    questionCount: questionCount,
+    entryFee: room.entryFee,
+  );
+
+  @override
   Future<GameRoom> joinOnlineRoom(String code) async {
     return joinRoom(code);
   }

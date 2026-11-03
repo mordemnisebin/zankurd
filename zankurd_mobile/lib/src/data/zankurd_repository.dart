@@ -372,6 +372,25 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// basanlar aynı lobiye katılır (sunucu `create_room_rematch`).
   Future<GameRoom> createRoomRematch(String roomId);
 
+  /// Lobide oda sahibi kategori, soru süresi ve soru sayısını değiştirir
+  /// (`update_room_settings`; giriş ücreti ve kapasite sabit). Sunucuda RPC
+  /// yoksa [RoomLiveUnsupported], reddedilirse [RoomSettingsException].
+  Future<RoomLobbyState> updateRoomSettings({
+    required GameRoom room,
+    required String category,
+    required int secondsPerQuestion,
+    required int questionCount,
+  });
+
+  /// Lobi sinyali + canlı durum (`room_heartbeat`): sunucu sessiz sahibi
+  /// devreder, ayarları ve sahibi döndürür. RPC yoksa `null` (bir kez
+  /// denendikten sonra çağrı yapılmaz) ve eski yoklama sürer.
+  Future<RoomLobbyState?> roomHeartbeat(GameRoom room);
+
+  /// Ayar düzenleme sunucuda kullanılabilir mi? RPC eksikliği görülünce
+  /// `false`; ekran düzenleme düğmesini göstermez.
+  bool get roomSettingsEditable;
+
   // ─── Sırayla düello (async 1v1) ──────────────────────────────────────
   //
   // Rakibin aynı anda çevrimiçi olması gerekmeyen 1v1: oyuncu sunucunun

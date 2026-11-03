@@ -74,6 +74,22 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  bool get roomSettingsEditable => false;
+
+  @override
+  Future<RoomLobbyState?> roomHeartbeat(GameRoom room) async => null;
+
+  @override
+  Future<RoomLobbyState> updateRoomSettings({
+    required GameRoom room,
+    required String category,
+    required int secondsPerQuestion,
+    required int questionCount,
+  }) async {
+    throw const RoomLiveUnsupported();
+  }
+
+  @override
   Future<GameRoom> joinOnlineRoom(String code) async {
     throw StateError('Remote service unavailable.');
   }

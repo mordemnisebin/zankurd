@@ -1486,13 +1486,63 @@ class _SettingsSummaryRow extends StatelessWidget {
   }
 }
 
+/// Lobide oda sahibinin seçtiği yeni ayarlar (T2, 2026-11-03).
+class RoomSettingsEdit {
+  const RoomSettingsEdit({
+    required this.category,
+    required this.duration,
+    required this.questionCount,
+  });
+
+  /// Karışık = `Tevlihev`, tek kategori = adı, çoklu = adlar `, ` ile.
+  final String category;
+  final int duration;
+  final int questionCount;
+}
+
+/// Oda kurma sayfasının AYNI seçicileriyle lobi ayar düzenleyicisi: yalnız
+/// kategori, soru süresi ve soru sayısı. Giriş ücreti ve kapasite sunucuda
+/// kilitlidir (ücretler ödendi); bu yüzden hiç çizilmez. İptalde `null`.
+Future<RoomSettingsEdit?> showRoomSettingsSheet(
+  BuildContext context, {
+  required List<String> availableCategories,
+  required GameRoom room,
+  required bool extendedOptions,
+}) {
+  return showModalBottomSheet<RoomSettingsEdit>(
+    context: context,
+    isScrollControlled: true,
+    useSafeArea: true,
+    backgroundColor: Colors.transparent,
+    builder: (sheetCtx) => _CustomRoomBottomSheet(
+      availableCategories: availableCategories,
+      coinBalance: 0,
+      extendedOptions: extendedOptions,
+      editing: true,
+      initialCategory: room.category,
+      initialDuration: room.secondsPerQuestion,
+      initialQuestionCount: room.questionCount,
+    ),
+  );
+}
+
 class _CustomRoomBottomSheet extends StatefulWidget {
   const _CustomRoomBottomSheet({
     required this.availableCategories,
     required this.coinBalance,
     this.fixedMaxPlayers,
     required this.extendedOptions,
+    this.editing = false,
+    this.initialCategory,
+    this.initialDuration,
+    this.initialQuestionCount,
   });
+
+  /// Lobide ayar düzenleme kipi: ücret ve kapasite yok, düğme "Kaydet".
+  final bool editing;
+  final String? initialCategory;
+  final int? initialDuration;
+  final int? initialQuestionCount;
 
   final bool extendedOptions;
   final List<String> availableCategories;
@@ -1571,6 +1621,23 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
     super.initState();
     _selectedMaxPlayers = widget.fixedMaxPlayers ?? _selectedMaxPlayers;
     _selectedEntryFee = _affordableFee(_selectedEntryFee);
+    if (widget.editing) {
+      _settingsOpen = true;
+      _selectedDuration = widget.initialDuration ?? _selectedDuration;
+      _selectedQuestionCount =
+          widget.initialQuestionCount ?? _selectedQuestionCount;
+      final initial = widget.initialCategory;
+      if (initial != null && initial != 'Tevlihev') {
+        final picked = initial
+            .split(', ')
+            .where(widget.availableCategories.contains)
+            .toSet();
+        if (picked.isNotEmpty) {
+          _selectedCategories.addAll(picked);
+          _mixed = false;
+        }
+      }
+    }
   }
 
   /// [fee] bakiyeyi aşıyorsa yetebilen en yüksek izinli ücret (en az 0).
@@ -1652,7 +1719,9 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                   ],
                   Expanded(
                     child: Text(
-                      context.t(K.customRoomTitle),
+                      context.t(
+                        widget.editing ? K.settings : K.customRoomTitle,
+                      ),
                       style: SahneType.headline.copyWith(color: t.tx),
                     ),
                   ),
@@ -1762,7 +1831,8 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                               const SizedBox(height: SahneSpace.x3),
 
                               // Arkadaşla canlı düelloda kapasite 2'ye SABİTTİR; seçim gizlenir.
-                              if (widget.fixedMaxPlayers == null) ...[
+                              if (widget.fixedMaxPlayers == null &&
+                                  !widget.editing) ...[
                                 // Oyuncu sayısı (kapasite). 2 = bugünkü iki kişilik oda;
                                 // daha fazlası kalabalık oda: ev sahibi >= 2 kişiyle
                                 // başlatır, sonuç sıralı gelir.
@@ -1823,18 +1893,21 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                               // Kurul 3. tur 2026-10-20: üç ikincil grup (soru sayısı,
                               // süre, ücret) tek "Ayarlar" satırında toplandı; özet
                               // güncel değerleri gösterir, dokununca satır içinde açılır.
-                              _SettingsSummaryRow(
-                                key: const ValueKey('custom-room-settings-row'),
-                                title: context.t(K.settings),
-                                summary: _settingsSummary(context),
-                                open: _settingsOpen,
-                                onTap: () {
-                                  setState(() {
-                                    _settingsOpen = !_settingsOpen;
-                                  });
-                                  if (_settingsOpen) _revealSettings();
-                                },
-                              ),
+                              if (!widget.editing)
+                                _SettingsSummaryRow(
+                                  key: const ValueKey(
+                                    'custom-room-settings-row',
+                                  ),
+                                  title: context.t(K.settings),
+                                  summary: _settingsSummary(context),
+                                  open: _settingsOpen,
+                                  onTap: () {
+                                    setState(() {
+                                      _settingsOpen = !_settingsOpen;
+                                    });
+                                    if (_settingsOpen) _revealSettings();
+                                  },
+                                ),
                               Padding(
                                 padding: const EdgeInsets.only(
                                   top: SahneSpace.x1,
@@ -1910,87 +1983,91 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                       ),
                                   ],
                                 ),
-                                const SizedBox(height: SahneSpace.x3),
+                                if (!widget.editing) ...[
+                                  const SizedBox(height: SahneSpace.x3),
 
-                                // Bahis / Giriş Ücreti
-                                // İki metin de esnek: dar ekranda ve Kurmancî'de etiketler
-                                // uzuyor ve sabit genişlikli `Row` sağdan 192 piksel taşıyordu
-                                // (`home_room_failures_test` yakaladı). `spaceBetween` tek
-                                // başına taşmayı önlemez — çocuklar doğal boyutlarını ister.
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        context.t(K.entryFeeLabel),
-                                        style: SahneType.bodyStrong.copyWith(
-                                          color: SahneTokens.of(context).tx,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: SahneSpace.x2),
-                                    Flexible(
-                                      child: Text(
-                                        context.t(K.yourBalance, {
-                                          'coins': groupThousands(
-                                            widget.coinBalance,
+                                  // Bahis / Giriş Ücreti
+                                  // İki metin de esnek: dar ekranda ve Kurmancî'de etiketler
+                                  // uzuyor ve sabit genişlikli `Row` sağdan 192 piksel taşıyordu
+                                  // (`home_room_failures_test` yakaladı). `spaceBetween` tek
+                                  // başına taşmayı önlemez — çocuklar doğal boyutlarını ister.
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          context.t(K.entryFeeLabel),
+                                          style: SahneType.bodyStrong.copyWith(
+                                            color: SahneTokens.of(context).tx,
                                           ),
-                                        }),
-                                        textAlign: TextAlign.end,
-                                        style: SahneType.caption.copyWith(
-                                          color: SahneTokens.of(context).tx2,
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: SahneSpace.x2),
-                                _ChoiceGrid(
-                                  // 2x2: tek satırda çip ~80 pt'e daralıp yazı
-                                  // küçülüyordu (tur 10a); 14 pt yazı için geniş hücre.
-                                  columns: 2,
-                                  children: [
-                                    for (final fee in GameRoom.allowedEntryFees)
-                                      _choiceChip(
-                                        context,
-                                        key: ValueKey('custom-room-fee-$fee'),
-                                        avatar: fee > 0
-                                            ? const ExcludeSemantics(
-                                                child: SahneGlyph(
-                                                  SahneGlyphKind.coin,
-                                                  size: 16,
-                                                ),
-                                              )
-                                            : null,
-                                        label: fee == 0
-                                            ? context.t(K.freeEntry)
-                                            : '${groupThousands(fee)} ${context.t(K.coinWord)}',
-                                        selected: _selectedEntryFee == fee,
-                                        locked: fee > widget.coinBalance,
-                                        looked: _blockedFee == fee,
-                                        semanticLabel: fee > widget.coinBalance
-                                            ? '${'${groupThousands(fee)} ${context.t(K.coinWord)}'}, '
-                                                  '${context.t(K.coinsShort, {'coins': groupThousands(coinShortfall(cost: fee, balance: widget.coinBalance))})}'
-                                            : null,
-                                        onTap: () {
-                                          setState(() {
-                                            if (fee > widget.coinBalance) {
-                                              // Yetmeyen ücret seçilmez: seçim kalır,
-                                              // eksik miktar alt notta söylenir.
-                                              _blockedFee = fee;
-                                            } else {
-                                              _selectedEntryFee = fee;
-                                              _blockedFee = null;
-                                            }
-                                          });
-                                          // Not satırı görünür alanı kısaltır: ızgara kesilmeden görünsün.
-                                          _revealSettings();
-                                        },
+                                      const SizedBox(width: SahneSpace.x2),
+                                      Flexible(
+                                        child: Text(
+                                          context.t(K.yourBalance, {
+                                            'coins': groupThousands(
+                                              widget.coinBalance,
+                                            ),
+                                          }),
+                                          textAlign: TextAlign.end,
+                                          style: SahneType.caption.copyWith(
+                                            color: SahneTokens.of(context).tx2,
+                                          ),
+                                        ),
                                       ),
-                                  ],
-                                ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: SahneSpace.x2),
+                                  _ChoiceGrid(
+                                    // 2x2: tek satırda çip ~80 pt'e daralıp yazı
+                                    // küçülüyordu (tur 10a); 14 pt yazı için geniş hücre.
+                                    columns: 2,
+                                    children: [
+                                      for (final fee
+                                          in GameRoom.allowedEntryFees)
+                                        _choiceChip(
+                                          context,
+                                          key: ValueKey('custom-room-fee-$fee'),
+                                          avatar: fee > 0
+                                              ? const ExcludeSemantics(
+                                                  child: SahneGlyph(
+                                                    SahneGlyphKind.coin,
+                                                    size: 16,
+                                                  ),
+                                                )
+                                              : null,
+                                          label: fee == 0
+                                              ? context.t(K.freeEntry)
+                                              : '${groupThousands(fee)} ${context.t(K.coinWord)}',
+                                          selected: _selectedEntryFee == fee,
+                                          locked: fee > widget.coinBalance,
+                                          looked: _blockedFee == fee,
+                                          semanticLabel:
+                                              fee > widget.coinBalance
+                                              ? '${'${groupThousands(fee)} ${context.t(K.coinWord)}'}, '
+                                                    '${context.t(K.coinsShort, {'coins': groupThousands(coinShortfall(cost: fee, balance: widget.coinBalance))})}'
+                                              : null,
+                                          onTap: () {
+                                            setState(() {
+                                              if (fee > widget.coinBalance) {
+                                                // Yetmeyen ücret seçilmez: seçim kalır,
+                                                // eksik miktar alt notta söylenir.
+                                                _blockedFee = fee;
+                                              } else {
+                                                _selectedEntryFee = fee;
+                                                _blockedFee = null;
+                                              }
+                                            });
+                                            // Not satırı görünür alanı kısaltır: ızgara kesilmeden görünsün.
+                                            _revealSettings();
+                                          },
+                                        ),
+                                    ],
+                                  ),
+                                ],
                               ],
                             ],
                           ),
@@ -2075,6 +2152,19 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                 child: FilledButton(
                   key: const ValueKey('custom-room-open'),
                   onPressed: () {
+                    final category = _mixed
+                        ? 'Tevlihev'
+                        : _selectedCategories.join(', ');
+                    if (widget.editing) {
+                      Navigator.of(context).pop(
+                        RoomSettingsEdit(
+                          category: category,
+                          duration: _selectedDuration,
+                          questionCount: _selectedQuestionCount,
+                        ),
+                      );
+                      return;
+                    }
                     Navigator.of(context).pop(
                       _CustomRoomConfig(
                         category: _mixed
@@ -2087,7 +2177,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                       ),
                     );
                   },
-                  child: Text(context.t(K.openRoom)),
+                  child: Text(context.t(widget.editing ? K.save : K.openRoom)),
                 ),
               ),
             ],
