@@ -272,7 +272,11 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
     final t = SahneTokens.of(context);
     return Scaffold(
       backgroundColor: t.bg,
-      appBar: zkAppBar(context, title: Text(context.t(K.tekrarTitle))),
+      appBar: zkAppBar(
+        context,
+        title: Text(context.t(K.tekrarTitle)),
+        accent: SahneTokens.of(context).learnFill,
+      ),
       body: SafeArea(
         top: false,
         child: _loading

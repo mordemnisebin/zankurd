@@ -59,7 +59,11 @@ class _AlphabetScreenState extends State<AlphabetScreen> {
     final speaker = _speaker;
     return Scaffold(
       backgroundColor: t.bg,
-      appBar: zkAppBar(context, title: Text(context.t(K.alphabetTitle))),
+      appBar: zkAppBar(
+        context,
+        title: Text(context.t(K.alphabetTitle)),
+        accent: SahneTokens.of(context).learnFill,
+      ),
       body: SafeArea(
         top: false,
         child: ListView.separated(

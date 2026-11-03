@@ -294,6 +294,7 @@ class _StoryScreenState extends State<StoryScreen> {
       appBar: zkAppBar(
         context,
         title: Text(ku ? widget.story.titleKu : widget.story.titleTr),
+        accent: SahneTokens.of(context).learnFill,
         // U10 (2026-10-28 tur 4): çubuğun sağında EN ÇOK BİR eylem. Rehber ve
         // yeniden başlat tek "⋯" menüsünde.
         actions: [

@@ -95,6 +95,7 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
       appBar: zkAppBar(
         context,
         title: Text(context.t(K.wordsTitle)),
+        accent: t.learnFill,
         actions: words.isEmpty
             ? null
             : [

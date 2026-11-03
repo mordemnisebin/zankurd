@@ -1432,11 +1432,19 @@ class _DuelScoreHeader extends StatelessWidget {
     required this.opponent,
     required this.progress,
     this.showTug = true,
+    this.opponentAnswered = false,
   });
 
   final Player player;
   final Player opponent;
   final String progress;
+
+  /// Rakip bu soruyu cevapladı mı (gerçek zamanlı yayından). QuizUp deseni:
+  /// rakibin varlığı yalnız puanıyla değil "şimdi cevapladı" işaretiyle de
+  /// hissedilir. İşaret rakibin durum satırındaki SABİT 16 pt'lik yuvaya
+  /// çizilir; yuva her zaman yerleşimdedir, bu yüzden işaretin belirmesi
+  /// kartı ya da soruyu hiç kaydırmaz (bkz. `duel_rakip_cevapladi_test`).
+  final bool opponentAnswered;
 
   /// Halat çekme çubuğu; kısa ekranda (< 700 pt) düşer, puanlar yine yazılıdır.
   final bool showTug;
@@ -1520,6 +1528,24 @@ class _DuelScoreHeader extends StatelessWidget {
                     ? MainAxisAlignment.end
                     : MainAxisAlignment.start,
                 children: [
+                  if (end) ...[
+                    SizedBox.square(
+                      key: const ValueKey('duel-opponent-answered-slot'),
+                      dimension: 16,
+                      child: opponentAnswered
+                          ? Semantics(
+                              label: context.t(K.answeredState),
+                              child: Icon(
+                                AppIcons.circleCheck,
+                                key: const ValueKey('duel-opponent-answered'),
+                                size: 16,
+                                color: t.okTx,
+                              ),
+                            )
+                          : null,
+                    ),
+                    const SizedBox(width: 4),
+                  ],
                   if (!end)
                     Text(
                       context.t(K.you),

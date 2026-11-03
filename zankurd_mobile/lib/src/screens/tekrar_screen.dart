@@ -150,14 +150,22 @@ class _TekrarScreenState extends State<TekrarScreen> {
     if (_loading) {
       return Scaffold(
         backgroundColor: t.bg,
-        appBar: zkAppBar(context, title: Text(context.t(K.tekrarTitle))),
+        appBar: zkAppBar(
+          context,
+          title: Text(context.t(K.tekrarTitle)),
+          accent: SahneTokens.of(context).learnFill,
+        ),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
     if (_loadFailed) {
       return Scaffold(
         backgroundColor: t.bg,
-        appBar: zkAppBar(context, title: Text(context.t(K.tekrarTitle))),
+        appBar: zkAppBar(
+          context,
+          title: Text(context.t(K.tekrarTitle)),
+          accent: SahneTokens.of(context).learnFill,
+        ),
         body: SafeArea(
           top: false,
           child: AppErrorState(
@@ -176,7 +184,11 @@ class _TekrarScreenState extends State<TekrarScreen> {
     if (plan == null || plan.isEmpty) {
       return Scaffold(
         backgroundColor: t.bg,
-        appBar: zkAppBar(context, title: Text(context.t(K.tekrarTitle))),
+        appBar: zkAppBar(
+          context,
+          title: Text(context.t(K.tekrarTitle)),
+          accent: SahneTokens.of(context).learnFill,
+        ),
         body: SafeArea(
           top: false,
           child: AppEmptyState(

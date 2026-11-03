@@ -55,7 +55,11 @@ class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
     // konu açıklama satırında.
     return Scaffold(
       backgroundColor: t.bg,
-      appBar: zkAppBar(context, title: Text(context.t(K.lexiconTitle))),
+      appBar: zkAppBar(
+        context,
+        title: Text(context.t(K.lexiconTitle)),
+        accent: SahneTokens.of(context).learnFill,
+      ),
       body: SafeArea(
         top: false,
         child: Column(
