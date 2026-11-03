@@ -2027,9 +2027,12 @@ class SupabaseZanKurdRepository
           .from('room_messages')
           .select('*')
           .eq('room_id', roomId)
-          .order('created_at');
+          // Son N mesaj (canlı akışla aynı pencere); sınırsız sorgu uzun
+          // sohbetin tamamını çekerdi. En yeniden başlayıp tersine çevrilir.
+          .order('created_at', ascending: false)
+          .limit(PollCadence.chatWindow);
       return _withSenderProfiles([
-        for (final row in rows)
+        for (final row in rows.reversed)
           RoomMessage.fromJson(Map<String, dynamic>.from(row as Map)),
       ]);
     } catch (e, s) {

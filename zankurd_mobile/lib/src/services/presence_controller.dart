@@ -9,10 +9,33 @@ abstract interface class PresenceGateway {
   Future<void> touch();
 }
 
-class SupabasePresenceGateway implements PresenceGateway {
+/// Tek RPC'lik yoklama: dokunuş + görünürlük (`touch_presence_v2`). Sunucuda
+/// işlev yoksa (göç uygulanmadı) eski iki RPC'ye düşer.
+abstract interface class PresencePulseGateway {
+  Future<bool> pulse();
+}
+
+class SupabasePresenceGateway implements PresenceGateway, PresencePulseGateway {
   SupabasePresenceGateway(this.client);
 
   final SupabaseClient client;
+  bool _pulseUnavailable = false;
+
+  @override
+  Future<bool> pulse() async {
+    if (!_pulseUnavailable) {
+      try {
+        return await client.rpc<bool>('touch_presence_v2');
+      } on PostgrestException catch (e) {
+        // PGRST202 / 42883: işlev yok → eski yol, bir daha denenmez.
+        if (e.code != 'PGRST202' && e.code != '42883') rethrow;
+        _pulseUnavailable = true;
+      }
+    }
+    final visible = await loadVisibility();
+    if (visible) await touch();
+    return visible;
+  }
 
   @override
   Future<bool> loadVisibility() async =>
@@ -124,13 +147,25 @@ class PresenceController extends ChangeNotifier with WidgetsBindingObserver {
     }
     _pollGeneration = generation;
     try {
-      final visible = await gateway.loadVisibility().timeout(_timeout);
-      if (!_current(generation) || !_foreground || _saving) return;
+      final bool visible;
+      final PresencePulseGateway? pulseGateway = gateway is PresencePulseGateway
+          ? gateway as PresencePulseGateway
+          : null;
+      if (pulseGateway != null) {
+        // Tek RPC: sunucu dokunur ve görünürlüğü döndürür.
+        visible = await pulseGateway.pulse().timeout(_timeout);
+        if (!_current(generation) || !_foreground || _saving) return;
+      } else {
+        visible = await gateway.loadVisibility().timeout(_timeout);
+        if (!_current(generation) || !_foreground || _saving) return;
+      }
       _enabled = visible;
       _ready = true;
       _loadFailed = false;
       _notify();
-      if (visible) await gateway.touch().timeout(_timeout);
+      if (pulseGateway == null && visible) {
+        await gateway.touch().timeout(_timeout);
+      }
     } catch (_) {
       // İstemci yoklaması öğrenme/yarış akışını ve hata raporlarını kirletmez.
       if (_current(generation) && !_ready && !_loadFailed) {
