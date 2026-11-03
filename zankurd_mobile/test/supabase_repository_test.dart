@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
+import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 
 /// Bir kategori isteği gelirse yerel bankadan bilinçli olarak farklı bir
@@ -54,14 +55,49 @@ class _BlockedPlayersErrorHttpClient extends http.BaseClient {
 }
 
 /// `list_friends`in gerçek dönüş şekli: `user_id` YOK, `total_score` ve
-/// `last_active_at` VAR (2026-08-14_list_friends_score_and_activity.sql).
-/// Eski `Friend.fromJson` bu satırlarda çöküyordu; bu istemci canlı
-/// sözleşmeyi taklit ederek o regresyonu bir daha mümkün kılmaz.
+/// `last_active_at` VAR. Yeni RPC yok yanıtı verir; bu yüzden eski sürücü
+/// RLS'nin 0'a indirdiği puan yerine eski XP puanına geri düşmelidir. RPC
+/// yokluğu ayrıca hata değildir; test bunu gerçekçi PGRST202 ile taklit eder.
 class _FriendsScoreHttpClient extends http.BaseClient {
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    final bytes = utf8.encode(
-      jsonEncode([
+    final path = request.url.path;
+    final status = path.endsWith('/get_friends_leaderboard') ? 404 : 200;
+    final body = path.endsWith('/get_friends_leaderboard')
+        ? {'code': 'PGRST202', 'message': 'function not found'}
+        : path.endsWith('/get_public_profiles')
+        ? <Object>[]
+        : [
+            {
+              'id': 'f1',
+              'friend_id': 'friend-1',
+              'friend_name': 'Rojda',
+              'friend_avatar_color': '#2AA6A1',
+              'created_at': '2026-08-01T00:00:00Z',
+              'total_score': 8420,
+              'last_active_at': '2026-08-14T09:00:00Z',
+            },
+          ];
+    final bytes = utf8.encode(jsonEncode(body));
+    return http.StreamedResponse(
+      Stream.value(bytes),
+      status,
+      request: request,
+      contentLength: bytes.length,
+      headers: const {'content-type': 'application/json; charset=utf-8'},
+    );
+  }
+}
+
+class _FriendsLeaderboardHttpClient extends http.BaseClient {
+  Map<String, dynamic>? leaderboardParams;
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    final path = request.url.path;
+    Object body;
+    if (path.endsWith('/list_friends')) {
+      body = [
         {
           'id': 'f1',
           'friend_id': 'friend-1',
@@ -71,8 +107,34 @@ class _FriendsScoreHttpClient extends http.BaseClient {
           'total_score': 8420,
           'last_active_at': '2026-08-14T09:00:00Z',
         },
-      ]),
-    );
+      ];
+    } else if (path.endsWith('/get_friends_leaderboard')) {
+      leaderboardParams =
+          jsonDecode((request as http.Request).body) as Map<String, dynamic>;
+      body = [
+        {
+          'player_id': 'friend-1',
+          'display_name': 'Rojda',
+          'total_score': 120,
+          'best_streak': 3,
+          'rooms_played': 2,
+          'experience': 8420,
+          'is_self': false,
+        },
+        {
+          'player_id': 'self-1',
+          'display_name': 'Berfin',
+          'total_score': 70,
+          'best_streak': 2,
+          'rooms_played': 1,
+          'experience': 9500,
+          'is_self': true,
+        },
+      ];
+    } else {
+      body = <Object>[];
+    }
+    final bytes = utf8.encode(jsonEncode(body));
     return http.StreamedResponse(
       Stream.value(bytes),
       200,
@@ -946,7 +1008,7 @@ void main() {
   });
 
   test(
-    'list_friends user_id döndürmese de arkadaş listesi çökmez ve seviye xp\'den hesaplanır',
+    'RPC yokken eski puan davranışı korunur; seviye XP\'den hesaplanır',
     () async {
       final repository = SupabaseZanKurdRepository(
         SupabaseClient(
@@ -967,8 +1029,56 @@ void main() {
       // gelmeyen bir alanın istemcide doğru hesaplandığını kanıtlıyor.
       expect(friend.level, 5);
       expect(friend.lastActiveAt, isNotNull);
+
+      final ranked = await repository.loadFriendsLeaderboard(
+        period: LeaderboardPeriod.daily,
+      );
+      expect(ranked, hasLength(1));
+      expect(ranked.single.friendId, 'friend-1');
+      expect(ranked.single.totalScore, 8420);
     },
   );
+
+  // Önceki depo testleri yalnız list_friends'i taklit ediyordu; dönem
+  // seçicisinin arkadaş sekmesine hiç taşınmaması bu yüzden sessiz kalmıştı.
+  test(
+    'arkadaş sıralaması seçili dönemi kullanır ve kendi satırını ekler',
+    () async {
+      final httpClient = _FriendsLeaderboardHttpClient();
+      final repository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      final friends = await repository.loadFriendsLeaderboard(
+        period: LeaderboardPeriod.daily,
+      );
+
+      expect(httpClient.leaderboardParams, {'p_days': 1});
+      expect(friends.map((friend) => friend.friendId), ['friend-1', 'self-1']);
+      expect(friends.map((friend) => friend.totalScore), [120, 70]);
+      expect(friends.last.friendName, 'Berfin');
+    },
+  );
+
+  test('arkadaş listesi yeni RPC puanını kullanır', () async {
+    final httpClient = _FriendsLeaderboardHttpClient();
+    final repository = SupabaseZanKurdRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: httpClient,
+      ),
+    );
+
+    final friends = await repository.loadFriends();
+
+    expect(httpClient.leaderboardParams, {'p_days': -1});
+    expect(friends.single.totalScore, 120);
+  });
 
   test(
     'kategoriler sunucudan farklı olsa bile yerel soru bankasıyla aynı kalır',

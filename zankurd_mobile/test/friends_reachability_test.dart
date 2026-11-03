@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
+import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -41,7 +42,9 @@ class _FriendsRepository extends MockZanKurdRepository {
   final List<FriendRequest> pending;
 
   @override
-  Future<List<Friend>> loadFriendsLeaderboard() async => friends;
+  Future<List<Friend>> loadFriendsLeaderboard({
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async => friends;
 
   @override
   Future<List<FriendRequest>> loadPendingFriendRequests() async => pending;

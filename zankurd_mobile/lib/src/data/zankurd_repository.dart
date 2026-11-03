@@ -865,7 +865,9 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   Future<List<Friend>> loadFriends();
 
   /// Arkadaş liderlik tablosu (skora göre sıralı).
-  Future<List<Friend>> loadFriendsLeaderboard();
+  Future<List<Friend>> loadFriendsLeaderboard({
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  });
 
   /// Bekleyen arkadaş isteklerini yükle.
   Future<List<FriendRequest>> loadPendingFriendRequests();

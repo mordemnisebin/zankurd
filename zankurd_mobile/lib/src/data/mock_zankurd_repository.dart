@@ -4529,7 +4529,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<List<Friend>> loadFriendsLeaderboard() async {
+  Future<List<Friend>> loadFriendsLeaderboard({
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async {
     final friends = await loadFriends();
     friends.sort((a, b) => b.totalScore.compareTo(a.totalScore));
     return friends;

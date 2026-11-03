@@ -11,21 +11,25 @@ import 'package:zankurd_mobile/src/models/async_duel.dart';
 
 void main() {
   final sql = File('supabase/2026-10-16_son_bosluklar.sql').readAsStringSync();
+  final t1Sql = File('supabase/2026-11-03_siralama_t1.sql').readAsStringSync();
 
   /// `create or replace function public.<name>(` ... `$function$;` bloğu.
-  String body(String name) {
+  String functionBody(String source, String name) {
     // toLowerCase() Türkçe büyük İ'de uzunluğu değiştirir; büyük/küçük harf
     // duyarsız eşleşme için RegExp kullanılır.
     final match = RegExp(
       'create or replace function public\\.$name\\(',
       caseSensitive: false,
-    ).firstMatch(sql);
+    ).firstMatch(source);
     if (match == null) throw StateError('$name göçte tanımlı olmalı');
     final start = match.start;
-    final open = sql.indexOf(r'$function$', start) + r'$function$'.length;
-    final close = sql.indexOf(r'$function$', open);
-    return sql.substring(start, close + r'$function$'.length);
+    final open = source.indexOf(r'$function$', start) + r'$function$'.length;
+    final close = source.indexOf(r'$function$', open);
+    return source.substring(start, close + r'$function$'.length);
   }
+
+  String body(String name) => functionBody(sql, name);
+  String t1Body(String name) => functionBody(t1Sql, name);
 
   test('tek işlemde, idempotent create or replace', () {
     expect(sql, contains('\nbegin;\n'));
@@ -259,11 +263,13 @@ void main() {
     );
   });
 
-  group('5) sıralama günlük puan tavanı', () {
+  group('5) yeni göçte sıralama günlük puan tavanı kaldırıldı', () {
     for (final name in ['get_leaderboard', 'get_my_leaderboard_rank']) {
-      test('$name: (oyuncu, İstanbul günü) başına 5000 ile kesilir', () {
-        final fn = body(name);
-        expect(fn, contains('least(coalesce(sum(rp.score), 0), 5000)'));
+      test('$name: oda puanı İstanbul günleri başına tavansız toplanır', () {
+        final fn = t1Body(name);
+        expect(fn, contains('coalesce(sum(rp.score), 0)::bigint as day_score'));
+        expect(fn, isNot(contains('least(coalesce(sum(rp.score)')));
+        expect(fn, isNot(contains('5000')));
         expect(
           fn,
           contains("(r.finished_at at time zone 'Europe/Istanbul')::date"),

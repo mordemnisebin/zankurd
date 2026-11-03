@@ -3968,52 +3968,130 @@ class SupabaseZanKurdRepository
   }
 
   @override
-  Future<List<Friend>> loadFriends() async {
+  Future<List<Friend>> loadFriends() =>
+      _loadFriends(period: null, includeSelf: false);
+
+  @override
+  Future<List<Friend>> loadFriendsLeaderboard({
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async {
     try {
-      final res = await client.rpc<List<dynamic>>('list_friends');
-      // `list_friends` çağıranın yetkisiyle çalışır: `profiles` RLS'si
-      // arkadaşın satırını gizler, ad ve renk `friends` tablosuna yazılmış
-      // eski kopyadan gelir (fotoğraf hiç gelmez). Güncel kimlik herkese
-      // açık profilden tamamlanır.
-      final profiles = await _publicProfilesById([
-        for (final row in res) (row as Map)['friend_id'] as String?,
-      ]);
-      return res.map((row) {
-        var friend = Friend.fromJson(Map<String, dynamic>.from(row as Map));
-        final profile = profiles[friend.friendId];
-        if (profile != null) {
-          friend = friend.copyWith(
-            friendName: profile.nameOr(friend.friendName),
-            friendAvatarColor: profile.avatar.colorHex,
-            profile: profile,
-          );
-        }
-        // `list_friends` seviye döndürmez (yalnız `total_score` = xp);
-        // Arkadaşlar sekmesi rozet olarak seviye gösteriyor
-        // (leaderboard_screen.dart _FriendRankRow). Aynı XP→seviye
-        // formülü sunucudaki liderlik view'ının kullandığı `xp` ile
-        // tutarlı olsun diye burada, tek yerde hesaplanır.
-        return friend.copyWith(
-          level: XPStore.calculateLevel(friend.totalScore),
-        );
-      }).toList();
+      return await _loadFriends(period: period, includeSelf: true);
     } catch (e, s) {
-      _recordError(e, s, reason: 'loadFriends failed');
-      // Hata "arkadaşın yok" DEĞİLDİR: boş liste dönmek ekranın hata +
-      // "tekrar dene" durumunu hiç tetiklemiyordu (bkz.
-      // test/friend_read_errors_test.dart).
+      _recordError(e, s, reason: 'loadFriendsLeaderboard failed');
       rethrow;
     }
   }
 
-  @override
-  Future<List<Friend>> loadFriendsLeaderboard() async {
+  Future<List<Friend>> _loadFriends({
+    required LeaderboardPeriod? period,
+    required bool includeSelf,
+  }) async {
+    var scoreRpcErrorReported = false;
     try {
-      final friends = await loadFriends();
-      friends.sort((a, b) => b.totalScore.compareTo(a.totalScore));
+      final res = await client.rpc<List<dynamic>>('list_friends');
+      List<Map<String, dynamic>>? scoreRows;
+      try {
+        final rows = await client.rpc<List<dynamic>>(
+          'get_friends_leaderboard',
+          params: {'p_days': period?.days ?? -1},
+        );
+        scoreRows = [
+          for (final row in rows) Map<String, dynamic>.from(row as Map),
+        ];
+      } on PostgrestException catch (error, stack) {
+        if (!_isMissingFunction(error)) {
+          _recordError(
+            error,
+            stack,
+            reason: 'get_friends_leaderboard RPC failed',
+          );
+          scoreRpcErrorReported = true;
+          Error.throwWithStackTrace(error, stack);
+        }
+        // Eski sürücü göçten önceki list_friends puanını ve arkadaş
+        // sıralamasını kullanmaya devam eder.
+      }
+
+      final scoresByPlayerId = {
+        for (final row in scoreRows ?? const <Map<String, dynamic>>[])
+          if (row['player_id'] is String) row['player_id'] as String: row,
+      };
+      final profiles = await _publicProfilesById([
+        for (final row in res) (row as Map)['friend_id'] as String?,
+        for (final row in scoreRows ?? const <Map<String, dynamic>>[])
+          row['player_id'] as String?,
+      ]);
+      final friends = res.map((row) {
+        var friend = Friend.fromJson(Map<String, dynamic>.from(row as Map));
+        final score = scoresByPlayerId[friend.friendId];
+        final profile = profiles[friend.friendId];
+        final experience =
+            (score?['experience'] as num?)?.toInt() ?? friend.totalScore;
+        final scoreName = score?['display_name'] as String?;
+        friend = friend.copyWith(
+          friendName:
+              profile?.nameOr(scoreName ?? friend.friendName) ??
+              scoreName ??
+              friend.friendName,
+          friendAvatarColor:
+              profile?.avatar.colorHex ?? friend.friendAvatarColor,
+          profile: profile,
+          totalScore:
+              (score?['total_score'] as num?)?.toInt() ?? friend.totalScore,
+          level: XPStore.calculateLevel(experience),
+        );
+        return friend;
+      }).toList();
+
+      if (includeSelf && scoreRows != null) {
+        for (final row in scoreRows) {
+          if (row['is_self'] != true || row['player_id'] is! String) continue;
+          final playerId = row['player_id'] as String;
+          final profile = profiles[playerId];
+          final name = row['display_name'] as String? ?? 'Oyuncu';
+          friends.add(
+            Friend(
+              id: playerId,
+              userId: playerId,
+              friendId: playerId,
+              friendName: profile?.nameOr(name) ?? name,
+              friendAvatarColor: profile?.avatar.colorHex,
+              createdAt: DateTime.now().toUtc(),
+              totalScore: (row['total_score'] as num?)?.toInt() ?? 0,
+              level: XPStore.calculateLevel(
+                (row['experience'] as num?)?.toInt() ?? 0,
+              ),
+              profile: profile,
+            ),
+          );
+        }
+        final order = {
+          for (final (index, row) in scoreRows.indexed)
+            if (row['player_id'] is String) row['player_id'] as String: index,
+        };
+        friends.sort(
+          (a, b) => (order[a.friendId] ?? friends.length).compareTo(
+            order[b.friendId] ?? friends.length,
+          ),
+        );
+      } else if (includeSelf) {
+        friends.sort((a, b) => b.totalScore.compareTo(a.totalScore));
+      }
       return friends;
     } catch (e, s) {
-      _recordError(e, s, reason: 'loadFriendsLeaderboard failed');
+      if (!scoreRpcErrorReported) {
+        _recordError(
+          e,
+          s,
+          reason: includeSelf
+              ? 'loadFriendsLeaderboard failed'
+              : 'loadFriends failed',
+        );
+      }
+      // Hata "arkadaşın yok" DEĞİLDİR: boş liste dönmek ekranın hata +
+      // "tekrar dene" durumunu hiç tetiklemiyordu (bkz.
+      // test/friend_read_errors_test.dart).
       rethrow;
     }
   }

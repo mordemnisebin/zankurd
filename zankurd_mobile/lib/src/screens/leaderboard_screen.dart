@@ -323,7 +323,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         // (2026-08-14 denetimi).
         _friendsFuture =
             Future.wait([
-              widget.repository.loadFriendsLeaderboard(),
+              widget.repository.loadFriendsLeaderboard(period: _period),
               widget.repository.loadBlockedPlayerIds(),
             ]).timeout(const Duration(seconds: 10)).then((results) {
               final friends = results[0] as List<Friend>;

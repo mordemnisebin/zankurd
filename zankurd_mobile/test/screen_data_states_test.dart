@@ -43,7 +43,9 @@ class _EmptyRepository extends MockZanKurdRepository {
   Future<List<Friend>> loadFriends() async => const [];
 
   @override
-  Future<List<Friend>> loadFriendsLeaderboard() async => const [];
+  Future<List<Friend>> loadFriendsLeaderboard({
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async => const [];
 
   @override
   Future<List<FriendRequest>> loadPendingFriendRequests() async => const [];
@@ -88,7 +90,9 @@ class _FailingRepository extends MockZanKurdRepository {
   Future<List<Friend>> loadFriends() async => _fail();
 
   @override
-  Future<List<Friend>> loadFriendsLeaderboard() async => _fail();
+  Future<List<Friend>> loadFriendsLeaderboard({
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async => _fail();
 
   @override
   Future<List<FriendRequest>> loadPendingFriendRequests() async => _fail();
