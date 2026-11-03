@@ -30,6 +30,7 @@ import '../l10n/lang.dart';
 import '../utils/coin_calculator.dart';
 import '../l10n/strings.dart';
 import '../services/crowd_standings.dart';
+import '../widgets/lexicon_lookup.dart';
 import '../widgets/whole_scroll_row.dart';
 import '../widgets/player_moderation_button.dart';
 import '../services/premium_service.dart';
@@ -1834,6 +1835,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         // turu yanlış anlatırdı.
         category: roundLabel ?? room.category,
         results: [for (final record in answerRecords) record.isCorrect],
+        records: answerRecords,
         // 1v1 galibiyetinde kart "pêşbirkê bi ser ketim" satırını yazar.
         duelWin:
             !room.isCrowd &&
@@ -3865,17 +3867,64 @@ class ResultExplanationEntry extends StatelessWidget {
                 // okuyordu (bu liste tam da "neden" diye açıklamaların
                 // toplandığı yer). Soru metni artık tam görünür; uzun soru
                 // listeyi uzatır, kaydırma zaten var.
-                Text(
-                  '${groupThousands(index)}. ${record.prompt}',
-                  style: SahneType.bodyStrong.copyWith(color: t.tx),
+                //
+                // Dokun-çevir: tur BİTTİ, hiçbir cevap gizli değil; sözlükte
+                // olan Kurmancî sözcükler dokunulabilir (bkz.
+                // test/result_tap_translate_test.dart). Sayılar/etiketler
+                // dokunulmaz: yalnız soru, cevap ve açıklama metni.
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${groupThousands(index)}. ',
+                      style: SahneType.bodyStrong.copyWith(color: t.tx),
+                    ),
+                    Expanded(
+                      child: LexiconText(
+                        record.prompt,
+                        style: SahneType.bodyStrong.copyWith(color: t.tx),
+                        policy: LexiconTapPolicy.forQuestion(
+                          enabled: true,
+                          isKu: context.isKu,
+                          answered: true,
+                          type: '',
+                          promptText: record.prompt,
+                          correctAnswer: record.correctAnswer,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: SahneSpace.x1),
-                Text(
-                  '${context.t(K.correctAnswerLabel)}: ${record.correctAnswer}',
-                  style: SahneType.captionStrong.copyWith(color: t.okTx),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${context.t(K.correctAnswerLabel)}: ',
+                      style: SahneType.captionStrong.copyWith(color: t.okTx),
+                    ),
+                    Expanded(
+                      child: LexiconText(
+                        record.correctAnswer,
+                        style: SahneType.captionStrong.copyWith(color: t.okTx),
+                        policy: LexiconTapPolicy.forReview(
+                          isKu: context.isKu,
+                          prompt: record.prompt,
+                          isAnswer: true,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: SahneSpace.x1),
-                Text(explanation, style: SahneType.body.copyWith(color: t.tx2)),
+                LexiconText(
+                  explanation,
+                  style: SahneType.body.copyWith(color: t.tx2),
+                  policy: LexiconTapPolicy.forReview(
+                    isKu: context.isKu,
+                    prompt: record.prompt,
+                  ),
+                ),
               ],
             ),
           ),

@@ -26,6 +26,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/widgets/lexicon_lookup.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/story_progress_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
@@ -464,8 +465,16 @@ void main() {
           );
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull);
-          final prompt = find.textContaining('sermaya zivistana');
-          expect(prompt, findsOneWidget);
+          // Dokun-çevir: soru artık LexiconText (zengin metin); düz metin
+          // araması sözcük yer tutucularında bölünür, bu yüzden paragraf
+          // LexiconText'in içinden alınır.
+          final lexiconPrompt = find.byWidgetPredicate(
+            (w) => w is LexiconText && w.text.contains('sermaya zivistana'),
+          );
+          expect(lexiconPrompt, findsOneWidget);
+          final prompt = find
+              .descendant(of: lexiconPrompt, matching: find.byType(RichText))
+              .first;
           final paragraph = tester.renderObject<RenderParagraph>(prompt);
           expect(paragraph.didExceedMaxLines, isFalse);
           expect(paragraph.text.toPlainText(), contains('nikarin bimeşin?'));

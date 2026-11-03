@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/widgets/lexicon_lookup.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
@@ -105,7 +106,14 @@ void main() {
     // "Ayrıntılar" satırının içinde.
     await openResultDetails(tester);
 
-    expect(find.text('«av» bi Tirkî dibe «su».'), findsOneWidget);
+    // Dokun-çevir: açıklama LexiconText (sözcük başına WidgetSpan), düz
+    // `find.text` cümleyi bölünmüş görür; metin widget'tan okunur.
+    expect(
+      find.byWidgetPredicate(
+        (w) => w is LexiconText && w.text == '«av» bi Tirkî dibe «su».',
+      ),
+      findsOneWidget,
+    );
     expect(find.textContaining('Şirove:'), findsNothing);
   });
 }

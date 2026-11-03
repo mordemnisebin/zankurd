@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/widgets/lexicon_lookup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
@@ -105,7 +106,12 @@ void main() {
     await pumpResult(tester, ku: true);
 
     expect(
-      find.textContaining('bi Tirkî dibe', skipOffstage: false),
+      find.byWidgetPredicate(
+        // Dokun-çevir: açıklama artık LexiconText (sözcük başına WidgetSpan),
+        // düz metin araması cümleyi bölünmüş görür.
+        (w) => w is LexiconText && w.text.contains('bi Tirkî dibe'),
+        skipOffstage: false,
+      ),
       findsOneWidget,
       reason: 'Kurmancî açıklama görünmüyor',
     );

@@ -971,7 +971,16 @@ class _LearningExplanationAction extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(explanation, style: SahneType.body.copyWith(color: t.tx)),
+            // Cevaptan sonra açılan sayfa: cevap gizli değil, sözlükteki
+            // Kurmancî sözcükler dokunulabilir (Kurmancî arayüzde).
+            LexiconText(
+              explanation,
+              style: SahneType.body.copyWith(color: t.tx),
+              policy: LexiconTapPolicy.forReview(
+                isKu: sheetContext.isKu,
+                prompt: question.prompt,
+              ),
+            ),
             QuestionSourceLine(question: question),
           ],
         );

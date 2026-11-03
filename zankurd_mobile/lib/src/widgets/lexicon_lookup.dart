@@ -83,6 +83,27 @@ class LexiconTapPolicy {
     return LexiconTapPolicy(mode: LexiconTapMode.whole, blocked: correctTokens);
   }
 
+  /// Tur SONU inceleme metni (cevap ve açıklama): hiçbir cevap gizli değildir.
+  ///
+  /// Kurmancî arayüzde açıklama Kurmancîdir -> tamamı dokunulabilir. Türkçe
+  /// arayüzde açıklama Türkçedir ("ev" Türkçede 'konut', Kurmancîde 'bu'):
+  /// kapalı. Cevap satırı ([isAnswer]) Türkçe arayüzde yalnız soru Kurmancî
+  /// cevap istiyorsa (`bi Kurmancî çi ye?`) açılır.
+  static LexiconTapPolicy forReview({
+    required bool isKu,
+    required String prompt,
+    bool isAnswer = false,
+  }) {
+    if (isKu) return const LexiconTapPolicy(mode: LexiconTapMode.whole);
+    if (isAnswer &&
+        RegExp(
+          r'bi kurmanc|kurmancîsi|kurmancisi|kurmancası',
+        ).hasMatch(prompt.toLowerCase())) {
+      return const LexiconTapPolicy(mode: LexiconTapMode.whole);
+    }
+    return off;
+  }
+
   static final _wordPattern = RegExp(r'[\p{L}̧̂]+', unicode: true);
 
   static Set<String> _tokenSet(String text) => {
