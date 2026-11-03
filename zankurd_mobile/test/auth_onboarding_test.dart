@@ -694,6 +694,12 @@ void main() {
     await tester.tap(find.text('Atla'));
     await tester.pumpAndSettle();
 
+    // 2026-11-03 ilk 5 dakika: tanıtımdan sonra amaç/seviye soruları gelir
+    // (giriş seçenekleri bunların ARDINDAN, olduğu gibi görünür).
+    expect(find.byKey(const ValueKey('first-run-surface')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('first-run-skip')));
+    await tester.pumpAndSettle();
+
     expect(find.text('ZanKurd\'a hoş geldin'), findsOneWidget);
     expect(tester.takeException(), isNull);
     final preferences = await SharedPreferences.getInstance();

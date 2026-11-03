@@ -11,6 +11,7 @@ class LearningGoalChooser extends StatelessWidget {
     required this.selected,
     required this.onSelected,
     this.compact = false,
+    this.showHeading = true,
     super.key,
   });
 
@@ -18,6 +19,10 @@ class LearningGoalChooser extends StatelessWidget {
   final LearningGoal? selected;
   final ValueChanged<LearningGoal> onSelected;
   final bool compact;
+
+  /// Başlık + ipucu kapalıysa yalnız seçenekler çizilir (ilk akışta başlığı
+  /// sayfa kendisi taşır).
+  final bool showHeading;
 
   @override
   Widget build(BuildContext context) {
@@ -29,20 +34,21 @@ class LearningGoalChooser extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            compact
-                ? Tr.forKu(K.learningGoalTitleCompact, isKu)
-                : Tr.forKu(K.learningGoalTitle, isKu),
-            style: SahneType.bodyStrong.copyWith(color: t.tx),
-          ),
-          if (!compact) ...[
+          if (showHeading)
+            Text(
+              compact
+                  ? Tr.forKu(K.learningGoalTitleCompact, isKu)
+                  : Tr.forKu(K.learningGoalTitle, isKu),
+              style: SahneType.bodyStrong.copyWith(color: t.tx),
+            ),
+          if (showHeading && !compact) ...[
             const SizedBox(height: SahneSpace.x1),
             Text(
               Tr.forKu(K.learningGoalHint, isKu),
               style: SahneType.caption.copyWith(color: t.tx2),
             ),
           ],
-          const SizedBox(height: SahneSpace.x2),
+          if (showHeading) const SizedBox(height: SahneSpace.x2),
           Wrap(
             spacing: SahneSpace.x2,
             runSpacing: SahneSpace.x2,

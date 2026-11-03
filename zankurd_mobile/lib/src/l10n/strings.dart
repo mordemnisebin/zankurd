@@ -3333,6 +3333,24 @@ class Tr {
     K.language: {'ku': 'Ziman', 'tr': 'Dil'},
     K.languageCode: {'ku': 'KU', 'tr': 'TR'},
     K.dailyLesson: {'ku': 'Pratîk', 'tr': 'Pratik'},
+    // 2026-11-03 ilk 5 dakika akışı. KU TASLAK: jüri onayı bekliyor.
+    K.onbKnowTitle: {
+      'ku': 'Tu Kurmancî dizanî?',
+      'tr': 'Kurmancî biliyor musun?',
+    },
+    K.onbKnowSome: {
+      'ku': 'Hinekî dizanim, asta min diyar bike',
+      'tr': 'Biraz biliyorum, seviyemi bul',
+    },
+    K.onbKnowBeginner: {
+      'ku': 'Na, ji destpêkê dest pê bikim',
+      'tr': 'Hayır, baştan başlayayım',
+    },
+    K.onbFirstWordTitle: {'ku': 'Peyva te ya yekem', 'tr': 'İlk kelimen'},
+    K.wordsEmptyAction: {
+      'ku': 'Dest bi dersa yekem bike',
+      'tr': 'İlk derse başla',
+    },
     K.learningGoalTitle: {
       'ku': 'Îro tu dixwazî li ser çi bisekinî?',
       'tr': 'Bugün neye odaklanmak istersin?',
@@ -6192,6 +6210,11 @@ class K {
   static const quizTutorialNextTitle = 'quiz.tutorial.next.title';
   static const quizTutorialNextBody = 'quiz.tutorial.next.body';
   static const languagePickerLabel = 'onboarding.languagePickerLabel';
+  static const onbKnowTitle = 'onboarding.know.title';
+  static const onbKnowSome = 'onboarding.know.some';
+  static const onbKnowBeginner = 'onboarding.know.beginner';
+  static const onbFirstWordTitle = 'onboarding.firstWord.title';
+  static const wordsEmptyAction = 'words.empty.action';
   static const signInConsent = 'auth.signInConsent';
   static const inviteCardTitle = 'friends.invite.cardTitle';
   static const inviteYourCode = 'friends.invite.yourCode';

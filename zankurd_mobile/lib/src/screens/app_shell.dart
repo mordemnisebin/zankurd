@@ -29,7 +29,9 @@ import '../widgets/offline_banner.dart';
 import 'learn_home_screen.dart';
 import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
+import 'first_run_choice_screen.dart';
 import 'onboarding_screen.dart';
+import '../data/first_run_store.dart';
 import '../services/analytics_service.dart';
 import '../services/foreground_push_center.dart';
 import '../services/push_messaging_gateway.dart';
@@ -137,6 +139,8 @@ class _AppShellState extends State<AppShell>
   final ValueNotifier<int> _playRefresh = ValueNotifier<int>(0);
   bool _checkingOnboarding = true;
   bool _showOnboarding = false;
+  bool _showFirstRunChoice = false;
+  bool _firstRunLaunchScheduled = false;
   bool _checkingProfileName = false;
   bool _profileNameComplete = false;
   bool _profileCheckStarted = false;
@@ -556,9 +560,11 @@ class _AppShellState extends State<AppShell>
     // Okuma başarısız olursa (bozuk depo) yükleyici sonsuza dek kalmasın:
     // güvenli varsayılan, tanıtımı göstermektir.
     var show = true;
+    var choice = false;
     try {
       final preferences = await SharedPreferences.getInstance();
       show = preferences.getBool(_onboardingSeenKey) != true;
+      choice = !show && await FirstRunStore.stage() == FirstRunStage.choice;
     } catch (error, stack) {
       ErrorReporter.record(
         error,
@@ -569,6 +575,7 @@ class _AppShellState extends State<AppShell>
     if (!mounted) return;
     setState(() {
       _showOnboarding = show;
+      _showFirstRunChoice = choice;
       _checkingOnboarding = false;
     });
   }
@@ -586,11 +593,28 @@ class _AppShellState extends State<AppShell>
       );
     }
     AnalyticsService.instance.logOnboardingCompleted();
+    // Yeni oyuncu: tanıtımın ardından amaç/seviye soruları (ilk 5 dakika
+    // akışı). Tanıtımı daha önce görmüş kullanıcıda bu işaret hiç konmaz.
+    await FirstRunStore.armChoice();
     if (!mounted) return;
-    setState(() => _showOnboarding = false);
+    setState(() {
+      _showOnboarding = false;
+      _showFirstRunChoice = true;
+    });
   }
 
   bool _wasAuthenticated = false;
+
+  /// Kapılar (tanıtım, sorular, giriş, ad) geçildi: bekleyen ilk 5 dakika
+  /// planı varsa kullanıcı doğrudan uygun ilk derse iner. Oturumda bir kez.
+  void _scheduleFirstRunLanding() {
+    if (_firstRunLaunchScheduled) return;
+    _firstRunLaunchScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      unawaited(FirstRunFlow.run(context, _repository));
+    });
+  }
 
   /// Oturumlu → oturumsuz GEÇİŞİNDE kabuğun üstündeki rotaları kapatır.
   ///
@@ -648,6 +672,12 @@ class _AppShellState extends State<AppShell>
 
     if (_showOnboarding) {
       return OnboardingScreen(onComplete: _completeOnboarding);
+    }
+
+    if (_showFirstRunChoice) {
+      return FirstRunChoiceScreen(
+        onDone: () => setState(() => _showFirstRunChoice = false),
+      );
     }
 
     if (!authProvider.isAuthenticated) {
@@ -712,6 +742,7 @@ class _AppShellState extends State<AppShell>
       _scheduleRoomResumeCheck(resumableUserId);
     }
     _scheduleJoinDeepLink();
+    _scheduleFirstRunLanding();
     _readyForPushTap = true;
     _schedulePushTapTarget();
 
