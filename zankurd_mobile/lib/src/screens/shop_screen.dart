@@ -21,6 +21,8 @@ import '../widgets/sahne/sahne.dart';
 import '../widgets/shop_showcase.dart';
 import '../widgets/zk_back_button.dart';
 import 'spin_wheel_screen.dart';
+import 'contest_screen.dart';
+import '../utils/profile_tab_request.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
 import '../utils/number_format.dart';
@@ -609,6 +611,14 @@ class _ShopScreenState extends State<ShopScreen> {
     await _refreshCoinBalance();
   }
 
+  Future<void> _openDailyRound() async {
+    await Navigator.of(
+      context,
+    ).push(AppRoute<void>(page: ContestScreen(repository: widget.repository)));
+    if (!mounted) return;
+    await _refreshCoinBalance();
+  }
+
   Future<void> _refreshCoinBalance() async {
     try {
       final balance = await widget.repository.loadCoinBalance();
@@ -646,99 +656,139 @@ class _ShopScreenState extends State<ShopScreen> {
               ),
             ],
           ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(desc, style: SahneType.body.copyWith(color: t.tx2)),
-              const SizedBox(height: SahneSpace.x4),
-              DecoratedBox(
-                decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
-                child: Padding(
-                  padding: const EdgeInsets.all(SahneSpace.x3),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SahneGlyph(SahneGlyphKind.coin),
-                      const SizedBox(width: SahneSpace.x2),
-                      Flexible(
-                        child: Text(
-                          // Para birimi adı defterden gelir: Kurmancî
-                          // ekranda "zêr", Türkçede "coin". Sabit yazıldığında
-                          // aynı ekranda iki ad birden görünüyordu — başlık
-                          // "Zêrên xwe bi aqilmendî bixercîne" derken sayaç
-                          // "0 coin" diyordu (2026-08-01, canlı Kurmancî
-                          // mağaza ekranı).
-                          '${groupThousands(item.cost)} ${ctx.t(K.coinWord).toLowerCase()}',
-                          style: SahneType.bodyStrong.copyWith(
-                            color: t.tx,
-                            fontFeatures: const [FontFeature.tabularFigures()],
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(desc, style: SahneType.body.copyWith(color: t.tx2)),
+                const SizedBox(height: SahneSpace.x4),
+                DecoratedBox(
+                  decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
+                  child: Padding(
+                    padding: const EdgeInsets.all(SahneSpace.x3),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SahneGlyph(SahneGlyphKind.coin),
+                        const SizedBox(width: SahneSpace.x2),
+                        Flexible(
+                          child: Text(
+                            // Para birimi adı defterden gelir: Kurmancî
+                            // ekranda "zêr", Türkçede "coin". Sabit yazıldığında
+                            // aynı ekranda iki ad birden görünüyordu — başlık
+                            // "Zêrên xwe bi aqilmendî bixercîne" derken sayaç
+                            // "0 coin" diyordu (2026-08-01, canlı Kurmancî
+                            // mağaza ekranı).
+                            '${groupThousands(item.cost)} ${ctx.t(K.coinWord).toLowerCase()}',
+                            style: SahneType.bodyStrong.copyWith(
+                              color: t.tx,
+                              fontFeatures: const [
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              // Yetersiz bakiye bir durumdur: Şaş metni + ikon + söz; yalnız
-              // renkle verilmez. Eksik miktar yazılır; bakiye satırı hep
-              // görünür.
-              const SizedBox(height: SahneSpace.x3),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(AppIcons.wallet, size: 16, color: t.tx2),
-                  const SizedBox(width: SahneSpace.x2),
-                  Flexible(
-                    child: Text(
-                      context.t(K.yourBalance, {
-                        'coins': groupThousands(_coinBalance),
-                      }),
-                      style: SahneType.caption.copyWith(color: t.tx2),
+                      ],
                     ),
                   ),
-                ],
-              ),
-              if (short) ...[
-                const SizedBox(height: SahneSpace.x2),
-                SahneShortfallNote(
-                  key: const ValueKey('shop-dialog-shortfall'),
-                  missing: coinShortfall(
-                    cost: item.cost,
-                    balance: _coinBalance,
-                  ),
-                  alert: true,
-                  center: true,
                 ),
+                // Yetersiz bakiye bir durumdur: Şaş metni + ikon + söz; yalnız
+                // renkle verilmez. Eksik miktar yazılır; bakiye satırı hep
+                // görünür.
+                const SizedBox(height: SahneSpace.x3),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(AppIcons.wallet, size: 16, color: t.tx2),
+                    const SizedBox(width: SahneSpace.x2),
+                    Flexible(
+                      child: Text(
+                        context.t(K.yourBalance, {
+                          'coins': groupThousands(_coinBalance),
+                        }),
+                        style: SahneType.caption.copyWith(color: t.tx2),
+                      ),
+                    ),
+                  ],
+                ),
+                if (short) ...[
+                  const SizedBox(height: SahneSpace.x2),
+                  SahneShortfallNote(
+                    key: const ValueKey('shop-dialog-shortfall'),
+                    missing: coinShortfall(
+                      cost: item.cost,
+                      balance: _coinBalance,
+                    ),
+                    alert: true,
+                    center: true,
+                  ),
+                  // 2026-11-03 tasarım kurulu: tek "Jeton kazan" düğmesi
+                  // yalnız çarka gidiyordu; oyuncu jetonu başka nerede
+                  // kazanacağını bilmiyordu. Üç gerçek yol, her biri kendi
+                  // ekranına giden bir düğme (çark, günün turu, görevler).
+                  const SizedBox(height: SahneSpace.x4),
+                  Text(
+                    ctx.t(K.earnCoins),
+                    textAlign: TextAlign.center,
+                    style: SahneType.bodyStrong.copyWith(color: t.tx),
+                  ),
+                  const SizedBox(height: SahneSpace.x2),
+                  SahneButton.primary(
+                    key: const ValueKey('shop-dialog-earn-coins'),
+                    label: ctx.t(K.wheelTitle),
+                    arrow: false,
+                    expand: true,
+                    onPressed: () async {
+                      Navigator.of(ctx).pop(false);
+                      await _openSpinWheel();
+                    },
+                  ),
+                  const SizedBox(height: SahneSpace.x2),
+                  SahneButton.secondary(
+                    key: const ValueKey('shop-dialog-earn-daily-round'),
+                    label: ctx.t(K.dailyContest),
+                    expand: true,
+                    onPressed: () async {
+                      Navigator.of(ctx).pop(false);
+                      await _openDailyRound();
+                    },
+                  ),
+                  const SizedBox(height: SahneSpace.x2),
+                  SahneButton.secondary(
+                    key: const ValueKey('shop-dialog-earn-missions'),
+                    label: ctx.t(K.gunlukGorevler),
+                    expand: true,
+                    onPressed: () {
+                      Navigator.of(ctx).pop(false);
+                      Navigator.of(context).popUntil((r) => r.isFirst);
+                      HomeTabRequest.request();
+                    },
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
           actions: [
-            DialogActionPair(
-              cancel: SahneButton.text(
+            if (short)
+              SahneButton.text(
                 label: context.t(K.cancelShort),
                 arrow: false,
                 onPressed: () => Navigator.of(ctx).pop(false),
+              )
+            else
+              DialogActionPair(
+                cancel: SahneButton.text(
+                  label: context.t(K.cancelShort),
+                  arrow: false,
+                  onPressed: () => Navigator.of(ctx).pop(false),
+                ),
+                confirm: SahneButton.primary(
+                  label: context.t(K.buyAction),
+                  arrow: false,
+                  onPressed: () => Navigator.of(ctx).pop(true),
+                ),
               ),
-              // Diyaloğun tek birincil eylemi. Bakiye yetmiyorsa "Satın al"
-              // pasif bırakılmaz, YERİNE gerçek bir sonraki adım gelir:
-              // günlük çark (jeton kazanılan, kodda var olan yol).
-              confirm: short
-                  ? SahneButton.primary(
-                      key: const ValueKey('shop-dialog-earn-coins'),
-                      label: context.t(K.earnCoins),
-                      arrow: false,
-                      onPressed: () async {
-                        Navigator.of(ctx).pop(false);
-                        await _openSpinWheel();
-                      },
-                    )
-                  : SahneButton.primary(
-                      label: context.t(K.buyAction),
-                      arrow: false,
-                      onPressed: () => Navigator.of(ctx).pop(true),
-                    ),
-            ),
           ],
         );
       },

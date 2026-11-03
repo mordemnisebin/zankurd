@@ -285,12 +285,28 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
             textAlign: TextAlign.center,
             style: SahneType.bodyStrong.copyWith(color: t.tx),
           ),
+          if (!_ownerMismatch) ...[
+            const SizedBox(height: SahneSpace.x2),
+            Text(
+              context.t(K.resultRecoveryFailedBody),
+              key: const ValueKey('room-result-recovery-body'),
+              textAlign: TextAlign.center,
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+          ],
           const SizedBox(height: SahneSpace.x6),
           SahneButton.primary(
             label: context.t(K.retry),
             icon: AppIcons.arrowsRotate,
             arrow: false,
             onPressed: _retry,
+          ),
+          const SizedBox(height: SahneSpace.x2),
+          SahneButton.text(
+            key: const ValueKey('room-result-recovery-lobby'),
+            label: context.t(K.resultRecoveryToLobby),
+            arrow: false,
+            onPressed: _leaveRecovery,
           ),
         ],
       );

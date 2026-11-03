@@ -6,6 +6,16 @@ import 'package:flutter_test/flutter_test.dart';
 
 Future<void> _tapTile(WidgetTester tester, Finder tile) async {
   if (tile.evaluate().isEmpty) {
+    // Önceki dokunuş listeyi aşağı kaydırmış olabilir (2026-11-03: Sırayla
+    // düello ikincil listeye indi, Oda kartı üstte kaldı); önce başa dön.
+    await tester.fling(
+      find.byType(Scrollable).first,
+      const Offset(0, 3000),
+      4000,
+    );
+    await tester.pumpAndSettle();
+  }
+  if (tile.evaluate().isEmpty) {
     await tester.scrollUntilVisible(
       tile,
       200,

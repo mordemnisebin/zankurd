@@ -11,6 +11,7 @@ import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/screens/paywall_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne_buttons.dart';
 
 /// 2026-07-25 denetim bulgusu: paywall'da otomatik yenileme koşulları
 /// yazmıyordu (Apple App Store Review 3.1.2 / Google Play abonelik
@@ -83,10 +84,6 @@ void main() {
     );
     expect(Tr.of(K.cancelAnytime, AppLanguage.ku), 'Her gav dikarî betal bikî');
     expect(Tr.of(K.buyAction, AppLanguage.ku), 'Bikire');
-    expect(
-      Tr.of(K.paywallPackagesInactive, AppLanguage.ku),
-      'Pakêtên Premium hîn ne çalak in',
-    );
     expect(Tr.of(K.restorePurchases, AppLanguage.ku), 'Kirînên xwe vegerîne');
 
     // Terk edilmiş biçimler hiçbir anahtarda yaşamamalı.
@@ -163,10 +160,7 @@ void main() {
       expect(find.text(Tr.of(K.restorePurchases, AppLanguage.tr)), findsOne);
       expect(find.text(Tr.of(K.privacyPolicy, AppLanguage.tr)), findsOne);
       expect(find.text(Tr.of(K.termsOfUse, AppLanguage.tr)), findsOne);
-      expect(
-        find.text(Tr.of(K.paywallPackagesInactive, AppLanguage.tr)),
-        findsNothing,
-      );
+      expect(find.text(Tr.of(K.yakinda, AppLanguage.tr)), findsNothing);
       expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.byType(ElevatedButton), findsNothing);
 
@@ -176,10 +170,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(attempts, 2);
-      expect(
-        find.text(Tr.of(K.paywallPackagesInactive, AppLanguage.tr)),
-        findsOne,
-      );
+      expect(find.text(Tr.of(K.yakinda, AppLanguage.tr)), findsOne);
       expect(
         find.text(Tr.of(K.genericErrorTitle, AppLanguage.tr)),
         findsNothing,
@@ -229,10 +220,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(attempts, 1);
-    expect(
-      find.text(Tr.of(K.paywallPackagesInactive, AppLanguage.tr)),
-      findsOne,
-    );
+    expect(find.text(Tr.of(K.yakinda, AppLanguage.tr)), findsOne);
     // Hata dalı değil: teknik hata başlığı gösterilmemeli.
     expect(find.text(Tr.of(K.genericErrorTitle, AppLanguage.tr)), findsNothing);
     // 2026-09-29 doğallık (K10): satın alınacak paket yokken yenileme
@@ -255,15 +243,13 @@ void main() {
     // (çıkmaz tuşu). Artık "Yakında" durumunda eylem "Geri"dir ve ekrandan
     // çıkar; "Tekrar dene" yalnız hata durumunda (ağ) kalır.
     expect(find.text(Tr.of(K.retry, AppLanguage.tr)), findsNothing);
-    final back = find.descendant(
-      of: find.byKey(const ValueKey('paywall-empty-offerings')),
-      matching: find.text(Tr.of(K.back, AppLanguage.tr)),
+    // 2026-11-03: boş durumda düğme de yok; kart yalnız "Yakında" der.
+    final card = find.byKey(const ValueKey('paywall-empty-offerings'));
+    expect(card, findsOne);
+    expect(
+      find.descendant(of: card, matching: find.byType(SahneButton)),
+      findsNothing,
     );
-    expect(back, findsOne);
-    expect(find.byType(PaywallScreen), findsOne);
-    await tester.ensureVisible(back);
-    await tester.tap(back);
-    await tester.pumpAndSettle();
     expect(attempts, 1);
   });
 

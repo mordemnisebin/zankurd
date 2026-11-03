@@ -208,9 +208,11 @@ void main() {
         await tester.pumpAndSettle();
         final t = dark ? SahneTokens.night : SahneTokens.day;
         const vivid = SahneTokens.day;
-        for (final (key, fill) in [
-          ('play-hub-async-duel', vivid.raceFill),
-          ('play-hub-room', vivid.nilFill),
+        // 2026-11-03: Günün turu ana mod kartı oldu (Zêr bandı, koyu mürekkep);
+        // Sırayla düello ikincil listeye indi ve artık kart değil satırdır.
+        for (final (key, fill, ink) in [
+          ('play-hub-daily-contest', t.zerBand, t.onZer),
+          ('play-hub-room', vivid.nilFill, SahneVivid.onFill),
         ]) {
           final card = find.byKey(ValueKey(key));
           expect(card, findsOneWidget, reason: key);
@@ -227,14 +229,8 @@ void main() {
             greaterThan(0.4),
             reason: '$key doygun',
           );
-          expect(
-            _contrast(SahneVivid.onFill, g.colors.first),
-            greaterThanOrEqualTo(4.5),
-          );
-          expect(
-            _contrast(SahneVivid.onFill, g.colors.last),
-            greaterThanOrEqualTo(4.5),
-          );
+          expect(_contrast(ink, g.colors.first), greaterThanOrEqualTo(4.5));
+          expect(_contrast(ink, g.colors.last), greaterThanOrEqualTo(4.5));
           // Turuncu (Agir) dolgu değil.
           expect(g.colors.first, isNot(t.act));
         }

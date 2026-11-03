@@ -14,3 +14,15 @@ class ProfileTabRequest {
 
   static void request() => pending.value++;
 }
+
+/// [ProfileTabRequest]'in Ana sayfa karşılığı: kabuğun üstüne itilmiş bir
+/// sayfadan (ör. Mağaza) "Günlük görevler"in durduğu Ana sayfaya dönmek için.
+/// 2026-11-03 tasarım kurulu: jetonu yetmeyen oyuncuya yalnız çark
+/// gösteriliyordu; görevler Ana sayfadadır ve oraya götüren yol yoktu.
+class HomeTabRequest {
+  const HomeTabRequest._();
+
+  static final ValueNotifier<int> pending = ValueNotifier<int>(0);
+
+  static void request() => pending.value++;
+}

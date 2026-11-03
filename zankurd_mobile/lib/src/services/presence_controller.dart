@@ -44,6 +44,10 @@ class PresenceController extends ChangeNotifier with WidgetsBindingObserver {
   bool _disposed = false;
   bool _enabled = false;
   bool _ready = false;
+  // Son okuma GERÇEKTEN başarısız oldu (ağ/sunucu); ilk yükleme sürerken
+  // ya da oturum yokken false kalır. Ayarlardaki "doğrulanamadı" notu yalnız
+  // bu durumda görünür ve ilk başarılı okumada kaybolur.
+  bool _loadFailed = false;
   bool _saving = false;
   // Timeout RPC'yi iptal etmez; hesap değişse de eski yazma bitmeden
   // yenisi başlayamaz. Aksi hâlde geciken açma son kapatmayı ezebilir.
@@ -53,6 +57,7 @@ class PresenceController extends ChangeNotifier with WidgetsBindingObserver {
 
   bool get enabled => _enabled;
   bool get ready => _ready;
+  bool get loadFailed => _loadFailed && !_ready;
   bool get canChange =>
       !_disposed && _ready && !_saving && !_writePending && _userId != null;
   static const _timeout = Duration(seconds: 10);
@@ -81,6 +86,7 @@ class PresenceController extends ChangeNotifier with WidgetsBindingObserver {
     _userId = userId;
     _enabled = false;
     _ready = false;
+    _loadFailed = false;
     _saving = false;
     _restart();
     _notify();
@@ -122,10 +128,15 @@ class PresenceController extends ChangeNotifier with WidgetsBindingObserver {
       if (!_current(generation) || !_foreground || _saving) return;
       _enabled = visible;
       _ready = true;
+      _loadFailed = false;
       _notify();
       if (visible) await gateway.touch().timeout(_timeout);
     } catch (_) {
       // İstemci yoklaması öğrenme/yarış akışını ve hata raporlarını kirletmez.
+      if (_current(generation) && !_ready && !_loadFailed) {
+        _loadFailed = true;
+        _notify();
+      }
     } finally {
       if (_pollGeneration == generation) _pollGeneration = null;
     }

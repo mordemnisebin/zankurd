@@ -151,10 +151,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(
-      find.text(Tr.of(K.paywallPackagesInactive, AppLanguage.tr)),
-      findsOneWidget,
-    );
+    expect(find.text(Tr.of(K.yakinda, AppLanguage.tr)), findsOneWidget);
     expect(
       find.text(Tr.of(K.restorePurchases, AppLanguage.tr)),
       findsOneWidget,

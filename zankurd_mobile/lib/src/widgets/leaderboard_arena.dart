@@ -121,22 +121,31 @@ class LeaderboardArenaHeader extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              children: [
-                // Büyük yazıda arma kalkar: başlık harf harf bölünmesin.
-                if (!big) ...[emblem, const SizedBox(width: SahneSpace.x3)],
-                Expanded(child: text),
-                if (!big) ...[
-                  const SizedBox(width: SahneSpace.x2),
-                  ZanMascot(
-                    key: const ValueKey('leaderboard-league-mascot'),
-                    pose: rank != null && rank <= 3
-                        ? ZanPose.celebrate
-                        : ZanPose.guide,
-                    size: 88,
-                  ),
-                ],
-              ],
+            LayoutBuilder(
+              builder: (context, box) {
+                // 2026-11-03 tasarım kurulu (320 pt, "9. sıradasın" harf
+                // harf bölünüyordu): kart içinde arma (56) + maskot (88)
+                // metne ~96 px bırakıyordu. Dar kartta maskot kalkar, arma
+                // ve başlık kalır; büyük yazıda ikisi de kalkar.
+                final showMascot = !big && box.maxWidth >= 300;
+                return Row(
+                  children: [
+                    // Büyük yazıda arma kalkar: başlık harf harf bölünmesin.
+                    if (!big) ...[emblem, const SizedBox(width: SahneSpace.x3)],
+                    Expanded(child: text),
+                    if (showMascot) ...[
+                      const SizedBox(width: SahneSpace.x2),
+                      ZanMascot(
+                        key: const ValueKey('leaderboard-league-mascot'),
+                        pose: rank != null && rank <= 3
+                            ? ZanPose.celebrate
+                            : ZanPose.guide,
+                        size: 88,
+                      ),
+                    ],
+                  ],
+                );
+              },
             ),
             if (gap != null) ...[
               const SizedBox(height: SahneSpace.x3),

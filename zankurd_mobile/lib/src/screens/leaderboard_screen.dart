@@ -1448,11 +1448,16 @@ class _FriendRankRow extends StatelessWidget {
               child: SizedBox.square(
                 dimension: 36,
                 child: Center(
-                  child: Text(
-                    groupThousands(rank),
-                    key: ValueKey('friend-rank-number-${friend.friendId}'),
-                    style: SahneType.captionStrong.copyWith(
-                      color: isSelf ? t.tx : t.tx2,
+                  // Dört haneli sıra karede kesilmesin: sığmazsa küçülür.
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      groupThousands(rank),
+                      maxLines: 1,
+                      key: ValueKey('friend-rank-number-${friend.friendId}'),
+                      style: SahneType.captionStrong.copyWith(
+                        color: isSelf ? t.tx : t.tx2,
+                      ),
                     ),
                   ),
                 ),

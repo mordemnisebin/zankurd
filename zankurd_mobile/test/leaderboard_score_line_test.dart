@@ -8,6 +8,7 @@ import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:zankurd_mobile/src/utils/number_format.dart';
+import 'package:zankurd_mobile/src/widgets/leaderboard_arena.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -156,4 +157,78 @@ void main() {
     expect(find.text('87.654'), findsWidgets);
     expect(find.textContaining('…'), findsNothing);
   });
+
+  // 2026-11-03 tasarım kurulu: 320 pt'te lig başlığı "9. sıradasın" harf
+  // harf bölünüyordu (arma + maskot metne ~96 px bırakıyordu). Niçin sessiz
+  // kaldı: testler yalnız puanı ölçüyordu, başlığın satır sayısını değil.
+  // Şimdi dar kartta maskot kalkar; başlık sözcük sınırında bile bölünmeden
+  // en çok iki satırda, kelimesi (sıradasın) tek parça kalır.
+  testWidgets('lig başlığının maskotu geniş kartta durur', (tester) async {
+    tester.view.devicePixelRatio = 1.0;
+    tester.view.physicalSize = const Size(390, 760);
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      testShell(
+        child: const Scaffold(
+          body: Padding(
+            padding: EdgeInsets.all(16),
+            child: LeaderboardArenaHeader(
+              periodLabel: 'Hafta',
+              myRank: 9,
+              myScore: 240,
+              nextScore: 300,
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+    expect(
+      find.byKey(const ValueKey('leaderboard-league-mascot')),
+      findsOneWidget,
+    );
+  });
+
+  for (final scale in const [1.0, 2.0]) {
+    testWidgets('lig başlığı 320 pt ve x$scale yazıda sözcüğü bölmez', (
+      tester,
+    ) async {
+      tester.view.devicePixelRatio = 1.0;
+      tester.view.physicalSize = const Size(320, 760);
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        testShell(
+          child: MediaQuery(
+            data: MediaQueryData(textScaler: TextScaler.linear(scale)),
+            child: const Scaffold(
+              body: Padding(
+                padding: EdgeInsets.all(16),
+                child: LeaderboardArenaHeader(
+                  periodLabel: 'Hafta',
+                  myRank: 9,
+                  myScore: 240,
+                  nextScore: 300,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      expect(tester.takeException(), isNull);
+      // Test koşucusunun yazı tipi gerçek tipten geniştir; satır sayısı
+      // ölçülemez. Bekçi nedeni ölçer: dar kartta maskot yok, başlık tüm
+      // genişliği alır (kart genişliği - arma).
+      expect(
+        find.byKey(const ValueKey('leaderboard-league-mascot')),
+        findsNothing,
+      );
+      final title = find.byKey(const ValueKey('leaderboard-league-title'));
+      expect(
+        tester.getSize(title).width,
+        greaterThanOrEqualTo(180),
+        reason: 'başlığa en az ~180 px kalmalı',
+      );
+    });
+  }
 }

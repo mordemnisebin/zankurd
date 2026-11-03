@@ -195,7 +195,7 @@ void main() {
   });
 
   testWidgets(
-    'sıra: canlı düello, sırayla düello ve oda, sonra günlük kartlar',
+    'sıra: canlı düello, günün turu ve oda kartları, sonra ikincil liste',
     (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 1400));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -209,10 +209,15 @@ void main() {
       );
       await tester.pumpAndSettle();
       double top(String key) => tester.getTopLeft(find.byKey(ValueKey(key))).dy;
-      expect(top('play-hub-quick-duel'), lessThan(top('play-hub-async-duel')));
-      expect(top('play-hub-async-duel'), top('play-hub-room'));
-      expect(top('play-hub-room'), lessThan(top('play-hub-daily-contest')));
-      expect(top('play-hub-daily-contest'), lessThan(top('play-hub-friends')));
+      // 2026-11-03 tasarım kurulu: üç ana mod (canlı düello, günün turu,
+      // oda) önde; sırayla düello, çark, arkadaşlar ikincil listede.
+      expect(
+        top('play-hub-quick-duel'),
+        lessThan(top('play-hub-daily-contest')),
+      );
+      expect(top('play-hub-daily-contest'), top('play-hub-room'));
+      expect(top('play-hub-room'), lessThan(top('play-hub-async-duel')));
+      expect(top('play-hub-async-duel'), lessThan(top('play-hub-friends')));
     },
   );
 

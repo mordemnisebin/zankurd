@@ -557,26 +557,49 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     // 2026-10-28 kurul K3/K5: Günün turu ve Günün çarkı dolu bordo/sarı
     // kutu DEĞİL, Arkadaşlar/Turnuva ile aynı standart liste satırıdır;
     // renk yalnız ikon rozetinde. Ekranın tek turuncusu "Rakip seç"tir.
+    // 2026-11-03 tasarım kurulu (hiyerarşi): ana modlar KART, geri kalanı
+    // liste. Canlı düello (kahraman), Oda ve Günün turu kart; Sırayla
+    // düello, çark, arkadaşlar, turnuva ikincil listede. Hiçbir özellik
+    // kalkmadı, yalnız ağırlık değişti (rakip kıyası: Kahoot/QuizUp ana
+    // modları büyük, ötekileri satır tutar).
     final dailyContest = _lockedTap(
       locked,
-      SahneListRow.icon(
+      SahneModeTile(
         key: const ValueKey('play-hub-daily-contest'),
-        roundBadge: true,
+        lobby: true,
         icon: AppIcons.calendarDays,
-        role: SahneRole.race,
+        role: SahneRole.gold,
         title: context.t(K.dailyContest),
         subtitle: context.t(K.tenQuestions),
-        trailing: _dailyLoading
-            ? const SizedBox.square(
-                dimension: 18,
-                child: CircularProgressIndicator(strokeWidth: 2),
-              )
-            : null,
-        chevron: !locked && !_dailyLoading,
-        enabled: !locked,
+        loading: _dailyLoading,
         onTap: locked || _dailyLoading ? null : _openDailyQuiz,
         semanticLabel:
             '${context.t(K.dailyContest)}. ${context.t(K.tenQuestions)}',
+      ),
+    );
+
+    final asyncDuelRow = _lockedTap(
+      locked,
+      SahneListRow.icon(
+        key: const ValueKey('play-hub-async-duel'),
+        roundBadge: true,
+        icon: AppIcons.hourglass,
+        role: SahneRole.race,
+        title: context.t(K.asyncDuel),
+        subtitle: context.t(K.asyncDuelSub),
+        // Sırası bende düello üstteki sıra bölümünde ZATEN listelenir; satır
+        // "Sıra sende" diye tekrarlamaz, işini söyler: yeni düello başlatmak.
+        trailing: _duelsMyTurn > 0 && !locked
+            ? SahneBadge(
+                label: context.t(K.asyncDuelStartNew),
+                tone: SahneBadgeTone.gold,
+              )
+            : null,
+        chevron: true,
+        enabled: !locked,
+        onTap: locked ? null : () => unawaited(_pickOpponent(_PlayMode.async)),
+        semanticLabel:
+            '${context.t(K.asyncDuel)}. ${context.t(K.asyncDuelSub)}',
       ),
     );
 
@@ -669,27 +692,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         const SizedBox(height: SahneSpace.cardGap),
         SahneModeGrid(
           children: [
-            if (widget.asyncDuelEnabled)
-              _lockedTap(
-                locked,
-                SahneModeTile(
-                  key: const ValueKey('play-hub-async-duel'),
-                  lobby: true,
-                  icon: AppIcons.hourglass,
-                  role: SahneRole.race,
-                  title: context.t(K.asyncDuel),
-                  subtitle: context.t(K.asyncDuelSub),
-                  // Sırası bende düello üstteki sıra bölümünde ZATEN
-                  // listelenir; kart "Sıra sende" diye tekrarlamaz, işini
-                  // söyler: yeni düello başlatmak (2026-10-24).
-                  badge: _duelsMyTurn > 0 && !locked
-                      ? context.t(K.asyncDuelStartNew)
-                      : null,
-                  onTap: locked
-                      ? null
-                      : () => unawaited(_pickOpponent(_PlayMode.async)),
-                ),
-              ),
+            dailyContest,
             _lockedTap(
               locked,
               SahneModeTile(
@@ -714,7 +717,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         const SizedBox(height: SahneSpace.x3),
         SahneListGroup(
           children: [
-            dailyContest,
+            if (widget.asyncDuelEnabled) asyncDuelRow,
             wheelTile,
             friendsRow,
             if (!widget.asyncDuelEnabled || kTournamentEnabled) ...[

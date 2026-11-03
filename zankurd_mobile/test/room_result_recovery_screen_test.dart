@@ -177,6 +177,18 @@ void main() {
     Navigator.of(tester.element(find.text('Üst rota'))).pop();
     await tester.pumpAndSettle();
     expect(find.text('Tekrar dene'), findsOneWidget);
+    // 2026-11-03 tasarım kurulu: tek cümlelik çıkmaz yerine kısa açıklama ve
+    // "Lobiye dön" yolu. Niçin sessiz kaldı: ekranda tek eylem "Tekrar dene"
+    // idi; sunucu yanıt vermiyorsa oyuncunun çıkışı yalnız geri okuydu.
+    expect(
+      find.byKey(const ValueKey('room-result-recovery-body')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('room-result-recovery-lobby')),
+      findsOneWidget,
+    );
+    expect(find.text('Lobiye dön'), findsOneWidget);
 
     await tester.tap(find.text('Tekrar dene'));
     await tester.pumpAndSettle();

@@ -1386,7 +1386,7 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
       child: child,
     );
 
-    final Widget action;
+    Widget action;
     if (_questionLoadExhausted) {
       // 3 otomatik denemeden sonra sessiz döngü durur; kullanıcı gerçek
       // durumu görür ve elle karar verir (2026-08-14 denetimi).
@@ -1445,8 +1445,42 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
       );
     }
 
+    // Kapalı "Yarışı başlat"ın NEDENİ düğmenin altında (2026-11-03 tasarım
+    // kurulu: ev sahibi kapalı düğmeye bakıp niçinini üstteki şeritten
+    // eşleştirmek zorunda kalıyordu). Yalnız ev sahibi için; konuğun
+    // alt perdesi zaten "ev sahibini bekliyor" der ve şerit konuğa kalır.
+    String? startBlockedReason;
+    if (isHost && !starting && !canStart && !_questionLoadExhausted) {
+      if (crowd ? activePlayerCount < 2 : room.players.length < 2) {
+        startBlockedReason = context.t(K.needTwoPlayers);
+      } else if (waitingForReady) {
+        final notReady = room.players
+            .where((p) => p.state != Player.readyState)
+            .length;
+        startBlockedReason = ready
+            ? context.t(K.roomPlayersNotReady, {'n': '$notReady'})
+            : context.t(K.tapReadyToStart);
+      }
+    }
+    if (startBlockedReason != null) {
+      action = Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          action,
+          const SizedBox(height: SahneSpace.x2),
+          Text(
+            startBlockedReason,
+            key: const ValueKey('room-start-blocked-reason'),
+            textAlign: TextAlign.center,
+            style: SahneType.captionStrong.copyWith(color: t.tx2),
+          ),
+        ],
+      );
+    }
+
     final notices = <Widget>[
-      if (waitingForReady)
+      if (waitingForReady && !isHost)
         // Oyuncu sayısı yeter ama biri hazır değil. Mesaj role göre
         // değişir: hazır olmayan kişiye ne yapacağı, ötekine niçin
         // beklediği söylenir.
@@ -1461,7 +1495,7 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
           icon: AppIcons.circleCheck,
           text: context.t(K.crowdHostStartHint),
         ),
-      if (room.players.length < 2)
+      if (room.players.length < 2 && !isHost)
         // Tek uyarı şeridi: "2 oyuncu gerekli" yalnız burada görünür.
         // Bir hata değil, bir koşul: Zêr (dikkat) tonu, Şaş değil.
         _RoomNotice(icon: AppIcons.userPlus, text: context.t(K.needTwoPlayers)),
@@ -2768,33 +2802,18 @@ class _RoomPlayerRow extends StatelessWidget {
       ],
     );
 
-    // Yerel oyuncunun hazır anahtarı: etiket + Switch. Büyük yazıda satırın
-    // altına iner (adın yanında sıkışmasın).
+    // Yerel oyuncunun hazır durumu: ayar anahtarı değil, "parti lobisi"
+    // hapı (2026-11-03 tasarım kurulu: Kahoot/Trivia Crack lobisinde hazır
+    // olmak bir DURUM düğmesidir; ayar tipi Switch lobide soğuk duruyordu).
+    // Hazır değilken çizgili "Hazırım" hapı, hazırken yeşil dolgulu ✓ hapı.
+    // Büyük yazıda satırın altına iner (adın yanında sıkışmasın).
     final readyToggle = onReadyChanged == null
         ? null
-        : Semantics(
-            container: true,
+        : RoomReadyPill(
+            key: const ValueKey('room-ready-switch'),
             label: context.t(K.imReady),
-            toggled: readyValue,
-            excludeSemantics: true,
-            onTap: () => onReadyChanged!(!readyValue),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: Text(
-                    context.t(K.imReady),
-                    style: SahneType.captionStrong.copyWith(color: t.tx),
-                  ),
-                ),
-                const SizedBox(width: SahneSpace.x2),
-                Switch(
-                  key: const ValueKey('room-ready-switch'),
-                  value: readyValue,
-                  onChanged: onReadyChanged,
-                ),
-              ],
-            ),
+            value: readyValue,
+            onChanged: onReadyChanged!,
           );
 
     // Hazır anahtarı dar satırda (< 340 px; telefon 320) ya da büyük yazıda
@@ -2920,6 +2939,73 @@ class _RoomPlayerRow extends StatelessWidget {
         key: ValueKey('room-player-moderation-$id'),
         onLongPress: open,
         child: row,
+      ),
+    );
+  }
+}
+
+/// "Hazırım" hapı. Dokunma hedefi en az 48 dp; durum yalnız renkle değil
+/// ikon (✓ / boş daire) ve `toggled` anlamıyla da verilir.
+class RoomReadyPill extends StatelessWidget {
+  const RoomReadyPill({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final String label;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final fg = value ? Colors.white : t.tx;
+    return Semantics(
+      container: true,
+      button: true,
+      label: label,
+      toggled: value,
+      excludeSemantics: true,
+      onTap: () => onChanged(!value),
+      child: Material(
+        color: value ? t.okFill : Colors.transparent,
+        shape: StadiumBorder(
+          side: BorderSide(color: value ? t.okFill : t.tx2, width: 1.5),
+        ),
+        child: InkWell(
+          customBorder: const StadiumBorder(),
+          onTap: () => onChanged(!value),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: SahneSpace.x4,
+                vertical: SahneSpace.x2,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    value ? AppIcons.circleCheck : AppIcons.circle,
+                    size: 18,
+                    color: fg,
+                  ),
+                  const SizedBox(width: SahneSpace.x2),
+                  Flexible(
+                    child: Text(
+                      label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: SahneType.captionStrong.copyWith(color: fg),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

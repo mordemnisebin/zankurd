@@ -182,9 +182,9 @@ void main() {
 
       final cardFinder = find.byKey(const ValueKey('play-hub-async-duel'));
       expect(cardFinder, findsOneWidget);
-      // 2026-10-22: kart artık mod kartıdır (`SahneModeTile`, tasarım
-      // kurulu); kural aynı: kilitliyken dokunulamaz.
-      final card = tester.widget<SahneModeTile>(cardFinder);
+      // 2026-10-22: kart mod kartıydı; 2026-11-03 tasarım kurulu: ikincil
+      // liste satırı (`SahneListRow`). Kural aynı: kilitliyken dokunulamaz.
+      final card = tester.widget<SahneListRow>(cardFinder);
       expect(card.onTap, isNull, reason: 'kilitliyken kart dokunulamaz olmalı');
       // 2026-09-30 simülatör: neden üstteki şeritte söylenir; satır kendi
       // açıklamasını korur.
