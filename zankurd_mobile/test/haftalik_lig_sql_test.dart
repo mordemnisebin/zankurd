@@ -274,11 +274,11 @@ void main() {
     expect(geri, isNot(contains('league_memberships')));
   });
 
-  test('applied.md: ⏳ satırı var', () {
+  test('applied.md: ✅ satırı var', () {
     final row = applied
         .split('\n')
         .firstWhere((l) => l.startsWith('| 2026-11-05_haftalik_lig.sql'));
-    expect(row, contains('⏳'));
+    expect(row, contains('✅'));
     expect(row, contains('geri_al/2026-11-05_haftalik_lig_geri.sql'));
   });
 }
