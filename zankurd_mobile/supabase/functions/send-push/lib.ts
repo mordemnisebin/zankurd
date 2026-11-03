@@ -345,3 +345,29 @@ export async function deliverPushJob(
   }
   return "unsettled";
 }
+
+/// Bir çağrıda art arda toplu talep döngüsü (2026-11-04 ölçek sertleştirme).
+/// Eskiden çağrı başına TEK 20'lik paket alınıp çıkılıyordu: kuyrukta 5000 iş
+/// birikirse dakikalık cron'la boşalması ~4 saat sürerdi. Döngü yalnız şu
+/// koşullarda bir paket daha talep eder; lease/ack anlamı DEĞİŞMEZ (her paket
+/// ayrı `claim_push_outbox_v2` lease'i, ayrı `finish_push_outbox` ack'i).
+/// - son talep boş döndüyse kuyruk bitmiştir;
+/// - bütçe (`deadline`, epoch ms) dolduysa yeni lease alınmaz — alınmış ama
+///   işlenmemiş iş lease bitene dek askıda kalırdı;
+/// - ack'i kesinleşmeyen iş varsa (`unsettled`) döngü durur: veri tabanı
+///   sorunluyken yeni lease almak işi çoğaltır;
+/// - `maxBatches` sonsuz döngüye karşı üst sınırdır.
+export function shouldClaimNextBatch(state: {
+  now: number;
+  deadline: number;
+  lastClaimed: number | null;
+  unsettled: number;
+  batches: number;
+  maxBatches?: number;
+}): boolean {
+  if (state.unsettled > 0) return false;
+  if (state.now >= state.deadline) return false;
+  if (state.lastClaimed === 0) return false;
+  if (state.batches >= (state.maxBatches ?? 200)) return false;
+  return true;
+}

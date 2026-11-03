@@ -8,6 +8,7 @@ import {
   parseServiceAccount,
   pemToDer,
   retryAfterSeconds,
+  shouldClaimNextBatch,
   signServiceAccountJwt,
   timingSafeEqual,
 } from "./lib.ts";
@@ -472,4 +473,39 @@ Deno.test("henüz geçerli iş aynı saat örneğinin TTL ile gönderilir", asyn
     clearToken: async () => true,
   });
   assert(outcome === "sent" && sends === 1, "geçerli iş gönderildi");
+});
+
+Deno.test("shouldClaimNextBatch: boş talep, bütçe, unsettled ve üst sınır döngüyü durdurur", () => {
+  const base = {
+    now: 1_000,
+    deadline: 26_000,
+    lastClaimed: 20,
+    unsettled: 0,
+    batches: 1,
+  };
+  assert(shouldClaimNextBatch(base), "dolu paket + bütçe varken devam");
+  assert(
+    shouldClaimNextBatch({ ...base, lastClaimed: null, batches: 0 }),
+    "ilk talep her zaman yapılır",
+  );
+  assert(
+    !shouldClaimNextBatch({ ...base, lastClaimed: 0 }),
+    "boş talep kuyruğun bittiğini gösterir",
+  );
+  assert(
+    !shouldClaimNextBatch({ ...base, now: 26_000 }),
+    "bütçe dolunca yeni lease alınmaz",
+  );
+  assert(
+    !shouldClaimNextBatch({ ...base, unsettled: 1 }),
+    "ack'i kesinleşmeyen iş varken yeni lease alınmaz",
+  );
+  assert(
+    !shouldClaimNextBatch({ ...base, batches: 200 }),
+    "üst sınır sonsuz döngüyü keser",
+  );
+  assert(
+    shouldClaimNextBatch({ ...base, batches: 199 }),
+    "üst sınırın altında devam",
+  );
 });

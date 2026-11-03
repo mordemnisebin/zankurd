@@ -15,6 +15,8 @@
 //      işaretlenmeden kalır, bir sonraki dakika yeniden denenir.
 //   3. `claim_push_outbox_v2` en çok 20 işi 120 saniyelik lease ile verir.
 //      Eski kalıcı claim RPC'sine fallback YOK; SQL sözleşmesi önce kurulmalı.
+//      2026-11-04: tek paketle çıkılmaz; kuyruk boşalana ya da ~25 sn talep
+//      bütçesi dolana dek paket paket talep edilir (`shouldClaimNextBatch`).
 //   4. En çok 5 eşzamanlı FCM çağrısı, her biri 10 sn zaman aşımı.
 //      `finish_push_outbox` lease kimliğiyle başarı/kalıcı hata/retry kaydeder.
 //      Süreç ölürse lease zaman aşımı işi yeniden alınabilir kılar.
@@ -34,6 +36,7 @@ import {
   parseServiceAccount,
   type PushJob,
   type ServiceAccount,
+  shouldClaimNextBatch,
   signServiceAccountJwt,
   timingSafeEqual,
   validPushExpiry,
@@ -43,6 +46,10 @@ const FCM_SCOPE = "https://www.googleapis.com/auth/firebase.messaging";
 const BATCH_LIMIT = 20;
 const CONCURRENCY = 5;
 const REQUEST_TIMEOUT_MS = 10_000;
+// Yeni paket TALEP etme bütçesi. Paket başına işleme (55 sn başlangıç sınırı)
+// ve ack payı bunun ÜSTÜNE biner; lease 120 sn olduğundan talep edilen paket
+// her zaman lease dolmadan işlenir.
+const CLAIM_BUDGET_MS = 25_000;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -152,105 +159,126 @@ Deno.serve(async (request: Request): Promise<Response> => {
     return json({ error: "oauth_failed" }, 502);
   }
 
-  let data: unknown;
-  try {
-    const result = await admin.rpc("claim_push_outbox_v2", {
-      p_limit: BATCH_LIMIT,
-    });
-    if (result.error) {
-      console.error("claim_push_outbox_v2 failed", result.error.code);
-      return json({ error: "claim_failed" }, 500);
-    }
-    data = result.data;
-  } catch (_) {
-    return json({ error: "claim_failed" }, 500);
-  }
-  // Uyumsuz RPC yanıtında FCM'ye dokunma; lease sona erince güvenle yeniden alınır.
-  if (
-    !Array.isArray(data) || data.some((job) =>
-      !job ||
-      typeof job.job_id !== "string" || !job.job_id ||
-      typeof job.claim_token !== "string" || !job.claim_token ||
-      !Number.isInteger(job.attempt_count) || job.attempt_count < 1 ||
-      !validPushExpiry(job.expires_at)
-    )
-  ) {
-    return json({ error: "invalid_claim_contract" }, 500);
-  }
-  const jobs = data as PushJob[];
   const counts = {
-    claimed: jobs.length,
+    claimed: 0,
     sent: 0,
     skipped: 0,
     failed: 0,
     retry: 0,
     unsettled: 0,
     cleared: 0,
+    batches: 0,
   };
   const fcmUrl =
     `https://fcm.googleapis.com/v1/projects/${account.project_id}/messages:send`;
-  let next = 0;
-  // Claim10sn + FCM10sn + token temizleme10sn + ack30sn için lease payı.
-  const startDeadline = Date.now() + 55_000;
-  async function worker() {
-    while (next < jobs.length) {
-      if (Date.now() >= startDeadline) {
-        counts.unsettled += jobs.length - next;
-        next = jobs.length;
-        return; // Kalan işler lease bitince yeniden alınır; FCM gönderilmez.
-      }
-      const job = jobs[next++];
-      const outcome = await deliverPushJob(job, {
-        send: async (_job, _token, payload) => {
-          const response = await fetch(fcmUrl, {
-            signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${bearer}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          });
-          // Sonraki invocation OAuth'u yenilesin;401 retry sayısı SQL'de8 ile sınırlı.
-          if (response.status === 401) cachedToken = null;
-          return response;
-        },
-        finish: async (_job, completion) => {
-          const result = await admin.rpc("finish_push_outbox", {
-            p_job_id: _job.job_id,
-            p_claim_token: _job.claim_token,
-            p_outcome: completion.outcome,
-            p_error_code: completion.errorCode ?? null,
-            p_retry_after_seconds: completion.retryAfterSeconds ?? null,
-          });
-          if (result.error) {
-            console.error(
-              "finish_push_outbox failed",
-              _job.job_id,
-              result.error.code,
-            );
-          }
-          return !result.error && result.data === true;
-        },
-        clearToken: async (_job, token) => {
-          const result = await admin.rpc("clear_fcm_token", {
-            p_user_id: _job.to_user_id,
-            p_token: token,
-          });
-          if (result.error) {
-            console.error("clear_fcm_token failed", result.error.code);
-          } else counts.cleared++;
-          return !result.error;
-        },
+  const claimDeadline = Date.now() + CLAIM_BUDGET_MS;
+  let lastClaimed: number | null = null;
+
+  while (
+    shouldClaimNextBatch({
+      now: Date.now(),
+      deadline: claimDeadline,
+      lastClaimed,
+      unsettled: counts.unsettled,
+      batches: counts.batches,
+    })
+  ) {
+    let data: unknown;
+    try {
+      const result = await admin.rpc("claim_push_outbox_v2", {
+        p_limit: BATCH_LIMIT,
       });
-      counts[outcome]++;
-      if (outcome === "unsettled") {
-        console.error("push acknowledgement unsettled", job.job_id);
+      if (result.error) {
+        console.error("claim_push_outbox_v2 failed", result.error.code);
+        // Önceki paketler işlendi; yalnız bu talep başarısız.
+        if (counts.batches === 0) return json({ error: "claim_failed" }, 500);
+        break;
+      }
+      data = result.data;
+    } catch (_) {
+      if (counts.batches === 0) return json({ error: "claim_failed" }, 500);
+      break;
+    }
+    // Uyumsuz RPC yanıtında FCM'ye dokunma; lease sona erince güvenle yeniden alınır.
+    if (
+      !Array.isArray(data) || data.some((job) =>
+        !job ||
+        typeof job.job_id !== "string" || !job.job_id ||
+        typeof job.claim_token !== "string" || !job.claim_token ||
+        !Number.isInteger(job.attempt_count) || job.attempt_count < 1 ||
+        !validPushExpiry(job.expires_at)
+      )
+    ) {
+      return json({ error: "invalid_claim_contract" }, 500);
+    }
+    const jobs = data as PushJob[];
+    lastClaimed = jobs.length;
+    if (jobs.length === 0) break;
+    counts.batches++;
+    counts.claimed += jobs.length;
+    let next = 0;
+    // Claim10sn + FCM10sn + token temizleme10sn + ack30sn için lease payı.
+    const startDeadline = Date.now() + 55_000;
+    async function worker() {
+      while (next < jobs.length) {
+        if (Date.now() >= startDeadline) {
+          counts.unsettled += jobs.length - next;
+          next = jobs.length;
+          return; // Kalan işler lease bitince yeniden alınır; FCM gönderilmez.
+        }
+        const job = jobs[next++];
+        const outcome = await deliverPushJob(job, {
+          send: async (_job, _token, payload) => {
+            const response = await fetch(fcmUrl, {
+              signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${bearer}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(payload),
+            });
+            // Sonraki invocation OAuth'u yenilesin;401 retry sayısı SQL'de8 ile sınırlı.
+            if (response.status === 401) cachedToken = null;
+            return response;
+          },
+          finish: async (_job, completion) => {
+            const result = await admin.rpc("finish_push_outbox", {
+              p_job_id: _job.job_id,
+              p_claim_token: _job.claim_token,
+              p_outcome: completion.outcome,
+              p_error_code: completion.errorCode ?? null,
+              p_retry_after_seconds: completion.retryAfterSeconds ?? null,
+            });
+            if (result.error) {
+              console.error(
+                "finish_push_outbox failed",
+                _job.job_id,
+                result.error.code,
+              );
+            }
+            return !result.error && result.data === true;
+          },
+          clearToken: async (_job, token) => {
+            const result = await admin.rpc("clear_fcm_token", {
+              p_user_id: _job.to_user_id,
+              p_token: token,
+            });
+            if (result.error) {
+              console.error("clear_fcm_token failed", result.error.code);
+            } else counts.cleared++;
+            return !result.error;
+          },
+        });
+        counts[outcome]++;
+        if (outcome === "unsettled") {
+          console.error("push acknowledgement unsettled", job.job_id);
+        }
       }
     }
+    await Promise.all(
+      Array.from({ length: Math.min(CONCURRENCY, jobs.length) }, worker),
+    );
   }
-  await Promise.all(
-    Array.from({ length: Math.min(CONCURRENCY, jobs.length) }, worker),
-  );
   return json(counts, counts.unsettled > 0 ? 502 : 200);
 });
