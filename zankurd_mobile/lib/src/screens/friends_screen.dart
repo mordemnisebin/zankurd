@@ -35,6 +35,7 @@ import '../widgets/dialog_action_pair.dart';
 import '../services/social_push_prompt.dart';
 import '../services/app_haptics.dart';
 import '../services/foreground_push_center.dart';
+import '../services/poll_cadence.dart';
 import '../services/push_messaging_gateway.dart';
 
 /// Arkadaş listesi, oyuncu arama ve istek yönetimi ekranı.
@@ -62,7 +63,7 @@ class _FriendsScreenState extends State<FriendsScreen>
     with WidgetsBindingObserver {
   /// Ekran açıkken hafif yenileme aralığı: gelen istek ve kabuller ekrana
   /// yeniden girmeden görünsün (2026-10-21 iki simülatör turu).
-  static const _pollInterval = Duration(seconds: 20);
+  static const _pollInterval = PollCadence.socialRefresh;
   Timer? _pollTimer;
   StreamSubscription<ForegroundPush>? _pushSubscription;
   bool _appInForeground = true;

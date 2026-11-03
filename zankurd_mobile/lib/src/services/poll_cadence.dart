@@ -25,6 +25,20 @@ class PollCadence {
   /// Sıralama: yalnız görünürken ve ön plandayken; elle çekip yenilenir.
   static const leaderboardRefresh = Duration(seconds: 120);
 
+  /// Eşleşme beklerken `touch_matchmaking` (3 sn → 6 sn, 2026-11-05 tur 4).
+  /// Eşleşmeyi asıl `matchmaking_queue` realtime akışı bildirir; yoklama yedek
+  /// ve canlılık vuruşudur. Sunucudaki 12 sn bayatlık kuralına iki vuruş
+  /// sığar; ön plana dönünce hemen yoklanır.
+  static const matchmakingTouch = Duration(seconds: 6);
+
+  /// Düello "ready" el sıkışması (400 ms → 1,5 sn): iki taraf da hazır olunca
+  /// durur; 6 sn zaman aşımı değişmedi.
+  static const readyPing = Duration(milliseconds: 1500);
+
+  /// Ana ekran oda daveti kartı ve Arkadaşlar ekranı (20 sn → 60 sn):
+  /// bildirim (ForegroundPushCenter) ve ön plana dönüş anında yeniler.
+  static const socialRefresh = Duration(seconds: 60);
+
   /// Sohbet akışı yalnız son bu kadar mesajı taşır.
   static const chatWindow = 50;
 

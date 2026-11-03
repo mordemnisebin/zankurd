@@ -9,6 +9,7 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
+import 'package:zankurd_mobile/src/services/poll_cadence.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 /// Yoklamanın yeniden girişi (touch "none" → `joinMatchmaking`) iptalle
@@ -153,7 +154,7 @@ Future<void> _searchUntilRejoinPending(
   repository
     ..inQueue = false
     ..touchResult = const MatchmakingTouch.none();
-  await tester.pump(const Duration(seconds: 3));
+  await tester.pump(PollCadence.matchmakingTouch);
   await tester.pump();
   expect(repository.joinCalls, 2);
   expect(repository.pendingRejoin, isNotNull);

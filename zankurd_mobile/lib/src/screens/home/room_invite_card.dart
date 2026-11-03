@@ -9,6 +9,7 @@ import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../models/room_invite.dart';
 import '../../providers/remote_availability.dart';
+import '../../services/poll_cadence.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/error_reporter.dart';
@@ -107,7 +108,7 @@ class _RoomInviteCardState extends State<RoomInviteCard>
     }
     if (_pollTimer != null) return;
     _reload();
-    _pollTimer = Timer.periodic(const Duration(seconds: 20), (_) {
+    _pollTimer = Timer.periodic(PollCadence.socialRefresh, (_) {
       if (!_loading) unawaited(_load());
     });
   }

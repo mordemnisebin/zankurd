@@ -11,6 +11,7 @@ import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
+import 'package:zankurd_mobile/src/services/poll_cadence.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
@@ -36,7 +37,7 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 ///
 /// ## Düzeltme
 ///
-/// `touchMatchmaking` yoklaması (3 sn) akışla aynı kapıdan (`_openReceivedRoom`)
+/// `touchMatchmaking` yoklaması (6 sn; tur 4) akışla aynı kapıdan (`_openReceivedRoom`)
 /// geçer ve tek kez açar; yükleme 3 kez yeniden denenir, hâlâ düşerse
 /// `leaveOnlineRoom` çağrılıp hata gösterilir; dispose odayı terk eder.
 const _roomId = '00000000-0000-0000-0000-0000000000a1';
@@ -195,7 +196,7 @@ void main() {
     // Akış da aynı odayı bildirir; ikinci açılış yok sayılmalı.
     repository.queue.add({'room_id': _roomId});
     await tester.pump();
-    await tester.pump(const Duration(seconds: 3));
+    await tester.pump(PollCadence.matchmakingTouch);
     await tester.pump(const Duration(milliseconds: 1600));
     await tester.pump();
 
@@ -226,7 +227,7 @@ void main() {
         'room_id': _roomId,
         'opponent_name': 'Rojda',
       };
-    await tester.pump(const Duration(seconds: 3));
+    await tester.pump(PollCadence.matchmakingTouch);
     await tester.pump(const Duration(milliseconds: 1600));
     await tester.pump();
 
@@ -242,10 +243,36 @@ void main() {
     final repository = _LiveRepository()
       ..touchResult = const MatchmakingTouch.unknown();
     await _startSearch(tester, repository);
-    await tester.pump(const Duration(seconds: 3));
-    await tester.pump(const Duration(seconds: 3));
+    await tester.pump(PollCadence.matchmakingTouch);
+    await tester.pump(PollCadence.matchmakingTouch);
 
     expect(repository.joinCalls, 1);
+    await tester.pumpWidget(const SizedBox.shrink());
+    await repository.queue.close();
+  });
+
+  testWidgets('6 sn aralık: dakikada <=10 yoklama; ön plana dönüşte hemen', (
+    tester,
+  ) async {
+    final repository = _LiveRepository();
+    await _startSearch(tester, repository);
+    final start = repository.touchCalls; // ilk yoklama bekleme başında
+    await tester.pump(PollCadence.matchmakingTouch);
+    expect(repository.touchCalls, start + 1);
+    await tester.pump(const Duration(seconds: 5));
+    expect(
+      repository.touchCalls,
+      start + 1,
+      reason: '6 sn dolmadan yoklama yok',
+    );
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pump();
+    expect(
+      repository.touchCalls,
+      start + 2,
+      reason: 'dönüşte periyot beklenmez',
+    );
     await tester.pumpWidget(const SizedBox.shrink());
     await repository.queue.close();
   });
@@ -259,7 +286,7 @@ void main() {
     repository.queue.addError(StateError('realtime dropped'));
     await tester.pump();
     repository.touchResult = const MatchmakingTouch.matched(roomId: _roomId);
-    await tester.pump(const Duration(seconds: 3));
+    await tester.pump(PollCadence.matchmakingTouch);
     await tester.pump(const Duration(milliseconds: 1600));
     await tester.pump();
 

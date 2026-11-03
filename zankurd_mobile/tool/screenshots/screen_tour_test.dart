@@ -25,6 +25,7 @@ import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
+import 'package:zankurd_mobile/src/models/weekly_league.dart';
 import 'package:zankurd_mobile/src/models/contest.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/theme/sahne.dart';
@@ -3077,6 +3078,23 @@ void main() {
     await _shoot(t, '226_leaderboard_narrow_long_names');
   }, tags: ['preview']);
 
+  // ── Haftalık lig (tur 4): turun sahte deposu leagueSupported=false olduğundan
+  // kurullar lig görünümünü hiç görmemişti; yalnız bu karelerde sahte lig var.
+  testWidgets('294 sıralama — haftalık lig (kademe, bölgeler, Sen)', (t) async {
+    await _pump(t, LeaderboardScreen(repository: _LeagueTourRepository()));
+    await _shoot(t, '294_leaderboard_weekly_league');
+  }, tags: ['preview']);
+
+  testWidgets('295 sıralama — haftalık lig (karanlık, Kurmancî)', (t) async {
+    await _pump(
+      t,
+      LeaderboardScreen(repository: _LeagueTourRepository()),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '295_leaderboard_weekly_league_dark_ku');
+  }, tags: ['preview']);
+
   // ── Başlangıç yolu (2026-10-06) ─────────────────────────────────────
   testWidgets('227 başlangıç dersi — Alfabe', (t) async {
     final lesson = (await repository.loadLessonsByCategory(
@@ -3895,6 +3913,68 @@ class _BoardRepository extends MockZanKurdRepository {
       roomsPlayed: 1,
     );
   }
+}
+
+/// Lig karesi için: 30 kişilik Altın küme, sen 12. sıradasın (çıkma bölgesi
+/// 1-5, düşme bölgesi 26-30; ortası güvenli).
+class _LeagueTourRepository extends MockZanKurdRepository {
+  static const _names = [
+    'Rojda',
+    'Baran',
+    'Dilan',
+    'Diyar',
+    'Berfin',
+    'Rojîn',
+    'Zelal',
+    'Hêvîdar',
+    'Azad',
+    'Narîn',
+    'Şêrko',
+    'Rojhat',
+    'Evîn',
+    'Kawa',
+    'Jiyan',
+    'Mazlum',
+    'Ronî',
+    'Cegerxwîn',
+    'Medya',
+    'Sebahat',
+    'Welat',
+    'Şiyar',
+    'Delal',
+    'Mîrza',
+    'Gulistan',
+    'Bedirxan',
+    'Nûjen',
+    'Dara',
+    'Zîn',
+    'Heval',
+  ];
+
+  @override
+  bool get leagueSupported => true;
+
+  @override
+  Future<WeeklyLeague?> getMyLeague() async => WeeklyLeague(
+    tier: 2,
+    joined: true,
+    secondsLeft: 3 * 86400 + 5 * 3600,
+    cohortSize: 30,
+    promoteCount: 5,
+    demoteCount: 5,
+    myRank: 12,
+    myScore: 640,
+    members: [
+      for (var i = 1; i <= 30; i++)
+        LeagueMember(
+          rank: i,
+          playerId: i == 12 ? 'user' : 'league-$i',
+          displayName: i == 12 ? 'Rojhat' : _names[i - 1],
+          score: (1500 - i * 48).clamp(40, 1500),
+          isMe: i == 12,
+        ),
+    ],
+  );
 }
 
 /// Teslim edilememiş bir 1v1 sonucu — kurtarma ekranının beslendiği veri.

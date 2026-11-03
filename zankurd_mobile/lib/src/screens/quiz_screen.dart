@@ -842,6 +842,12 @@ class _QuizScreenState extends State<QuizScreen>
                   senderName != null &&
                   !isSelf &&
                   payload['ready'] == true) {
+                // Tur 4: ping 400 ms → 1,5 sn. Karşı taraf geç abone olduysa
+                // ilk pingimi kaçırmış olabilir ve ben bunu duyar duymaz
+                // pingi bırakırım; bir kez ANINDA onay (`ack`) gönderirim ki
+                // o taraf bir sonraki periyodu ya da 6 sn zaman aşımını
+                // beklemesin. Onaya onay verilmez (döngü yok).
+                if (payload['ack'] != true) _sendReadyPing(ack: true);
                 _handleOpponentReady();
                 return;
               }
@@ -1550,7 +1556,7 @@ class _QuizScreenState extends State<QuizScreen>
   /// geçiş ekranındayken diğeri soruları görüp cevaplamaya başlayabilir.
   void _startOpponentReadyHandshake() {
     _sendReadyPing();
-    _readyPingTimer = Timer.periodic(const Duration(milliseconds: 400), (_) {
+    _readyPingTimer = Timer.periodic(PollCadence.readyPing, (_) {
       if (_opponentClientReady) {
         _readyPingTimer?.cancel();
         return;
@@ -1563,7 +1569,7 @@ class _QuizScreenState extends State<QuizScreen>
     });
   }
 
-  void _sendReadyPing() {
+  void _sendReadyPing({bool ack = false}) {
     final roomId = widget.room.id;
     if (roomId == null) return;
     widget.repository
@@ -1571,6 +1577,7 @@ class _QuizScreenState extends State<QuizScreen>
           'sender': _myName,
           'sender_id': _myId,
           'ready': true,
+          if (ack) 'ack': true,
         })
         .catchError((error, stack) {
           ErrorReporter.record(

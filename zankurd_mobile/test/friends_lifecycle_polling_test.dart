@@ -141,16 +141,16 @@ void main() {
     );
     await tester.pump();
 
-    // Önde: 20 sn'de bir yeniden okur.
+    // Önde: 60 sn'de bir yeniden okur (PollCadence.socialRefresh; tur 4).
     final afterStart = repository.loadFriendsCalls;
-    await tester.pump(const Duration(seconds: 20));
+    await tester.pump(const Duration(seconds: 60));
     await tester.pump();
     expect(repository.loadFriendsCalls, afterStart + 1);
 
     // Arka plan: periyodik süreler geçse de istek yok.
     _toBackground(tester);
     final afterPause = repository.loadFriendsCalls;
-    await tester.pump(const Duration(seconds: 60));
+    await tester.pump(const Duration(seconds: 180));
     await tester.pump();
     expect(repository.loadFriendsCalls, afterPause);
 
@@ -159,16 +159,17 @@ void main() {
     await tester.pump();
     expect(repository.loadFriendsCalls, afterPause + 1);
 
-    // 10 sn sonra ikinci bir dönüş: döngü yeniden kurulur. Eski zamanlayıcı
-    // iptal edilmeseydi 20. saniyede o da tetiklenirdi.
-    await tester.pump(const Duration(seconds: 10));
+    // 20 sn sonra ikinci bir dönüş: döngü yeniden kurulur. Eski zamanlayıcı
+    // iptal edilmeseydi ilk dönüşten 60. saniyede (yeniden kurulandan 40.)
+    // o da tetiklenirdi.
+    await tester.pump(const Duration(seconds: 20));
     tester.binding
       ..handleAppLifecycleStateChanged(AppLifecycleState.inactive)
       ..handleAppLifecycleStateChanged(AppLifecycleState.resumed);
     await tester.pump();
     expect(repository.loadFriendsCalls, afterPause + 2);
 
-    await tester.pump(const Duration(seconds: 10));
+    await tester.pump(const Duration(seconds: 40));
     await tester.pump();
     expect(
       repository.loadFriendsCalls,
@@ -176,7 +177,7 @@ void main() {
       reason: 'İlk dönüşün zamanlayıcısı iptal edilmeli (tek zamanlayıcı).',
     );
 
-    await tester.pump(const Duration(seconds: 10));
+    await tester.pump(const Duration(seconds: 20));
     await tester.pump();
     expect(repository.loadFriendsCalls, afterPause + 3);
 

@@ -132,12 +132,12 @@ void main() {
     final repository = _Repository();
     final availability = RemoteAvailability(reachable: false);
     await tester.pumpWidget(_host(repository, availability: availability));
-    await tester.pump(const Duration(seconds: 40));
+    await tester.pump(const Duration(seconds: 120));
     expect(repository.calls, 0);
     availability.update(true);
     await tester.pump();
     expect(repository.calls, 1);
-    await tester.pump(const Duration(seconds: 20));
+    await tester.pump(const Duration(seconds: 60));
     await tester.pump();
     expect(repository.calls, 2);
     await tester.pumpWidget(const SizedBox());
@@ -152,12 +152,12 @@ void main() {
     await tester.pump();
     expect(find.byKey(const ValueKey('room-invite-card')), findsNothing);
     repository.invites = [_invite];
-    await tester.pump(const Duration(seconds: 20));
+    await tester.pump(const Duration(seconds: 60));
     await tester.pump();
     expect(find.byKey(const ValueKey('room-invite-card')), findsOneWidget);
     expect(repository.receivedThrowOnError, isTrue);
     repository.fail = true;
-    await tester.pump(const Duration(seconds: 20));
+    await tester.pump(const Duration(seconds: 60));
     await tester.pump();
     expect(find.byKey(const ValueKey('room-invite-card')), findsOneWidget);
     await tester.pumpWidget(const SizedBox());
@@ -168,22 +168,22 @@ void main() {
   ) async {
     final repository = _Repository();
     await tester.pumpWidget(_host(repository, visible: false));
-    await tester.pump(const Duration(seconds: 40));
+    await tester.pump(const Duration(seconds: 120));
     expect(repository.calls, 0);
     await tester.pumpWidget(_host(repository));
     await tester.pump();
     expect(repository.calls, 1);
     _background(tester);
-    await tester.pump(const Duration(seconds: 40));
+    await tester.pump(const Duration(seconds: 120));
     expect(repository.calls, 1);
     _foreground(tester);
     await tester.pump();
     expect(repository.calls, 2);
     await tester.pumpWidget(_host(repository, visible: false));
-    await tester.pump(const Duration(seconds: 40));
+    await tester.pump(const Duration(seconds: 120));
     expect(repository.calls, 2);
     await tester.pumpWidget(const SizedBox());
-    await tester.pump(const Duration(seconds: 40));
+    await tester.pump(const Duration(seconds: 120));
     expect(repository.calls, 2);
   });
 
@@ -197,7 +197,7 @@ void main() {
     repository.pending!.complete([_invite]);
     await tester.pump();
     repository.pending = null;
-    await tester.pump(const Duration(seconds: 20));
+    await tester.pump(const Duration(seconds: 60));
     await tester.pump();
     expect(repository.calls, 2);
     await tester.pumpWidget(const SizedBox());
@@ -219,7 +219,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     final coveredCalls = repository.calls;
-    await tester.pump(const Duration(seconds: 40));
+    await tester.pump(const Duration(seconds: 120));
     expect(repository.calls, coveredCalls);
     Navigator.of(tester.element(find.text('other-page'))).pop();
     await tester.pumpAndSettle();

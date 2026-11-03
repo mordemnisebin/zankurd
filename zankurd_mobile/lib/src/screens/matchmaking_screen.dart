@@ -25,6 +25,7 @@ import '../utils/error_reporter.dart';
 import '../utils/player_identity.dart';
 import '../services/analytics_service.dart';
 import '../services/matchmaking_metrics.dart';
+import '../services/poll_cadence.dart';
 import '../utils/test_environment.dart';
 import '../widgets/app_state.dart';
 import 'async_duel/async_duel_play_screen.dart';
@@ -118,7 +119,7 @@ class MatchmakingScreen extends StatefulWidget {
 }
 
 class _MatchmakingScreenState extends State<MatchmakingScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   static const _joinSettleTimeout = Duration(seconds: 10);
 
   late final AnimationController _radarController;
@@ -222,6 +223,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   StreamSubscription? _matchmakingSub;
   Timer? _statusTimer;
   Timer? _touchTimer;
+
+  /// Yoklama gövdesi; ön plana dönüşte beklemeden çağrılır (tur 4: 3 sn →
+  /// 6 sn yavaşlatma, arka plandan dönen oyuncu bir periyot beklemesin).
+  Future<void> Function()? _touchTick;
   bool _touchInFlight = false;
   bool _touchErrorReported = false;
 
@@ -239,6 +244,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _matchmakingMetrics =
         widget.metrics ??
         MatchmakingMetrics(
@@ -282,6 +288,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _radarController.dispose();
     _pulseController.dispose();
     _stopWaiting();
@@ -452,6 +459,15 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     _statusTimer = null;
     _touchTimer?.cancel();
     _touchTimer = null;
+    _touchTick = null;
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && _touchTimer != null) {
+      final tick = _touchTick;
+      if (tick != null) unawaited(tick());
+    }
   }
 
   Future<void> _leaveRoomBestEffort(
@@ -1079,8 +1095,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     }
 
     _touchTimer?.cancel();
+    _touchTick = tick;
     unawaited(tick());
-    _touchTimer = Timer.periodic(const Duration(seconds: 3), (_) => tick());
+    _touchTimer = Timer.periodic(PollCadence.matchmakingTouch, (_) => tick());
   }
 
   /// Sunucudan oda kimliği geldi (join, akış, yoklama ya da 20 sn iptali):

@@ -1,5 +1,5 @@
 -- Ölçek denetimi 2. tur (Copilot + Gemini Flash; her bulgu kodda doğrulandı).
--- CANLIYA UYGULANMADI. Geri alma: geri_al/2026-11-05_olcek_tur3_geri.sql
+-- Canlıda (2026-11-05). Geri alma: geri_al/2026-11-05_olcek_tur3_geri.sql
 -- Büyük tablo indeksleri: 2026-11-05_olcek_tur3_indeks_concurrently.sql
 -- (transaction DIŞINDA; bu göçten önce ya da sonra koşulabilir).
 --
