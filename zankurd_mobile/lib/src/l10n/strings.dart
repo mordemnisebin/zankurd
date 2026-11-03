@@ -2276,8 +2276,14 @@ class Tr {
       'tr': 'Tüm oyuncuların hazır olması bekleniyor.',
     },
     K.tapReadyToStart: {
-      'ku': 'Gava amade bî, "Amade me" veke.',
-      'tr': 'Hazır olduğunda "Hazırım" anahtarını aç.',
+      'ku': 'Gava amade bûyî, li "Amade me" bixe.',
+      'tr': 'Hazır olduğunda "Hazırım"a dokun.',
+    },
+    // 2026-11-03 tasarım kurulu: kapalı "Yarışı başlat" düğmesinin NEDENİ
+    // düğmenin altında yazılır. KU taslak (jüri gerekli).
+    K.roomPlayersNotReady: {
+      'ku': 'Divê {n} lîstikvanên din jî amade bibin.',
+      'tr': '{n} oyuncu daha hazır olmalı.',
     },
     K.preparingShort: {'ku': 'Tê amadekirin', 'tr': 'Hazırlanıyor'},
     K.startRace: {'ku': 'Dest bi pêşbirkê bike', 'tr': 'Yarışı başlat'},
@@ -2413,6 +2419,15 @@ class Tr {
       'ku': 'Encam nehate barkirin. Dîsa biceribîne.',
       'tr': 'Sonuç yüklenemedi. Tekrar deneyebilirsin.',
     },
+    // 2026-11-03 tasarım kurulu: tek cümle ("yüklenemedi") ne olduğunu ve
+    // çıkışı söylemiyordu. KU taslak (jüri gerekli).
+    K.resultRecoveryFailedBody: {
+      'ku':
+          'Girêdan an pêşkêşkar bersiv neda. Dîsa biceribîne an vegere lobiyê.',
+      'tr':
+          'Bağlantı ya da sunucu yanıt vermedi. Tekrar deneyebilir ya da lobiye dönebilirsin.',
+    },
+    K.resultRecoveryToLobby: {'ku': 'Vegere lobiyê', 'tr': 'Lobiye dön'},
     K.resultRecoveryOwnerChanged: {
       'ku': 'Hesab guherî. Ji bo vê encamê, bi hesabê rast têkeve.',
       'tr': 'Hesap değişti. Bu sonucu açmak için doğru hesapla devam et.',
@@ -3574,10 +3589,6 @@ class Tr {
     K.restorePurchases: {
       'ku': 'Kirînên xwe vegerîne',
       'tr': 'Satın alımları geri yükle',
-    },
-    K.paywallPackagesInactive: {
-      'ku': 'Pakêtên Premium hîn ne çalak in',
-      'tr': 'Premium paketler henüz aktif değil',
     },
     K.paywallOfferingsLoadFailed: {
       'ku':
@@ -5626,7 +5637,10 @@ class K {
   static const imReady = 'room.imReady';
   static const needTwoPlayers = 'room.needTwoPlayers';
   static const waitingOpponentReady = 'room.waitingOpponentReady';
+  static const resultRecoveryFailedBody = 'result.recovery.failedBody';
+  static const resultRecoveryToLobby = 'result.recovery.toLobby';
   static const tapReadyToStart = 'room.tapReadyToStart';
+  static const roomPlayersNotReady = 'room.playersNotReady';
   static const preparingShort = 'room.preparing';
   static const startRace = 'room.startRace';
   static const waitingHost = 'room.waitingHost';
@@ -6077,7 +6091,6 @@ class K {
   static const perWeekSuffix = 'paywall.suffix.week';
   static const priceComing = 'paywall.priceComing';
   static const restorePurchases = 'paywall.restore';
-  static const paywallPackagesInactive = 'paywall.packages.inactive';
   static const paywallOfferingsLoadFailed = 'paywall.offerings.loadFailed';
   static const paywallPackagesInactiveBody = 'paywall.packages.inactive.body';
   static const paywallRenewalTerms = 'paywall.renewalTerms';

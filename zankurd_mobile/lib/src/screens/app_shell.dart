@@ -186,6 +186,7 @@ class _AppShellState extends State<AppShell>
     JoinDeepLink.incoming.addListener(_onIncomingJoinLink);
     PushTapRouter.pending.addListener(_consumePushTapTarget);
     ProfileTabRequest.pending.addListener(_onProfileTabRequest);
+    HomeTabRequest.pending.addListener(_onHomeTabRequest);
     _foregroundPushSub = ForegroundPushCenter.events.listen(
       _refreshForForegroundPush,
     );
@@ -541,6 +542,7 @@ class _AppShellState extends State<AppShell>
     JoinDeepLink.incoming.removeListener(_onIncomingJoinLink);
     PushTapRouter.pending.removeListener(_consumePushTapTarget);
     ProfileTabRequest.pending.removeListener(_onProfileTabRequest);
+    HomeTabRequest.pending.removeListener(_onHomeTabRequest);
     unawaited(_foregroundPushSub?.cancel());
     unawaited(_pushTokenRefreshSub?.cancel());
     if (identical(SocialPushPrompt.tokenSync, widget.pushTokenSync)) {
@@ -1146,6 +1148,10 @@ class _AppShellState extends State<AppShell>
 
   /// Arkadaşlar ekranındaki misafir daveti "Hesabını kaydet" diyor: Profil
   /// sekmesi (kaydetme satırının yeri) açılır.
+  void _onHomeTabRequest() {
+    if (mounted) _selectTab(0);
+  }
+
   void _onProfileTabRequest() {
     if (mounted) _selectTab(3);
   }

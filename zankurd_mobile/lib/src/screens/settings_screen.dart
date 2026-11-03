@@ -421,9 +421,14 @@ class _SettingsScreenState extends State<SettingsScreen>
                       listenable: auth.presence,
                       builder: (context, _) => SahneListRow.plain(
                         title: context.t(K.presenceVisibility),
-                        subtitle: auth.presence.ready
-                            ? context.t(K.presenceVisibilitySub)
-                            : context.t(K.presenceVisibilityUnavailable),
+                        // 2026-11-03 tasarım kurulu: "doğrulanamadı" notu
+                        // eskiden okuma bitene kadar (ve oturum yokken hep)
+                        // kalıcı etiket gibi duruyordu. Artık yalnız okuma
+                        // gerçekten başarısız olduysa görünür, bir sonraki
+                        // başarılı okumada kaybolur.
+                        subtitle: auth.presence.loadFailed
+                            ? context.t(K.presenceVisibilityUnavailable)
+                            : context.t(K.presenceVisibilitySub),
                         subtitleProminent: true,
                         trailing: Switch(
                           key: const ValueKey('presence-visibility-switch'),

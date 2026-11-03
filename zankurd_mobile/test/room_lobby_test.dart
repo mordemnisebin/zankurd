@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/widgets/floating_reaction_overlay.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
@@ -382,6 +383,11 @@ void main() {
       find.text('Yarışı başlatmak için en az 2 oyuncu olmalı.'),
       findsOneWidget,
     );
+    // 2026-11-03: neden düğmenin altındaki satırdır (üstteki şerit değil).
+    expect(
+      find.byKey(const ValueKey('room-start-blocked-reason')),
+      findsOneWidget,
+    );
 
     final startButton = tester.widget<GeometricGradientButton>(
       find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
@@ -475,6 +481,62 @@ void main() {
     );
     expect(startButton.onPressed, isNull);
     expect(find.byType(QuizScreen), findsNothing);
+
+    // 2026-11-03 tasarım kurulu: kapalı düğmenin NEDENİ düğmenin altında,
+    // sayıyla yazılır ("1 oyuncu daha hazır olmalı"). Niçin sessiz kaldı:
+    // eski şerit genel "tüm oyuncuların hazır olması bekleniyor" diyordu ve
+    // düğmeden ayrı, listenin altında duruyordu; ev sahibi kaç kişi
+    // beklediğini ve hangi düğmenin sebebi olduğunu eşleştiremiyordu.
+    final reason = find.byKey(const ValueKey('room-start-blocked-reason'));
+    expect(reason, findsOneWidget);
+    expect(tester.widget<Text>(reason).data, '1 oyuncu daha hazır olmalı.');
+    expect(
+      tester.getTopLeft(reason).dy,
+      greaterThan(
+        tester
+            .getBottomLeft(
+              find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
+            )
+            .dy,
+      ),
+      reason: 'neden düğmenin ALTINDA durmalı',
+    );
+  });
+
+  // Hazır olma bir ayar anahtarı değil, lobi durumudur: yerel oyuncunun
+  // satırında hapı ("Hazırım") ve hazırken yeşil ✓ hali.
+  testWidgets('hazırım hapı: ayar anahtarı yok, hazırken yeşil onay', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _HostOnlyRoomRepository(const [
+      Player(
+        id: 'host-user',
+        name: 'HostOyuncu',
+        score: 0,
+        state: Player.readyState,
+      ),
+      Player(id: 'guest-user', name: 'Misafir', score: 0, state: 'Bekliyor'),
+    ]);
+    await tester.pumpWidget(
+      testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.hostLobbyRoom(),
+        ),
+      ),
+    );
+    await tester.pump();
+    expect(find.byType(Switch), findsNothing);
+    final pill = find.byType(RoomReadyPill);
+    expect(pill, findsOneWidget);
+    expect(tester.widget<RoomReadyPill>(pill).value, isTrue);
+    expect(tester.getSize(pill).height, greaterThanOrEqualTo(48));
+    expect(
+      find.descendant(of: pill, matching: find.byIcon(AppIcons.circleCheck)),
+      findsOneWidget,
+    );
   });
 
   testWidgets('two-player private room opens quiz in 1v1 mode', (tester) async {

@@ -89,18 +89,20 @@ void main() {
   // 2026-10-28 kurul K3/K5 (eski "çark dolgulu Zêr kart" beklentisi
   // DEĞİŞTİ): Sırayla düello ve Oda eşit boyutlu iki SAKİN karttır; Günün
   // turu ve Günün çarkı Arkadaşlar/Turnuva ile aynı standart liste satırı.
-  testWidgets('sırayla düello ve oda eşit; günün turu ve çark standart satır', (
+  // 2026-11-03 tasarım kurulu (hiyerarşi): Günün turu ve Oda eşit ana
+  // kartlar; Sırayla düello ve çark standart satır (ikincil liste).
+  testWidgets('günün turu ve oda eşit kart; sırayla düello ve çark satır', (
     tester,
   ) async {
     await _pumpHub(tester, pendingDuel: false);
     final big = tester.getSize(
-      find.byKey(const ValueKey('play-hub-async-duel')),
+      find.byKey(const ValueKey('play-hub-daily-contest')),
     );
     final room = tester.getSize(find.byKey(const ValueKey('play-hub-room')));
     expect(big.height, greaterThanOrEqualTo(SahneModeTile.minHeight));
     expect(room.height, closeTo(big.height, 0.5), reason: 'eşit boy');
     expect(room.width, closeTo(big.width, 0.5), reason: 'eşit en');
-    for (final key in ['play-hub-daily-contest', 'play-hub-spin-wheel']) {
+    for (final key in ['play-hub-async-duel', 'play-hub-spin-wheel']) {
       final finder = find.byKey(ValueKey(key));
       expect(tester.widget(finder), isA<SahneListRow>(), reason: key);
       expect(

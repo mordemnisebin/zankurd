@@ -297,8 +297,10 @@ void main() {
 
       final key = find.byKey(const ValueKey('play-hub-daily-contest'));
       await tester.scrollUntilVisible(key, 200);
-      // K5 (2026-10-28): günün turu standart liste satırıdır (dolu kart değil).
-      expect(tester.widget<SahneListRow>(key).role, SahneRole.race);
+      // 2026-11-03 tasarım kurulu: günün turu üç ana moddan biri, mod kartı
+      // (K5'in "liste satırı" kararı hiyerarşi için değişti); ödül (Zêr)
+      // rolü: tur jeton kazandırır.
+      expect(tester.widget<SahneModeTile>(key).role, SahneRole.gold);
       expect(
         find.descendant(of: key, matching: find.byType(SahneBadge)),
         findsNothing,

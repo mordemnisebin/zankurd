@@ -324,20 +324,26 @@ void main() {
     addTearDown(repository.close);
     await _openRoom(tester, repository, repository.onlineLobby());
 
-    await tester.ensureVisible(find.byType(Switch));
+    await tester.ensureVisible(find.byType(RoomReadyPill));
     await tester.pump();
-    expect(tester.widget<Switch>(find.byType(Switch)).value, isTrue);
+    expect(
+      tester.widget<RoomReadyPill>(find.byType(RoomReadyPill)).value,
+      isTrue,
+    );
 
     // Sunucu çağrısı burada gerçek bir gecikme içermediği (mock, senkron
     // fırlatır) için iyimser "kapalı" ara durumu ile geri alınmış hâl aynı
     // pump turunda birleşir; asıl doğrulanan şey SON durumun eski değere
     // (true) dönmüş olmasıdır — anahtar yanlış "hazır değilim" göstererek
     // takılı kalmaz.
-    await tester.tap(find.byType(Switch));
+    await tester.tap(find.byType(RoomReadyPill));
     await tester.pump();
     await tester.pump();
 
-    expect(tester.widget<Switch>(find.byType(Switch)).value, isTrue);
+    expect(
+      tester.widget<RoomReadyPill>(find.byType(RoomReadyPill)).value,
+      isTrue,
+    );
     expect(
       find.text('Hazır durumun kaydedilemedi. Önceki durumuna döndürüldü.'),
       findsOneWidget,

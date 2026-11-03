@@ -721,7 +721,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('120'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Jeton kazan'));
+    // 2026-11-03: "Jeton kazan" artık üç yolun başlığı; çark düğmesi anahtarlı.
+    await tester.tap(find.byKey(const ValueKey('shop-dialog-earn-coins')));
     await tester.pumpAndSettle();
     await tester.pump();
     // R6 (2026-10-28 tur 2): "Çevir" alt perdede sabit; kaydırma gerekmez.

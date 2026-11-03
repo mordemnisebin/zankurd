@@ -183,6 +183,19 @@ void main() {
           reason: 'Birincil eylem ölü olmamalı.',
         );
 
+        // 2026-11-03 tasarım kurulu: yalnız çark değil, üç yol birden —
+        // çark, günün turu, günlük görevler. Eskiden tek "Jeton kazan"
+        // düğmesi vardı ve oyuncu jetonu başka nerede kazanacağını
+        // bilmiyordu.
+        expect(
+          find.byKey(const ValueKey('shop-dialog-earn-daily-round')),
+          findsOneWidget,
+        );
+        expect(
+          find.byKey(const ValueKey('shop-dialog-earn-missions')),
+          findsOneWidget,
+        );
+
         await tester.tap(earn);
         await tester.pumpAndSettle();
         expect(find.byType(SpinWheelScreen), findsOneWidget);

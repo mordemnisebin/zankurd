@@ -125,14 +125,12 @@ class DailyTourCard extends StatelessWidget {
                             style: SahneType.bodyStrong.copyWith(color: t.tx),
                           )
                         else
-                          ExcludeSemantics(
+                          const ExcludeSemantics(
                             child: Opacity(
                               opacity: 0,
                               child: Text(
                                 ' ',
-                                key: const ValueKey(
-                                  'home-daily-task-rank-slot',
-                                ),
+                                key: ValueKey('home-daily-task-rank-slot'),
                                 style: SahneType.bodyStrong,
                               ),
                             ),

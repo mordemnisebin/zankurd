@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
+import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/services/presence_controller.dart';
 
@@ -70,6 +71,45 @@ void main() {
       await tester.pumpWidget(const SizedBox.shrink());
     });
   }
+
+  // 2026-11-03 tasarım kurulu: "Tercihin sunucudan doğrulanamadı" notu
+  // okuma bitene kadar ve oturum yokken de kalıcı etiket gibi duruyor,
+  // çevrimiçi kullanıcıda sunucu çökmüş izlenimi veriyordu. Niçin sessiz
+  // kaldı: not `!ready` koşuluna bağlıydı, "henüz yüklenmedi" ile "yükleme
+  // başarısız" aynı görünüyordu. Artık yalnız gerçek bir başarısız okuma
+  // sonrası görünür ve ilk başarılı okumada kaybolur.
+  testWidgets('doğrulanamadı notu yalnız başarısız okumada, geçici görünür', (
+    tester,
+  ) async {
+    final auth = AuthProvider.test();
+    final gateway = _Gateway()..fail = true;
+    final failText = Tr.of(K.presenceVisibilityUnavailable, AppLanguage.tr);
+    final subText = Tr.of(K.presenceVisibilitySub, AppLanguage.tr);
+    // Oturum yok: not da yok.
+    await tester.pumpWidget(
+      testShell(
+        authProvider: auth,
+        child: SettingsScreen(repository: MockZanKurdRepository()),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(auth.presence.loadFailed, isFalse);
+    expect(find.text(failText), findsNothing);
+
+    auth.presence.bind(gateway, userId: 'guest');
+    auth.presence.didChangeAppLifecycleState(AppLifecycleState.resumed);
+    await tester.pumpAndSettle();
+    expect(auth.presence.loadFailed, isTrue);
+    expect(find.text(failText, skipOffstage: false), findsOneWidget);
+
+    gateway.fail = false;
+    await tester.pump(const Duration(minutes: 2));
+    await tester.pumpAndSettle();
+    expect(auth.presence.loadFailed, isFalse);
+    expect(find.text(failText, skipOffstage: false), findsNothing);
+    expect(find.text(subText, skipOffstage: false), findsOneWidget);
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
 
   testWidgets('T1 gecikmiş okuma arka planda touch başlatmaz; hızlı '
       'yanıt veren testler yaşam döngüsü yarışını gizliyordu', (tester) async {

@@ -489,21 +489,17 @@ class _NoticeCard extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.body,
-    required this.retryLabel,
-    required this.onRetry,
+    this.retryLabel,
+    this.onRetry,
     this.error = false,
-    this.arrow = true,
   });
 
   final IconData icon;
   final String title;
   final String body;
-  final String retryLabel;
-  final VoidCallback onRetry;
+  final String? retryLabel;
+  final VoidCallback? onRetry;
   final bool error;
-
-  /// Eylem metin düğmesinde sağa ok ister mi ('Geri' için hayır).
-  final bool arrow;
 
   @override
   Widget build(BuildContext context) {
@@ -530,8 +526,10 @@ class _NoticeCard extends StatelessWidget {
           ),
           const SizedBox(height: SahneSpace.x1),
           Text(body, style: SahneType.caption.copyWith(color: t.tx2)),
-          const SizedBox(height: SahneSpace.x1),
-          SahneButton.text(label: retryLabel, arrow: arrow, onPressed: onRetry),
+          if (retryLabel != null && onRetry != null) ...[
+            const SizedBox(height: SahneSpace.x1),
+            SahneButton.text(label: retryLabel!, onPressed: onRetry),
+          ],
         ],
       ),
     );
@@ -544,6 +542,11 @@ class _NoticeCard extends StatelessWidget {
 /// bir şey yoktur: durum dışarıdan (RevenueCat panelinde offering ↔ mağaza
 /// ürünü eşlemesi tamamlandığında) düzelir. Ekran dürüst kalır (sahte fiyat
 /// veya sahte paket uydurulmaz) ve "Yakında" der.
+///
+/// 2026-11-03 tasarım kurulu: satış alanında "henüz aktif değil" hata gibi
+/// okunuyordu; başlık artık yalnız "Yakında", eylem düğmesi yok (üstteki
+/// geri oku zaten çıkıştır; ölü bir "Geri" düğmesi satın alma çağrısına
+/// benziyordu).
 ///
 /// 2026-10-28 kurul K12: eskiden burada "Tekrar dene" vardı; basınca aynı
 /// boş durum geri geliyordu (çıkmaz tuşu). Artık eylem "Geri": ekrandan
@@ -561,11 +564,8 @@ class _EmptyOfferings extends StatelessWidget {
     return _NoticeCard(
       key: const ValueKey('paywall-empty-offerings'),
       icon: AppIcons.circleInfo,
-      title: Tr.forKu(K.paywallPackagesInactive, isKu),
+      title: Tr.forKu(K.yakinda, isKu),
       body: Tr.forKu(K.paywallPackagesInactiveBody, isKu),
-      retryLabel: Tr.forKu(K.back, isKu),
-      arrow: false,
-      onRetry: () => Navigator.of(context).maybePop(),
     );
   }
 }
