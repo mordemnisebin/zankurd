@@ -95,7 +95,7 @@ void main() {
       },
     );
 
-    test('geri alma dosyası ve applied.md ⏳ kaydı var', () {
+    test('geri alma dosyası ve applied.md ✅ kaydı var', () {
       final rollback = File(
         'supabase/geri_al/2026-11-04_uzak_ayar_geri.sql',
       ).readAsStringSync();
@@ -105,7 +105,7 @@ void main() {
       );
       final applied = File('supabase/applied.md').readAsStringSync();
       expect(
-        RegExp(r'\| 2026-11-04_uzak_ayar\.sql \| ⏳').hasMatch(applied),
+        RegExp(r'\| 2026-11-04_uzak_ayar\.sql \| ✅').hasMatch(applied),
         isTrue,
       );
     });
