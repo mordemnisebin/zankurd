@@ -150,7 +150,7 @@ class Tr {
     },
     K.updateRequiredBody: {
       'ku':
-          'Ev guhertoya ZanKurdê êdî nayê piştgirîkirin. Ji bo ku tu bidomînî, ji dukanê nû bike.',
+          'Ev guhertoya ZanKurdê êdî nayê piştgirîkirin. Ji bo ku tu bidomînî, ji dukanê nûve bike.',
       'tr':
           'Bu sürüm artık desteklenmiyor. Devam etmek için ZanKurd\'u mağazadan güncelle.',
     },
@@ -159,14 +159,14 @@ class Tr {
       'ku': 'Guhertoyeke nû ya ZanKurdê heye.',
       'tr': 'ZanKurd\'un yeni bir sürümü var.',
     },
-    K.updateSoftAction: {'ku': 'Nû bike', 'tr': 'Güncelle'},
+    K.updateSoftAction: {'ku': 'Nûve bike', 'tr': 'Güncelle'},
     K.consentSheetTitle: {
       'ku': 'Em sepanê bi hev re baştir bikin',
       'tr': 'Uygulamayı birlikte geliştirelim',
     },
     K.consentSheetBody: {
       'ku':
-          'Daneyên bikaranînê û ragihandinên çewtiyan alîkariya me dikin ku ZanKurd zûtir û bêçewtî bibe. Heke nexwazî, girtî bihêle; tu dikarî her dem ji Mîhengê biguherînî.',
+          'Daneyên bikaranînê û ragihandinên çewtiyan alîkariya me dikin ku ZanKurd zûtir û bêçewt bibe. Heke nexwazî, girtî bihêle; tu dikarî her dem ji Mîhengê biguherînî.',
       'tr':
           'Kullanım verisi ve hata raporları ZanKurd\'u daha hızlı ve hatasız yapmamıza yardım eder. İstemezsen kapalı bırak; Ayarlar\'dan istediğin zaman değiştirebilirsin.',
     },
@@ -183,7 +183,7 @@ class Tr {
           '13 yaşından küçükler için sohbet, arkadaş özellikleri ve kullanım analizi kapalı kalır; öğrenme ve tek başına oyun açıktır.',
     },
     K.ageGateMinorOff: {
-      'ku': 'Ev taybetmendî ji bo bin 13 salî girtî ye.',
+      'ku': 'Ev taybetmendî ji bo kesên bin 13 salî girtî ye.',
       'tr': 'Bu özellik 13 yaş altı için kapalı.',
     },
     K.reportAbuse: {
