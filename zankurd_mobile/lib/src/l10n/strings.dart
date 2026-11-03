@@ -1123,12 +1123,13 @@ class Tr {
     },
     K.streakRescueHint: {
       'ku':
-          'Belaş: 5 pirsan dubare bike, herî kêm 4 rast bike. Her 7 rojan carekê.',
+          'Belaş: 5 pirsan dubare bike û herî kêm 4 bersivên rast bide. Her 7 rojan carekê.',
       'tr':
           'Ücretsiz: 5 soruyu tekrar et, en az 4 doğru yap. 7 günde bir kullanılabilir.',
     },
     K.streakRescueFailed: {
-      'ku': 'Herî kêm 4 rast pêwîst bû. Berî dem biqede dîsa biceribîne.',
+      'ku':
+          'Herî kêm 4 bersivên rast pêwîst bûn. Berî ku dem biqede, dîsa biceribîne.',
       'tr': 'En az 4 doğru gerekiyordu. Süre dolmadan tekrar deneyebilirsin.',
     },
     K.emailVerifyCardTitle: {
