@@ -23,6 +23,8 @@ class StreakRepairCard extends StatefulWidget {
     required this.offer,
     required this.onRepaired,
     this.onLater,
+    this.onRescue,
+    this.showPaid = true,
     this.now,
     super.key,
   });
@@ -34,6 +36,15 @@ class StreakRepairCard extends StatefulWidget {
 
   /// Verilirse "Niha na" düğmesi çizilir (açılış sayfasında).
   final VoidCallback? onLater;
+
+  /// Verilirse ücretsiz "Seriyi kurtar" turu önerilir (5 soru, en az 4
+  /// doğru). Turu çağıran yürütür: kart bir sayfanın/diyalogun içindedir ve
+  /// quiz o sayfanın ÜSTÜNE değil, kapandıktan sonra açılmalıdır (aksi halde
+  /// dönüşteki `pop` sonuç ekranını kapatır).
+  final VoidCallback? onRescue;
+
+  /// Ücretli (jetonlu) onarım düğmesi; bu ayın hakkı kullanıldıysa false.
+  final bool showPaid;
 
   final DateTime? now;
 
@@ -127,11 +138,13 @@ class _StreakRepairCardState extends State<StreakRepairCard> {
             }),
             style: SahneType.body.copyWith(color: t.tx2),
           ),
-          const SizedBox(height: SahneSpace.x1),
-          Text(
-            context.t(K.streakRepairHint),
-            style: SahneType.caption.copyWith(color: t.tx3),
-          ),
+          if (widget.showPaid) ...[
+            const SizedBox(height: SahneSpace.x1),
+            Text(
+              context.t(K.streakRepairHint),
+              style: SahneType.caption.copyWith(color: t.tx3),
+            ),
+          ],
           if (_errorKey != null) ...[
             const SizedBox(height: SahneSpace.x2),
             Text(
@@ -141,15 +154,42 @@ class _StreakRepairCardState extends State<StreakRepairCard> {
             ),
           ],
           const SizedBox(height: SahneSpace.x3),
-          SahneButton.primary(
-            buttonKey: const ValueKey('streak-repair-action'),
-            label: label,
-            icon: AppIcons.fire,
-            expand: true,
-            arrow: false,
-            loading: _busy,
-            onPressed: _busy ? null : _repair,
-          ),
+          if (widget.onRescue != null) ...[
+            SahneButton.primary(
+              buttonKey: const ValueKey('streak-rescue-action'),
+              label: context.t(K.streakRescueAction),
+              icon: AppIcons.fire,
+              expand: true,
+              arrow: false,
+              onPressed: _busy ? null : widget.onRescue,
+            ),
+            const SizedBox(height: SahneSpace.x1),
+            Text(
+              context.t(K.streakRescueHint),
+              style: SahneType.caption.copyWith(color: t.tx3),
+            ),
+            if (widget.showPaid) const SizedBox(height: SahneSpace.x3),
+          ],
+          if (widget.showPaid)
+            widget.onRescue != null
+                ? SahneButton.secondary(
+                    buttonKey: const ValueKey('streak-repair-action'),
+                    label: label,
+                    icon: AppIcons.fire,
+                    expand: true,
+                    arrow: false,
+                    loading: _busy,
+                    onPressed: _busy ? null : _repair,
+                  )
+                : SahneButton.primary(
+                    buttonKey: const ValueKey('streak-repair-action'),
+                    label: label,
+                    icon: AppIcons.fire,
+                    expand: true,
+                    arrow: false,
+                    loading: _busy,
+                    onPressed: _busy ? null : _repair,
+                  ),
           if (widget.onLater != null) ...[
             const SizedBox(height: SahneSpace.x1),
             Align(
@@ -178,6 +218,8 @@ Future<void> showStreakRepairSheet({
   required ZanKurdRepository repository,
   required StreakRepairOffer offer,
   required ValueChanged<int> onRepaired,
+  VoidCallback? onRescue,
+  bool showPaid = true,
   DateTime? now,
 }) {
   return showSahneSheet<void>(
@@ -190,6 +232,13 @@ Future<void> showStreakRepairSheet({
         repository: repository,
         offer: offer,
         now: now,
+        showPaid: showPaid,
+        onRescue: onRescue == null
+            ? null
+            : () {
+                Navigator.of(sheetContext).pop();
+                onRescue();
+              },
         onLater: () => Navigator.of(sheetContext).pop(),
         onRepaired: (days) {
           Navigator.of(sheetContext).pop();

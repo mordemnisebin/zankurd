@@ -59,6 +59,10 @@ import '../widgets/notification_prompt_card.dart';
 import '../services/guest_save_prompt.dart';
 import '../services/review_service.dart';
 import '../utils/result_sharer.dart';
+import '../models/async_duel.dart';
+import 'async_duel/async_duel_challenge_sheet.dart'
+    show asyncDuelChallengeAvailable;
+import 'async_duel/async_duel_play_screen.dart';
 import 'leaderboard_screen.dart';
 import 'quiz_screen.dart';
 import 'review_screen.dart';
@@ -257,6 +261,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   late final String? _resultProgressScope;
 
   bool _newRoomLoading = false;
+
+  /// "Meydan oku" satırı yalnız sunucu meydan okumayı destekliyorsa görünür;
+  /// satır "⋯" sayfasındadır, bu yüzden geç gelen yanıt ekranı oynatmaz.
+  bool _challengeAvailable = false;
+  bool _challengeBusy = false;
   bool _showNotifPrompt = false;
 
   /// W2: "Cevapları gör" düğmesi "Ayrıntılar" bölümünü açar ve cevap
@@ -483,6 +492,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     super.initState();
     _resultProgressOwner = repository.currentUserId;
     _resultProgressScope = LocalProgressScope.activeUserId;
+    unawaited(
+      asyncDuelChallengeAvailable(repository).then((available) {
+        if (mounted && available) setState(() => _challengeAvailable = true);
+      }),
+    );
     // Sonuç ekranının kendisi ilerleme yazımına bağlı değildir: skor,
     // doğru/yanlış ve cevap listesi zaten widget parametrelerinden gelir.
     // Yazım zinciri (seri, rozet, ustalık, görev, XP, mağaza değerlendirmesi)
@@ -1823,7 +1837,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       );
     }
 
-    Future<void> shareResult() async {
+    Future<void> shareResult({String? challengeCode}) async {
       final shared = await ResultSharer.share(
         context,
         isKu: context.isKu,
@@ -1841,6 +1855,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             !room.isCrowd &&
             opponents.length == 1 &&
             score > opponents.first.score,
+        // Düz paylaşımda kod yoktur; yalnız "Meydan oku" dokunuşu verir.
+        challengeCode: challengeCode,
       );
       // Paylaşım sayfası kapatılırsa (iptal) ödül verilmez.
       if (!shared) return;
@@ -1859,6 +1875,60 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             duration: const Duration(seconds: 3),
           ),
         );
+      }
+    }
+
+    // "Meydan oku": yalnız ÇEVRİMDIŞI/solo, ödüllü ve rakipsiz normal tur.
+    // Düz Paylaş sunucuya hiçbir şey yazmaz; düello yalnız bu satıra açık
+    // dokunuşla açılır (bekçi: `solo_challenge_share_contract_test.dart`).
+    final canChallenge =
+        _challengeAvailable &&
+        !isOnlineRoom &&
+        !room.isCrowd &&
+        opponents.isEmpty &&
+        !practice &&
+        !dailyQuiz &&
+        widget.contestId == null &&
+        !widget.levelGated &&
+        !widget.tournamentMatch;
+
+    Future<void> challengeFromRound() async {
+      if (_challengeBusy) return;
+      _challengeBusy = true;
+      final messenger = ScaffoldMessenger.of(context);
+      final navigator = Navigator.of(context);
+      try {
+        // Sunucu soru kimlikleri almaz (`create_async_duel_challenge(
+        // p_category, p_friend_id)`): aynı konuda standart meydan okuma açılır.
+        final start = await repository.createAsyncDuelChallenge(
+          category: isMixedCategoryRound || room.category == 'mixed'
+              ? null
+              : room.category,
+        );
+        final code = start.challengeCode;
+        if (code != null && context.mounted) {
+          await shareResult(challengeCode: code);
+        }
+        // Meydan okuyan kendi 7 sorusunu bitirmeden rakip kabul edemez
+        // ("henüz turunu bitirmedi"): paylaşımdan sonra sıra ona geçer.
+        if (!navigator.mounted) return;
+        await navigator.push(
+          AppRoute.to(
+            AsyncDuelPlayScreen(
+              repository: repository,
+              entry: AsyncDuelEntry.resume(start.duelId),
+            ),
+          ),
+        );
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'result_solo_challenge');
+        if (context.mounted) {
+          messenger.showSnackBar(
+            SnackBar(content: Text(asyncDuelStartErrorMessage(context, error))),
+          );
+        }
+      } finally {
+        _challengeBusy = false;
       }
     }
 
@@ -2544,6 +2614,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             context,
           ).push(AppRoute.to(LeaderboardScreen(repository: repository))),
           onRate: () => ReviewService.openStoreListing(),
+          onChallenge: canChallenge ? challengeFromRound : null,
         ),
       ),
     );
@@ -3600,6 +3671,7 @@ Future<void> _openMoreOptions(
   required VoidCallback onHome,
   required VoidCallback onLeaderboard,
   required VoidCallback onRate,
+  VoidCallback? onChallenge,
 }) {
   final t = SahneTokens.of(context);
   Widget row(Key? key, IconData icon, String label, VoidCallback action) {
@@ -3640,6 +3712,13 @@ Future<void> _openMoreOptions(
             context.t(K.home),
             onHome,
           ),
+          if (onChallenge != null)
+            row(
+              const ValueKey('result-challenge-button'),
+              AppIcons.shareNodes,
+              context.t(K.challengeFriendAction),
+              onChallenge,
+            ),
           row(
             null,
             AppIcons.trophy,

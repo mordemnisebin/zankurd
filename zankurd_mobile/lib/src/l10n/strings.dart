@@ -1116,6 +1116,21 @@ class Tr {
       'ku': 'Mafê vê mehê jixwe hatiye bikaranîn.',
       'tr': 'Bu ayın hakkı zaten kullanıldı.',
     },
+    // Ücretsiz seri kurtarma turu (2026-11-03). KU taslak: jüri gerekli.
+    K.streakRescueAction: {
+      'ku': 'Zincîrê rizgar bike · 5 pirs',
+      'tr': 'Seriyi kurtar · 5 soru',
+    },
+    K.streakRescueHint: {
+      'ku':
+          'Belaş: 5 pirsan dubare bike, herî kêm 4 rast bike. Her 7 rojan carekê.',
+      'tr':
+          'Ücretsiz: 5 soruyu tekrar et, en az 4 doğru yap. 7 günde bir kullanılabilir.',
+    },
+    K.streakRescueFailed: {
+      'ku': 'Herî kêm 4 rast pêwîst bû. Berî dem biqede dîsa biceribîne.',
+      'tr': 'En az 4 doğru gerekiyordu. Süre dolmadan tekrar deneyebilirsin.',
+    },
     K.emailVerifyCardTitle: {
       'ku': 'E-nameya xwe piştrast bike',
       'tr': 'E-postanı doğrula',
@@ -5158,6 +5173,9 @@ class K {
   static const streakRepairDone = 'streak.repair.done';
   static const streakRepairFailed = 'streak.repair.failed';
   static const streakRepairMonthly = 'streak.repair.monthly';
+  static const streakRescueAction = 'streak.rescue.action';
+  static const streakRescueHint = 'streak.rescue.hint';
+  static const streakRescueFailed = 'streak.rescue.failed';
   static const emailVerifyCardTitle = 'profile.emailVerify.title';
   static const emailVerifyCardBody = 'profile.emailVerify.body';
   static const emailVerifyCardAction = 'profile.emailVerify.action';

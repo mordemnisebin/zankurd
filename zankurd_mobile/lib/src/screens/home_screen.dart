@@ -39,6 +39,7 @@ import '../models/daily_mission.dart';
 import '../models/quiz_question.dart';
 import '../models/learning_goal.dart';
 import '../services/premium_service.dart';
+import '../services/streak_rescue_service.dart';
 import '../services/daily_question_selector.dart';
 import '../services/home_widget_sync.dart';
 import 'paywall_screen.dart';
@@ -363,12 +364,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   /// ve başka bir sayfa üstteyken kesmez; gösterim işareti sayfa açılmadan
   /// ÖNCE yazılır, böylece kapatılan sayfa bir daha çıkmaz.
   Future<void> _maybeOfferStreakRepair(StreakStore store) async {
-    final offer = store.repairOffer();
+    // Çevrimdışı depoda ücretli onarım yapılamaz; ücretsiz kurtarma turu
+    // sunucusuz çalıştığı için yine sunulur.
+    final paid = _paidRepairOffer(store);
+    final offer = paid ?? store.rescueOffer();
     if (offer == null ||
         _repairSheetOpen ||
         store.repairOfferSeen(offer) ||
         !mounted ||
-        repo is OfflineZanKurdRepository ||
         ModalRoute.of(context)?.isCurrent != true) {
       return;
     }
@@ -381,12 +384,78 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         store: store,
         repository: repo,
         offer: offer,
+        showPaid: paid != null,
+        onRescue: store.rescueOffer() == null
+            ? null
+            : () => unawaited(_startStreakRescue(store)),
         onRepaired: _onStreakRepaired,
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'streak_repair_sheet');
     } finally {
       _repairSheetOpen = false;
+    }
+  }
+
+  StreakRepairOffer? _paidRepairOffer(StreakStore store) =>
+      repo is OfflineZanKurdRepository ? null : store.repairOffer();
+
+  /// Ücretsiz "Seriyi kurtar" turu: 5 soru (önce yanlış defteri), en az 4
+  /// doğru. Çağıran kartın sayfasını/diyalogunu ÖNCE kapatır; quiz bu
+  /// ekranın üstüne açılır ve dönüş değeri QuizScreen'in tamamlanma
+  /// sonucudur (sonuç ekranına geçerken kendi rotası değiştiği için gelir).
+  /// Seri, yalnız tur geçilirse ve teklif hâlâ geçerliyse yazılır
+  /// ([StreakStore.applyRescue]); kaybedilen tur teklifi yakmaz.
+  Future<void> _startStreakRescue(StreakStore store) async {
+    final offer = store.rescueOffer();
+    if (offer == null || !mounted) return;
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    final failed = SnackBar(content: Text(context.t(K.streakRescueFailed)));
+    final failedLoad = SnackBar(content: Text(context.t(K.streakRepairFailed)));
+    try {
+      final questions = StreakRescueService.pickQuestions(
+        mistakeStore: await MistakeStore.load(),
+        playable: repo.playableQuestions,
+      );
+      if (questions.isEmpty || !mounted) {
+        messenger.showSnackBar(failedLoad);
+        return;
+      }
+      final room = repo.createRoom().copyWith(
+        name: context.t(K.tekrarTitle),
+        questionCount: questions.length,
+        category: reviewRoomCategory(questions),
+      );
+      final result = await navigator.push<Map<String, dynamic>>(
+        AppRoute.to<Map<String, dynamic>>(
+          QuizScreen(
+            repository: repo,
+            room: room,
+            questions: questions,
+            practice: true,
+            enableTimer: false,
+            experience: QuizExperience.learning,
+          ),
+        ),
+      );
+      final passed = StreakRescueService.passes(
+        completed: result?['completed'] == true,
+        correct: (result?['correct'] as num?)?.toInt() ?? 0,
+      );
+      if (!passed) {
+        if (result?['completed'] == true) messenger.showSnackBar(failed);
+        return;
+      }
+      final days = await store.applyRescue(offer);
+      if (days == null) {
+        messenger.showSnackBar(failedLoad);
+        return;
+      }
+      if (mounted) _onStreakRepaired(days);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'streak_rescue');
+      messenger.showSnackBar(failedLoad);
     }
   }
 
@@ -1083,12 +1152,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   onFreeze: null,
                 ),
                 // Son 24 saatte kırılan seri: aynı sayfada geri alınabilir.
-                if (store.repairOffer() case final offer?) ...[
+                if (_paidRepairOffer(store) ?? store.rescueOffer()
+                    case final offer?) ...[
                   const SizedBox(height: SahneSpace.x3),
                   StreakRepairCard(
                     store: store,
                     repository: repo,
                     offer: offer,
+                    showPaid: _paidRepairOffer(store) != null,
+                    onRescue: store.rescueOffer() == null
+                        ? null
+                        : () {
+                            Navigator.of(context).pop();
+                            unawaited(_startStreakRescue(store));
+                          },
                     onRepaired: (days) {
                       Navigator.of(context).pop();
                       _onStreakRepaired(days);

@@ -67,6 +67,8 @@ class StreakStore {
       LocalProgressWriteLock.physical('zankurd.streak.firstSeen');
   static String get _offerSeenKey =>
       LocalProgressWriteLock.physical('zankurd.streak.repairOfferSeenFor');
+  static String get _rescueDayKey =>
+      LocalProgressWriteLock.physical('zankurd.streak.rescueDay');
 
   /// Takvimde tutulan en fazla gün sayısı (≈ 13 ay); sonsuz büyümesin.
   static const maxHistoryDays = 400;
@@ -74,6 +76,12 @@ class StreakStore {
   /// Seri onarımının jeton bedeli (sunucudaki `spend_streak_repair` ile
   /// aynı; bekçi: `streak_repair_contract_test.dart`).
   static const repairCost = 100;
+
+  /// Ücretsiz "Seriyi kurtar" turu: soru sayısı, geçme eşiği ve iki kurtarma
+  /// arasındaki en az gün (bekçi: `streak_rescue_contract_test.dart`).
+  static const rescueQuestions = 5;
+  static const rescueMinCorrect = 4;
+  static const rescueCooldownDays = 7;
 
   /// Aynı anda tutulabilecek en fazla dondurma jetonu.
   static const maxFreeze = 2;
@@ -114,7 +122,7 @@ class StreakStore {
       preferences = null;
     }
     if (preferences != null) await _recoverPaidFreeze(preferences);
-    return StreakStore._(
+    final store = StreakStore._(
       preferences,
       preferences?.getInt(_currentKey) ?? 0,
       preferences?.getInt(_bestKey) ?? 0,
@@ -128,6 +136,8 @@ class StreakStore {
       preferences?.getString(_offerSeenKey),
       preferences?.getString(_firstSeenKey),
     );
+    store._rescueDay = preferences?.getString(_rescueDayKey);
+    return store;
   }
 
   /// Testlerde tekil örneği sıfırlamak için.
@@ -173,6 +183,12 @@ class StreakStore {
   final Set<String> _playedDays;
   final Set<String> _frozenDays;
   String? _repairMonth;
+
+  /// Son ücretsiz kurtarmanın günü (`yyyy-MM-dd`). YALNIZ bu cihazda tutulur
+  /// (bulut anlık görüntüsüne girmez): kurtarılan günün `frozenDays`e
+  /// yazılması çifte sayımı zaten engeller, bu anahtar yalnız 7 günlük
+  /// sıklık sınırıdır; yeniden kurulumda sıfırlanması kabul edilmiş.
+  String? _rescueDay;
   int _lostValue;
   String? _lostLastDay;
   String? _offerSeenFor;
@@ -611,6 +627,29 @@ class StreakStore {
   StreakRepairOffer? repairOffer({DateTime? now}) {
     final today = now ?? DateTime.now();
     if (_repairMonth == monthKey(today)) return null;
+    return _brokenStreakOffer(today);
+  }
+
+  /// Ücretsiz "Seriyi kurtar" turu için teklif: aynı 24 saat penceresi ve
+  /// değer kuralı, ama aylık ücretli hakka DEĞİL bu cihazdaki 7 günlük
+  /// sıklığa bağlı ve yalnız elde dondurma jetonu yokken (jeton varsa oyun
+  /// seriyi zaten korur). Ücretli onarımla aynı kırılma günü anahtarını
+  /// paylaşır: biri uygulanınca `frozenDays` o günü kapatır, öbürü null döner.
+  StreakRepairOffer? rescueOffer({DateTime? now}) {
+    final today = now ?? DateTime.now();
+    if (_freeze > 0) return null;
+    final last = _rescueDay == null ? null : DateTime.tryParse(_rescueDay!);
+    if (last != null) {
+      final todayDate = DateTime(today.year, today.month, today.day);
+      final lastDate = DateTime(last.year, last.month, last.day);
+      if (todayDate.difference(lastDate).inDays < rescueCooldownDays) {
+        return null;
+      }
+    }
+    return _brokenStreakOffer(today);
+  }
+
+  StreakRepairOffer? _brokenStreakOffer(DateTime today) {
     final lastDay = _lastDay;
     if (lastDay == null) return null;
     final twoAgo = _dayKey(DateTime(today.year, today.month, today.day - 2));
@@ -663,28 +702,48 @@ class StreakStore {
   /// Aradaki (kaçırılan) gün dondurulmuş sayılır; seri kırılmamış gibi
   /// sürer. Hak işlendiği için [repairOffer] bu ay artık null döner.
   Future<int> applyRepair(StreakRepairOffer offer, {DateTime? now}) =>
-      _mutate(() async {
-        await _completePendingPaidFreeze();
-        final today = now ?? DateTime.now();
-        final yesterday = DateTime(today.year, today.month, today.day - 1);
-        _frozenDays.add(_dayKey(yesterday));
-        if (offer.playedToday) {
-          _current = offer.lostStreak + 1;
-          _lastDay = _dayKey(today);
-        } else {
-          _current = offer.lostStreak;
-          _lastDay = _dayKey(yesterday);
-        }
-        if (_current > _best) _best = _current;
-        _repairMonth = offer.monthKey;
-        _lostValue = 0;
-        _lostLastDay = null;
-        _offerSeenFor = offer.breakDay;
-        await _persist();
-        // Uyarıyı yeni duruma göre kur (bugün oynandıysa yarına).
-        await NotificationService.syncStreakWarning(now: today);
-        return _current;
-      });
+      _restore(offer, now: now, rescue: false);
+
+  /// Ücretsiz kurtarma turu geçildikten SONRA seriyi geri yükler. Ücretli
+  /// onarımdan farkı: aylık hakkı DEĞİL 7 günlük kurtarma gününü işler.
+  /// Teklif artık geçerli değilse (başka gün oynandı, başka yoldan
+  /// onarıldı, gece yarısı geçti) hiçbir şey yazmaz ve null döner.
+  Future<int?> applyRescue(StreakRepairOffer offer, {DateTime? now}) async {
+    final current = rescueOffer(now: now);
+    if (current == null || current.breakDay != offer.breakDay) return null;
+    return _restore(offer, now: now, rescue: true);
+  }
+
+  Future<int> _restore(
+    StreakRepairOffer offer, {
+    DateTime? now,
+    required bool rescue,
+  }) => _mutate(() async {
+    await _completePendingPaidFreeze();
+    final today = now ?? DateTime.now();
+    final yesterday = DateTime(today.year, today.month, today.day - 1);
+    _frozenDays.add(_dayKey(yesterday));
+    if (offer.playedToday) {
+      _current = offer.lostStreak + 1;
+      _lastDay = _dayKey(today);
+    } else {
+      _current = offer.lostStreak;
+      _lastDay = _dayKey(yesterday);
+    }
+    if (_current > _best) _best = _current;
+    if (rescue) {
+      _rescueDay = _dayKey(today);
+    } else {
+      _repairMonth = offer.monthKey;
+    }
+    _lostValue = 0;
+    _lostLastDay = null;
+    _offerSeenFor = offer.breakDay;
+    await _persist();
+    // Uyarıyı yeni duruma göre kur (bugün oynandıysa yarına).
+    await NotificationService.syncStreakWarning(now: today);
+    return _current;
+  });
 
   Future<void> _stampFreeze() async {
     await _preferences?.setInt(
@@ -709,6 +768,7 @@ class StreakStore {
     await _setOrRemove(preferences, _lostLastDayKey, _lostLastDay);
     await _setOrRemove(preferences, _offerSeenKey, _offerSeenFor);
     await _setOrRemove(preferences, _firstSeenKey, _firstSeen);
+    await _setOrRemove(preferences, _rescueDayKey, _rescueDay);
     await preferences.setInt(_lostValueKey, _lostValue);
     ProgressSyncService.markDirty();
   }
@@ -749,6 +809,7 @@ class StreakStore {
       _lostLastDayKey,
       _offerSeenKey,
       _firstSeenKey,
+      _rescueDayKey,
     ]);
     _current = 0;
     _best = 0;
@@ -761,6 +822,7 @@ class StreakStore {
     _lostLastDay = null;
     _offerSeenFor = null;
     _firstSeen = null;
+    _rescueDay = null;
   });
 }
 
