@@ -5554,6 +5554,13 @@ class LearnerLexicon {
       forms: ['dijwateya', 'dijwateyê'],
     ),
     LearnerLexiconEntry(
+      id: 'q-paradigma',
+      termKu: 'Paradîgma',
+      meaningTr: 'paradigma',
+      sourceId: 'questions',
+      forms: ['paradîgmaya', 'paradîgmayê'],
+    ),
+    LearnerLexiconEntry(
       id: 'q-pesketin',
       termKu: 'Pêşketin',
       meaningTr: 'gelişme',
