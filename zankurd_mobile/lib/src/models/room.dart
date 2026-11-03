@@ -511,6 +511,65 @@ class GameRoom {
   }
 }
 
+/// Lobinin sunucudaki canlı durumu (`room_heartbeat` / `update_room_settings`):
+/// sahip, kategori, süre ve soru sayısı. T2 (2026-11-03).
+///
+/// Kusur: lobide yalnız oda DURUMU izleniyordu; sahip devri ya da ayar
+/// değişikliği ancak oda yeniden açılınca görünüyordu. Sessizdi: sunucu
+/// doğru çalışır, ekran bayat kalır, kimse hata görmez.
+class RoomLobbyState {
+  const RoomLobbyState({
+    this.hostId,
+    this.status,
+    this.category,
+    this.secondsPerQuestion,
+    this.questionCount,
+    this.entryFee,
+  });
+
+  /// Sunucu JSON'undan (`room_lobby_state_json`). Eksik alan null kalır.
+  factory RoomLobbyState.fromJson(Map<String, dynamic> json) {
+    RoomStatus? status;
+    final rawStatus = json['status'];
+    if (rawStatus is String) {
+      status = RoomStatus.values
+          .where((value) => value.name == rawStatus)
+          .firstOrNull;
+    }
+    return RoomLobbyState(
+      hostId: json['host_id'] as String?,
+      status: status,
+      category: json['category_name'] as String?,
+      secondsPerQuestion: (json['seconds_per_question'] as num?)?.toInt(),
+      questionCount: (json['question_count'] as num?)?.toInt(),
+      entryFee: (json['entry_fee'] as num?)?.toInt(),
+    );
+  }
+
+  final String? hostId;
+  final RoomStatus? status;
+  final String? category;
+  final int? secondsPerQuestion;
+  final int? questionCount;
+  final int? entryFee;
+}
+
+/// Sunucuda `room_heartbeat` / `update_room_settings` yok (göç uygulanmamış:
+/// PGRST202 / 42883). İstemci eski davranışa düşer.
+class RoomLiveUnsupported implements Exception {
+  const RoomLiveUnsupported();
+}
+
+/// `update_room_settings` reddi (sahip değil, lobi değil, geçersiz değer).
+class RoomSettingsException implements Exception {
+  const RoomSettingsException([this.message]);
+
+  final String? message;
+
+  @override
+  String toString() => 'RoomSettingsException($message)';
+}
+
 /// Sunucu seçenekleri daraldı; yeniden seçim gerekir, sessizce değer değiştirilmez.
 class RoomOptionsUnsupported implements Exception {
   const RoomOptionsUnsupported();

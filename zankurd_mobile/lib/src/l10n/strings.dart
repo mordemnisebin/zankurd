@@ -2324,6 +2324,16 @@ class Tr {
       'ku': 'Mêvandar derket; niha tu mêvandar î.',
       'tr': 'Oda sahibi ayrıldı; artık oda sahibi sensin.',
     },
+    // T2 (2026-11-03): lobide sahiplik ve ayar değişikliği bantları.
+    // KU TASLAK: KU jürisi onaylayana kadar taslak.
+    K.roomNewOwner: {
+      'ku': 'Mêvandarê nû: {name}',
+      'tr': 'Oda sahibi artık {name}',
+    },
+    K.roomSettingsChanged: {
+      'ku': 'Mîheng hatin guhertin',
+      'tr': 'Ayarlar değişti',
+    },
     K.crowdRankLabel: {'ku': 'Rêza te', 'tr': 'Sıralaman'},
     K.crowdTopThree: {'ku': 'Sêyên yekem', 'tr': 'İlk 3'},
     K.crowdAnsweredCount: {
@@ -5566,6 +5576,8 @@ class K {
   static const crowdStartsWhenHostStarts = 'room.crowd.startsWhenHostStarts';
   static const crowdHostStartHint = 'room.crowd.hostStartHint';
   static const hostTransferredToYou = 'room.crowd.hostTransferredToYou';
+  static const roomNewOwner = 'room.lobby.newOwner';
+  static const roomSettingsChanged = 'room.lobby.settingsChanged';
   static const crowdRankLabel = 'quiz.crowd.rankLabel';
   static const crowdTopThree = 'quiz.crowd.topThree';
   static const crowdAnsweredCount = 'quiz.crowd.answeredCount';

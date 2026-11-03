@@ -23,6 +23,7 @@ import '../widgets/floating_reaction_overlay.dart';
 import '../widgets/player_moderation_button.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/styled_button.dart';
+import 'play_hub_screen.dart' show RoomSettingsEdit, showRoomSettingsSheet;
 import 'quiz_screen.dart';
 import '../widgets/self_marked_name.dart';
 import 'room/room_invite_friends_sheet.dart';
@@ -505,6 +506,136 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
     _refreshHostIfMissing(unique);
   }
 
+  /// Lobide kısa süre görünen bant: "Oda sahibi artık X" (taç) ya da
+  /// "Ayarlar değişti" (T2, 2026-11-03). Aynı anda tek bant; yenisi eskiyi
+  /// değiştirir ve 6 sn sonra kendiliğinden kalkar.
+  String? _lobbyBannerText;
+  bool _lobbyBannerCrown = false;
+  Timer? _lobbyBannerTimer;
+
+  void _showLobbyBanner(String text, {bool crown = false}) {
+    _lobbyBannerTimer?.cancel();
+    setState(() {
+      _lobbyBannerText = text;
+      _lobbyBannerCrown = crown;
+    });
+    _lobbyBannerTimer = Timer(const Duration(seconds: 6), () {
+      if (!mounted) return;
+      setState(() => _lobbyBannerText = null);
+    });
+  }
+
+  /// Sunucudan gelen canlı lobi durumunu (`room_heartbeat` yanıtı ya da
+  /// kendi `update_room_settings` yanıtım) ekrana uygular.
+  ///
+  /// Kusur: lobi yalnız oda DURUMUNU izlerdi; sahip devri ve ayar
+  /// değişikliği ancak odadan çıkıp girince görünürdü. Yanıt kendi
+  /// değişikliğimin yankısıysa ([announce] false) bant gösterilmez.
+  void _applyLobbyState(RoomLobbyState state, {bool announce = true}) {
+    if (!mounted || _leaving || _terminalHandled || quizOpened) return;
+    if (room.status != RoomStatus.lobby) return;
+    final newHost = state.hostId;
+    final hostChanged =
+        newHost != null && room.hostId != null && newHost != room.hostId;
+    final category = state.category;
+    final settingsChanged =
+        (category != null && category != room.category) ||
+        (state.secondsPerQuestion != null &&
+            state.secondsPerQuestion != room.secondsPerQuestion) ||
+        (state.questionCount != null &&
+            state.questionCount != room.questionCount);
+    if (!hostChanged && !settingsChanged) return;
+    setState(() {
+      room = room.copyWith(
+        hostId: hostChanged ? newHost : null,
+        category: category,
+        secondsPerQuestion: state.secondsPerQuestion,
+        questionCount: state.questionCount,
+      );
+      // Ayar değişince sunucu başkalarının "hazır" işaretini sıfırlar;
+      // elle kalmış yerel seçim sunucuyla çelişmesin.
+      if (settingsChanged && announce) _readyOverride = null;
+    });
+    if (hostChanged) {
+      final me = _currentUserId;
+      if (newHost == me) {
+        _showLobbyBanner(context.t(K.hostTransferredToYou), crown: true);
+      } else {
+        final name = room.players
+            .where((p) => p.id == newHost)
+            .map(
+              (p) => PlayerIdentity.resolveNameWithTag(
+                p.name,
+                isKu: context.isKu,
+                tag: p.tag,
+              ),
+            )
+            .firstOrNull;
+        _showLobbyBanner(
+          context.t(K.roomNewOwner, {'name': name ?? '…'}),
+          crown: true,
+        );
+      }
+    } else if (settingsChanged && announce) {
+      _showLobbyBanner(context.t(K.roomSettingsChanged));
+    }
+  }
+
+  bool _settingsSheetOpen = false;
+
+  /// Sahip lobide kategori, süre ve soru sayısını değiştirir; giriş ücreti
+  /// ve kapasite sunucuda kilitlidir.
+  Future<void> _editSettings() async {
+    if (_settingsSheetOpen || !_isHost || room.status != RoomStatus.lobby) {
+      return;
+    }
+    _settingsSheetOpen = true;
+    try {
+      var categories = widget.repository.categories;
+      try {
+        final server = await widget.repository.loadMatchmakingCategories();
+        if (server.isNotEmpty) categories = server;
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'room_settings_categories');
+      }
+      final extended = await widget.repository.supportsExtendedRoomOptions();
+      if (!mounted) return;
+      final RoomSettingsEdit? edit = await showRoomSettingsSheet(
+        context,
+        availableCategories: categories,
+        room: room,
+        extendedOptions: extended,
+      );
+      if (edit == null || !mounted) return;
+      if (edit.category == room.category &&
+          edit.duration == room.secondsPerQuestion &&
+          edit.questionCount == room.questionCount) {
+        return;
+      }
+      try {
+        final state = await widget.repository.updateRoomSettings(
+          room: room,
+          category: edit.category,
+          secondsPerQuestion: edit.duration,
+          questionCount: edit.questionCount,
+        );
+        if (!mounted) return;
+        _applyLobbyState(state, announce: false);
+      } on RoomLiveUnsupported {
+        // Sunucuda göç yok: düğme bir daha çizilmez, eski davranış sürer.
+        if (mounted) setState(() {});
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'room_settings_update');
+        if (!mounted) return;
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.roomOpenFailed))));
+      }
+    } finally {
+      _settingsSheetOpen = false;
+    }
+  }
+
   bool _hostRefreshInFlight = false;
 
   /// Kalabalık lobide host çıkınca sunucu odayı kapatmaz, host'u en erken
@@ -619,6 +750,7 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
     _statusPollInFlight = true;
     try {
       await _pollRoomStatusBody();
+      await _heartbeatBody();
     } finally {
       _statusPollInFlight = false;
     }
@@ -658,6 +790,29 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
       if (mounted && _playersRefreshing) {
         setState(() => _playersRefreshing = false);
       }
+    }
+  }
+
+  /// Lobi sinyali (T2): sunucu `room_heartbeat` ile sessiz sahibi devreder ve
+  /// güncel sahip/ayarları döndürür. RPC yoksa depo `null` verir ve eski
+  /// yoklama (durum + oyuncu listesi) aynen sürer. Arka planda yoklama
+  /// durduğu için sinyal de kesilir.
+  Future<void> _heartbeatBody() async {
+    if (!mounted ||
+        quizOpened ||
+        _leaving ||
+        _terminalHandled ||
+        _appInBackground ||
+        room.id == null ||
+        room.status != RoomStatus.lobby) {
+      return;
+    }
+    try {
+      final state = await widget.repository.roomHeartbeat(room);
+      if (state == null) return;
+      _applyLobbyState(state);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'room_heartbeat failed');
     }
   }
 
@@ -736,6 +891,7 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    _lobbyBannerTimer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     _cancelSubscriptionsBestEffort('room_dispose_subscription_cancel_failed');
     _pausePolling();
@@ -1361,6 +1517,22 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                                   ],
                                   const SizedBox(height: SahneSpace.cardGap),
                                 ],
+                                if (_lobbyBannerText != null) ...[
+                                  padded(
+                                    _RoomNotice(
+                                      key: const ValueKey('room-lobby-banner'),
+                                      icon: AppIcons.gear,
+                                      leading: _lobbyBannerCrown
+                                          ? const SahneGlyph(
+                                              SahneGlyphKind.crown,
+                                              size: 16,
+                                            )
+                                          : null,
+                                      text: _lobbyBannerText!,
+                                    ),
+                                  ),
+                                  const SizedBox(height: SahneSpace.cardGap),
+                                ],
                                 padded(
                                   _RoomHero(
                                     room: room,
@@ -1373,6 +1545,18 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                                     inviteFirst: false,
                                     onInviteFriends: _canInviteFriends
                                         ? _inviteFriends
+                                        : null,
+                                    // Yalnız sahip, yalnız lobide, yalnız
+                                    // sunucu destekliyorsa (T2).
+                                    onEditSettings:
+                                        isHost &&
+                                            room.hostId != null &&
+                                            room.id != null &&
+                                            room.status == RoomStatus.lobby &&
+                                            widget
+                                                .repository
+                                                .roomSettingsEditable
+                                        ? _editSettings
                                         : null,
                                   ),
                                 ),
@@ -1805,7 +1989,11 @@ class _RoomHero extends StatelessWidget {
     required this.onShare,
     this.onInviteFriends,
     this.inviteFirst = false,
+    this.onEditSettings,
   });
+
+  /// Sahip için lobi ayar düzenleyicisini açar; `null` ise düğme çizilmez.
+  final VoidCallback? onEditSettings;
 
   /// Ev sahibi odada TEK başına: davet bağlantısı sayfanın birincil
   /// (dolu) düğmesi olur (kurul incelemesi 2026-10-19). Yarışı başlatmak
@@ -1907,18 +2095,36 @@ class _RoomHero extends StatelessWidget {
                   style: SahneType.headline.copyWith(color: t.tx),
                 ),
               ),
-              const SizedBox(height: SahneSpace.x2),
+              SizedBox(height: onEditSettings != null ? 0 : SahneSpace.x2),
               // Künye: çip değil düz satır. Dar ekranda ve büyük yazıda
               // alt satıra sarar; hiçbir öğe kesilmez.
-              Wrap(
-                spacing: SahneSpace.x4,
-                runSpacing: SahneSpace.x1,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  for (final (icon, label) in meta)
-                    _MetaItem(icon: icon, label: label),
+                  Expanded(
+                    child: Wrap(
+                      spacing: SahneSpace.x4,
+                      runSpacing: SahneSpace.x1,
+                      children: [
+                        for (final (icon, label) in meta)
+                          _MetaItem(icon: icon, label: label),
+                      ],
+                    ),
+                  ),
+                  if (onEditSettings != null)
+                    SahneIconButton(
+                      key: const ValueKey('room-edit-settings'),
+                      icon: AppIcons.pen,
+                      semanticLabel: context.t(K.settings),
+                      onPressed: onEditSettings,
+                    ),
                 ],
               ),
-              const SizedBox(height: SahneSpace.x4),
+              // Düzenleme düğmesi (48 pt) satırı uzattığı için boşluklar
+              // kısılır: lobi ilk görünümde dört satır sığdırır (T13).
+              SizedBox(
+                height: onEditSettings != null ? SahneSpace.x1 : SahneSpace.x4,
+              ),
               // Oda kodu: kopyalanabilir tek çip. Uzun "dokun ve kopyala"
               // yazısı ekran okuyucuya ipucu olarak kaldı; görünürde kısa
               // "Oda kodu" etiketi ve kopya simgesi yeter (kopyalayınca
@@ -2218,11 +2424,15 @@ class _RoomNotice extends StatelessWidget {
     required this.icon,
     required this.text,
     this.error = false,
+    this.leading,
   });
 
   final IconData icon;
   final String text;
   final bool error;
+
+  /// Verilirse simgenin yerine çizilir (ör. sahip değişiminde taç).
+  final Widget? leading;
 
   @override
   Widget build(BuildContext context) {
@@ -2240,7 +2450,7 @@ class _RoomNotice extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 2),
-              child: Icon(icon, color: fg, size: 16),
+              child: leading ?? Icon(icon, color: fg, size: 16),
             ),
             const SizedBox(width: SahneSpace.x2),
             Expanded(
@@ -2384,7 +2594,21 @@ class _RoomPlayerRow extends StatelessWidget {
             spacing: SahneSpace.x2,
             runSpacing: SahneSpace.x1,
             crossAxisAlignment: WrapCrossAlignment.center,
-            children: [nameText, hostBadge],
+            children: [
+              nameText,
+              // Taç, rozetle TEK çocuk: ayrı çocuk olsaydı dar satırda
+              // rozeti alt satıra itip oyuncu satırını uzatırdı (T13 sığma).
+              Wrap(
+                spacing: SahneSpace.x1,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  const ExcludeSemantics(
+                    child: SahneGlyph(SahneGlyphKind.crown, size: 14),
+                  ),
+                  hostBadge,
+                ],
+              ),
+            ],
           );
 
     // İkinci satır yalnız hazır durumu ("✓ Hazır" / kum saati + söz) içindir.
