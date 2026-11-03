@@ -55,6 +55,13 @@ begin
      or has_table_privilege('authenticated', 'public.olcek_tur3_yedek', 'insert,update,delete,select') then
     raise exception 'tur5: olcek_tur3_yedek anon/authenticated erişimine açık kalıyor';
   end if;
+  -- Sahibi dışında hiçbir alıcıya (doğrudan grant dahil) yetki kalmamalı.
+  if exists (
+    select 1 from pg_class c, aclexplode(coalesce(c.relacl, '{}')) a
+    where c.oid = 'public.olcek_tur3_yedek'::regclass and a.grantee <> c.relowner
+  ) then
+    raise exception 'tur5: olcek_tur3_yedek sahibi dışında alıcıya açık (relacl)';
+  end if;
   -- Tek uçuş, get_my_league ile weekly_league_rollover'ın AYNI advisory
   -- anahtarını kullanmasına bağlı: rollover gövdesinde formül aranır.
   v_rol := pg_get_functiondef(to_regprocedure('public.weekly_league_rollover(date)'));
@@ -69,7 +76,13 @@ $tur5_onkosul$;
 -- zinciri sağlam ve yama parçaları yerinde olmalı -> zaten uygulanmış, atlanır.
 -- Başka her durum göçü durdurur (bağlayıcı parça aynı kalıp gövdenin başka yeri
 -- değişmişse yama SÜRMEZ).
-create temp table tur5_durum (imza text primary key, gerekli boolean not null) on commit drop;
+-- Beklenen NİHAİ gövde md5'i (bu dosyanın yamalarından sonra). "Zaten
+-- uygulanmış" yalnız gövde TAM bu md5'teyse kabul edilir: aynı 'tur5:' yedek
+-- adlarıyla önceki bir tur5 varyantı uygulanmışsa (md5 farklı) göç durur.
+-- owner = yamadan önceki sahip; yama sonrası değişmediği doğrulanır.
+create temp table tur5_durum (
+  imza text primary key, gerekli boolean not null, sahip oid not null, nihai text not null
+) on commit drop;
 do $tur5_durum$
 declare
   r record;
@@ -78,23 +91,28 @@ declare
   v_eski text;
 begin
   for r in select * from (values
-    ('public.join_matchmaking(text)', 'ad0d91b0b6dc7f69921bad085dec4024'),
-    ('public.get_my_league()', 'c978108c3c567ecb926a2d78a6093c99')) t(imza, taban)
+    ('public.join_matchmaking(text)', 'ad0d91b0b6dc7f69921bad085dec4024', 'f059997f9c948d6a9cacbe993e599b2c'),
+    ('public.get_my_league()', 'c978108c3c567ecb926a2d78a6093c99', 'a72570e3764fe2fdc2b79b08d56bb590')) t(imza, taban, nihai)
   loop
     v_def := pg_get_functiondef(to_regprocedure(r.imza));
     if md5(v_def) = r.taban then
-      insert into tur5_durum values (r.imza, true);
+      insert into tur5_durum
+      select r.imza, true, p.proowner, r.nihai from pg_proc p where p.oid = to_regprocedure(r.imza);
       continue;
+    end if;
+    if md5(v_def) <> r.nihai then
+      raise exception 'tur5: % gövdesi ne bilinen canlı taban ne de bu sürümün nihai gövdesi (md5 %); eski bir tur5 varyantı uygulanmış ya da canlı gövde değişmiş olabilir, elle incele', r.imza, md5(v_def);
     end if;
     select y.tanim into v_yedek from public.olcek_tur3_yedek y where y.ad = 'tur5:' || r.imza;
     v_eski := regexp_replace(coalesce(v_yedek, ''), E'\n-- md5:[0-9a-f]+\n-- yama-md5:[0-9a-f]+$', '');
     if v_yedek is null or v_eski = v_yedek
        or md5(v_eski) <> r.taban
        or substring(v_yedek from E'\n-- md5:([0-9a-f]+)\n') <> r.taban
-       or substring(v_yedek from E'\n-- yama-md5:([0-9a-f]+)$') <> md5(v_def) then
-      raise exception 'tur5: % gövdesi ne bilinen canlı taban ne de sağlam yamalı durumda (md5 %); canlı gövde değişmiş ya da yedek bozuk, elle incele', r.imza, md5(v_def);
+       or substring(v_yedek from E'\n-- yama-md5:([0-9a-f]+)$') <> r.nihai then
+      raise exception 'tur5: % nihai gövdede ama yedek satırı/md5 zinciri sağlam değil; güvenli geri alma yok, elle incele', r.imza;
     end if;
-    insert into tur5_durum values (r.imza, false);
+    insert into tur5_durum
+    select r.imza, false, p.proowner, r.nihai from pg_proc p where p.oid = to_regprocedure(r.imza);
   end loop;
 end;
 $tur5_durum$;
@@ -254,20 +272,27 @@ revoke all on function public.get_my_league() from public, anon;
 grant execute on function public.get_my_league() to authenticated;
 do $tur5_son$
 declare
-  v_imza text;
+  r record;
+  v_sp text;
 begin
-  foreach v_imza in array array['public.join_matchmaking(text)', 'public.get_my_league()'] loop
+  for r in select * from tur5_durum loop
+    v_sp := case r.imza when 'public.join_matchmaking(text)' then 'search_path=public'
+                        else 'search_path=public, pg_temp' end;
     if not exists (
       select 1 from pg_proc p
-      where p.oid = to_regprocedure(v_imza)
+      where p.oid = to_regprocedure(r.imza)
         and p.prosecdef
-        and exists (select 1 from unnest(coalesce(p.proconfig, '{}')) c where c like 'search_path=%')
+        and p.proowner = r.sahip
+        and p.proconfig = array[v_sp]
     ) then
-      raise exception 'tur5: % SECURITY DEFINER + search_path değil', v_imza;
+      raise exception 'tur5: % SECURITY DEFINER / sahip / tam search_path (%) doğrulanamadı', r.imza, v_sp;
     end if;
-    if has_function_privilege('anon', to_regprocedure(v_imza), 'execute')
-       or has_function_privilege('public', to_regprocedure(v_imza), 'execute') then
-      raise exception 'tur5: % anon/PUBLIC EXECUTE açık', v_imza;
+    if md5(pg_get_functiondef(to_regprocedure(r.imza))) <> r.nihai then
+      raise exception 'tur5: % yama sonrası gövde beklenen nihai md5 değil', r.imza;
+    end if;
+    if has_function_privilege('anon', to_regprocedure(r.imza), 'execute')
+       or has_function_privilege('public', to_regprocedure(r.imza), 'execute') then
+      raise exception 'tur5: % anon/PUBLIC EXECUTE açık', r.imza;
     end if;
   end loop;
 end;

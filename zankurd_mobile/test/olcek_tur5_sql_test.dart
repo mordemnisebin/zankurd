@@ -72,6 +72,11 @@ void main() {
     () {
       expect(code, contains('tur5_durum'));
       expect(code, contains('p.prosecdef'));
+      expect(code, contains('aclexplode'));
+      expect(code, contains('p.proowner = r.sahip'));
+      expect(code, contains('bu sürümün nihai gövdesi'));
+      expect(geri, contains('for update;'));
+      expect(geri, contains('execute v_eskiler[v_i]'));
       expect(code, contains("has_function_privilege('anon'"));
       expect(code, contains('revoke all on public.olcek_tur3_yedek'));
       expect(code, contains("'league-rollover:' || v_week::text"));

@@ -78,6 +78,12 @@ const md5 = t => crypto.createHash('md5').update(t).digest('hex');
 if (process.env.TUR5_PRINT_MD5) { console.log(md5(joinEski), md5(ligEski)); process.exit(0); }
 assert(tur5.includes(md5(joinEski)), 'göçteki join taban md5 = repo zincirinden türeyen gövde');
 assert(tur5.includes(md5(ligEski)), 'göçteki lig taban md5 = repo zincirinden türeyen gövde');
+if (process.env.TUR5_PRINT_FINAL) {
+  await db.exec(fs.readFileSync(process.env.TUR5_PRINT_FINAL, 'utf8'));
+  console.log(md5(await defOnce('join_matchmaking(text)')), md5(await defOnce('get_my_league()')));
+  console.log((await db.query("select proname, proconfig from pg_proc where proname in ('join_matchmaking','get_my_league') order by 1")).rows.map(r => r.proname + JSON.stringify(r.proconfig)).join(' '));
+  process.exit(0);
+}
 const uygula = () => db.exec(tur5);
 await uygula();
 await uygula(); // idempotent
@@ -134,7 +140,7 @@ console.log('esleme dogrulugu: iki kisi tam bir kez eslesti, ucuncu bekledi');
     await db.exec("update olcek_tur3_yedek set tanim = replace(tanim, '-- md5:0', '-- md5:')");
     // Uygulanmış sayılan dalda yedek yoksa göç durur.
     await db.exec('delete from olcek_tur3_yedek');
-    await assert.rejects(db.exec(tur5), /ne bilinen canlı taban ne de sağlam yamalı/);
+    await assert.rejects(db.exec(tur5), /yedek satırı\/md5 zinciri sağlam değil/);
     await db.exec('rollback');
     for (const y of yedekler) await db.query('insert into olcek_tur3_yedek values ($1,$2,$3)', [y.ad, y.tanim, y.alindi]);
     // İşlev yoksa yeniden yaratma yok.
@@ -145,6 +151,18 @@ console.log('esleme dogrulugu: iki kisi tam bir kez eslesti, ucuncu bekledi');
     await db.exec(tur5); // sağlam yamalı durumda sorunsuz (yeniden ileri)
     console.log('geri alma hep-ya-hic, bozuk zincir, eksik islev, yedeksiz uygulanmis dali dogru');
   }
+  // (c3) Eski tur5 varyantı (nihai md5 değil) 'uygulanmış' sayılmaz; ACL sızıntısı göçü durdurur.
+  {
+    const lyamali = await defOnce('get_my_league()');
+    await db.exec("create or replace function public.get_my_league() returns jsonb language sql security definer set search_path to 'public', 'pg_temp' as $$ select '{}'::jsonb $$");
+    await assert.rejects(db.exec(tur5), /nihai gövdesi/);
+    await db.exec('rollback');
+    await db.exec(lyamali);
+    await db.exec('create role baska; grant select on olcek_tur3_yedek to baska');
+    await assert.rejects(db.exec(tur5), /relacl/);
+    await db.exec('rollback');
+    await db.exec('revoke all on olcek_tur3_yedek from baska');
+  }
   // (d) göçten sonra gövde değişirse geri alma durur.
   await db.exec("create or replace function public.get_my_league() returns jsonb language sql as $$ select '{}'::jsonb $$");
   await assert.rejects(db.exec(geri), /canlı gövdesi göçten sonra değişmiş/);
@@ -154,6 +172,6 @@ console.log('esleme dogrulugu: iki kisi tam bir kez eslesti, ucuncu bekledi');
 // (e) Beklenmeyen taban: göç durur.
 await db.exec("create or replace function public.get_my_league() returns jsonb language sql as $$ select '{}'::jsonb $$");
 await db.exec("delete from olcek_tur3_yedek");
-await assert.rejects(db.exec(tur5), /ne bilinen canlı taban ne de sağlam yamalı/);
+await assert.rejects(db.exec(tur5), /nihai|zinciri/);
 await db.exec('rollback');
 console.log('TAMAM');
