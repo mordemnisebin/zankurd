@@ -31,6 +31,7 @@ const defOnce = async n => (await db.query(`select pg_get_functiondef('public.${
 const join = async (n, cat = 'Rastgele') => { await as(n); return (await db.query('select public.join_matchmaking($1) r', [cat])).rows[0].r; };
 
 await db.exec(`
+  create role anon; create role authenticated;
   create schema auth;
   create function auth.uid() returns uuid language sql stable
     as $$ select nullif(current_setting('test.uid', true), '')::uuid $$;
@@ -72,16 +73,23 @@ const ligEski = await defOnce('get_my_league()');
 assert(joinEski.includes('pg_sleep(0.03)') && joinEski.includes('v_pass = 1'), 'taban: tur3 gövdesi');
 
 // (a) Tabanda kilit altında uyku var; yamadan sonra yok.
-const uygula = () => db.exec(noRevoke(tur5));
+import crypto from 'node:crypto';
+const md5 = t => crypto.createHash('md5').update(t).digest('hex');
+if (process.env.TUR5_PRINT_MD5) { console.log(md5(joinEski), md5(ligEski)); process.exit(0); }
+assert(tur5.includes(md5(joinEski)), 'göçteki join taban md5 = repo zincirinden türeyen gövde');
+assert(tur5.includes(md5(ligEski)), 'göçteki lig taban md5 = repo zincirinden türeyen gövde');
+const uygula = () => db.exec(tur5);
 await uygula();
 await uygula(); // idempotent
 const j = await defOnce('join_matchmaking(text)');
-const lockIdx = j.indexOf("perform pg_advisory_xact_lock(hashtextextended('matchmaking:' || lower(v_category_name)");
+assert(j.includes('pg_try_advisory_xact_lock(hashtextextended(\'matchmaking:\'') && !/\n    perform pg_advisory_xact_lock\(hashtextextended\('matchmaking:'/.test(j.slice(j.indexOf('v_locked'))), 'kategori kilidi try-lock');
+const lockIdx = j.indexOf("pg_try_advisory_xact_lock(hashtextextended('matchmaking:' || lower(v_category_name)");
 const sleepIdx = j.indexOf('perform pg_sleep(0.03)');
 assert(lockIdx > 0 && sleepIdx > 0 && sleepIdx < lockIdx, 'uyku kilitten ÖNCE');
 assert.equal((j.match(/pg_sleep/g) || []).length, 1, 'tek uyku');
 assert(j.includes('v_locked := true') && j.includes('not v_locked'), 'kilit bir kez');
-assert.equal((j.match(/pg_advisory_xact_lock\(hashtextextended\('matchmaking:'/g) || []).length, 1);
+assert.equal((j.match(/pg_try_advisory_xact_lock\(hashtextextended\('matchmaking:'/g) || []).length, 1);
+assert(!/[^_]pg_advisory_xact_lock\(hashtextextended\('matchmaking:'/.test(j), 'bekleyen kategori kilidi kalmadı');
 const l = await defOnce('get_my_league()');
 assert(l.includes("pg_try_advisory_xact_lock") && l.includes("'league-rollover:' || (v_week - 7)::text"), 'lig tek uçuş');
 assert(l.includes('not v_pending'), 'lig: bekleyen kapanışta atama yok');
@@ -109,6 +117,34 @@ console.log('esleme dogrulugu: iki kisi tam bir kez eslesti, ucuncu bekledi');
   assert.equal(await defOnce('get_my_league()'), ligEski, 'geri alma lig birebir');
   assert.equal((await db.query("select count(*)::int c from olcek_tur3_yedek where ad like 'tur5:%'")).rows[0].c, 0);
   await uygula(); // yeniden ileri
+  // (c2) Geri alma ya hep ya hiç: tek yedek eksikse hiçbir şey dönmez.
+  {
+    const yamali = await defOnce('join_matchmaking(text)');
+    const lyamali = await defOnce('get_my_league()');
+    const yedekler = (await db.query('select * from olcek_tur3_yedek')).rows;
+    await db.exec("delete from olcek_tur3_yedek where ad = 'tur5:public.get_my_league()'");
+    await assert.rejects(db.exec(geri), /yedek satırı yok/);
+    await db.exec('rollback');
+    assert.equal(await defOnce('join_matchmaking(text)'), yamali, 'eksik yedekte join dönmedi');
+    await db.exec("delete from olcek_tur3_yedek where ad = 'tur5:public.get_my_league()'");
+    for (const y of yedekler) await db.query('insert into olcek_tur3_yedek values ($1,$2,$3) on conflict do nothing', [y.ad, y.tanim, y.alindi]);
+    await db.exec("update olcek_tur3_yedek set tanim = replace(tanim, '-- md5:', '-- md5:0') where ad like 'tur5:%'");
+    await assert.rejects(db.exec(geri), /bozuk/);
+    await db.exec('rollback');
+    await db.exec("update olcek_tur3_yedek set tanim = replace(tanim, '-- md5:0', '-- md5:')");
+    // Uygulanmış sayılan dalda yedek yoksa göç durur.
+    await db.exec('delete from olcek_tur3_yedek');
+    await assert.rejects(db.exec(tur5), /ne bilinen canlı taban ne de sağlam yamalı/);
+    await db.exec('rollback');
+    for (const y of yedekler) await db.query('insert into olcek_tur3_yedek values ($1,$2,$3)', [y.ad, y.tanim, y.alindi]);
+    // İşlev yoksa yeniden yaratma yok.
+    await db.exec('drop function public.get_my_league()');
+    await assert.rejects(db.exec(geri), /yok; geri alma durdu/);
+    await db.exec('rollback');
+    await db.exec(lyamali);
+    await db.exec(tur5); // sağlam yamalı durumda sorunsuz (yeniden ileri)
+    console.log('geri alma hep-ya-hic, bozuk zincir, eksik islev, yedeksiz uygulanmis dali dogru');
+  }
   // (d) göçten sonra gövde değişirse geri alma durur.
   await db.exec("create or replace function public.get_my_league() returns jsonb language sql as $$ select '{}'::jsonb $$");
   await assert.rejects(db.exec(geri), /canlı gövdesi göçten sonra değişmiş/);
@@ -118,6 +154,6 @@ console.log('esleme dogrulugu: iki kisi tam bir kez eslesti, ucuncu bekledi');
 // (e) Beklenmeyen taban: göç durur.
 await db.exec("create or replace function public.get_my_league() returns jsonb language sql as $$ select '{}'::jsonb $$");
 await db.exec("delete from olcek_tur3_yedek");
-await assert.rejects(db.exec(noRevoke(tur5)), /bağlayıcı durumu beklenmiyor/);
+await assert.rejects(db.exec(tur5), /ne bilinen canlı taban ne de sağlam yamalı/);
 await db.exec('rollback');
 console.log('TAMAM');

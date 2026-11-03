@@ -58,13 +58,32 @@ void main() {
     );
     final uyku = blok.indexOf('perform pg_sleep(0.03)');
     final kilit = blok.indexOf(
-      "pg_advisory_xact_lock(hashtextextended('matchmaking:'",
+      "pg_try_advisory_xact_lock(hashtextextended('matchmaking:'",
     );
     expect(uyku, greaterThan(0));
     expect(kilit, greaterThan(uyku), reason: 'uyku yalnız kilitsiz geçişte');
     expect(blok.indexOf('v_locked := true'), greaterThan(kilit));
     expect('pg_sleep'.allMatches(blok).length, 1);
+    expect(blok, contains("return json_build_object('status', 'waiting')"));
   });
+
+  test(
+    'göç: taban md5, yedek zinciri, son güvenlik doğrulaması; geri: hep ya hiç',
+    () {
+      expect(code, contains('tur5_durum'));
+      expect(code, contains('p.prosecdef'));
+      expect(code, contains("has_function_privilege('anon'"));
+      expect(code, contains('revoke all on public.olcek_tur3_yedek'));
+      expect(code, contains("'league-rollover:' || v_week::text"));
+      expect(geri, isNot(contains('ad like')));
+      expect(geri, contains('yedek satırı yok; hiçbir işlev geri alınmadı'));
+      expect(geri, contains('yok; geri alma durdu'));
+      expect(
+        geri,
+        contains('grant execute on function public.get_my_league()'),
+      );
+    },
+  );
 
   test('get_my_league: tek uçuş, rollover ile aynı anahtar', () {
     expect(code, contains('pg_try_advisory_xact_lock('));

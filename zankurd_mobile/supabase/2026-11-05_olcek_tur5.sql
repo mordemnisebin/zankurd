@@ -22,6 +22,10 @@
 --    bekler; istemci 20 sn'lik iptalden sonra join'i yeniden çağırır, kimse
 --    sonsuza dek beklemez (eskisi bu pencereyi kilit altında 150 ms uyuyarak
 --    kapatıyordu, bedeli bütün arayanların seri beklemesiydi).
+-- (Eklenen sertlik) Kategori kilidi artık pg_try_advisory_xact_lock: alınamazsa
+--    satır eklenmeden 'waiting' döner (istemci touch 'none' -> yeniden join).
+--    Taban gövdenin TAM md5'i doğrulanır; uygulanmışlıkta yedek+md5 zinciri
+--    doğrulanır; yama sonrası prosecdef/search_path/anon EXECUTE doğrulanır.
 -- 2. get_my_league: cron geciktiğinde her çağrı geçen haftayı kapatmaya
 --    kalkıp haftanın ilk dakikalarında yığılıyordu. Artık tek uçuş:
 --    pg_try_advisory_xact_lock('league-rollover:<hafta>', rollover ile AYNI
@@ -34,6 +38,8 @@ begin;
 set local lock_timeout = '10s';
 
 do $tur5_onkosul$
+declare
+  v_rol text;
 begin
   if to_regprocedure('public.join_matchmaking(text)') is null
      or to_regprocedure('public.get_my_league()') is null
@@ -41,8 +47,57 @@ begin
      or to_regclass('public.olcek_tur3_yedek') is null then
     raise exception 'tur5: beklenen canlı nesneler eksik; göçü uygulamadan önce incele';
   end if;
+  -- Yedek tablosu istemci rollerine kapalı (rollback bu satırlardaki gövdeyi
+  -- çalıştırır; yazılabilir olması keyfi kod çalıştırmak demektir).
+  alter table public.olcek_tur3_yedek enable row level security;
+  revoke all on public.olcek_tur3_yedek from public, anon, authenticated;
+  if has_table_privilege('anon', 'public.olcek_tur3_yedek', 'insert,update,delete,select')
+     or has_table_privilege('authenticated', 'public.olcek_tur3_yedek', 'insert,update,delete,select') then
+    raise exception 'tur5: olcek_tur3_yedek anon/authenticated erişimine açık kalıyor';
+  end if;
+  -- Tek uçuş, get_my_league ile weekly_league_rollover'ın AYNI advisory
+  -- anahtarını kullanmasına bağlı: rollover gövdesinde formül aranır.
+  v_rol := pg_get_functiondef(to_regprocedure('public.weekly_league_rollover(date)'));
+  if position($k$perform pg_advisory_xact_lock(hashtextextended('league-rollover:' || v_week::text, 0));$k$ in v_rol) = 0 then
+    raise exception 'tur5: weekly_league_rollover kilit anahtarı beklenenden farklı; tek uçuş anahtarı eşleşmiyor';
+  end if;
 end;
 $tur5_onkosul$;
+
+-- Bilinen canlı taban gövdelerinin TAM md5'i (pg_get_functiondef). Yamadan önce
+-- gövde ya (a) tam bu taban olmalı -> yamalanır, ya (b) yedek satırı + md5
+-- zinciri sağlam ve yama parçaları yerinde olmalı -> zaten uygulanmış, atlanır.
+-- Başka her durum göçü durdurur (bağlayıcı parça aynı kalıp gövdenin başka yeri
+-- değişmişse yama SÜRMEZ).
+create temp table tur5_durum (imza text primary key, gerekli boolean not null) on commit drop;
+do $tur5_durum$
+declare
+  r record;
+  v_def text;
+  v_yedek text;
+  v_eski text;
+begin
+  for r in select * from (values
+    ('public.join_matchmaking(text)', 'ad0d91b0b6dc7f69921bad085dec4024'),
+    ('public.get_my_league()', 'c978108c3c567ecb926a2d78a6093c99')) t(imza, taban)
+  loop
+    v_def := pg_get_functiondef(to_regprocedure(r.imza));
+    if md5(v_def) = r.taban then
+      insert into tur5_durum values (r.imza, true);
+      continue;
+    end if;
+    select y.tanim into v_yedek from public.olcek_tur3_yedek y where y.ad = 'tur5:' || r.imza;
+    v_eski := regexp_replace(coalesce(v_yedek, ''), E'\n-- md5:[0-9a-f]+\n-- yama-md5:[0-9a-f]+$', '');
+    if v_yedek is null or v_eski = v_yedek
+       or md5(v_eski) <> r.taban
+       or substring(v_yedek from E'\n-- md5:([0-9a-f]+)\n') <> r.taban
+       or substring(v_yedek from E'\n-- yama-md5:([0-9a-f]+)$') <> md5(v_def) then
+      raise exception 'tur5: % gövdesi ne bilinen canlı taban ne de sağlam yamalı durumda (md5 %); canlı gövde değişmiş ya da yedek bozuk, elle incele', r.imza, md5(v_def);
+    end if;
+    insert into tur5_durum values (r.imza, false);
+  end loop;
+end;
+$tur5_durum$;
 
 -- Yamalayıcı. Uygulanmış sayılması: yeni parça TAM BİR kez var ve yeni parça
 -- çıkarıldığında eski parça kalmamış (eski parça yeninin alt metni olabilir).
@@ -101,7 +156,7 @@ begin
   $y$  v_pass integer;
   v_locked boolean := false;
 begin
-  if v_player_id is null then$y$);
+  if v_player_id is null then$y$) from tur5_durum d where d.imza = 'public.join_matchmaking(text)' and d.gerekli;
 
 select pg_temp.tur5_yama(
   'public.join_matchmaking(text)',
@@ -149,12 +204,17 @@ select pg_temp.tur5_yama(
       perform pg_sleep(0.03);
       continue;
     end if;
-    perform pg_advisory_xact_lock(hashtextextended('matchmaking:' || lower(v_category_name), 0));
+    if not pg_try_advisory_xact_lock(hashtextextended('matchmaking:' || lower(v_category_name), 0)) then
+      -- Kategori kilidi başkasında: BEKLEME (RPC takılmasın). Satır eklenmeden
+      -- 'waiting' döner; istemcinin touch_matchmaking yoklaması 'none' görüp
+      -- join'i yeniden çağırır (en geç bir yoklama aralığı sonra).
+      return json_build_object('status', 'waiting');
+    end if;
     v_locked := true;
     continue;
   end if;
   exit;
-  end loop;$y$);
+  end loop;$y$) from tur5_durum d where d.imza = 'public.join_matchmaking(text)' and d.gerekli;
 
 select pg_temp.tur5_yama(
   'public.get_my_league()',
@@ -164,7 +224,7 @@ begin
   $y$  v_zone integer;
   v_pending boolean := false;
 begin
-  if v_uid is null then$y$);
+  if v_uid is null then$y$) from tur5_durum d where d.imza = 'public.get_my_league()' and d.gerekli;
 
 select pg_temp.tur5_yama(
   'public.get_my_league()',
@@ -177,12 +237,40 @@ select pg_temp.tur5_yama(
     else
       v_pending := true;
     end if;
-  end if;$y$);
+  end if;$y$) from tur5_durum d where d.imza = 'public.get_my_league()' and d.gerekli;
 
 select pg_temp.tur5_yama(
   'public.get_my_league()',
   $e$  if v_cohort is null and public.weekly_league_score(v_uid, v_week) > 0 then$e$,
   $y$  if v_cohort is null and not v_pending
-     and public.weekly_league_score(v_uid, v_week) > 0 then$y$);
+     and public.weekly_league_score(v_uid, v_week) > 0 then$y$) from tur5_durum d where d.imza = 'public.get_my_league()' and d.gerekli;
+
+-- Yama sonrası güvenlik doğrulaması: SECURITY DEFINER, sabit search_path,
+-- anon EXECUTE yok; erişim açıkça yeniden kurulur (CREATE OR REPLACE sahipliği
+-- ve ACL'yi korur ama göç bunu varsaymaz).
+revoke all on function public.join_matchmaking(text) from public, anon;
+grant execute on function public.join_matchmaking(text) to authenticated;
+revoke all on function public.get_my_league() from public, anon;
+grant execute on function public.get_my_league() to authenticated;
+do $tur5_son$
+declare
+  v_imza text;
+begin
+  foreach v_imza in array array['public.join_matchmaking(text)', 'public.get_my_league()'] loop
+    if not exists (
+      select 1 from pg_proc p
+      where p.oid = to_regprocedure(v_imza)
+        and p.prosecdef
+        and exists (select 1 from unnest(coalesce(p.proconfig, '{}')) c where c like 'search_path=%')
+    ) then
+      raise exception 'tur5: % SECURITY DEFINER + search_path değil', v_imza;
+    end if;
+    if has_function_privilege('anon', to_regprocedure(v_imza), 'execute')
+       or has_function_privilege('public', to_regprocedure(v_imza), 'execute') then
+      raise exception 'tur5: % anon/PUBLIC EXECUTE açık', v_imza;
+    end if;
+  end loop;
+end;
+$tur5_son$;
 
 commit;
