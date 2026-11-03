@@ -208,11 +208,9 @@ void main() {
       tester,
       _LobbyRepository(userId: 'host-user', players: [_me, _guest]),
     );
-    // Tepkiler "Sohbet" düğmesinin arkasında: kapalıyken lobide yok.
-    expect(find.byType(SahneRailChip), findsNothing);
-    await tester.tap(find.byKey(const ValueKey('room-chat-toggle')));
-    await tester.pump(const Duration(milliseconds: 300));
-    expect(find.byType(SahneRailChip), findsWidgets);
+    // k4 T3: tepkiler klavyesiz tek dokunuş, sohbet paneli kapalıyken de
+    // lobide görünür (sohbet mesajı olarak gider).
+    expect(find.byKey(const ValueKey('room-reaction-🔥')), findsOneWidget);
   });
 
   testWidgets(
