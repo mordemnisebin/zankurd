@@ -71,8 +71,8 @@ void main() {
     expect(geriRaw, isNot(contains('COMMIT')));
     expect(
       applied,
-      contains('2026-11-04_olcek_sertlestirme.sql | ⏳'),
-      reason: 'uygulanana dek ⏳',
+      contains('2026-11-04_olcek_sertlestirme.sql | ✅'),
+      reason: 'canlıda ✅',
     );
   });
 
