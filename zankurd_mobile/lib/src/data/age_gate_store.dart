@@ -18,9 +18,15 @@ import '../utils/error_reporter.dart';
 ///   özellikler ve kullanım analizi KAPALI; öğrenme ve tek kişilik oyun
 ///   AÇIK kalır (bkz. `FeatureGate.chat/social`,
 ///   `AnalyticsConsentProvider.load/setEnabled`).
-/// * Cevap yoksa ([declaration] null) kısıtlama YOKTUR: mevcut kullanıcı
-///   bir şeyden yoksun bırakılmaz; ona yalnız BİR KEZ sorulur
-///   ([shouldAsk]/[markAsked]), yeni kullanıcıya ilk açılış akışında.
+/// * Cevap yoksa ([declaration] null) sosyal yüzey (sohbet, arkadaş isteği,
+///   oda sohbeti) AÇILMAZ (2026-11-04, ikinci tur kurul): eskiden "cevap
+///   yok = serbest"ti ve kapıyı atlamak için tek yapılacak soruyu
+///   kapatmaktı; çocuk sohbete sessizce giriyordu. Şimdi kullanıcı ilk kez
+///   sosyal bir özelliğe dokununca yaş sorusu çıkar
+///   (`StartupPrompts.ensureAgeCleared`); cevaplayana dek kapalı kalır.
+///   Öğrenme ve tek kişilik oyun HİÇBİR durumda kapanmaz; ilk açılış
+///   sorusu ([shouldAsk]/[markAsked]) yine bir kez çıkar. Daha önce cevap
+///   vermiş kullanıcı cevabını korur.
 /// * Beyan yalnız cihazdadır: profilde sütun yoktur (göç eklenmedi) ve
 ///   hesap açan biri başka cihazda yeniden sorulur. Bilinçli: DB'ye yaş
 ///   bilgisi yazmak da ayrı bir veri sorumluluğudur.
@@ -37,6 +43,9 @@ class AgeGate {
   static AgeDeclaration? declaration;
 
   static bool get isMinor => declaration == AgeDeclaration.minor;
+
+  /// 13 yaşından büyük olduğunu AÇIKÇA beyan etti mi (sosyal yüzeyin şartı).
+  static bool get isAdult => declaration == AgeDeclaration.adult;
 
   @visibleForTesting
   static void debugSet(AgeDeclaration? value) => declaration = value;

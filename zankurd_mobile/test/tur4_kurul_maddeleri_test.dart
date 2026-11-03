@@ -331,8 +331,9 @@ void main() {
       ).allMatches(src).length,
       greaterThanOrEqualTo(2),
     );
+    // Biçimlendirici girintiye göre satırı bölebilir: boşluk-bağımsız karşılaştır.
     expect(
-      src,
+      src.replaceAll(RegExp(r'\s+'), ' '),
       contains('maxWidth: _largeText(context) ? double.infinity : _priceWidth'),
     );
   });

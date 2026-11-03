@@ -83,6 +83,7 @@ class MatchmakingScreen extends StatefulWidget {
   const MatchmakingScreen({
     required this.repository,
     this.metrics,
+    this.initialCategory,
     this.asyncDuelEnabled = kAsyncDuelEnabled,
     this.loadRetryDelays = defaultLoadRetryDelays,
     super.key,
@@ -99,6 +100,10 @@ class MatchmakingScreen extends StatefulWidget {
 
   final ZanKurdRepository repository;
   final MatchmakingMetrics? metrics;
+
+  /// Doluysa ve konu listesinde varsa kategori seçimi atlanır, arama bu
+  /// konuda hemen başlar (sonuç ekranındaki "Yeniden eşleş").
+  final String? initialCategory;
 
   /// Varsayılanı [kAsyncDuelEnabled]; testler ve ekran turu bayrak
   /// kapalıyken de "sırayla düello" teklifini açabilsin diye parametredir
@@ -207,6 +212,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   bool _opponentIsBot = false;
 
   bool _searchingStarted = false;
+  bool _initialCategoryUsed = false;
   List<String> _categories = const [];
   bool _loadingCategories = false;
   bool _categoriesError = false;
@@ -586,6 +592,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         _categories = cats;
         _loadingCategories = false;
       });
+      final initial = widget.initialCategory;
+      if (initial != null && !_initialCategoryUsed && cats.contains(initial)) {
+        _initialCategoryUsed = true;
+        unawaited(_startMatchmaking(initial));
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'matchmaking_load_categories');
       if (mounted) {

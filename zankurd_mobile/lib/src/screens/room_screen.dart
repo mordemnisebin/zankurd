@@ -20,6 +20,7 @@ import '../widgets/player_avatar.dart';
 import '../models/room_message.dart';
 import '../widgets/lobby_chat_hud.dart';
 import '../widgets/room_chat.dart';
+import '../widgets/startup_prompts.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/join_deep_link.dart';
@@ -133,8 +134,32 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
   LobbyChatController? _chatHud;
 
   void _setChatOpen(bool open) {
+    if (open && !FeatureGate.chat && FeatureGate.chatVisible) {
+      // Yaş beyanı yok: sohbet önce soruyla açılır (bkz. `AgeGate`).
+      unawaited(_openChatAfterAge());
+      return;
+    }
     setState(() => _chatOpen = open);
     _chatHud?.chatOpen = open;
+  }
+
+  Future<void> _openChatAfterAge() async {
+    if (!await StartupPrompts.ensureAgeCleared(context)) return;
+    if (!mounted || !FeatureGate.chat) return;
+    _startChatHud();
+    _setChatOpen(true);
+  }
+
+  void _startChatHud() {
+    final hudRoomId = room.id;
+    if (_chatHud != null || hudRoomId == null || !FeatureGate.chat) return;
+    _chatHud = LobbyChatController(
+      repository: widget.repository,
+      roomId: hudRoomId,
+      isBlocked: (id) =>
+          _blockedPlayerIds.contains(id) || ChatMuteStore.instance.isMuted(id),
+      onReaction: _showIncomingChatReaction,
+    )..start();
   }
 
   late GameRoom room = widget.initialRoom.copyWith(
@@ -282,19 +307,10 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
     _startSubscriptions();
     _startPolling();
     _startStatusPolling();
-    final hudRoomId = room.id;
-    // Sohbet kapalıysa (uzak anahtar `chat_enabled` ya da 13 yaş altı
-    // beyanı, bkz. `FeatureGate.chat`) akışa hiç abone olunmaz.
-    if (hudRoomId != null && FeatureGate.chat) {
-      _chatHud = LobbyChatController(
-        repository: widget.repository,
-        roomId: hudRoomId,
-        isBlocked: (id) =>
-            _blockedPlayerIds.contains(id) ||
-            ChatMuteStore.instance.isMuted(id),
-        onReaction: _showIncomingChatReaction,
-      )..start();
-    }
+    // Sohbet kapalıysa (uzak anahtar `chat_enabled`, 13 yaş altı ya da
+    // henüz cevaplanmamış yaş beyanı, bkz. `FeatureGate.chat`) akışa hiç
+    // abone olunmaz; beyan sonradan verilirse `_openChatAfterAge` başlatır.
+    _startChatHud();
     // Burada `updateReady(room, ready)` YOK — ve olmamalı.
     //
     // Eskiden vardı ve `ready` sabit `true` olduğu için zararsızdı: odaya
@@ -1209,7 +1225,7 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
   bool _roomInvitesSupported = false;
 
   bool get _canInviteFriends =>
-      FeatureGate.social &&
+      FeatureGate.socialVisible &&
       _roomInvitesSupported &&
       room.id != null &&
       room.isCustom &&
@@ -1229,6 +1245,8 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
 
   /// Kabul edilmiş arkadaşları kod girmeden davet eden sayfayı açar.
   Future<void> _inviteFriends() async {
+    if (!await StartupPrompts.ensureAgeCleared(context)) return;
+    if (!mounted) return;
     final count = await showRoomInviteFriendsSheet(
       context,
       widget.repository,
@@ -1560,7 +1578,7 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
                   // görünüyordu. Sohbet artık başlıkta küçük ikon düğmesi.
                   // Yalnızken kimseyle konuşulmaz: gizli (kurul 2026-10-19).
                   trailing:
-                      FeatureGate.chat &&
+                      FeatureGate.chatVisible &&
                           room.id != null &&
                           (room.players.length >= 2 || _chatOpen)
                       ? _withChatBadge(

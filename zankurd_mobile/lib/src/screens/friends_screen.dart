@@ -25,6 +25,8 @@ import '../widgets/friend_activity_label.dart';
 import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/player_moderation_button.dart';
+import '../widgets/startup_prompts.dart';
+import '../data/age_gate_store.dart';
 import '../widgets/sahne/sahne.dart';
 import 'async_duel/async_duel_challenge_sheet.dart';
 import 'room_screen.dart';
@@ -119,6 +121,12 @@ class _FriendsScreenState extends State<FriendsScreen>
       _sentRequests.contains(userId) ||
       (_sentServer?.any((request) => request.toUserId == userId) ?? false);
 
+  Future<void> _askAge() async {
+    if (!mounted) return;
+    await StartupPrompts.ensureAgeCleared(context);
+    if (mounted) setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
@@ -127,6 +135,10 @@ class _FriendsScreenState extends State<FriendsScreen>
         ? asyncDuelChallengeAvailable(widget.repository)
         : Future<bool>.value(false);
     _loadFriends();
+    // Yaş beyanı yoksa ekran açılır açılmaz sorulur (bkz. `AgeGate`).
+    if (!AgeGate.isAdult && !AgeGate.isMinor) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _askAge());
+    }
     final lifecycle = WidgetsBinding.instance.lifecycleState;
     _appInForeground =
         lifecycle == null || lifecycle == AppLifecycleState.resumed;
@@ -523,6 +535,7 @@ class _FriendsScreenState extends State<FriendsScreen>
     // Giriş noktaları (Yarış, Sıralama, Profil) yerinde durur; buraya gelen
     // kişi bekleneni bulmaz ama nedenini görür.
     if (!FeatureGate.social) {
+      final unanswered = !AgeGate.isMinor;
       return SahnePushedPage(
         role: SahneRole.social,
         title: context.t(K.myFriends),
@@ -531,13 +544,35 @@ class _FriendsScreenState extends State<FriendsScreen>
           SliverPadding(
             padding: const EdgeInsets.all(SahneSpace.page),
             sliver: SliverToBoxAdapter(
-              child: Text(
-                context.t(K.ageGateMinorOff),
-                key: const ValueKey('friends-minor-off'),
-                style: SahneType.body.copyWith(
-                  color: SahneTokens.of(context).tx2,
-                ),
-              ),
+              child: unanswered
+                  // Cevap yok: arkadaşlar yaş sorusunun arkasında.
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          context.t(K.ageGateBody),
+                          key: const ValueKey('friends-age-unanswered'),
+                          style: SahneType.body.copyWith(
+                            color: SahneTokens.of(context).tx2,
+                          ),
+                        ),
+                        const SizedBox(height: SahneSpace.x4),
+                        SahneButton.primary(
+                          buttonKey: const ValueKey('friends-age-ask'),
+                          label: context.t(K.ageGateTitle),
+                          expand: true,
+                          arrow: false,
+                          onPressed: () => unawaited(_askAge()),
+                        ),
+                      ],
+                    )
+                  : Text(
+                      context.t(K.ageGateMinorOff),
+                      key: const ValueKey('friends-minor-off'),
+                      style: SahneType.body.copyWith(
+                        color: SahneTokens.of(context).tx2,
+                      ),
+                    ),
             ),
           ),
         ],

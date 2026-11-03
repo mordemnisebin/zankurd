@@ -388,10 +388,29 @@ class _Cohort extends StatelessWidget {
       }
       children.add(_LeagueRow(member: m, isKu: isKu, promo: promo, demo: demo));
     }
-    return SahneListGroup(
+    final group = SahneListGroup(
       key: const ValueKey('league-cohort'),
       dividerIndent: SahneSpace.x3 + 24 + SahneSpace.x3,
       children: children,
+    );
+    // Küçük küme (< 4 oyuncu): sunucu bölge boyutunu 0 verir, bölge
+    // etiketleri hiç çıkmaz ve oyuncu yükselme/düşme kuralının var olduğunu
+    // bile göremezdi. Kural cümlesi açıkça yazılır (2026-11-04, ikinci tur).
+    if (league.cohortSize >= 4 || league.members.isEmpty) return group;
+    final t = SahneTokens.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+          child: Text(
+            Tr.forKu(K.lgZonesPending, isKu),
+            key: const ValueKey('league-zones-pending'),
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+        ),
+        group,
+      ],
     );
   }
 }

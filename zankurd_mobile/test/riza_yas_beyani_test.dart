@@ -8,6 +8,11 @@
 /// hiç yoktu; mağaza/COPPA 13 yaş altına sohbet, arkadaş ve kişiselleştirilmiş
 /// ölçümün kapalı olmasını bekler.
 ///
+/// 2026-11-04 (ikinci tur kurulu): cevap yokken sosyal yüzey de AÇIKTI;
+/// soruyu kapatan çocuk sohbete ve arkadaş isteğine sessizce giriyordu.
+/// Artık cevapsız = sosyal kapalı, ilk sosyal dokunuşta soru çıkar.
+/// Öğrenme/tek kişilik oyun hiçbir durumda kapanmaz.
+///
 /// ## Niçin sessiz kalırdı
 ///
 /// İkisi de "eksik özellik"ti: çökmez, hata üretmez. Eklenirken kolay
@@ -26,6 +31,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/config/feature_flags.dart';
 import 'package:zankurd_mobile/src/data/age_gate_store.dart';
 import 'package:zankurd_mobile/src/providers/analytics_consent_provider.dart';
+import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/widgets/startup_prompts.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -39,8 +45,13 @@ void main() {
   tearDown(() => AgeGate.debugSet(null));
 
   group('AgeGate', () {
-    test('cevap yoksa kısıtlama YOK; bir kez sorulur', () async {
+    test('cevap yoksa sosyal KAPALI (çocuk değil ama onaylı da değil); '
+        'açılış sorusu bir kez çıkar', () async {
       expect(AgeGate.isMinor, isFalse);
+      expect(AgeGate.isAdult, isFalse);
+      expect(FeatureGate.social, isFalse, reason: 'cevapsız sosyal açılmaz');
+      expect(FeatureGate.chat, isFalse);
+      expect(FeatureGate.socialVisible, isTrue, reason: 'giriş görünür');
       expect(await AgeGate.shouldAsk(), isTrue);
       await AgeGate.markAsked();
       expect(await AgeGate.shouldAsk(), isFalse, reason: 'ikinci kez sorulmaz');
@@ -56,8 +67,8 @@ void main() {
     });
 
     test('13 altı: sohbet ve sosyal kapalı, 13 üstü: açık', () async {
-      expect(FeatureGate.chat, isTrue);
-      expect(FeatureGate.social, isTrue);
+      expect(FeatureGate.chat, isFalse, reason: 'cevap yok = kapalı');
+      expect(FeatureGate.social, isFalse);
       await AgeGate.declare(AgeDeclaration.minor);
       expect(FeatureGate.chat, isFalse);
       expect(FeatureGate.social, isFalse);
@@ -141,6 +152,69 @@ void main() {
       await run(tester);
       expect(find.text('13 yaşından büyük müsün?'), findsNothing);
       expect(find.text('Uygulamayı birlikte geliştirelim'), findsNothing);
+    });
+
+    testWidgets(
+      'sosyal özelliğe ilk dokunuşta cevapsız kullanıcıya yaş sorulur; '
+      '"evet" izin verir, çarpı vermez',
+      (tester) async {
+        await tester.pumpWidget(host());
+        bool? cleared;
+        unawaited_(
+          StartupPrompts.ensureAgeCleared(ctx).then((v) => cleared = v),
+        );
+        await settle(tester);
+        expect(find.text('13 yaşından büyük müsün?'), findsOneWidget);
+        await tester.tap(find.byKey(const ValueKey('sahne-sheet-close')));
+        await settle(tester);
+        expect(cleared, isFalse, reason: 'soruyu kapatmak izin değildir');
+        expect(FeatureGate.social, isFalse);
+
+        // Cevapsız kaldıkça her sosyal denemede yeniden sorulur.
+        unawaited_(
+          StartupPrompts.ensureAgeCleared(ctx).then((v) => cleared = v),
+        );
+        await settle(tester);
+        await tester.tap(find.byKey(const ValueKey('age-gate-yes')));
+        await settle(tester);
+        expect(cleared, isTrue);
+        expect(FeatureGate.social, isTrue);
+        expect(FeatureGate.chat, isTrue);
+        // Cevaplayana bir daha sorulmaz.
+        expect(await StartupPrompts.ensureAgeCleared(ctx), isTrue);
+      },
+    );
+
+    testWidgets(
+      'Arkadaşlar ekranı cevapsızken yaş sorar; "evet" listeyi açar',
+      (tester) async {
+        await tester.pumpWidget(
+          testShell(child: FriendsScreen(repository: freshMockRepository())),
+        );
+        await settle(tester);
+        expect(find.byKey(const ValueKey('age-gate-yes')), findsOneWidget);
+        expect(
+          find.byKey(const ValueKey('friends-age-unanswered')),
+          findsOneWidget,
+        );
+        await tester.tap(find.byKey(const ValueKey('age-gate-yes')));
+        await settle(tester);
+        expect(
+          find.byKey(const ValueKey('friends-age-unanswered')),
+          findsNothing,
+        );
+        expect(AgeGate.isAdult, isTrue);
+      },
+    );
+
+    testWidgets('13 altı cevabı: ensureAgeCleared sormadan false verir', (
+      tester,
+    ) async {
+      await tester.pumpWidget(host());
+      AgeGate.debugSet(AgeDeclaration.minor);
+      expect(await StartupPrompts.ensureAgeCleared(ctx), isFalse);
+      await tester.pump();
+      expect(find.text('13 yaşından büyük müsün?'), findsNothing);
     });
 
     testWidgets('"Şimdi değil": ölçüm kapalı kalır ve bir daha sorulmaz', (

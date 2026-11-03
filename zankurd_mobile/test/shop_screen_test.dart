@@ -340,6 +340,28 @@ void main() {
     },
   );
 
+  testWidgets('ürün türü etiketi: çerçeve Kalıcı, güçlendirici Tek kullanım', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      _shell(ShopScreen(repository: _OfflineSpendShopRepository())),
+    );
+    await tester.pumpAndSettle();
+    Text tag(String id) => tester.widget<Text>(
+      find.descendant(
+        of: find.byKey(ValueKey('shop-kind-tag-$id')),
+        matching: find.byType(Text),
+      ),
+    );
+    expect(tag('avatar_frame_neon').data, 'Kalıcı');
+    expect(tag('profile_badge_vip').data, 'Kalıcı');
+    expect(tag('joker_pack_3').data, 'Tek kullanım');
+    expect(tag('spin_wheel_extra').data, 'Tek kullanım');
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('kuyruğa alınan çerçeve satın alması etkisi için işaretlenir', (
     tester,
   ) async {

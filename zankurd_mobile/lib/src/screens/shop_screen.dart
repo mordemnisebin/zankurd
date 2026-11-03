@@ -1332,6 +1332,29 @@ class _ShopScreenState extends State<ShopScreen> {
   static const double _priceWidth = 112;
   static const double _priceHeight = 52;
 
+  /// Ürün kalıcı mı yoksa tüketilir mi? Görünüm ürünleri (çerçeve, rozet,
+  /// ad rengi) hesapta kalır; güçlendiriciler (joker paketi, ekstra çark,
+  /// seri dondurma) kullanılınca biter. Karta küçük etiket olarak yazılır:
+  /// oyuncu jeton harcamadan "bu kaybolur mu?" sorusunun cevabını görür
+  /// (2026-11-04 ikinci tur kurulu).
+  Widget _kindTag(ShopItem item) {
+    final t = SahneTokens.of(context);
+    final permanent = _isAvatarLookItem(item.id);
+    return Container(
+      key: ValueKey('shop-kind-tag-${item.id}'),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: ShapeDecoration(
+        shape: StadiumBorder(
+          side: BorderSide(color: t.tx2.withValues(alpha: 0.5)),
+        ),
+      ),
+      child: Text(
+        context.t(permanent ? K.shopTagPermanent : K.shopTagConsumable),
+        style: SahneType.caption.copyWith(color: t.tx2, fontSize: 12),
+      ),
+    );
+  }
+
   String? _stockLabel(ShopItem item) => switch (item.id) {
     _freezeItemId => context.t(K.shopFreezeOwned, {
       'n': groupThousands(_freezeCount),
@@ -1362,6 +1385,8 @@ class _ShopScreenState extends State<ShopScreen> {
             fontWeight: FontWeight.w600,
           ),
         ),
+        const SizedBox(height: 4),
+        _kindTag(item),
         if (stock != null)
           Text(
             stock,
@@ -1416,45 +1441,54 @@ class _ShopScreenState extends State<ShopScreen> {
       emboss: true,
       padding: const EdgeInsets.all(12),
       onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      // Tür etiketi karonun sol üst köşesine biner (yükseklik eklemez:
+      // `VIP kartı kompakt` bekçisinin bütçesi korunur).
+      child: Stack(
         children: [
-          // 2026-10-29 vay 2B (B9, Astra "önizlemeler satın alma isteği
-          // yaratamayacak kadar küçük"): 80'lik ürün karosu 88'lik ışık
-          // diskinin önünde, altında eliptik gölge — oyuncunun KENDİ
-          // avatarı o çerçeveyle büyük görünür.
-          Center(
-            child: ShopPreviewStage(
-              key: ValueKey('shop-preview-${item.id}'),
-              glow: isPurchased ? t.s3 : _PreviewTile.fillFor(t, item.id),
-              child: _stagePreview(item, dim: isPurchased),
-            ),
-          ),
-          const SizedBox(height: SahneSpace.x2),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: SahneType.bodyStrong.copyWith(
-              color: isPurchased ? t.tx2 : t.tx,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: SahneSpace.x2),
-          // U7 (2026-10-28 tur 4): ızgaradaki fiyat çipi güçlendirici listesiyle
-          // AYNI bileşen ve AYNI boy (112 × 52); eskiden kart genişliğine
-          // yayılıp farklı bir çip gibi okunuyordu.
-          Center(
-            child: ConstrainedBox(
-              // Büyük yazıda sabit 112 sığmaz ("300" rakamdan bölünürdü): çip
-              // kartın genişliğine açılır.
-              constraints: BoxConstraints(
-                maxWidth: _largeText(context) ? double.infinity : _priceWidth,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // 2026-10-29 vay 2B (B9, Astra "önizlemeler satın alma isteği
+              // yaratamayacak kadar küçük"): 80'lik ürün karosu 88'lik ışık
+              // diskinin önünde, altında eliptik gölge — oyuncunun KENDİ
+              // avatarı o çerçeveyle büyük görünür.
+              Center(
+                child: ShopPreviewStage(
+                  key: ValueKey('shop-preview-${item.id}'),
+                  glow: isPurchased ? t.s3 : _PreviewTile.fillFor(t, item.id),
+                  child: _stagePreview(item, dim: isPurchased),
+                ),
               ),
-              child: isPurchased
-                  ? _buildOwnedChip(expand: true)
-                  : _buildBuyButton(item, ku, expand: true),
-            ),
+              const SizedBox(height: SahneSpace.x2),
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: SahneType.bodyStrong.copyWith(
+                  color: isPurchased ? t.tx2 : t.tx,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: SahneSpace.x2),
+              // U7 (2026-10-28 tur 4): ızgaradaki fiyat çipi güçlendirici listesiyle
+              // AYNI bileşen ve AYNI boy (112 × 52); eskiden kart genişliğine
+              // yayılıp farklı bir çip gibi okunuyordu.
+              Center(
+                child: ConstrainedBox(
+                  // Büyük yazıda sabit 112 sığmaz ("300" rakamdan bölünürdü): çip
+                  // kartın genişliğine açılır.
+                  constraints: BoxConstraints(
+                    maxWidth: _largeText(context)
+                        ? double.infinity
+                        : _priceWidth,
+                  ),
+                  child: isPurchased
+                      ? _buildOwnedChip(expand: true)
+                      : _buildBuyButton(item, ku, expand: true),
+                ),
+              ),
+            ],
           ),
+          PositionedDirectional(top: 0, start: 0, child: _kindTag(item)),
         ],
       ),
     );

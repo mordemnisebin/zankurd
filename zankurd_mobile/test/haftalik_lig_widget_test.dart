@@ -284,4 +284,30 @@ void main() {
       });
     }
   });
+
+  group('küçük küme', () {
+    // 2026-11-04 ikinci tur: küme < 4 iken sunucu bölge boyutu 0 verir,
+    // bölge etiketleri hiç çıkmazdı; oyuncu kuralın varlığını göremezdi.
+    for (final size in [1, 3]) {
+      testWidgets('$size kişilik kümede kural cümlesi görünür', (tester) async {
+        await _pump(tester, _LeagueRepo(_league(size: size, myRank: 1)));
+        expect(
+          find.byKey(const ValueKey('league-zones-pending')),
+          findsOneWidget,
+        );
+        expect(find.byKey(const ValueKey('league-zone-promote')), findsNothing);
+        expect(tester.takeException(), isNull);
+      });
+    }
+
+    testWidgets('4+ kişide bölge etiketleri yazılı, kural cümlesi yok', (
+      tester,
+    ) async {
+      await _pump(tester, _LeagueRepo(_league(size: 6, myRank: 3)));
+      expect(find.byKey(const ValueKey('league-zones-pending')), findsNothing);
+      expect(find.byKey(const ValueKey('league-zone-promote')), findsOneWidget);
+      expect(find.byKey(const ValueKey('league-zone-demote')), findsOneWidget);
+      expect(find.textContaining('İlk 2 üst lige çıkar'), findsOneWidget);
+    });
+  });
 }
