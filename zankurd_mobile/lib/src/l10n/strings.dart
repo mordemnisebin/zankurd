@@ -2875,7 +2875,7 @@ class Tr {
       'tr': 'Oyuncu susturuldu.',
     },
     K.chatUnmuted: {
-      'ku': 'Bêdengiya lîstikvan hate rakirin.',
+      'ku': 'Bêdengkirina lîstikvan hat rakirin.',
       'tr': 'Oyuncunun sesi açıldı.',
     },
     K.chatMutedCountP: {
@@ -3102,7 +3102,7 @@ class Tr {
     // süre "168 sa" yerine gün olarak yazılır. KU TASLAK — jüri onayı bekler.
     K.asyncDuelOpenInviteClosesDays: {
       'tr': '{n} gün içinde katılan olmazsa kapanır',
-      'ku': 'Heke di {n} rojan de kes tevlî nebe tê girtin',
+      'ku': 'Heke di {n} rojan de kes tevlî nebe, dê were girtin',
     },
     K.asyncDuelOpenInviteClosesMinutes: {
       'tr': '{n} dk içinde katılan olmazsa kapanır',
