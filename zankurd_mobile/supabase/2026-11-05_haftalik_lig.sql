@@ -1,4 +1,4 @@
--- Haftalık lig (Duolingo tarzı kümeler). Canlıya UYGULANMADI.
+-- Haftalık lig (Duolingo tarzı kümeler). Canlıda (2026-11-04/05, applied.md ✅).
 -- Geri alma: geri_al/2026-11-05_haftalik_lig_geri.sql
 --
 -- Niçin: tek global sıralama yeni gelen oyuncuyu bin puanlık liderlerin

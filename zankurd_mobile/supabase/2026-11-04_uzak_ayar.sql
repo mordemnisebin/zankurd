@@ -1,4 +1,4 @@
--- Uzak çalışma ayarı (2026-11-04). CANLIYA UYGULANMADI.
+-- Uzak çalışma ayarı (2026-11-04). Canlıda (2026-11-04/05, applied.md ✅).
 --
 -- Niçin: 10 bin+ kullanıcıya hazırlık denetimi (olcek_* bulguları): özellik
 -- bayrakları derleme-zamanı sabitiydi ve zorunlu güncelleme yoktu. Bir

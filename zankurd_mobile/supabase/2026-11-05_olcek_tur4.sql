@@ -1,5 +1,5 @@
 -- Ölçek denetimi 3. tur (Copilot + Gemini Flash; her bulgu kodda doğrulandı).
--- CANLIYA UYGULANMADI. Geri alma: geri_al/2026-11-05_olcek_tur4_geri.sql
+-- Canlıda (2026-11-04/05, applied.md ✅). Geri alma: geri_al/2026-11-05_olcek_tur4_geri.sql
 --
 -- Taban (canlı ✅): leaderboard_daily_rows / recompute_player_score_day /
 -- rebuild_player_score_daily = 2026-11-04_olcek_sertlestirme.sql;

@@ -1,5 +1,5 @@
 -- Ölçek sertleştirme (10.000 eşzamanlı kullanıcı denetimi, 2026-11-04).
--- Canlıya UYGULANMADI. Geri alma: geri_al/2026-11-04_olcek_sertlestirme_geri.sql
+-- Canlıda (2026-11-04/05, applied.md ✅). Geri alma: geri_al/2026-11-04_olcek_sertlestirme_geri.sql
 --
 -- Dayanak (canlı ✅ tanımlar; gövdeler uygulama anında pg_get_functiondef ile
 -- okunup yalnız bağlayıcı metin değiştirilir, bağlayıcı bulunamazsa göç durur):
