@@ -7,6 +7,9 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/local_progress_scope.dart';
+import '../models/answer_record.dart';
+import 'join_deep_link.dart';
+import 'round_words.dart';
 import '../l10n/strings.dart';
 import '../widgets/share_story_card.dart';
 import 'error_reporter.dart';
@@ -105,16 +108,38 @@ class ResultSharer {
     required String category,
     List<bool> results = const [],
     bool duelWin = false,
+    List<AnswerRecord> records = const [],
+
+    /// Tur bir meydan okuma koduna bağlıysa (`D…`, [JoinDeepLink.isChallengeCode])
+    /// metne "skorumu geç" bağlantısı girer; yoksa uygulama bağlantısı.
+    String? challengeCode,
   }) async {
     final accuracy = totalQuestions == 0
         ? 0
         : ((correctCount / totalQuestions) * 100).round();
-    final text = Tr.forKu(shareTextKey(), isKu, {
+    // Kod normalleştirmesi (büyük harf) `JoinDeepLink.shareUrl` içindedir.
+    final challengeUrl = JoinDeepLink.isChallengeCode(challengeCode)
+        ? JoinDeepLink.shareUrl(challengeCode!)
+        : null;
+    // `challengeShareText` "ji 7 pirsan" sabitini taşır (yalnız sırayla düello);
+    // serbest turda yalan olurdu, o yüzden normal metne bağlantı eklenir.
+    final baseText = Tr.forKu(shareTextKey(), isKu, {
       'score': groupThousands(score),
       'correct': groupThousands(correctCount),
       'total': groupThousands(totalQuestions),
       'percent': PercentFormat.value(accuracy, isKu: isKu),
     });
+    final text = challengeUrl != null ? '$baseText $challengeUrl' : baseText;
+    final words = [
+      for (final e in learnedWordsForRound(records))
+        (ku: e.termKu, tr: e.meaningTr),
+    ];
+    // iPad paylaşım sayfası bir çıkış noktası ister; yoksa PlatformException.
+    Rect? origin;
+    final box = context.findRenderObject();
+    if (box is RenderBox && box.hasSize) {
+      origin = box.localToGlobal(Offset.zero) & box.size;
+    }
 
     final overlay = Overlay.maybeOf(context);
     final stars = accuracy >= 80
@@ -136,6 +161,10 @@ class ResultSharer {
             category: category,
             stars: stars,
             duelWin: duelWin,
+            words: words,
+            linkText: challengeUrl != null
+                ? challengeUrl.replaceFirst('https://www.', '')
+                : ShareStoryCard.siteLink,
           ),
         );
         if (bytes != null) images.add(bytes);
@@ -150,7 +179,7 @@ class ResultSharer {
             XFile.fromData(images[i], mimeType: 'image/png', name: names[i]),
         ];
         final result = await SharePlus.instance.share(
-          ShareParams(text: text, files: files),
+          ShareParams(text: text, files: files, sharePositionOrigin: origin),
         );
         return statusCounts(result.status);
       }
@@ -159,7 +188,9 @@ class ResultSharer {
       // Görsel paylaşımı başarısız — metne düş.
     }
     try {
-      final result = await SharePlus.instance.share(ShareParams(text: text));
+      final result = await SharePlus.instance.share(
+        ShareParams(text: text, sharePositionOrigin: origin),
+      );
       return statusCounts(result.status);
     } catch (error, stack) {
       // Metin yolu da düşerse çağıran (`shareResult`) yakalamıyor; işlenmemiş

@@ -32,6 +32,8 @@ class ShareStoryCard extends StatelessWidget {
     this.stars = 3,
     this.duelWin = false,
     this.scoreLabel,
+    this.words = const [],
+    this.linkText = siteLink,
     super.key,
   });
 
@@ -48,6 +50,14 @@ class ShareStoryCard extends StatelessWidget {
   final String category;
   final int stars;
   final bool duelWin;
+
+  /// Turdan öğrenilen sözcükler (Kurmancî, Türkçe anlam); en çok 3, boşsa
+  /// çizilmez. Bkz. `learnedWordsForRound`.
+  final List<({String ku, String tr})> words;
+
+  /// Alt satırdaki bağlantı: varsayılan site adresi; meydan okuma bağlantısı
+  /// varsa `zankurd.com/join/D…`.
+  final String linkText;
 
   static const siteLink = 'zankurd.com';
 
@@ -69,7 +79,10 @@ class ShareStoryCard extends StatelessWidget {
         : Tr.forKu(K.shareStoryLine, isKu, {'score': scoreText});
 
     Widget band() {
-      if (mark == null) return const SizedBox.shrink();
+      // Kare biçimde sözcük rozetleri varken şerit sığmaz (1080 px dolu).
+      if (mark == null || (!story && words.isNotEmpty)) {
+        return const SizedBox.shrink();
+      }
       // 9 hücre × 12 px = 108 px kare; sekiz karo yan yana kilim şeridi.
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -124,7 +137,7 @@ class ShareStoryCard extends StatelessWidget {
               ),
               const Spacer(),
               band(),
-              SizedBox(height: gap / 2),
+              if (story || words.isEmpty) SizedBox(height: gap / 2),
               Center(
                 child: DecoratedBox(
                   decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
@@ -190,9 +203,54 @@ class ShareStoryCard extends StatelessWidget {
                   height: 1.25,
                 ),
               ),
+              if (words.isNotEmpty) ...[
+                SizedBox(height: gap),
+                if (story) ...[
+                  Text(
+                    Tr.forKu(K.yeniKelimeler, isKu),
+                    textAlign: TextAlign.center,
+                    style: SahneType.headline.copyWith(
+                      color: t.tx2,
+                      fontSize: 36,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    key: const ValueKey('share-card-words'),
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (var i = 0; i < words.length; i++) ...[
+                        if (i > 0) const SizedBox(width: 20),
+                        DecoratedBox(
+                          decoration: ShapeDecoration(
+                            color: t.s2,
+                            shape: SahneShape.m,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 28,
+                              vertical: 12,
+                            ),
+                            child: Text(
+                              '${words[i].ku} · ${words[i].tr}',
+                              style: SahneType.headline.copyWith(
+                                color: t.tx,
+                                fontSize: story ? 40 : 34,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ],
               const Spacer(),
               Text(
-                siteLink,
+                linkText,
                 textAlign: TextAlign.center,
                 style: SahneType.headline.copyWith(
                   color: t.goldTx,

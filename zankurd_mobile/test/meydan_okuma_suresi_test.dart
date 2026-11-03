@@ -94,17 +94,22 @@ void main() {
     expect(sql, contains('raise exception'));
   });
 
-  test('geri alma dosyası ve applied.md ⏳ kaydı var', () {
-    final geri = File(
-      'supabase/geri_al/2026-11-04_meydan_okuma_suresi_geri.sql',
-    ).readAsStringSync();
-    expect(geri, isNot(contains('7 days')));
-    final applied = File('supabase/applied.md').readAsStringSync();
-    expect(
-      RegExp(r'\| 2026-11-04_meydan_okuma_suresi\.sql \| ⏳').hasMatch(applied),
-      isTrue,
-    );
-  });
+  test(
+    'geri alma dosyası ve applied.md kaydı var (⏳ bekliyor ya da ✅ uygulandı)',
+    () {
+      final geri = File(
+        'supabase/geri_al/2026-11-04_meydan_okuma_suresi_geri.sql',
+      ).readAsStringSync();
+      expect(geri, isNot(contains('7 days')));
+      final applied = File('supabase/applied.md').readAsStringSync();
+      expect(
+        RegExp(
+          r'\| 2026-11-04_meydan_okuma_suresi\.sql \| (⏳|✅)',
+        ).hasMatch(applied),
+        isTrue,
+      );
+    },
+  );
 
   group('süre etiketi', () {
     Future<String?> label(

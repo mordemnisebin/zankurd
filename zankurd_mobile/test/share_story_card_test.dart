@@ -42,4 +42,39 @@ void main() {
       });
     }
   }
+
+  // Sözcük rozetleri: üç sözcük, uzun anlam ve meydan okuma bağlantısı ile
+  // de iki biçimde taşmadan çizilir (kare biçim en sıkışık olandır).
+  for (final format in ShareCardFormat.values) {
+    testWidgets('${format.name} sözcük rozetleriyle taşmadan çizilir', (
+      tester,
+    ) async {
+      tester.view.physicalSize = Size(format.width, format.height);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: AppTheme.light(),
+          home: Scaffold(
+            body: ShareStoryCard(
+              isKu: true,
+              format: format,
+              scoreText: '9/10',
+              category: 'Ziman',
+              words: const [
+                (ku: 'Dûr', tr: 'Uzak'),
+                (ku: 'Spas', tr: 'Teşekkür'),
+                (ku: 'Xwendekar', tr: 'Öğrenci'),
+              ],
+              linkText: 'zankurd.com/join/D23456789',
+            ),
+          ),
+        ),
+      );
+      expect(tester.takeException(), isNull);
+      expect(find.byKey(const ValueKey('share-card-words')), findsOneWidget);
+      expect(find.text('Dûr · Uzak'), findsOneWidget);
+      expect(find.text('zankurd.com/join/D23456789'), findsOneWidget);
+    });
+  }
 }
