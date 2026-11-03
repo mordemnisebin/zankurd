@@ -12,6 +12,7 @@ import '../models/friend.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/league_tier.dart';
+import '../models/weekly_league.dart';
 import '../providers/remote_availability.dart';
 import '../utils/app_route.dart';
 import '../utils/player_identity.dart';
@@ -21,12 +22,18 @@ import '../widgets/app_state.dart';
 import '../widgets/leaderboard_arena.dart';
 import '../widgets/leaderboard_podium.dart';
 import '../widgets/player_avatar.dart';
+import '../widgets/weekly_league_view.dart';
 import '../widgets/sahne/sahne.dart';
 import 'contest_screen.dart';
 import 'friends_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/number_format.dart';
+
+/// Sıralama ekranının segmentleri. Lig yalnız sunucu göçü varsa ve depo
+/// destekliyorsa bulunur ve ilk segmenttir (varsayılan); yoksa eski dört
+/// segment (Gün/Hafta/Ay/Arkadaş) aynen çalışır.
+enum _Seg { league, daily, weekly, monthly, friends }
 
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({
@@ -59,8 +66,25 @@ class LeaderboardScreen extends StatefulWidget {
 }
 
 class _LeaderboardScreenState extends State<LeaderboardScreen>
-    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   late TabController _tabController;
+
+  /// Lig segmenti var mı. Başlangıçta deponun desteğine bakılır; `getMyLeague`
+  /// null dönerse (RPC yok: PGRST202/42883, oturum yok) segment gizlenir ve
+  /// Hafta'ya geçilir.
+  late bool _leagueOn;
+  Future<WeeklyLeague?>? _leagueFuture;
+  WeeklyLeague? _lastLeague;
+  bool _leagueResultDismissed = false;
+
+  List<_Seg> get _segs => [
+    if (_leagueOn) _Seg.league,
+    _Seg.daily,
+    _Seg.weekly,
+    _Seg.monthly,
+    _Seg.friends,
+  ];
+  _Seg get _seg => _segs[_tabController.index];
   late Future<List<LeaderboardEntry>> _future;
   late Future<List<Friend>> _friendsFuture;
   Timer? _refreshTimer;
@@ -91,7 +115,12 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this, initialIndex: 1);
+    _leagueOn = widget.repository.leagueSupported;
+    _tabController = TabController(
+      length: _segs.length,
+      vsync: this,
+      initialIndex: _leagueOn ? 0 : 1,
+    );
     _tabController.addListener(_onTabChanged);
     WidgetsBinding.instance.addObserver(this);
     _loadData();
@@ -110,20 +139,55 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
 
   void _onTabChanged() {
     if (_tabController.indexIsChanging) return;
-    final periods = [
-      LeaderboardPeriod.daily,
-      LeaderboardPeriod.weekly,
-      LeaderboardPeriod.monthly,
-    ];
-    if (_tabController.index == 3) {
-      // Friends tab
+    final seg = _seg;
+    if (seg == _Seg.friends || seg == _Seg.league) {
       _loadData();
       return;
     }
     setState(() {
-      _period = periods[_tabController.index];
+      _period = switch (seg) {
+        _Seg.daily => LeaderboardPeriod.daily,
+        _Seg.monthly => LeaderboardPeriod.monthly,
+        _ => LeaderboardPeriod.weekly,
+      };
     });
     _loadData();
+  }
+
+  /// Lig yok (göç uygulanmamış ya da oturum yok): segmenti kaldırır, Hafta'ya
+  /// geçer. Denetleyici yeniden kurulur (sekme sayısı değişir).
+  void _dropLeague() {
+    if (!mounted || !_leagueOn) return;
+    _tabController.removeListener(_onTabChanged);
+    _tabController.dispose();
+    setState(() {
+      _leagueOn = false;
+      _lastLeague = null;
+      _leagueFuture = null;
+      _period = LeaderboardPeriod.weekly;
+      _tabController = TabController(
+        length: _segs.length,
+        vsync: this,
+        initialIndex: 1,
+      );
+      _tabController.addListener(_onTabChanged);
+    });
+    _loadData();
+  }
+
+  Future<WeeklyLeague?> _fetchLeague() {
+    return widget.repository
+        .getMyLeague()
+        .timeout(const Duration(seconds: 10))
+        .then((league) {
+          if (league == null) {
+            // Build sırasında değil, gelecek karede kaldır.
+            scheduleMicrotask(_dropLeague);
+          } else {
+            _lastLeague = league;
+          }
+          return league;
+        });
   }
 
   /// Seçili dönemin sıralamasındaki kendi satırı.
@@ -194,7 +258,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       ),
     );
     // Lig bandı bayrakla kapalı (bkz. `kWeeklyLeagueEnabled`).
-    final banner = kWeeklyLeagueEnabled && _period == LeaderboardPeriod.weekly
+    final banner =
+        !_leagueOn &&
+            kWeeklyLeagueEnabled &&
+            _period == LeaderboardPeriod.weekly
         ? _LeagueBanner(myRank: _myRank(entries), isKu: ku)
         : null;
 
@@ -312,9 +379,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   }
 
   void _loadData() {
-    _myRankFuture = _loadMyRank();
     unawaited(_refreshPendingRequests());
-    if (_tabController.index == 3) {
+    if (_seg == _Seg.league) {
+      setState(() {
+        _leagueFuture = _fetchLeague();
+      });
+      return;
+    }
+    _myRankFuture = _loadMyRank();
+    if (_seg == _Seg.friends) {
       setState(() {
         // Genel liderlik sekmesi engellenen oyuncuyu 2026-08-02'den beri
         // süzüyor (yukarıdaki yorum); Arkadaşlar sekmesi aynı süzgeci hiç
@@ -451,7 +524,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       }
     }
     final labels = ku ? ['Roj', 'Heft', 'Meh'] : ['Gün', 'Hafta', 'Ay'];
-    final period = labels[_tabController.index.clamp(0, 2)];
+    final period = labels[LeaderboardPeriod.values.indexOf(_period)];
     LeaderboardArenaHeader header(LeaderboardEntry? me, int? nextScore) {
       final ranked = me != null && me.rank > 0 && me.totalScore > 0;
       return LeaderboardArenaHeader(
@@ -554,7 +627,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     // Göstergenin dönüşü yenilemeyle aynı Future'ı bekler; hata ekranın
     // kendi durumunda gösterilir, burada yutulur.
     try {
-      await (_tabController.index == 3 ? _friendsFuture : _future);
+      await switch (_seg) {
+        _Seg.friends => _friendsFuture,
+        _Seg.league => _leagueFuture ?? Future<void>.value(),
+        _ => _future,
+      };
     } catch (_) {}
   }
 
@@ -570,7 +647,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       pendingRequestCount: _pendingRequests,
     );
     final top = <Widget>[
-      _PeriodRail(controller: _tabController, ku: ku),
+      _PeriodRail(controller: _tabController, ku: ku, league: _leagueOn),
       const SizedBox(height: SahneSpace.x4),
       content,
     ];
@@ -613,9 +690,59 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    return _tabController.index == 3
-        ? _buildFriendsTab(ku)
-        : _buildLeaderboardTab(ku);
+    return switch (_seg) {
+      _Seg.friends => _buildFriendsTab(ku),
+      _Seg.league => _buildLeagueTab(ku),
+      _ => _buildLeaderboardTab(ku),
+    };
+  }
+
+  /// Lig segmenti: kademe kartı + küme sıralaması (`get_my_league`). Sunucu
+  /// "lig yok" derse (null) segment kaldırılır; ağ hatasında yeniden dene.
+  Widget _buildLeagueTab(bool ku) {
+    return FutureBuilder<WeeklyLeague?>(
+      future: _leagueFuture,
+      builder: (ctx, snap) {
+        final league = snap.data ?? _lastLeague;
+        if (league == null) {
+          if (snap.hasError) {
+            return _page(
+              context,
+              ku,
+              content: AppErrorState(
+                title: context.t(K.boardLoadFailed),
+                message: context.t(K.checkConnection),
+                retryLabel: context.t(K.retry),
+                onRetry: _loadData,
+              ),
+            );
+          }
+          return _page(context, ku, content: _loadingIndicator(context));
+        }
+        return _page(
+          context,
+          ku,
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (snap.connectionState == ConnectionState.waiting)
+                _refreshBar(context),
+              WeeklyLeagueView(
+                league: league,
+                isKu: ku,
+                onStart: widget.onOpenPlay ?? _startQuickRace,
+                showResult: !_leagueResultDismissed,
+                onDismissResult: () {
+                  setState(() => _leagueResultDismissed = true);
+                  unawaited(widget.repository.ackLeagueResult());
+                },
+              ),
+            ],
+          ),
+          pinned: LeagueMyRow(league: league, isKu: ku),
+        );
+      },
+    );
   }
 
   /// Filtre/yenileme sırasında mevcut liste korunur; ince çubuk yükleme
@@ -1074,16 +1201,26 @@ class _HeaderAction extends StatelessWidget {
 /// çip ortak seçili biçimdir (`selFill`/`selLine`; kurul 3. tur: eskiden
 /// çağrıdaki `role: gold` hiç uygulanmıyordu, belge yanlış söylüyordu). Kısa etiketler: 4 eşit çip 320 px'te de sığar.
 class _PeriodRail extends StatelessWidget {
-  const _PeriodRail({required this.controller, required this.ku});
+  const _PeriodRail({
+    required this.controller,
+    required this.ku,
+    this.league = false,
+  });
 
   final TabController controller;
   final bool ku;
 
+  /// Başa "Lig" segmenti eklenir (denetleyici uzunluğu buna uyar).
+  final bool league;
+
   @override
   Widget build(BuildContext context) {
-    final labels = ku
-        ? ['Roj', 'Heft', 'Meh', 'Heval']
-        : ['Gün', 'Hafta', 'Ay', 'Arkadaş'];
+    final labels = [
+      if (league) Tr.forKu(K.lgSegment, ku),
+      ...(ku
+          ? ['Roj', 'Heft', 'Meh', 'Heval']
+          : ['Gün', 'Hafta', 'Ay', 'Arkadaş']),
+    ];
     // Çip görselde 44; dokunma kutusu ve ekran okuyucu düğümü 48
     // (2026-09-29 ek kararı: `SahneRailChip` 48'lik kutuya sarılır).
     return SahneRail.fit(

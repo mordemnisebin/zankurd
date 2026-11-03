@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'durable_write.dart';
 import '../models/async_duel.dart';
+import '../models/weekly_league.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
 import '../models/add_friend_outcome.dart';
@@ -310,6 +311,18 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Dönemde puanı yoksa, oturum yoksa ya da RPC yok/hata veriyorsa null
   /// döner — satır çizilmez, eski (toplam XP) yola düşülmez.
   Future<LeaderboardEntry?> getMyLeaderboardRank(LeaderboardPeriod period);
+
+  /// Haftalık lig (küme) desteği var mı. Sahte depoda false: Lig sekmesi
+  /// çizilmez. Sunucu göçü uygulanmamışsa ([getMyLeague] null) sekme gizlenir.
+  bool get leagueSupported;
+
+  /// Oyuncunun haftalık ligi (`get_my_league`). RPC yoksa (PGRST202/42883),
+  /// oturum yoksa ya da depo sunucusuzsa null: Lig sekmesi gizlenir. Diğer
+  /// hatalar fırlatılır (ekran yeniden dene gösterir; sekme gizlenmez).
+  Future<WeeklyLeague?> getMyLeague();
+
+  /// Hafta sonucu kartı kapatıldı (`ack_my_league_result`). Hata yutulur.
+  Future<void> ackLeagueResult();
 
   /// Öğrenme/tek kişilik akışların çevrimdışı kategori listesi.
   Future<List<String>> loadCategories();

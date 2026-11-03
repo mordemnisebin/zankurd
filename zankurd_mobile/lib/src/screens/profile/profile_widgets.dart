@@ -49,6 +49,7 @@ class _ProfileHeroCard extends StatelessWidget {
     required this.showcaseTitle,
     required this.playerTag,
     required this.rank,
+    this.leagueTier,
     required this.onEditAvatar,
     required this.level,
     required this.xpInLevel,
@@ -87,6 +88,10 @@ class _ProfileHeroCard extends StatelessWidget {
   /// gerekiyor. Dokununca panoya kopyalanır (2026-07-28).
   final String? playerTag;
   final int? rank;
+
+  /// Yeni sunucu ligi kademesi (0..4). Doluysa rozet bunu gösterir ve eski
+  /// `LeagueTier.forRank` yolu kullanılmaz (iki lig kavramı bir arada olmaz).
+  final int? leagueTier;
   final VoidCallback onEditAvatar;
 
   /// Kimlik kartının gece-mavi degradesi (VAY_KATMANI B7: #173C52 → #285C70);
@@ -237,8 +242,16 @@ class _ProfileHeroCard extends StatelessWidget {
                           ),
                         ),
                       ],
-                      // Lig rozeti bayrakla kapalı (bkz. `kWeeklyLeagueEnabled`).
-                      if (kWeeklyLeagueEnabled) ...[
+                      if (leagueTier != null) ...[
+                        const SizedBox(height: SahneSpace.x2),
+                        SahneBadge(
+                          key: const ValueKey('profile-league-badge'),
+                          label: leagueTierTitle(leagueTier!, ku),
+                          tone: SahneBadgeTone.gold,
+                        ),
+                      ]
+                      // Eski yol: yalnız yeni lig RPC'si yokken ve bayrak açıkken.
+                      else if (kWeeklyLeagueEnabled) ...[
                         const SizedBox(height: SahneSpace.x2),
                         Builder(
                           builder: (context) {

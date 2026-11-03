@@ -14,6 +14,7 @@ import '../models/add_friend_outcome.dart';
 import '../models/friend.dart';
 import '../models/lesson.dart';
 import '../models/leaderboard_entry.dart';
+import '../models/weekly_league.dart';
 import '../models/leaderboard_period.dart';
 import '../models/player.dart';
 import '../models/public_profile.dart';
@@ -387,6 +388,15 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // oynamamış oyuncunun sunucu satırı yoktur.
     return null;
   }
+
+  @override
+  bool get leagueSupported => false;
+
+  @override
+  Future<WeeklyLeague?> getMyLeague() async => null;
+
+  @override
+  Future<void> ackLeagueResult() async {}
 
   @override
   Future<LeaderboardEntry?> getMyLeaderboardRank(

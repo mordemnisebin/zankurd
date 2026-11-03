@@ -20,6 +20,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/achievement.dart';
+import '../widgets/weekly_league_view.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/league_tier.dart';
@@ -118,6 +119,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   /// sırasını (toplam XP, tüm profiller) gösteriyordu; iki ekranda aynı
   /// "sıra" iki farklı sayı oluyordu.
   LeaderboardEntry? _weeklyEntry;
+
+  /// Yeni sunucu ligindeki kademe (`getMyLeague`). Varsa profil rozeti bunu
+  /// gösterir; yoksa (RPC yok) eski `LeagueTier.forRank` yoluna düşülür.
+  int? _leagueTier;
 
   /// Oyuncunun kendi kodu; sunucu vermezse null kalır ve hiç gösterilmez.
   String? _playerTag;
@@ -219,6 +224,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       } catch (_) {
         weekly = null; // sıra yoksa karo çizilmez
       }
+      int? leagueTier;
+      if (widget.repository.leagueSupported) {
+        try {
+          leagueTier = (await widget.repository.getMyLeague())?.tier;
+        } catch (_) {
+          leagueTier = null; // okunamadı: rozet çizilmez / eski yol
+        }
+      }
       final tag = await widget.repository.getPlayerTag();
       final avatarIdentity = await widget.repository.loadAvatarIdentity();
       final achievementStore = await AchievementStore.load();
@@ -269,6 +282,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _streak = streak;
           _stats = stats;
           _weeklyEntry = weekly;
+          _leagueTier = leagueTier;
           _playerTag = tag;
           _avatarIdentity = avatarIdentity;
           _achievements = achievementStore.unlockedAchievements;
@@ -437,6 +451,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // bakınca aynı ekranda "Altın Lig" ile "Sıralama —" yan yana
       // duruyordu (2026-07-26 denetimi).
       rank: _hasServerScore ? _stats?.rank : null,
+      leagueTier: _leagueTier,
       onEditAvatar: _openAvatarEditor,
       level: _level,
       xpInLevel: _xpInLevel,

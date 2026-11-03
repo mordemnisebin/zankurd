@@ -1351,6 +1351,67 @@ class Tr {
     K.waitingAnswerState: {'ku': 'Li benda bersivê ye', 'tr': 'Cevap bekliyor'},
 
     // ── Göç edilen ekran metinleri (2026-07-31) ─────────────────────
+    // ── Haftalık lig (2026-11-05) ────────────────────────────────────
+    // KU jüri gerekli: aşağıdaki Kurmancî metinlerin HEPSİ taslaktır.
+    K.lgSegment: {'ku': 'Lîg', 'tr': 'Lig'},
+    K.lgTierBronze: {'ku': 'Bronz', 'tr': 'Bronz'},
+    K.lgTierSilver: {'ku': 'Zîv', 'tr': 'Gümüş'},
+    K.lgTierGold: {'ku': 'Zêr', 'tr': 'Altın'},
+    K.lgTierDiamond: {'ku': 'Almas', 'tr': 'Elmas'},
+    K.lgTierLegend: {'ku': 'Efsane', 'tr': 'Efsane'},
+    K.lgLeagueName: {'ku': 'Lîga {tier}', 'tr': '{tier} Lig'},
+    K.lgZonePromote: {'ku': 'Herêma bilindbûnê', 'tr': 'Yükselme bölgesi'},
+    K.lgZoneDemote: {'ku': 'Herêma daketinê', 'tr': 'Düşme bölgesi'},
+    K.lgPromoteHint: {
+      'ku': '{n} yên pêşîn diçin lîgeke bilindtir',
+      'tr': 'İlk {n} üst lige çıkar',
+    },
+    K.lgDemoteHint: {
+      'ku': '{n} yên dawîn diçin lîgeke jêrîn',
+      'tr': 'Son {n} alt lige düşer',
+    },
+    K.lgTimeLeftDays: {
+      'ku': 'Heta dawiya heftê: {d} roj {h} saet',
+      'tr': 'Haftanın bitmesine {d} gün {h} sa',
+    },
+    K.lgTimeLeftHours: {
+      'ku': 'Heta dawiya heftê: {h} saet {m} deqe',
+      'tr': 'Haftanın bitmesine {h} sa {m} dk',
+    },
+    K.lgTimeLeftMinutes: {
+      'ku': 'Heta dawiya heftê: {m} deqe',
+      'tr': 'Haftanın bitmesine {m} dk',
+    },
+    K.lgNotJoinedTitle: {
+      'ku': 'Ji bo ketina lîgê pûan bi dest bixe',
+      'tr': 'Lige girmek için puan kazan',
+    },
+    K.lgNotJoinedBody: {
+      'ku':
+          'Vê heftê di pêşbirka zindî an odeyê de bilîze; tu dikevî komeke bi lîstikvanên asta xwe re.',
+      'tr':
+          'Bu hafta canlı düello ya da odada oyna; aynı kademeden oyuncularla bir kümeye girersin.',
+    },
+    K.lgResultPromoted: {
+      'ku': 'Tu gihîştî lîga {tier}!',
+      'tr': '{tier} lige yükseldin!',
+    },
+    K.lgResultDemoted: {
+      'ku': 'Tu daketî lîga {tier}',
+      'tr': '{tier} lige düştün',
+    },
+    K.lgResultStayed: {
+      'ku': 'Tu di lîga {tier} de mayî',
+      'tr': '{tier} ligde kaldın',
+    },
+    K.lgResultRank: {
+      'ku': 'Hefteya borî tu di rêza {r} de bûyî',
+      'tr': 'Geçen hafta {r}. oldun',
+    },
+    K.lgYourRank: {
+      'ku': 'Rêza te: {r} · {p} pûan',
+      'tr': 'Sıran: {r} · {p} puan',
+    },
     K.altinLig: {'ku': 'Lîga zêrîn', 'tr': 'Altın lig'},
     K.gumusLig: {'ku': 'Lîga zîvîn', 'tr': 'Gümüş lig'},
     // Sözlük kararı (2026-09): `Bronz` yerleşik alıntıdır. `tunc` bakır
@@ -5307,6 +5368,27 @@ class K {
   static const answeredState = 'match.answered';
   static const waitingAnswerState = 'match.waitingAnswer';
 
+  static const lgSegment = 'league.segment';
+  static const lgTierBronze = 'league.tierBronze';
+  static const lgTierSilver = 'league.tierSilver';
+  static const lgTierGold = 'league.tierGold';
+  static const lgTierDiamond = 'league.tierDiamond';
+  static const lgTierLegend = 'league.tierLegend';
+  static const lgLeagueName = 'league.leagueName';
+  static const lgZonePromote = 'league.zonePromote';
+  static const lgZoneDemote = 'league.zoneDemote';
+  static const lgPromoteHint = 'league.promoteHint';
+  static const lgDemoteHint = 'league.demoteHint';
+  static const lgTimeLeftDays = 'league.timeLeftDays';
+  static const lgTimeLeftHours = 'league.timeLeftHours';
+  static const lgTimeLeftMinutes = 'league.timeLeftMinutes';
+  static const lgNotJoinedTitle = 'league.notJoinedTitle';
+  static const lgNotJoinedBody = 'league.notJoinedBody';
+  static const lgResultPromoted = 'league.resultPromoted';
+  static const lgResultDemoted = 'league.resultDemoted';
+  static const lgResultStayed = 'league.resultStayed';
+  static const lgResultRank = 'league.resultRank';
+  static const lgYourRank = 'league.yourRank';
   static const altinLig = 'screen.altinLig';
   static const gumusLig = 'screen.gumusLig';
   static const bronzLig = 'screen.bronzLig';
