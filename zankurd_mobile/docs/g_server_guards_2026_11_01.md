@@ -44,7 +44,7 @@ G9 resmî geçişi **göçü izleyen İstanbul günü 00:00** başlar. Kurulum g
 resmî günlük oturum açılmaz, yerel tur çalışır. Kullanıcı/gün başına tek
 resmî giriş vardır; farklı tur kimliğiyle ikinci giriş reddedilir.
 
-Yeni üç göç `supabase/applied.md` içinde **⏳** durumundadır ve her birinin
+G5/G9 (`solo_daily_verified`) ve G6–G8 (`room_duel_guards`) 2026-11-05'te canlıya uygulandı (applied.md ✅). Yeni üç göç yazıldığında `supabase/applied.md` içinde **⏳** durumundaydı ve her birinin
 `supabase/geri_al/` karşılığı vardır. G5–G9 göçleri güncel fonksiyon
 tanımlarını uygulama anında `pg_get_functiondef` ile saklar. Bu, canlı
 tanımın önceden incelendiği anlamına gelmez: operatör uygulamadan önce
