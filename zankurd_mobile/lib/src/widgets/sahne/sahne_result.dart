@@ -502,9 +502,11 @@ class _ResultMoreBelowState extends State<_ResultMoreBelow> {
                       ),
                     );
                   },
-                  // Görünen daire 32, dokunma hedefi 48 (en küçük hedef kuralı).
+                  // Hedef bilerek 32 kalır: ipucu içeriğin üstünde yüzer; 48'lik
+                  // alan altındaki "Ayrıntılar" başlığına dokunmayı yutuyordu
+                  // (xp_kaynagi_test). Süs öğesidir, aynı içerik kaydırmayla açılır.
                   child: SizedBox.square(
-                    dimension: 48,
+                    dimension: 32,
                     child: Center(
                       child: DecoratedBox(
                         decoration: BoxDecoration(
