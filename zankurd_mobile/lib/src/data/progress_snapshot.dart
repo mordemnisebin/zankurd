@@ -64,6 +64,34 @@ class ProgressSnapshot {
   /// Sunucu sınırı 256 KB; JSON bunun altında kalmalı.
   static const maxEncodedBytes = 240 * 1024;
 
+  /// Sunucunun ölçtüğü boyut: `octet_length(jsonb::text)`. jsonb metni
+  /// `"anahtar": değer` ve `, ` ayraçlarıyla yazar (her ayraçta +1 bayt) ve
+  /// karakterler UTF-8 sayılır.
+  static int serverBytes(Object? value) {
+    if (value is Map) {
+      if (value.isEmpty) return 2;
+      var total = 2; // { }
+      var first = true;
+      value.forEach((k, v) {
+        if (!first) total += 2; // ", "
+        first = false;
+        total += utf8.encode(jsonEncode('$k')).length + 2 + serverBytes(v);
+      });
+      return total;
+    }
+    if (value is Iterable) {
+      var total = 2;
+      var first = true;
+      for (final item in value) {
+        if (!first) total += 2;
+        first = false;
+        total += serverBytes(item);
+      }
+      return total;
+    }
+    return utf8.encode(jsonEncode(value)).length;
+  }
+
   final int xp;
   final SnapshotStreak streak;
   final Set<String> badges;
@@ -530,12 +558,21 @@ class SnapshotStreak {
         : cmp < 0
         ? b
         : (a.current >= b.current ? a : b);
-    final current = winner.current;
-    final best = [a.best, b.best, current].reduce((x, y) => x > y ? x : y);
     final (played, frozen) = normalizeCalendarDays(
       {...a.playedDays, ...b.playedDays},
       {...a.frozenDays, ...b.frozenDays},
     );
+    // Birleşmiş takvim kesintisiz bir oynama zinciri gösteriyorsa seri onun
+    // uzunluğundan KISA olamaz: ortak tabandan A ertesi gün, eski verili B
+    // sonraki gün çevrimdışı oynayınca `current` yalnız son günü yeni olan
+    // cihazdan alınıp 7 yerine 1 kalıyordu (2026-11-04 denetimi). Yalnız
+    // OYNANMIŞ günlerin ardışık zinciri sayılır (alt sınır; dondurma
+    // köprüleri ve onarımlar kendi sayaçlarından gelir).
+    final current = [
+      winner.current,
+      _playedRunEndingAt(winner.lastDay, played),
+    ].reduce((x, y) => x > y ? x : y);
+    final best = [a.best, b.best, current].reduce((x, y) => x > y ? x : y);
     final rmA = isValidMonthKey(a.repairMonth) ? a.repairMonth : null;
     final rmB = isValidMonthKey(b.repairMonth) ? b.repairMonth : null;
     final repairMonth = _compareDays(rmA, rmB) >= 0 ? rmA : rmB;
@@ -576,6 +613,25 @@ class SnapshotStreak {
       repairMonth: repairMonth,
       firstSeen: firstSeen,
     );
+  }
+
+  static int _playedRunEndingAt(String? lastDay, Set<String> played) {
+    if (!isValidDayKey(lastDay) || !played.contains(lastDay)) return 0;
+    var day = DateTime.utc(
+      int.parse(lastDay!.substring(0, 4)),
+      int.parse(lastDay.substring(5, 7)),
+      int.parse(lastDay.substring(8, 10)),
+    );
+    var run = 0;
+    while (true) {
+      final key =
+          '${day.year.toString().padLeft(4, '0')}-'
+          '${day.month.toString().padLeft(2, '0')}-'
+          '${day.day.toString().padLeft(2, '0')}';
+      if (!played.contains(key)) return run;
+      run++;
+      day = day.subtract(const Duration(days: 1));
+    }
   }
 
   /// `yyyy-MM-dd` dizgileri sözlük sırasıyla zaman sırasındadır; null en eski.

@@ -38,6 +38,16 @@ class AgeGate {
   static const declarationKey = 'zankurd.ageGate.v1';
   static const askedKey = 'zankurd.ageGate.v1.asked';
 
+  /// Yetişkin beyanını veren hesabın kimliği. Beyan cihaz geneli değildir:
+  /// A "13+" dedikten sonra aynı cihazda B'ye geçilirse B'ye yeniden
+  /// sorulur (2026-11-04 denetimi; eskiden `ensureAgeCleared` soru göstermeden
+  /// sosyal erişime izin veriyordu). Sahipsiz beyan (girişten önce, ilk
+  /// açılışta verilen) ilk görünen hesabı sahip yapar: misafirin kayıtlı
+  /// hesaba yükseltilmesi aynı kimliği korur, beyan kaybolmaz.
+  static const ownerKey = 'zankurd.ageGate.v1.owner';
+
+  static String? _boundUserId;
+
   /// Bağlamı olmayan katmanların okuduğu tek boğaz noktası (bkz.
   /// `AnalyticsConsentProvider.isEnabled` ile aynı desen).
   static AgeDeclaration? declaration;
@@ -65,6 +75,31 @@ class AgeGate {
     return declaration;
   }
 
+  /// Oturum kullanıcısı değiştiğinde çağrılır: başka bir hesabın YETİŞKİN
+  /// beyanı bu hesaba geçmez (bellek ve disk). Çocuk beyanı cihazda kalır
+  /// (kısıtlayıcı yön). Hata = yetişkin beyanı güvenilmez sayılır.
+  static Future<void> bindUser(String? userId) async {
+    _boundUserId = userId;
+    if (userId == null) return;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (prefs.getString(declarationKey) != 'adult') return;
+      final owner = prefs.getString(ownerKey);
+      if (owner == null || owner.isEmpty) {
+        await prefs.setString(ownerKey, userId);
+        return;
+      }
+      if (owner == userId) return;
+      await prefs.remove(declarationKey);
+      await prefs.remove(askedKey);
+      await prefs.remove(ownerKey);
+      if (declaration == AgeDeclaration.adult) declaration = null;
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'age_gate_bind');
+      if (declaration == AgeDeclaration.adult) declaration = null;
+    }
+  }
+
   /// Beyanı yazar. Yazım başarısız olsa da bellekteki değer uygulanır:
   /// çocuk beyanı bir hata yüzünden kısıtsız kalmasın.
   static Future<void> declare(AgeDeclaration value) async {
@@ -73,6 +108,12 @@ class AgeGate {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(declarationKey, value.name);
       await prefs.setBool(askedKey, true);
+      final owner = _boundUserId;
+      if (owner == null) {
+        await prefs.remove(ownerKey);
+      } else {
+        await prefs.setString(ownerKey, owner);
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'age_gate_save');
     }

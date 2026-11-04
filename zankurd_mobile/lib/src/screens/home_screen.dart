@@ -9,6 +9,7 @@ import '../config/coin_prices.dart';
 import '../config/feature_flags.dart';
 import '../data/mistake_store.dart';
 import '../data/tekrar_plani.dart';
+import '../data/local_progress_scope.dart';
 import '../data/word_list_store.dart';
 import '../data/learning_goal_store.dart';
 import '../data/streak_store.dart';
@@ -225,6 +226,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // Açılış sınırını (8 sn) aşıp geç biten ya da yeniden denenen soru
     // yüklemesi ekrana bildirilir (Codex denetimi 2026-10-29).
     QuestionBankLoader.instance.revision.addListener(_onQuestionBankChanged);
+    LocalProgressScope.revision.addListener(_onProgressRevision);
+  }
+
+  /// Buluttan birleştirme yerel ilerlemeyi değiştirdi: yüklenmiş alanları
+  /// (seri, ilerleme, tekrar sayısı) yeniden oku.
+  void _onProgressRevision() {
+    if (!mounted) return;
+    unawaited(_refreshStreak());
+    _refreshProgress();
+    unawaited(_refreshReviewCount());
   }
 
   void _onQuestionBankChanged() {
@@ -248,6 +259,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void dispose() {
     QuestionBankLoader.instance.revision.removeListener(_onQuestionBankChanged);
+    LocalProgressScope.revision.removeListener(_onProgressRevision);
     widget.refreshSignal?.removeListener(_handleRefreshSignal);
     _loadAnimationController.dispose();
     super.dispose();
@@ -357,6 +369,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final ku = context.isKu;
     _widgetSyncedKu = ku;
     final streak = _streak;
+    // Bekleyen günlük soru isteği tamamlanınca hesap değişmişse (çıkış / başka
+    // hesap) önceki hesabın serisini widget'a YAZMA.
+    final owner = repo.currentUserId;
     String? prompt;
     try {
       // Görsele dayanan sorular widget'a girmez (U13): bugünün kümesinden ilk
@@ -366,6 +381,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home_widget_prompt');
     }
+    if (!mounted || repo.currentUserId != owner) return;
     await HomeWidgetSync.sync(streak: streak, isKu: ku, dailyPrompt: prompt);
   }
 

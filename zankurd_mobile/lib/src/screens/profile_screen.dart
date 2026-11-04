@@ -14,6 +14,7 @@ import '../widgets/zan_mascot.dart';
 import '../data/streak_store.dart';
 import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
+import '../data/progress_sync.dart';
 import '../data/sync_manager.dart';
 import '../data/xp_store.dart';
 import '../data/zankurd_repository.dart';
@@ -1108,96 +1109,117 @@ class _SyncStatusChip extends StatelessWidget {
             return ValueListenableBuilder<int>(
               valueListenable: SyncManager.failedCountNotifier,
               builder: (context, failed, _) {
-                final isSynced = !syncing && pending == 0 && failed == 0;
-                // `pending == 0` retry'ları tükenip kalıcı olarak
-                // düşürülmüş ödülleri de gizleyebiliyordu — o kayıt
-                // artık `failed`te durur, "senkronize" burada YALAN
-                // söylememeli (2026-08-14 denetimi).
-                final hasFailed = !syncing && failed > 0;
-                // Sunucuya HİÇ ulaşılamıyorken (çevrimdışı misafir) de
-                // bekleyen kayıt olmadığı için çip "Bulutla senkronize"
-                // diyordu. Yalan: bulut yok (2026-09-27 simülatör turu).
-                final deviceOnly =
-                    isSynced && RemoteAvailability.socialLockedWatch(context);
-                // 2026-10-29 (X3): misafir (anonim) hesabın ilerlemesi
-                // sunucuya yazılsa da hesap cihazla birlikte kaybolur;
-                // "İlerleme kayıtlı" gerçek hesabın sözüdür. Misafire
-                // "Bu cihazda kayıtlı" denir, nötr tonla.
-                final guestSynced =
-                    isSynced &&
-                    !deviceOnly &&
-                    context.select<AuthProvider, bool>((a) => a.isGuest);
-                final (bg, fg) = hasFailed
-                    ? (t.errTint, t.errTx)
-                    : (deviceOnly || guestSynced)
-                    ? (t.s2, t.tx2)
-                    : isSynced
-                    ? (t.okTint, t.okTx)
-                    : (t.goldTint, t.goldTx);
-                final icon = syncing
-                    ? AppIcons.arrowsRotate
-                    : (hasFailed
-                          ? AppIcons.triangleExclamation
-                          : ((deviceOnly || guestSynced)
-                                ? AppIcons.mobileScreen
-                                : (isSynced
-                                      ? AppIcons.circleCheck
-                                      : AppIcons.cloud)));
-                final label = syncing
-                    ? (Tr.forKu(K.senkronizeEdiliyor, isKu))
-                    : (hasFailed
-                          ? Tr.forKu(K.pSenkronizeEdilemedi, isKu, {
-                              'p0': groupThousands(failed),
-                            })
-                          : (deviceOnly
-                                ? Tr.forKu(K.deviceOnlyProgress, isKu)
-                                : guestSynced
-                                ? Tr.forKu(K.guestSavedOnDevice, isKu)
-                                : (isSynced
-                                      ? (Tr.forKu(K.bulutlaSenkronize, isKu))
-                                      : Tr.forKu(K.pendingOnDeviceP, isKu, {
-                                          'p0': groupThousands(pending),
-                                        }))));
+                return ValueListenableBuilder<bool>(
+                  valueListenable: ProgressSyncService.unsyncedNotifier,
+                  builder: (context, progressUnsynced, _) {
+                    // `SyncManager` kuyruğu boş olsa da ilerleme (seri, kelime...)
+                    // buluta onaylanmadıysa "senkronize" denmez.
+                    final pendingTotal = pending + (progressUnsynced ? 1 : 0);
+                    final isSynced =
+                        !syncing && pendingTotal == 0 && failed == 0;
+                    // `pending == 0` retry'ları tükenip kalıcı olarak
+                    // düşürülmüş ödülleri de gizleyebiliyordu — o kayıt
+                    // artık `failed`te durur, "senkronize" burada YALAN
+                    // söylememeli (2026-08-14 denetimi).
+                    final hasFailed = !syncing && failed > 0;
+                    // Sunucuya HİÇ ulaşılamıyorken (çevrimdışı misafir) de
+                    // bekleyen kayıt olmadığı için çip "Bulutla senkronize"
+                    // diyordu. Yalan: bulut yok (2026-09-27 simülatör turu).
+                    final deviceOnly =
+                        isSynced &&
+                        RemoteAvailability.socialLockedWatch(context);
+                    // 2026-10-29 (X3): misafir (anonim) hesabın ilerlemesi
+                    // sunucuya yazılsa da hesap cihazla birlikte kaybolur;
+                    // "İlerleme kayıtlı" gerçek hesabın sözüdür. Misafire
+                    // "Bu cihazda kayıtlı" denir, nötr tonla.
+                    final guestSynced =
+                        isSynced &&
+                        !deviceOnly &&
+                        context.select<AuthProvider, bool>((a) => a.isGuest);
+                    final (bg, fg) = hasFailed
+                        ? (t.errTint, t.errTx)
+                        : (deviceOnly || guestSynced)
+                        ? (t.s2, t.tx2)
+                        : isSynced
+                        ? (t.okTint, t.okTx)
+                        : (t.goldTint, t.goldTx);
+                    final icon = syncing
+                        ? AppIcons.arrowsRotate
+                        : (hasFailed
+                              ? AppIcons.triangleExclamation
+                              : ((deviceOnly || guestSynced)
+                                    ? AppIcons.mobileScreen
+                                    : (isSynced
+                                          ? AppIcons.circleCheck
+                                          : AppIcons.cloud)));
+                    final label = syncing
+                        ? (Tr.forKu(K.senkronizeEdiliyor, isKu))
+                        : (hasFailed
+                              ? Tr.forKu(K.pSenkronizeEdilemedi, isKu, {
+                                  'p0': groupThousands(failed),
+                                })
+                              : (deviceOnly
+                                    ? Tr.forKu(K.deviceOnlyProgress, isKu)
+                                    : guestSynced
+                                    ? Tr.forKu(K.guestSavedOnDevice, isKu)
+                                    : (isSynced
+                                          ? (Tr.forKu(
+                                              K.bulutlaSenkronize,
+                                              isKu,
+                                            ))
+                                          : Tr.forKu(K.pendingOnDeviceP, isKu, {
+                                              'p0': groupThousands(
+                                                pendingTotal,
+                                              ),
+                                            }))));
 
-                final chip = DecoratedBox(
-                  decoration: ShapeDecoration(color: bg, shape: SahneShape.s),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: SahneSpace.x2,
-                      vertical: SahneSpace.x1,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(icon, size: 16, color: fg),
-                        const SizedBox(width: SahneSpace.x2),
-                        Flexible(
-                          child: Text(
-                            label,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: SahneType.captionStrong.copyWith(color: fg),
-                          ),
+                    final chip = DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: bg,
+                        shape: SahneShape.s,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: SahneSpace.x2,
+                          vertical: SahneSpace.x1,
                         ),
-                      ],
-                    ),
-                  ),
-                );
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(icon, size: 16, color: fg),
+                            const SizedBox(width: SahneSpace.x2),
+                            Flexible(
+                              child: Text(
+                                label,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: SahneType.captionStrong.copyWith(
+                                  color: fg,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
 
-                if (!hasFailed) return chip;
-                // Kullanıcı elle yeniden deneyebilsin — otomatik retry
-                // burada yok, aksi hâlde kalıcı bir hata (ör. eksik
-                // migration) sonsuz döngüye girer.
-                return GestureDetector(
-                  onTap: () => SyncManager.maybeInstance?.retryFailedItems(),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(minHeight: 48),
-                    child: Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      widthFactor: 1,
-                      child: chip,
-                    ),
-                  ),
+                    if (!hasFailed) return chip;
+                    // Kullanıcı elle yeniden deneyebilsin — otomatik retry
+                    // burada yok, aksi hâlde kalıcı bir hata (ör. eksik
+                    // migration) sonsuz döngüye girer.
+                    return GestureDetector(
+                      onTap: () =>
+                          SyncManager.maybeInstance?.retryFailedItems(),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(minHeight: 48),
+                        child: Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          widthFactor: 1,
+                          child: chip,
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
             );

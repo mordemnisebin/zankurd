@@ -30,11 +30,16 @@ import '../utils/error_reporter.dart';
 /// puanını beslemiyor; kapatılan şey yalnız oyuncunun kendi baskısı.
 class UntimedModeProvider extends ChangeNotifier {
   UntimedModeProvider({bool initialEnabled = false})
-    : _enabled = initialEnabled;
+    : _enabled = initialEnabled,
+      _persisted = initialEnabled;
 
   static const _storageKey = 'zankurd.untimedSolo';
 
   bool _enabled;
+
+  /// Diske YAZILMIŞ son değer. Yazım reddedilirse ekran bu değere döner;
+  /// bellekte açık görünüp yeniden açılışta kaybolan tercih olmaz.
+  bool _persisted;
 
   bool get enabled => _enabled;
 
@@ -50,14 +55,28 @@ class UntimedModeProvider extends ChangeNotifier {
   }
 
   Future<void> setEnabled(bool value) async {
-    if (_enabled == value) return;
-    _enabled = value;
-    notifyListeners();
+    if (_enabled == value && _persisted == value) return;
+    if (_enabled != value) {
+      _enabled = value;
+      notifyListeners();
+    }
+    var saved = false;
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(_storageKey, value);
+      saved = await prefs.setBool(_storageKey, value);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'untimed_mode_persist');
+    }
+    if (saved) {
+      _persisted = value;
+    } else if (_enabled == value) {
+      ErrorReporter.record(
+        StateError('Untimed mode preference was not persisted.'),
+        StackTrace.current,
+        reason: 'untimed_mode_persist',
+      );
+      _enabled = _persisted;
+      notifyListeners();
     }
   }
 

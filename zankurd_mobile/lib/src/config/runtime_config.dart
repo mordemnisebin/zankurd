@@ -213,7 +213,11 @@ class RuntimeConfigService extends ChangeNotifier {
   /// Son DENEMEDEN bu yana [staleAfter] geçtiyse tazeler (öne dönüşte çağrılır).
   Future<void> refreshIfStale() {
     final last = _lastAttempt;
-    if (last != null && _clock().difference(last) < staleAfter) {
+    // Negatif fark (saat ileri alınmışken denendi, sonra düzeltildi) "henüz
+    // dolmadı" SAYILMAZ: minimum sürüm / özellik kapatma yapılandırması
+    // gelecekteki zamana ulaşılana dek tazelenmeden kalıyordu.
+    final elapsed = last == null ? null : _clock().difference(last);
+    if (elapsed != null && !elapsed.isNegative && elapsed < staleAfter) {
       return _inFlight ?? Future<void>.value();
     }
     return refresh();

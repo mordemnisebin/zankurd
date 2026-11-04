@@ -527,15 +527,46 @@ class SyncManager {
     // Legacy taşıma/karantina başarısız olsa bile sağlam kullanıcı kuyruğu
     // mutlaka yüklenir. Bu bölümdeki hata ise manager'ın yayımlanmasını
     // engeller; boş bir manager eski kalıcı kaydı ezemez.
+    // Bozuk öğe bütün kuyruğu yüklenemez kılmaz (2026-11-04 denetimi: tek
+    // `Map` olmayan öğe sağlam ödül/ders/favori öğelerini de kilitliyordu ve
+    // yeniden başlatmak çözmüyordu). Sağlam öğeler yüklenir; bozuk ham veri
+    // KARANTİNAYA alınır (silinmez) ve hata kaydına düşer.
     final dataStr = prefs.getString(_queueKey);
     if (dataStr != null) {
-      final decoded = jsonDecode(dataStr);
-      if (decoded is! List || decoded.any((item) => item is! Map)) {
-        throw const FormatException('Invalid user-scoped sync queue.');
+      Object? decoded;
+      var readable = true;
+      try {
+        decoded = jsonDecode(dataStr);
+      } catch (error, stack) {
+        readable = false;
+        ErrorReporter.record(error, stack, reason: 'SyncManager queue decode');
       }
-      _queue
-        ..clear()
-        ..addAll(decoded.map((item) => Map<String, dynamic>.from(item as Map)));
+      if (!readable || decoded is! List) {
+        await _appendLegacyQuarantine(prefs, [dataStr]);
+        ErrorReporter.record(
+          const FormatException('Invalid user-scoped sync queue.'),
+          StackTrace.current,
+          reason: 'SyncManager queue quarantined',
+        );
+        _queue.clear();
+      } else {
+        final bad = decoded.where((item) => item is! Map).toList();
+        if (bad.isNotEmpty) {
+          await _appendLegacyQuarantine(prefs, bad);
+          ErrorReporter.record(
+            FormatException('${bad.length} malformed sync queue item(s).'),
+            StackTrace.current,
+            reason: 'SyncManager queue item quarantined',
+          );
+        }
+        _queue
+          ..clear()
+          ..addAll(
+            decoded.whereType<Map>().map(
+              (item) => Map<String, dynamic>.from(item),
+            ),
+          );
+      }
     }
 
     // Bozuk bir kayıt burada asıl kuyruğun yüklenmesini engellememeli —
@@ -546,6 +577,8 @@ class SyncManager {
       if (failedStr != null) {
         final decodedFailed = jsonDecode(failedStr);
         if (decodedFailed is List) {
+          final bad = decodedFailed.where((item) => item is! Map).toList();
+          if (bad.isNotEmpty) await _appendLegacyQuarantine(prefs, bad);
           _failedItems
             ..clear()
             ..addAll(
@@ -553,6 +586,8 @@ class SyncManager {
                 (item) => Map<String, dynamic>.from(item),
               ),
             );
+        } else {
+          await _appendLegacyQuarantine(prefs, [failedStr]);
         }
       }
     } catch (error, stack) {
@@ -561,6 +596,11 @@ class SyncManager {
         stack,
         reason: 'SyncManager load failed queue',
       );
+      // Okunamayan ham kayıt, sonraki `_saveFailedQueue` onun üstüne boş listeyi
+      // yazmadan ÖNCE yedeklenir; yeniden denenebilir ödüllerin tek kopyası
+      // olabilir. Yedekleme de başarısızsa yükleme durur (üzerine yazılmaz).
+      final raw = prefs.getString(_failedQueueKey);
+      if (raw != null) await _appendLegacyQuarantine(prefs, [raw]);
     }
     // İki kalıcı kopya kaldıysa kaynağı sync başlamadan temizle. Yalnız
     // bellekte tekilleştirmek, hedef boşaldıktan sonra eski kaydı diriltir.
@@ -990,6 +1030,23 @@ class SyncManager {
     unawaited(sync());
   }
 
+  /// Doğrudan yazım BAŞARILI olduysa aynı sorunun bekleyen eski favori kaydı
+  /// düşer: yoksa sonraki kuyruk gönderimi kullanıcının sonradan verdiği
+  /// kararı ezip kaldırdığı favoriyi yeniden ekleyebiliyordu (2026-11-04).
+  Future<void> supersedeQueuedFavorite(String questionId) async {
+    final id = questionId.trim();
+    if (id.isEmpty) return;
+    final currentUserId = _normalizedUserId(_repository.currentUserId);
+    if (_ownerUserId == null || currentUserId != _ownerUserId) return;
+    final before = _queue.length;
+    _queue.removeWhere(
+      (item) => item['type'] == 'sync_favorite' && item['questionId'] == id,
+    );
+    if (_queue.length == before) return;
+    _notifyNotifiers();
+    await _saveQueue(propagateFailure: false);
+  }
+
   /// Aynı anahtarlı coin harcaması bir kez kesilir.
   ///
   /// [expectedOwner]: işlemi BAŞLATAN hesap. İstek beklerken hesap değişirse
@@ -1056,6 +1113,40 @@ class SyncManager {
         const <String>[];
     for (final lessonId in ids) {
       await queueLessonCompletion(lessonId);
+    }
+  }
+
+  /// Çevrimdışı depoda kaydedilen favoriler (`zankurd.offline.favoriteQuestionIds`)
+  /// aynı hesapla çevrimiçi olunca kalıcı kuyruğa aktarılır; yoksa Supabase
+  /// favori okuyucusu yerel listeyi görmediği için kaydedilen sorular
+  /// kaybolmuş görünürdü (2026-11-04 denetimi). Yerel kopya, kayıt kuyruğa
+  /// KALICI yazıldıktan sonra düşer; `true` upsert tekrarlanabilir olduğundan
+  /// yarıda kalan aktarım güvenle yeniden çalışır.
+  Future<void> queueScopedOfflineFavorites() async {
+    final owner = _ownerUserId;
+    final scope = LocalProgressScope.activeUserId;
+    if (owner == null ||
+        scope != owner ||
+        !LocalProgressScope.isHumanOwner(scope)) {
+      return;
+    }
+    final preferences = await SharedPreferences.getInstance();
+    final key = LocalProgressScope.physicalFor(
+      owner,
+      'zankurd.offline.favoriteQuestionIds',
+    );
+    final ids = List<String>.of(preferences.getStringList(key) ?? const []);
+    if (ids.isEmpty) return;
+    // Liste en yeni başta; eskiden yeniye kuyruğa al ki sunucu sırası korunsun.
+    for (final id in ids.reversed) {
+      await retainFavorite(questionId: id, favorite: true);
+    }
+    final current = preferences.getStringList(key) ?? const <String>[];
+    final remaining = current.where((id) => !ids.contains(id)).toList();
+    if (remaining.isEmpty) {
+      await preferences.remove(key);
+    } else {
+      await preferences.setStringList(key, remaining);
     }
   }
 

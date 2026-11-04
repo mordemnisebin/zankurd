@@ -18,7 +18,16 @@ class FavoriteMutationService {
     required bool favorite,
   }) async {
     try {
-      return await repository.toggleFavoriteQuestion(question, favorite);
+      final result = await repository.toggleFavoriteQuestion(
+        question,
+        favorite,
+      );
+      try {
+        await SyncManager.maybeInstance?.supersedeQueuedFavorite(question.id);
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'favorite queue supersede');
+      }
+      return result;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'favorite mutation failed');
       final manager = SyncManager.maybeInstance;

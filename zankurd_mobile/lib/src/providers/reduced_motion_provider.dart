@@ -12,11 +12,15 @@ import '../utils/error_reporter.dart';
 /// yoğun konfeti kısaltılır. [motionDuration] bunun için yardımcıdır.
 class ReducedMotionProvider extends ChangeNotifier {
   ReducedMotionProvider({bool initialUserReduce = false})
-    : _userReduce = initialUserReduce;
+    : _userReduce = initialUserReduce,
+      _persisted = initialUserReduce;
 
   static const _storageKey = 'zankurd.reduceMotion';
 
   bool _userReduce;
+
+  /// Diske YAZILMIŞ son değer; yazım reddedilirse ekran bu değere döner.
+  bool _persisted;
   bool _systemReduce = false;
 
   bool get userReduce => _userReduce;
@@ -37,14 +41,28 @@ class ReducedMotionProvider extends ChangeNotifier {
   }
 
   Future<void> setUserReduce(bool value) async {
-    if (_userReduce == value) return;
-    _userReduce = value;
-    notifyListeners();
+    if (_userReduce == value && _persisted == value) return;
+    if (_userReduce != value) {
+      _userReduce = value;
+      notifyListeners();
+    }
+    var saved = false;
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(_storageKey, value);
+      saved = await prefs.setBool(_storageKey, value);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'reduced_motion_persist');
+    }
+    if (saved) {
+      _persisted = value;
+    } else if (_userReduce == value) {
+      ErrorReporter.record(
+        StateError('Reduced motion preference was not persisted.'),
+        StackTrace.current,
+        reason: 'reduced_motion_persist',
+      );
+      _userReduce = _persisted;
+      notifyListeners();
     }
   }
 

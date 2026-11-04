@@ -109,7 +109,13 @@ class MistakeStore {
         final decoded = jsonDecode(metadataString) as Map<String, dynamic>;
         decoded.forEach((key, val) {
           if (val is Map<String, dynamic>) {
-            metadata[key] = Map<String, dynamic>.from(val);
+            final entry = Map<String, dynamic>.from(val);
+            // Geçersiz vade tanımlı varsayılana döner (hemen tekrar).
+            if (entry.containsKey('nextReview') &&
+                _nextReviewOf(entry) == null) {
+              entry.remove('nextReview');
+            }
+            metadata[key] = entry;
           }
         });
       } catch (error, stack) {
@@ -154,11 +160,21 @@ class MistakeStore {
   int get count => _ids.length;
   bool contains(String id) => _ids.contains(id);
 
+  /// `nextReview` alanını güvenle okur: sayı değilse (`"tomorrow"` gibi bozuk
+  /// değer) yok sayılır ve soru "hemen tekrar" sayılır. Eskiden doğrudan
+  /// `as int?` çevrimi fırlatıyor, tek bozuk kayıt sağlıklı sorularla
+  /// kelimelerin birleşik tekrar planını da yüklenemez kılıyordu
+  /// (2026-11-04 denetimi).
+  static int? _nextReviewOf(Map<String, dynamic>? meta) {
+    final value = meta?['nextReview'];
+    return value is num && value.isFinite ? value.toInt() : null;
+  }
+
   bool isReadyForReview(String id) {
     if (!_ids.contains(id)) return false;
     final meta = _metadata[id];
     if (meta == null) return true; // Legacy, review immediately
-    final nextReview = meta['nextReview'] as int?;
+    final nextReview = _nextReviewOf(meta);
     if (nextReview == null) return true;
     return clock().millisecondsSinceEpoch >= nextReview;
   }
@@ -186,7 +202,7 @@ class MistakeStore {
     final ready = _ids.where(isReadyForReview).toList();
     final now = clock().millisecondsSinceEpoch;
     const dayMs = 24 * 60 * 60 * 1000;
-    int due(String id) => (_metadata[id]?['nextReview'] as int?) ?? 0;
+    int due(String id) => _nextReviewOf(_metadata[id]) ?? 0;
     int overdueDays(String id) => ((now - due(id)) / dayMs).floor();
     int missed(String id) =>
         (_metadata[id]?['missCount'] as num?)?.toInt() ?? 1;

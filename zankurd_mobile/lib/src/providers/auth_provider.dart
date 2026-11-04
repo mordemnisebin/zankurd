@@ -8,7 +8,11 @@ import 'package:flutter/widgets.dart'
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../data/age_gate_store.dart';
+import '../services/home_widget_sync.dart';
+import '../data/chat_mute_store.dart';
 import '../data/local_progress_scope.dart';
+import '../data/local_progress_write_lock.dart';
 import '../l10n/strings.dart';
 import '../data/xp_store.dart';
 import '../data/streak_store.dart';
@@ -228,6 +232,7 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
     final transition = _authTransition.then((_) async {
       if (!_isCurrentAuthGeneration(generation, userId)) return;
       if (user == null) {
+        await AgeGate.bindUser(null);
         try {
           final prefs = await SharedPreferences.getInstance();
           if (!_isCurrentAuthGeneration(generation, null)) return;
@@ -272,6 +277,9 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
     required bool restartSync,
     required int generation,
   }) async {
+    if (!_isCurrentAuthGeneration(generation, user.id)) return;
+    // Yaş beyanı hesaba bağlı: öteki hesabın yetişkin beyanı bu hesaba geçmez.
+    await AgeGate.bindUser(user.id);
     if (!_isCurrentAuthGeneration(generation, user.id)) return;
     var localProgressReady = true;
     try {
@@ -322,23 +330,44 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
   /// ilk gerçek kullanıcıya bir kez taşınır. Taşıma silmeyi başaramazsa
   /// sahip kaydı güncellenmez.
   Future<bool> _resetLocalProgressIfForeignUser(User user) async {
-    final prefs = await SharedPreferences.getInstance();
-    // Başarısız platform yazımı bellekte başarılı görünmüş olabilir.
-    // Hesap sınırını ve yeniden denemeyi daima kalıcı durumdan başlat.
-    await prefs.reload();
     final previousScope = LocalProgressScope.activeUserId;
-    final migrated = await LocalProgressScope.migrateLegacy(
-      prefs,
-      incomingUserId: user.id,
-    );
-    if (!migrated) return false;
-    final saved = await prefs.setString(_deviceOwnerUserIdKey, user.id);
-    if (!saved) return false;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      // Başarısız platform yazımı bellekte başarılı görünmüş olabilir.
+      // Hesap sınırını ve yeniden denemeyi daima kalıcı durumdan başlat.
+      await prefs.reload();
+      final migrated = await LocalProgressScope.migrateLegacy(
+        prefs,
+        incomingUserId: user.id,
+      );
+      if (!migrated) {
+        _failClosedLocalScope(user, previousScope);
+        return false;
+      }
+      final saved = await prefs.setString(_deviceOwnerUserIdKey, user.id);
+      if (!saved) {
+        _failClosedLocalScope(user, previousScope);
+        return false;
+      }
+      LocalProgressScope.bind(user.id);
+      if (previousScope != user.id) _dropProgressMemory();
+      await SyncManager.maybeInstance?.reconcileXpCache();
+      await SyncManager.maybeInstance?.queueScopedOfflineLessons();
+      return true;
+    } catch (_) {
+      _failClosedLocalScope(user, previousScope);
+      rethrow;
+    }
+  }
+
+  /// Kapsam hazırlığı (göç / sahip anahtarı) başarısız olursa B oturumu A'nın
+  /// yerel alanıyla çalışmasın: B'nin KENDİ (boş) kapsamına bağlanır ve bellek
+  /// önbellekleri atılır. Sahip anahtarı yazılmadığı için göç bir sonraki
+  /// açılışta/oturumda yeniden denenir; bu arada eşitleme kapalıdır
+  /// (`localProgressReady=false`) ve A'nın verisine dokunulmaz.
+  void _failClosedLocalScope(User user, String? previousScope) {
     LocalProgressScope.bind(user.id);
     if (previousScope != user.id) _dropProgressMemory();
-    await SyncManager.maybeInstance?.reconcileXpCache();
-    await SyncManager.maybeInstance?.queueScopedOfflineLessons();
-    return true;
   }
 
   /// Açılışta kapsamı bağlar. Ağ yokken insan sahip varsa onun alanı açılır;
@@ -371,6 +400,7 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
     // gelen "bugün oynandı" bilgisi de mevcut alarmı susturmuyordu (GPT-6 Pro
     // ALAN 4). Yeni kapsamın serisiyle yeniden hesaplanır (nesil denetimli).
     unawaited(NotificationService.syncStreakWarning());
+    LocalProgressScope.revision.value++;
   }
 
   @visibleForTesting
@@ -1016,16 +1046,29 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
       ErrorReporter.record(e, s, reason: 'progress flush on signOut');
     }
     ProgressSyncService.unbind();
+    var saved = false;
     try {
       final prefs = await SharedPreferences.getInstance();
-      return await prefs.setString(
+      saved = await prefs.setString(
         _deviceOwnerUserIdKey,
         LocalProgressScope.offlineUserId,
       );
+      if (!saved) {
+        // Bir kez daha dene; kalıcı durumdan başla.
+        await prefs.reload();
+        saved = await prefs.setString(
+          _deviceOwnerUserIdKey,
+          LocalProgressScope.offlineUserId,
+        );
+      }
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'deviceOwner reset on signOut');
-      return false;
     }
+    // Sahip kaydı diske yazılamadıysa `activateOffline()` diskte kalan A
+    // sahibini yeniden bağlar ve çıkılmış hesabın ilerlemesi sonraki
+    // çevrimdışı misafire açılırdı. Bu süreç boyunca sahipsiz kapsam zorlanır.
+    if (!saved) LocalProgressScope.forceOfflineScope();
+    return saved;
   }
 
   Future<void> signOut({
@@ -1048,6 +1091,7 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
     String? pendingRewardsOwnerId,
   }) async {
     var accountCleanupFailed = false;
+    final departingUserId = _currentUser?.id;
     // Kayıtlı hesabın normal çıkışında yerel ilerleme SİLİNMEZ: anahtarlar
     // kullanıcı kimliğine kapsamlı (bkz. [LocalProgressScope]) ve ilerleme
     // hesaba eşitleniyor; silmek seri/rozet/seviyeyi, telefon değişiminde
@@ -1086,6 +1130,10 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
       accountCleanupFailed = discardPendingRewards;
     }
 
+    // Ana ekran widget'ının seri verisi ayrı native depoda ve kullanıcı
+    // kimliği taşımaz: çıkışta temizlenir.
+    unawaited(HomeWidgetSync.clear());
+
     // RevenueCat kimliği de bırakılır; aksi halde aynı cihazda giriş yapan
     // bir sonraki kullanıcı önceki kullanıcının entitlement'ını devralır.
     try {
@@ -1094,9 +1142,37 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
       ErrorReporter.record(e, s, reason: 'PremiumService logout on signOut');
     }
 
-    final localProgressCleared = keepLocalProgress
+    // Hesap silmede bulut eşitlemesi temizlikten ÖNCE kapanır: silmeden önce
+    // başlamış `get_my_progress` yanıtı, temizlenmiş XP gibi alanları diske
+    // yeniden yazabiliyordu. Kapalı servis geç yanıtı reddeder (`_isCurrent`);
+    // temizlik de eşitlemenin yazım kilidi altında yapılır.
+    if (discardPendingRewards) ProgressSyncService.unbind();
+    var localProgressCleared = keepLocalProgress
         ? await _keepLocalProgressOnSignOut()
-        : await _clearLocalProgressStores();
+        : (discardPendingRewards && LocalProgressScope.activeUserId != null
+              ? await LocalProgressWriteLock.run(
+                  LocalProgressScope.activeUserId,
+                  _clearLocalProgressStores,
+                )
+              : await _clearLocalProgressStores());
+    if (discardPendingRewards) {
+      // Elle sıralı depo temizliğinin unuttuğu kayıtlar (kelime listesi,
+      // ders kümeleri, çevrimdışı favoriler, profil adı, avatar, sohbet
+      // susturma...) silinen hesabın kimliğine göre topluca silinir.
+      final deletedId = pendingRewardsOwnerId?.trim().isNotEmpty == true
+          ? pendingRewardsOwnerId!.trim()
+          : departingUserId;
+      if (deletedId != null) {
+        try {
+          final prefs = await SharedPreferences.getInstance();
+          await LocalProgressScope.clearUserOwnedKeys(prefs, deletedId);
+          unawaited(ChatMuteStore.instance.load(null));
+        } catch (e, s) {
+          localProgressCleared = false;
+          ErrorReporter.record(e, s, reason: 'deleted account key sweep');
+        }
+      }
+    }
     if (discardPendingRewards && !localProgressCleared) {
       accountCleanupFailed = true;
     }

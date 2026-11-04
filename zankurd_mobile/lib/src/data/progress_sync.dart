@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart'
     show AppLifecycleState, WidgetsBinding, WidgetsBindingObserver;
+import 'package:flutter/foundation.dart' show ValueNotifier;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -373,6 +374,14 @@ class LocalProgressSnapshot {
           ) &&
           ok;
     }
+    // Başarısız platform yazımı bellek önbelleğini iyimser bırakabilir; sonraki
+    // eşitleme yerel değeri sunucuyla eşit görüp yeniden yazmayı atlamasın,
+    // yeniden başlatınca da eski disk verisi sürpriz olmasın.
+    if (!ok) {
+      try {
+        await prefs.reload();
+      } catch (_) {}
+    }
     return ok;
   });
 
@@ -546,6 +555,14 @@ class ProgressSyncService with WidgetsBindingObserver {
   }) : _preferences = preferences,
        _generation = LocalProgressScope.generation;
 
+  /// İlerleme (seri, kelime, öğrenme...) buluta HENÜZ onaylanmadı: yükleme
+  /// bekliyor, sürüyor, hata verdi ya da boyut nedeniyle bırakıldı. Profildeki
+  /// "bulutla senkronize" çipi yalnız ödül kuyruğuna bakıyordu ve bu durumda
+  /// yalan söylüyordu (2026-11-04 denetimi).
+  static final ValueNotifier<bool> unsyncedNotifier = ValueNotifier<bool>(
+    false,
+  );
+
   static ProgressSyncService? _instance;
   static ProgressSyncService? get maybeInstance => _instance;
 
@@ -598,6 +615,7 @@ class ProgressSyncService with WidgetsBindingObserver {
   static void unbind() {
     _instance?.close();
     _instance = null;
+    unsyncedNotifier.value = false;
   }
 
   /// Bir sonuç kaydedildi: kısa bir gecikmeyle yükle.
@@ -636,6 +654,7 @@ class ProgressSyncService with WidgetsBindingObserver {
 
   void scheduleUpload() {
     if (_closed || _disabled) return;
+    unsyncedNotifier.value = true;
     _timer?.cancel();
     _timer = Timer(debounce, () => unawaited(syncNow()));
   }
@@ -674,6 +693,7 @@ class ProgressSyncService with WidgetsBindingObserver {
   Future<void> _syncOnce() async {
     if (_closed || _disabled) return;
     _lastRun = DateTime.now();
+    var confirmed = false;
     try {
       // Kapsam başka kullanıcıya geçtiyse (hızlı hesap değişimi) dokunma.
       if (!_isCurrent) return;
@@ -708,41 +728,80 @@ class ProgressSyncService with WidgetsBindingObserver {
         });
         // A local platform write can await while the auth client switches A→B.
         if (!_isCurrent || merged == null) return;
-        if (merged.isEmpty) return;
-        if (remoteSnapshot != null && merged == remoteSnapshot) return;
+        if (merged.isEmpty) {
+          confirmed = true;
+          return;
+        }
+        if (remoteSnapshot != null && merged == remoteSnapshot) {
+          confirmed = true;
+          return;
+        }
         final json = _compact(merged);
         if (json == null) return;
         final saved = await remote.save(
           json,
           expectedUpdatedAt: row?.updatedAt,
         );
-        if (saved) return;
+        if (saved) {
+          confirmed = true;
+          return;
+        }
       }
     } on ProgressRemoteMissing {
       _disabled = true;
+      confirmed = true;
     } catch (error, stack) {
       if (!_isNetwork(error)) {
         ErrorReporter.record(error, stack, reason: 'progress_sync');
       }
+    } finally {
+      if (!_closed && _isCurrent) unsyncedNotifier.value = !confirmed;
     }
   }
 
-  /// 240 KB'ı aşarsa önce günlük performans geçmişini bırakır; yine de
-  /// aşıyorsa yüklemeyi atlar (sunucu 256 KB'ta reddederdi).
+  /// Sunucu sınırına (262.144 bayt, `octet_length(jsonb::text)`) uymayan
+  /// görüntüyü sığdırır: önce günlük performans geçmişi, sonra mezun
+  /// edilmiş soruların SM-2 üst verisi bırakılır (yalnız yüklemeden; yerel
+  /// kopya korunur). Yine sığmıyorsa yükleme atlanır ama bu SESSİZ değildir:
+  /// hata kaydına düşer ve [oversized] işaretlenir (yeniden denenebilir).
+  /// Ölçü UTF-8 bayttır ve jsonb'nin boşluklu metin gösterimini sayar;
+  /// `jsonEncode(...).length` çok baytlı TR/KU karakterlerde ve jsonb
+  /// boşluklarında sunucudan KÜÇÜK ölçüyordu (2026-11-04 denetimi).
   static Map<String, dynamic>? _compact(ProgressSnapshot snapshot) {
     var json = snapshot.toJson();
-    if (jsonEncode(json).length <= ProgressSnapshot.maxEncodedBytes) {
+    bool fits(Map<String, dynamic> j) =>
+        ProgressSnapshot.serverBytes(j) <= ProgressSnapshot.maxEncodedBytes;
+    if (fits(json)) {
+      oversized = false;
       return json;
     }
     json = Map<String, dynamic>.from(json);
     final mistakes = Map<String, dynamic>.from(json['mistakes'] as Map);
     mistakes['history'] = <String, dynamic>{};
     json['mistakes'] = mistakes;
-    if (jsonEncode(json).length <= ProgressSnapshot.maxEncodedBytes) {
+    if (fits(json)) {
+      oversized = false;
       return json;
     }
+    final meta = Map<String, dynamic>.from(mistakes['meta'] as Map)
+      ..removeWhere((_, v) => v is Map && v['graduated'] == true);
+    mistakes['meta'] = meta;
+    if (fits(json)) {
+      oversized = false;
+      return json;
+    }
+    oversized = true;
+    ErrorReporter.record(
+      StateError('Progress snapshot exceeds server size limit.'),
+      StackTrace.current,
+      reason: 'progress_sync_oversized',
+    );
     return null;
   }
+
+  /// Son yükleme boyut nedeniyle gönderilemedi (görünür durum; bir sonraki
+  /// başarılı eşitlemede düşer).
+  static bool oversized = false;
 
   static bool _isNetwork(Object error) {
     final text = error.toString().toLowerCase();
