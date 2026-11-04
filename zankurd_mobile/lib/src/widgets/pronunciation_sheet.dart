@@ -50,6 +50,7 @@ class PronunciationSheet extends StatefulWidget {
     required this.speaker,
     this.recorder,
     this.playback,
+    this.tempDir,
     super.key,
   });
 
@@ -57,6 +58,11 @@ class PronunciationSheet extends StatefulWidget {
   final LessonListeningSpeaker speaker;
   final PronunciationRecorder? recorder;
   final PronunciationPlayback? playback;
+
+  /// Kayıt dosyalarının yazıldığı ve açılışta süpürüldüğü klasör. Boşsa
+  /// sistem geçici klasörü; testler eşzamanlı koşularla çakışmamak için
+  /// kendi yalıtılmış klasörlerini verir.
+  final Directory? tempDir;
 
   static const maxRecording = Duration(seconds: 4);
 
@@ -102,6 +108,8 @@ class _PronunciationSheetState extends State<PronunciationSheet> {
 
   static const _filePrefix = 'zankurd_telaffuz_';
 
+  Directory get _tmp => widget.tempDir ?? Directory.systemTemp;
+
   @override
   void initState() {
     super.initState();
@@ -113,7 +121,7 @@ class _PronunciationSheetState extends State<PronunciationSheet> {
   /// yalnız mutlu yolda değil, her yolda tutulsun.
   void _sweepStale() {
     try {
-      for (final entity in Directory.systemTemp.listSync()) {
+      for (final entity in _tmp.listSync()) {
         if (entity is File &&
             entity.uri.pathSegments.last.startsWith(_filePrefix)) {
           entity.deleteSync();
@@ -175,7 +183,7 @@ class _PronunciationSheetState extends State<PronunciationSheet> {
       // dosyayı çalmaya kalkmasın.
       if (mounted) setState(() => _path = null);
       final path =
-          '${Directory.systemTemp.path}/$_filePrefix'
+          '${_tmp.path}/$_filePrefix'
           '${DateTime.now().microsecondsSinceEpoch}.m4a';
       pending = path;
       await _recorder.start(path).timeout(PronunciationSheet.startTimeout);

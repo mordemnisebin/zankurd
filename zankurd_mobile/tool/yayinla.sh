@@ -39,13 +39,20 @@ hata() {
   exit 1
 }
 
-# Yüklenen derleme bir commit'e karşılık gelsin: izlenen kod değişmişse dur.
-if [[ -n "$(git status --porcelain --untracked-files=no -- lib pubspec.yaml)" ]]; then
-  git status --short --untracked-files=no -- lib pubspec.yaml >&2
-  hata "lib/ ya da pubspec.yaml'da işlenmemiş değişiklik var; önce commit et."
+# Yüklenen derleme bir commit'e karşılık gelsin: derlemeye giren BÜTÜN
+# izlenen/izlenmeyen kaynaklar temiz olmalı (lib, assets, android, ios,
+# pubspec.yaml, pubspec.lock). Eskiden yalnız izlenen lib + pubspec.yaml
+# bakılıyordu; değişmiş assets/ios/android pakete girip başarı mesajında
+# temiz HEAD kimliği yazılıyordu. Yerel gizli yapılandırmalar .gitignore'dadır
+# ve porcelain çıktısında görünmez (dar istisna ayrıca gerekmez).
+DERLEME_GIRDILERI=(lib assets android ios pubspec.yaml pubspec.lock)
+if [[ -n "$(git status --porcelain --untracked-files=normal -- "${DERLEME_GIRDILERI[@]}")" ]]; then
+  git status --short --untracked-files=normal -- "${DERLEME_GIRDILERI[@]}" >&2
+  hata "derleme girdilerinde (${DERLEME_GIRDILERI[*]}) işlenmemiş ya da izlenmeyen değişiklik var; önce commit et."
 fi
 COMMIT="$(git rev-parse --short HEAD)"
 SURUM="$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -n1)"
+TAM_COMMIT="$(git rev-parse HEAD)"
 echo "Yayın: $HEDEF  commit $COMMIT  sürüm $SURUM"
 
 # Gizli değer ve dosya denetimleri, ~10 dakikalık derlemeden ÖNCE yapılır.
@@ -72,7 +79,15 @@ else
 fi
 
 # Her zaman önce üretim paketi: yapılandırma doğrulaması ve ikilide anahtar denetimi.
-tool/surum_paketi.sh "$HEDEF" || hata "tool/surum_paketi.sh başarısız; yükleme yapılmadı."
+# --kuru: "ağa yükleme yok" sözü sembol yüklemesi (Crashlytics) için de geçerli.
+PAKET_BAYRAKLARI=()
+[[ "$KURU" == 1 ]] && PAKET_BAYRAKLARI+=(--semboller-yukleme)
+tool/surum_paketi.sh "$HEDEF" "${PAKET_BAYRAKLARI[@]+"${PAKET_BAYRAKLARI[@]}"}" || hata "tool/surum_paketi.sh başarısız; yükleme yapılmadı."
+
+# Derleme sürerken HEAD ya da girdiler değişmediyse (checkout, elle düzenleme)
+# yüklenen paket başarı mesajındaki commit'e karşılık gelmez: yükleme yok.
+[[ "$(git rev-parse HEAD)" == "$TAM_COMMIT" ]] || hata "derleme sırasında HEAD değişti; yükleme yapılmadı."
+[[ -z "$(git status --porcelain --untracked-files=normal -- "${DERLEME_GIRDILERI[@]}")" ]] || hata "derleme sırasında girdiler değişti; yükleme yapılmadı."
 
 if [[ "$HEDEF" == ios ]]; then
   # Eski bir IPA yanlış dosyanın yüklenmesine yol açmasın.

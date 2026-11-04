@@ -108,6 +108,7 @@ class _OwnedSupabaseRepository extends SupabaseZanKurdRepository {
 
   String? userId;
   int awardCalls = 0;
+  final awardedScores = <int>[];
   Completer<void>? awardStarted;
   Completer<void>? allowAward;
 
@@ -123,7 +124,9 @@ class _OwnedSupabaseRepository extends SupabaseZanKurdRepository {
     GameRoom? room,
   }) async {
     awardCalls += 1;
-    awardStarted?.complete();
+    awardedScores.add(score);
+    final started = awardStarted;
+    if (started != null && !started.isCompleted) started.complete();
     await allowAward?.future;
     return (amount: 1, dailyCapReached: false);
   }
@@ -1179,6 +1182,65 @@ void main() {
     // üç kayıt da korunur; ölçülen şey çöküşsüzlük, boşalma değil.
     expect(manager.pendingCount, 3);
   });
+
+  // Gerçek gönderim döngüsü (çevrimiçi Supabase deposu türevi): ilk gönderim
+  // `Completer` ile durdurulur; bu sırada yeni kayıt eklenir ve eşzamanlı
+  // sync çağrılır. Sahte depo bu döngüye hiç girmediği için yukarıdaki
+  // `pendingCount` testleri koruma bozulsa da geçerdi.
+  test(
+    'gönderim sürerken eklenen kayıt ve eşzamanlı sync: her kayıt tam bir kez',
+    () async {
+      final repository = _OwnedSupabaseRepository(userId: 'user-a')
+        ..awardStarted = Completer<void>()
+        ..allowAward = Completer<void>();
+      final manager = await SyncManager.initialize(
+        repository,
+        connectivityMonitor: _OnlineConnectivityMonitor(),
+      );
+
+      Future<void> queueReward(int score) => manager.queueQuizReward(
+        score: score,
+        correctCount: 1,
+        bestStreak: 1,
+        totalQuestions: 1,
+      );
+
+      await queueReward(100);
+      final syncing = manager.sync();
+      await repository.awardStarted!.future;
+      expect(repository.awardedScores, [100], reason: 'ilk gönderim başladı');
+
+      // İlk gönderim askıdayken yeni kayıt + üç eşzamanlı sync.
+      await queueReward(200);
+      final concurrent = Future.wait([
+        manager.sync(),
+        manager.sync(),
+        manager.sync(),
+      ]);
+      await Future<void>.delayed(Duration.zero);
+      expect(
+        repository.awardCalls,
+        1,
+        reason:
+            'tek etkin gönderim: eşzamanlı sync ikinci gönderim başlatmamalı',
+      );
+
+      repository.allowAward!.complete();
+      await Future.wait([syncing, concurrent]);
+      await manager.sync();
+
+      expect(
+        repository.awardedScores..sort(),
+        [100, 200],
+        reason: 'her kayıt tam bir kez gönderilmeli',
+      );
+      expect(
+        manager.pendingCount,
+        0,
+        reason: 'başarılı kayıtlar kuyruktan düşmeli',
+      );
+    },
+  );
 
   test('eşzamanlı sync çağrıları tek tur olarak çalışır', () async {
     final repository = MockZanKurdRepository();

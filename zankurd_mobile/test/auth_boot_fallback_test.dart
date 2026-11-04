@@ -116,14 +116,11 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
 
-    final createRoom = find.byKey(const ValueKey('play-hub-create-room'));
-    if (createRoom.evaluate().isNotEmpty) {
-      // 2026-09-29 doğallık (K7): "Oda kur" artık ikincil düğmedir
-      // (`SahneButton`); kural aynı: sunucu yokken dokunulamaz.
-      final button = tester.widget<SahneButton>(
-        find.descendant(of: createRoom, matching: find.byType(SahneButton)),
-      );
-      expect(button.onPressed, isNull);
-    }
+    // "Oda" artık ana ekranda bir kafes (SahneModeTile); oda kur/katıl onun
+    // açtığı sayfada. Sunucu yokken kafes dokunulamaz olmalı. Kafes yoksa
+    // test KIRILIR (koşullu atlama, kural kalkınca da yeşil kalıyordu).
+    final room = find.byKey(const ValueKey('play-hub-room'));
+    expect(room, findsOneWidget);
+    expect(tester.widget<SahneModeTile>(room).onTap, isNull);
   });
 }

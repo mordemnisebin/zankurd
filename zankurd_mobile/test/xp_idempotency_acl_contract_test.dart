@@ -2,11 +2,15 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'support/active_sql.dart';
+
 void main() {
   test('idempotency tabloları istemciye kapalı ve RLS açık', () {
-    final sql = File(
-      'supabase/2026-09-22_xp_and_coin_idempotency.sql',
-    ).readAsStringSync();
+    final sql = activeSql(
+      File(
+        'supabase/2026-09-22_xp_and_coin_idempotency.sql',
+      ).readAsStringSync(),
+    );
 
     expect(
       sql,
@@ -33,9 +37,11 @@ void main() {
   });
 
   test('client delta XP kapalı, coin idempotency RPC açık kalır', () {
-    final sql = File(
-      'supabase/2026-09-22_xp_and_coin_idempotency.sql',
-    ).readAsStringSync();
+    final sql = activeSql(
+      File(
+        'supabase/2026-09-22_xp_and_coin_idempotency.sql',
+      ).readAsStringSync(),
+    );
 
     expect(
       sql,

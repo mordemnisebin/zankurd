@@ -17,6 +17,8 @@ tutmazsa O KAYIT atlanır (tamamı değil — geri kalan iş boşa gitmesin):
 
 Atlananlar ekrana yazılır; sessizce düşen kayıt olmaz.
 """
+from __future__ import annotations
+
 import json
 import pathlib
 import re
@@ -73,6 +75,17 @@ def main() -> int:
         answers_tr = fix.get("answersTr", question.get("answersTr"))
         if answers_tr and len(answers_tr) != len(answers):
             skipped.append((qid, "TR şık sayısı Kurmancî ile eşleşmiyor")); continue
+
+        # Birleşik kaydı iki dil için YENİDEN doğrula: TR doğru cevap TR
+        # şıklarda olmalı ve iki dilde doğru şık indeksi eşit olmalı. Eskiden
+        # yalnız KU şıkları yeniden sıralanınca KU indeksi 1/TR indeksi 0 olan
+        # banka başarıyla yazılıyordu.
+        correct_tr = fix.get("correctAnswerTr", question.get("correctAnswerTr"))
+        if answers_tr:
+            if correct_tr not in answers_tr:
+                skipped.append((qid, "TR doğru cevap TR şıklarda yok")); continue
+            if answers_tr.index(correct_tr) != answers.index(correct):
+                skipped.append((qid, "doğru şık indeksi KU ile TR arasında farklı")); continue
 
         for alan in ALANLAR:
             if alan in fix:

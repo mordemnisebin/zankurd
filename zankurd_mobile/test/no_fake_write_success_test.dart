@@ -88,7 +88,13 @@ void main() {
       'loadTodayContest failed',
     ]) {
       final at = repo.indexOf("reason: '$read'");
-      if (at < 0) continue;
+      expect(
+        at,
+        greaterThanOrEqualTo(0),
+        reason:
+            "'$read' hata kaydı kaynakta bulunamadı: işaretçi değiştiyse test "
+            'sıfır beklentiyle geçerdi; işaretçiyi güncelle',
+      );
       final tail = repo.substring(at, at + 800);
       expect(
         tail.substring(0, tail.indexOf('\n  }')),

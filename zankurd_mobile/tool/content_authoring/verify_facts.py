@@ -21,6 +21,8 @@ gerektirir. Betik yalnız mekanik olarak kesin söylenebileni söyler.
 Kullanım:
   python3 tool/content_authoring/verify_facts.py aday.csv
 """
+from __future__ import annotations
+
 import csv
 import json
 import re
@@ -67,8 +69,22 @@ def page_text(url: str) -> str:
     return fetch(urllib.request.Request(encoded, headers=UA)).decode("utf-8", "replace")
 
 
+def correct_text(row: dict) -> str:
+    """Doğru şıkkın METNİ. `correct_option` çoğu CSV'de A–D harfidir; yıl
+    taraması eskiden harfi tarıyordu ve yıl yalnız `option_a` gibi şıkta
+    olduğunda soru "denetlenebilir yıl yok" diye sessizce atlanıyordu."""
+    key = (row.get("correct_option") or "").strip()
+    if len(key) == 1 and key.upper() in "ABCD":
+        return row.get(f"option_{key.lower()}") or ""
+    return key
+
+
+def claim_text(row: dict) -> str:
+    return f"{row['prompt']} {row['explanation']} {correct_text(row)}"
+
+
 def check(row: dict) -> tuple[str, str, list[str]] | None:
-    claim = f"{row['prompt']} {row['explanation']} {row['correct_option']}"
+    claim = claim_text(row)
     years = sorted(set(YEAR.findall(claim)))
     if not years:
         return None
@@ -86,7 +102,7 @@ def main(path: str) -> int:
     with open(path, newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
     checkable = [r for r in rows
-                 if YEAR.search(f"{r['prompt']} {r['explanation']} {r['correct_option']}")]
+                 if YEAR.search(claim_text(r))]
     print(f"{len(rows)} satır, {len(checkable)} tanesinde denetlenebilir yıl var")
 
     # Tek akış + aralık: Wikipedia API'si eşzamanlı isteklerde 429 veriyor ve

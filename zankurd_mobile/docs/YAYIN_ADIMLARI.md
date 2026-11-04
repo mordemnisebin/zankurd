@@ -342,9 +342,9 @@ flutter test integration_test/local_backend_1v1_test.dart -d <host-cihaz-id> --d
 flutter test integration_test/local_backend_1v1_test.dart -d <guest-cihaz-id> --dart-define-from-file=.env.mobile.local.json --dart-define=ZK_ROLE=guest --dart-define=ZK_ROOM_CODE=<host-logundaki-kod>
 flutter test integration_test/revenuecat_roundtrip_test.dart -d <ios-cihaz-id> --dart-define-from-file=.env.mobile.local.json
 flutter test integration_test/notification_real_schedule_test.dart -d <ios-cihaz-id>
-flutter test integration_test/os_level_resilience_test.dart -d <android-cihaz-id> --dart-define-from-file=.env.mobile.local.json --dart-define=ZK_PHASE=setup
+flutter test integration_test/os_level_resilience_test.dart -d <android-cihaz-id> --dart-define-from-file=.env.mobile.local.json --dart-define=ZK_PHASE=setup --dart-define=ZK_FREEZE_KEY=<koşuya-özgü-benzersiz>
 adb shell am force-stop com.zankurd.app
-flutter test integration_test/os_level_resilience_test.dart -d <android-cihaz-id> --dart-define-from-file=.env.mobile.local.json --dart-define=ZK_PHASE=resume
+flutter test integration_test/os_level_resilience_test.dart -d <android-cihaz-id> --dart-define-from-file=.env.mobile.local.json --dart-define=ZK_PHASE=resume --dart-define=ZK_FREEZE_KEY=<setup'takiyle-aynı> --dart-define=ZK_EXPECT_USER_ID=<setup'ın yazdığı ZK_USER_ID>
 ```
 
 1v1 host ve guest koşuları eşzamanlıdır; host logundaki `ZK_ROOM_CODE` guest
@@ -369,6 +369,11 @@ testin tamamını, ISO tarihini, aday sürümü ve release girdilerinin SHA-256
 parmak izini doğrulamadan sıfır çıkış kodu vermez. Cihaz testlerinden sonra
 `lib`, `assets`, `android`, `ios`, `pubspec.yaml`, `pubspec.lock` veya mobil
 release yapılandırması değişirse eski kanıt bilinçli olarak geçersiz olur.
+
+Validator `artifacts.*.ref` ve `checks.*.evidence_ref` dosyalarını (çalışma
+klasörüne göre) GERÇEKTEN açar, SHA-256'larını beyan edilenle karşılaştırır;
+olmayan dosya, yanlış hash, 64 sıfır ve dizin reddedilir. iOS için `.app`
+dizini değil, `.ipa` dosyası ver.
 
 **Tamam mı?** Validator `4/4` geçti ve Android/iPhone production-config smoke
 kurulumları da aynı aday kaynaktan geldiyse evet. Bu kapı eksikse mağaza

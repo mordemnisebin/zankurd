@@ -14,11 +14,32 @@ const requiredDeviceReleaseChecks = <String>[
 const requiredReleaseArtifacts = <String>['android', 'ios'];
 const deviceEvidenceMaxAge = Duration(days: 7);
 
+final _sha256Pattern = RegExp(r'^[a-f0-9]{64}$');
+
+/// [ref] dosyası [base] altında gerçekten var mı ve SHA-256'sı [claimed]
+/// ile aynı mı? Boş döner = tamam. Yalnız biçime bakmak, olmayan dosyaya ve
+/// 64 sıfırlı hash'e işaret eden kanıtı kabul ediyordu (GPT-6 Pro alan 8).
+String? _verifyFileHash(Directory base, String ref, String claimed, String ad) {
+  if (RegExp(r'^0{64}$').hasMatch(claimed)) {
+    return '$ad: sha256 yalnız sıfırlardan oluşamaz.';
+  }
+  final file = File(ref.startsWith('/') ? ref : '${base.path}/$ref');
+  if (!file.existsSync()) {
+    return '$ad: "$ref" dosyası bulunamadı (bir dizin değil, dosya olmalı).';
+  }
+  final actual = sha256.convert(file.readAsBytesSync()).toString();
+  if (actual != claimed) {
+    return '$ad: "$ref" gerçek sha256 değeri beyan edilenle uyuşmuyor.';
+  }
+  return null;
+}
+
 List<String> validateDeviceReleaseEvidence(
   String source, {
   required String expectedVersion,
   required String expectedSourceFingerprint,
   DateTime? now,
+  Directory? filesBase,
 }) {
   final errors = <String>[];
   Object? decoded;
@@ -80,8 +101,13 @@ List<String> validateDeviceReleaseEvidence(
       if (path is! String || path.trim().isEmpty) {
         errors.add('$platform artifact ref boş olamaz.');
       }
-      if (hash is! String || !RegExp(r'^[a-f0-9]{64}$').hasMatch(hash)) {
+      if (hash is! String || !_sha256Pattern.hasMatch(hash)) {
         errors.add('$platform artifact sha256 geçersiz.');
+      } else if (filesBase != null &&
+          path is String &&
+          path.trim().isNotEmpty) {
+        final e = _verifyFileHash(filesBase, path, hash, '$platform artifact');
+        if (e != null) errors.add(e);
       }
     }
   }
@@ -109,9 +135,13 @@ List<String> validateDeviceReleaseEvidence(
       errors.add('$name için evidence_ref boş olamaz.');
     }
     final evidenceHash = value['evidence_sha256'];
-    if (evidenceHash is! String ||
-        !RegExp(r'^[a-f0-9]{64}$').hasMatch(evidenceHash)) {
+    if (evidenceHash is! String || !_sha256Pattern.hasMatch(evidenceHash)) {
       errors.add('$name için evidence_sha256 geçersiz.');
+    } else if (filesBase != null &&
+        evidenceRef is String &&
+        evidenceRef.trim().isNotEmpty) {
+      final e = _verifyFileHash(filesBase, evidenceRef, evidenceHash, name);
+      if (e != null) errors.add(e);
     }
   }
   return errors;
@@ -217,6 +247,9 @@ void main(List<String> args) {
     evidence.readAsStringSync(),
     expectedVersion: expectedVersion,
     expectedSourceFingerprint: sourceFingerprint,
+    // Komut satırında dosyalar GERÇEKTEN okunur ve hash'leri doğrulanır;
+    // göreli yollar çalışma klasörüne göredir.
+    filesBase: Directory.current,
   );
   if (errors.isNotEmpty) {
     for (final error in errors) {

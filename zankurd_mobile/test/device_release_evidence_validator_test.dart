@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:crypto/crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../tool/validate_device_release_evidence.dart';
@@ -112,5 +114,80 @@ void main() {
     );
     expect(errors.join('\n'), contains('artifacts'));
     expect(errors.join('\n'), contains('evidence_sha256'));
+  });
+
+  group('dosya doğrulaması (filesBase verilince)', () {
+    late Directory dir;
+    setUp(() {
+      dir = Directory.systemTemp.createTempSync('cihaz_kanit_');
+      addTearDown(() => dir.deleteSync(recursive: true));
+    });
+
+    String write(String name, String content) {
+      File('${dir.path}/$name')
+        ..createSync(recursive: true)
+        ..writeAsStringSync(content);
+      return sha256.convert(utf8.encode(content)).toString();
+    }
+
+    Map<String, dynamic> gercek() {
+      final e = validEvidence();
+      e['artifacts'] = {
+        'android': {'ref': 'app.aab', 'sha256': write('app.aab', 'aab-bytes')},
+        'ios': {'ref': 'app.ipa', 'sha256': write('app.ipa', 'ipa-bytes')},
+      };
+      e['checks'] = {
+        for (final c in checks)
+          c: {
+            'passed': true,
+            'device': 'release-device',
+            'evidence_ref': 'evidence/$c.log',
+            'evidence_sha256': write('evidence/$c.log', 'ok $c'),
+          },
+      };
+      return e;
+    }
+
+    List<String> run(Map<String, dynamic> e) => validateDeviceReleaseEvidence(
+      jsonEncode(e),
+      expectedVersion: version,
+      expectedSourceFingerprint: sourceFingerprint,
+      now: DateTime.utc(2026, 9, 25, 10),
+      filesBase: dir,
+    );
+
+    test('gerçek dosyalar ve doğru hash kabul edilir', () {
+      expect(run(gercek()), isEmpty);
+    });
+
+    test('olmayan dosya referansı reddedilir', () {
+      final e = gercek();
+      ((e['checks'] as Map)['os_level_resilience_test']
+              as Map)['evidence_ref'] =
+          'yok.log';
+      expect(run(e), contains(contains('bulunamadı')));
+    });
+
+    test('yanlış hash ve 64 sıfır reddedilir', () {
+      final e = gercek();
+      (e['artifacts'] as Map)['android'] = {
+        'ref': 'app.aab',
+        'sha256': 'b' * 64,
+      };
+      (e['artifacts'] as Map)['ios'] = {'ref': 'app.ipa', 'sha256': '0' * 64};
+      final errors = run(e);
+      expect(errors, contains(contains('uyuşmuyor')));
+      expect(errors, contains(contains('sıfır')));
+    });
+
+    test('dizin artifact olarak kabul edilmez', () {
+      Directory('${dir.path}/Runner.app').createSync();
+      final e = gercek();
+      (e['artifacts'] as Map)['ios'] = {
+        'ref': 'Runner.app',
+        'sha256': 'c' * 64,
+      };
+      expect(run(e), contains(contains('bulunamadı')));
+    });
   });
 }
