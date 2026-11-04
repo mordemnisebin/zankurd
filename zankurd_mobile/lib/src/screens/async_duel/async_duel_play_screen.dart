@@ -663,6 +663,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     final view = recovered != null
         ? AsyncDuelResultView.fromSummary(recovered)
         : AsyncDuelResultView.fromAnswer(duel, result!);
+    _dismissExitDialog();
     Navigator.of(context).pushReplacement(
       AppRoute.to(
         AsyncDuelResultScreen(
@@ -673,6 +674,19 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       ),
     );
     return true;
+  }
+
+  /// Açık "Yarıştan çık?" diyaloğunun bağlamı. Sonuç diyalog açıkken gelirse
+  /// `pushReplacement` ekranın değil EN ÜSTTEKİ rotanın (diyaloğun) yerini
+  /// alırdı; sonuç kapanınca eski oyun ekranı geri görünürdü.
+  BuildContext? _exitDialogContext;
+
+  void _dismissExitDialog() {
+    final dialogContext = _exitDialogContext;
+    _exitDialogContext = null;
+    if (dialogContext != null && dialogContext.mounted) {
+      Navigator.of(dialogContext).pop(false);
+    }
   }
 
   Future<void> _confirmExit() async {
@@ -693,30 +707,34 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     }
     final quit = await showDialog<bool>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(
-          dialogContext.t(
-            _isTournament ? K.tournamentQuitTitle : K.asyncDuelQuitTitle,
+      builder: (dialogContext) {
+        _exitDialogContext = dialogContext;
+        return AlertDialog(
+          title: Text(
+            dialogContext.t(
+              _isTournament ? K.tournamentQuitTitle : K.asyncDuelQuitTitle,
+            ),
           ),
-        ),
-        content: Text(dialogContext.t(K.asyncDuelQuitBody)),
-        actions: [
-          DialogActionPair(
-            cancel: TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(true),
-              style: TextButton.styleFrom(
-                foregroundColor: Theme.of(dialogContext).colorScheme.error,
+          content: Text(dialogContext.t(K.asyncDuelQuitBody)),
+          actions: [
+            DialogActionPair(
+              cancel: TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(true),
+                style: TextButton.styleFrom(
+                  foregroundColor: Theme.of(dialogContext).colorScheme.error,
+                ),
+                child: Text(dialogContext.t(K.asyncDuelQuit)),
               ),
-              child: Text(dialogContext.t(K.asyncDuelQuit)),
+              confirm: FilledButton(
+                onPressed: () => Navigator.of(dialogContext).pop(false),
+                child: Text(dialogContext.t(K.asyncDuelKeepPlaying)),
+              ),
             ),
-            confirm: FilledButton(
-              onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: Text(dialogContext.t(K.asyncDuelKeepPlaying)),
-            ),
-          ),
-        ],
-      ),
+          ],
+        );
+      },
     );
+    _exitDialogContext = null;
     if (quit != true || !mounted) {
       if (pauseForDialog &&
           mounted &&
@@ -775,6 +793,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     if (_isTournament) {
       Navigator.of(context).pop(<String, Object?>{'completed': completed});
     } else if (duel != null && !completed) {
+      _dismissExitDialog();
       Navigator.of(context).pushReplacement(
         AppRoute.to(
           AsyncDuelResultScreen(
@@ -889,14 +908,13 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         // lacivert sahne. İlerleme çubuğu `progress` yuvasında.
         progress: SahneProgressBar(
           key: const ValueKey('async-duel-progress-bar'),
-          // `_results` toplam uzunlukta ve boş (`null`) başlar: yalnız
-          // cevaplananlar dolu sayılır.
+          // İlerleme SUNUCUCA doğrulanmış cevaplardan sayılır: yarım düelloya
+          // devam edilirken önceki cevaplar `_confirmedIndices`e yüklenir ama
+          // `_results` boş kurulur (doğru/yanlış rengi bilinmez); eskiden
+          // 6/7. soruda çubuk %0 gösteriyordu.
           value: total == 0
               ? 0
-              : (_results.where((r) => r != null).length / total).clamp(
-                  0.0,
-                  1.0,
-                ),
+              : (_confirmedIndices.length / total).clamp(0.0, 1.0),
           height: 4,
           semanticLabel: progressLabel,
         ),

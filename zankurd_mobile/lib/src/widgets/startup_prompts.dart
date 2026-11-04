@@ -104,10 +104,22 @@ class StartupPrompts {
       );
 }
 
-class _ConsentBody extends StatelessWidget {
+class _ConsentBody extends StatefulWidget {
   const _ConsentBody();
 
-  Future<void> _choose(BuildContext context, bool accept) async {
+  @override
+  State<_ConsentBody> createState() => _ConsentBodyState();
+}
+
+class _ConsentBodyState extends State<_ConsentBody> {
+  /// Kayıt sürerken düğmeler kapalı: hızlı çift dokunuş iki `_choose`
+  /// başlatıp ikinci `pop`la arkadaki ekranı ya da sıradaki pencereyi
+  /// kapatıyordu.
+  bool _busy = false;
+
+  Future<void> _choose(bool accept) async {
+    if (_busy) return;
+    setState(() => _busy = true);
     final consent = context.read<AnalyticsConsentProvider>();
     final navigator = Navigator.of(context);
     // Seçim önce yazılır, sonra sayfa kapanır; ikisi de AYRI anahtar.
@@ -116,7 +128,7 @@ class _ConsentBody extends StatelessWidget {
     if (accept) {
       unawaited(AnalyticsService.instance.initialize(enabled: true));
     }
-    if (navigator.mounted) navigator.pop();
+    if (mounted && navigator.mounted) navigator.pop();
   }
 
   @override
@@ -143,14 +155,14 @@ class _ConsentBody extends StatelessWidget {
             label: context.t(K.consentSheetAccept),
             expand: true,
             arrow: false,
-            onPressed: () => unawaited(_choose(context, true)),
+            onPressed: _busy ? null : () => unawaited(_choose(true)),
           ),
           const SizedBox(height: SahneSpace.x2),
           SahneButton.secondary(
             buttonKey: const ValueKey('consent-decline'),
             label: context.t(K.consentSheetDecline),
             expand: true,
-            onPressed: () => unawaited(_choose(context, false)),
+            onPressed: _busy ? null : () => unawaited(_choose(false)),
           ),
         ],
       ),
@@ -158,10 +170,22 @@ class _ConsentBody extends StatelessWidget {
   }
 }
 
-class _AgeGateBody extends StatelessWidget {
+class _AgeGateBody extends StatefulWidget {
   const _AgeGateBody();
 
-  Future<void> _choose(BuildContext context, AgeDeclaration value) async {
+  @override
+  State<_AgeGateBody> createState() => _AgeGateBodyState();
+}
+
+class _AgeGateBodyState extends State<_AgeGateBody> {
+  /// Kayıt sürerken düğmeler kapalı: hızlı çift dokunuş iki `_choose`
+  /// başlatıp ikinci `pop`la arkadaki ekranı ya da sıradaki pencereyi
+  /// kapatıyordu.
+  bool _busy = false;
+
+  Future<void> _choose(AgeDeclaration value) async {
+    if (_busy) return;
+    setState(() => _busy = true);
     final consent = context.read<AnalyticsConsentProvider>();
     final navigator = Navigator.of(context);
     await AgeGate.declare(value);
@@ -171,7 +195,7 @@ class _AgeGateBody extends StatelessWidget {
       await consent.setCrashReportsEnabled(false);
       unawaited(AnalyticsService.instance.disable());
     }
-    if (navigator.mounted) navigator.pop();
+    if (mounted && navigator.mounted) navigator.pop();
   }
 
   @override
@@ -198,14 +222,18 @@ class _AgeGateBody extends StatelessWidget {
             label: context.t(K.yes),
             expand: true,
             arrow: false,
-            onPressed: () => unawaited(_choose(context, AgeDeclaration.adult)),
+            onPressed: _busy
+                ? null
+                : () => unawaited(_choose(AgeDeclaration.adult)),
           ),
           const SizedBox(height: SahneSpace.x2),
           SahneButton.secondary(
             buttonKey: const ValueKey('age-gate-no'),
             label: context.t(K.no),
             expand: true,
-            onPressed: () => unawaited(_choose(context, AgeDeclaration.minor)),
+            onPressed: _busy
+                ? null
+                : () => unawaited(_choose(AgeDeclaration.minor)),
           ),
         ],
       ),

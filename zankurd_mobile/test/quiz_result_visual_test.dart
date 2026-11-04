@@ -236,7 +236,7 @@ Future<void> _expectReadablePrimaryNextAction(
   await tester.pumpAndSettle();
   expect(action, findsOneWidget, reason: variant.name);
 
-  final expectedLabel = Tr.forKu(K.playAgain, variant.language == 'ku');
+  final expectedLabel = Tr.forKu(K.home, variant.language == 'ku');
   final buttonSemantics = tester.getSemantics(action);
   expect(buttonSemantics.flagsCollection.isButton, isTrue);
   expect(buttonSemantics.label, contains(expectedLabel), reason: variant.name);
@@ -291,7 +291,7 @@ void main() {
       await tester.pump();
       final label = find.descendant(of: action, matching: find.byType(Text));
       final paragraph = tester.renderObject<RenderParagraph>(label);
-      expect(paragraph.text.toPlainText(), 'Tekrar oyna');
+      expect(paragraph.text.toPlainText(), 'Ana sayfa');
       expect(paragraph.didExceedMaxLines, isFalse);
       expect(tester.getRect(action).height, greaterThanOrEqualTo(54));
       expect(tester.takeException(), isNull);

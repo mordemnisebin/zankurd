@@ -399,6 +399,13 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
         if (view.kind == AsyncDuelResultKind.waiting) return;
         _replacedByResult = true;
         _waitingPoll?.cancel();
+        // İptal onayı açıkken sonuç gelirse diyalog rotası değil bu ekran
+        // değiştirilsin.
+        final dialogContext = _cancelDialogContext;
+        _cancelDialogContext = null;
+        if (dialogContext != null && dialogContext.mounted) {
+          Navigator.of(dialogContext).pop(false);
+        }
         unawaited(
           Navigator.of(context).pushReplacement(
             AppRoute.to(
@@ -869,28 +876,34 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
   /// Kimsenin katılmadığı düelloyu onaydan sonra geri çeker ve ekranı
   /// kapatır (liste dönüşte yenilenir). RPC yoksa ya da çağrı başarısızsa
   /// ekran açık kalır ve nedeni söylenir.
+  BuildContext? _cancelDialogContext;
+
   Future<void> _confirmCancel(AsyncDuelResultView view) async {
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(dialogContext.t(K.asyncDuelCancelTitle)),
-        content: Text(dialogContext.t(K.asyncDuelCancelBody)),
-        actions: [
-          DialogActionPair(
-            cancel: TextButton(
-              onPressed: () => Navigator.pop(dialogContext, false),
-              child: Text(dialogContext.t(K.cancel)),
+      builder: (dialogContext) {
+        _cancelDialogContext = dialogContext;
+        return AlertDialog(
+          title: Text(dialogContext.t(K.asyncDuelCancelTitle)),
+          content: Text(dialogContext.t(K.asyncDuelCancelBody)),
+          actions: [
+            DialogActionPair(
+              cancel: TextButton(
+                onPressed: () => Navigator.pop(dialogContext, false),
+                child: Text(dialogContext.t(K.cancel)),
+              ),
+              confirm: SahneButton.primary(
+                key: const ValueKey('async-duel-cancel-confirm'),
+                label: dialogContext.t(K.asyncDuelCancelConfirm),
+                arrow: false,
+                onPressed: () => Navigator.pop(dialogContext, true),
+              ),
             ),
-            confirm: SahneButton.primary(
-              key: const ValueKey('async-duel-cancel-confirm'),
-              label: dialogContext.t(K.asyncDuelCancelConfirm),
-              arrow: false,
-              onPressed: () => Navigator.pop(dialogContext, true),
-            ),
-          ),
-        ],
-      ),
+          ],
+        );
+      },
     );
+    _cancelDialogContext = null;
     if (confirmed != true || !mounted) return;
     final messenger = ScaffoldMessenger.of(context);
     final navigator = Navigator.of(context);

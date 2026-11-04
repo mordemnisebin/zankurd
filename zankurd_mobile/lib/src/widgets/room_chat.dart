@@ -45,6 +45,7 @@ class _RoomChatState extends State<RoomChat> {
   List<RoomMessage> _messages = [];
   bool _sending = false;
   bool _subscribed = false;
+  String? _lastSeenMessageId;
 
   /// Engellenen göndericiler ve bildirilen mesajlar — bu cihazda hemen
   /// gizlenir. Sunucu tarafında `blocked_users` politikası zaten süzüyor;
@@ -117,8 +118,18 @@ class _RoomChatState extends State<RoomChat> {
         .listen(
           (msgs) {
             if (!mounted) return;
+            // Eski mesajları okuyan kullanıcının konumu, gelen yeni mesajla
+            // bozulmaz: yalnız listenin dibindeyken ya da yeni mesajı KENDİSİ
+            // gönderdiyse en alta kayılır.
+            final nearBottom = _isNearBottom();
             setState(() => _messages = msgs);
-            _scrollToBottom();
+            final visible = _visibleMessages;
+            final ownLast =
+                visible.isNotEmpty &&
+                visible.last.id != _lastSeenMessageId &&
+                visible.last.senderId == widget.currentUserId;
+            _lastSeenMessageId = visible.isEmpty ? null : visible.last.id;
+            if (nearBottom || ownLast) _scrollToBottom();
           },
           onError: (Object error, StackTrace stack) {
             ErrorReporter.record(
@@ -162,6 +173,13 @@ class _RoomChatState extends State<RoomChat> {
     _subscription?.cancel();
     _subscription = null;
     _subscribed = false;
+  }
+
+  /// Liste dibe yakın mı (ya da henüz kaydırma yok)?
+  bool _isNearBottom() {
+    if (!_scrollController.hasClients) return true;
+    final position = _scrollController.position;
+    return position.maxScrollExtent - position.pixels <= 80;
   }
 
   void _scrollToBottom() {

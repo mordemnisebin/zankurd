@@ -60,17 +60,42 @@ class DailyEventBoardCard extends StatefulWidget {
   State<DailyEventBoardCard> createState() => _DailyEventBoardCardState();
 }
 
-class _DailyEventBoardCardState extends State<DailyEventBoardCard> {
+class _DailyEventBoardCardState extends State<DailyEventBoardCard>
+    with WidgetsBindingObserver {
   late Future<DailyEventBoard?> _board;
   Timer? _tick;
 
+  /// Panonun yüklendiği gün. Dakika zamanlayıcısı yalnız sayacı çizerdi;
+  /// gün değişince sayaç yeni güne geçerken önceki günün sıralaması ve
+  /// "dünün kazananı" ekranda kalıyordu.
+  late DateTime _boardDay;
+
   DateTime _now() => (widget.clock ?? DateTime.now)();
+
+  static DateTime _dayOf(DateTime t) => DateTime(t.year, t.month, t.day);
 
   @override
   void initState() {
     super.initState();
+    _boardDay = _dayOf(_now());
     _board = _load();
     _scheduleTick();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  /// Gün değiştiyse panoyu yeniden yükler.
+  void _refreshIfDayChanged() {
+    final today = _dayOf(_now());
+    if (today == _boardDay) return;
+    setState(() {
+      _boardDay = today;
+      _board = _load();
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && mounted) _refreshIfDayChanged();
   }
 
   Future<DailyEventBoard?> _load() async {
@@ -98,12 +123,14 @@ class _DailyEventBoardCardState extends State<DailyEventBoardCard> {
     _tick = Timer(untilNextMinute, () {
       if (!mounted) return;
       setState(() {});
+      _refreshIfDayChanged();
       _scheduleTick();
     });
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _tick?.cancel();
     super.dispose();
   }

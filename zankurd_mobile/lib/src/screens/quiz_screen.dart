@@ -4094,6 +4094,9 @@ class _QuizScreenState extends State<QuizScreen>
 
   Future<void> _answer(String answer) async {
     if (answered) return;
+    // İlk tur rehberi (coach mark) açıkken cevap kaydedilmez: ekran okuyucu
+    // ya da klavye odağı alttaki şıkları rehberi kapatmadan etkinleştirebilirdi.
+    if (!_tutorialGateReady && answer != 'TIMEOUT') return;
     AppHaptics.selection();
 
     // Sunucu odasında cevap veren de ortak kalan süreyi görür.
@@ -4588,6 +4591,18 @@ class _QuizScreenState extends State<QuizScreen>
     // Diyalog açıkken çevrimiçi maç sonraki soruya geçebilir: şikâyet,
     // diyaloğun açıldığı sorunun adına gider.
     final reported = question;
+    // Tek kişilik süreli turda rapor penceresi açıkken sayaç DURUR: açıklama
+    // yazan oyuncunun sorusu TIMEOUT ile kapanıyordu. Çevrimiçi odada süreyi
+    // sunucu yönetir; orada istemci sayacı durdurulmaz (bkz. `_confirmExit`).
+    final pauseForDialog =
+        !_isMultiplayer &&
+        _usesTimer &&
+        !answered &&
+        _timerController.isAnimating;
+    if (pauseForDialog) {
+      _timerController.stop();
+      _questionStopwatch.stop();
+    }
     // Denetleyiciyi diyalogun kendi State'i yönetir (kapanış animasyonu
     // sürerken dışarıdan atmak çöküş riskiydi).
     final reason = await showDialog<String>(
@@ -4595,6 +4610,14 @@ class _QuizScreenState extends State<QuizScreen>
       builder: (_) =>
           _QuizReportDialog(initialText: context.t(K.reportReasonDefault)),
     );
+    if (pauseForDialog &&
+        mounted &&
+        !answered &&
+        identical(question, reported) &&
+        !_timerController.isAnimating) {
+      _timerController.reverse();
+      _questionStopwatch.start();
+    }
     if (reason == null) return;
 
     try {

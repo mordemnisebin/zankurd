@@ -441,11 +441,16 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                                         .joinOnlineRoom(
                                           normalizeRoomCode(controller.text),
                                         );
-                                    if (!sheetCtx.mounted) return;
+                                    // Alt pencere istek sürerken kapatılmış olabilir:
+                                    // sunucu oyuncuyu odaya ALDI, bu yüzden lobi
+                                    // yine açılır (yoksa oyuncu görünmez biçimde
+                                    // odada kalıyordu).
                                     AnalyticsService.instance.logActivationStep(
                                       'room_joined',
                                     );
-                                    Navigator.of(sheetCtx).pop();
+                                    if (sheetCtx.mounted) {
+                                      Navigator.of(sheetCtx).pop();
+                                    }
                                     if (mounted) _openRoom(room);
                                   } catch (error, stack) {
                                     ErrorReporter.record(
@@ -453,8 +458,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                                       stack,
                                       reason: 'play hub join room failed',
                                     );
-                                    if (!sheetCtx.mounted) return;
-                                    Navigator.of(sheetCtx).pop();
+                                    if (sheetCtx.mounted) {
+                                      Navigator.of(sheetCtx).pop();
+                                    }
                                     if (!mounted) return;
                                     // Ücretli odaya jetonu yetmeyen oyuncuya "tekrar
                                     // dene" demek yalandı: tekrar denemek sonucu
@@ -1121,6 +1127,10 @@ class ThisWeekCard extends StatefulWidget {
 class _ThisWeekCardState extends State<ThisWeekCard> {
   int _loadGeneration = 0;
   bool _loaded = false;
+
+  /// Son istek hata verdi (boş sonuçtan AYRI): mevcut puan/sıra kaybolup
+  /// oynanmamış gibi boş durum gösterilmesin, yeniden deneme sunulsun.
+  bool _failed = false;
   LeaderboardEntry? _entry;
 
   @override
@@ -1148,16 +1158,20 @@ class _ThisWeekCardState extends State<ThisWeekCard> {
   Future<void> _load() async {
     final generation = ++_loadGeneration;
     LeaderboardEntry? entry;
+    var failed = false;
     try {
       entry = await widget.repository.getMyLeaderboardRank(
         LeaderboardPeriod.weekly,
       );
     } catch (error, stack) {
+      failed = true;
       ErrorReporter.record(error, stack, reason: 'play_hub_this_week');
     }
     if (!mounted || generation != _loadGeneration) return;
     setState(() {
-      _entry = entry;
+      // Hatada son başarılı veri korunur.
+      if (!failed) _entry = entry;
+      _failed = failed;
       _loaded = true;
     });
   }
@@ -1169,6 +1183,31 @@ class _ThisWeekCardState extends State<ThisWeekCard> {
     final t = SahneTokens.of(context);
     final entry = _entry;
     final hasData = entry != null && entry.rank > 0;
+    if (_failed && !hasData) {
+      return SahneSurfaceCard(
+        key: const ValueKey('play-hub-this-week'),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              context.t(K.thisWeek),
+              style: SahneType.captionStrong.copyWith(color: t.goldTx),
+            ),
+            const SizedBox(height: SahneSpace.x2),
+            Text(
+              context.t(K.loadFailedShort),
+              key: const ValueKey('play-hub-this-week-error'),
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+            SahneButton.text(
+              key: const ValueKey('play-hub-this-week-retry'),
+              label: context.t(K.retryShort),
+              onPressed: _load,
+            ),
+          ],
+        ),
+      );
+    }
     final cells = <(String, String)>[
       if (hasData) (context.t(K.statRank), '#${groupThousands(entry.rank)}'),
       if (hasData && entry.totalScore > 0)

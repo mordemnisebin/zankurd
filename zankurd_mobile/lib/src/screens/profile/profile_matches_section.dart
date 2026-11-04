@@ -275,6 +275,10 @@ class _ProfileRecordsSectionState extends State<ProfileRecordsSection> {
   /// sunucu sayıları gelince ekran "boş"tan "dolu"ya zıplıyordu.
   bool _settled = false;
 
+  /// Sunucu rekorları okunamadı: yerel seri de yoksa bölüm "İlk rekorunu
+  /// kır" demez (sunucuda rekorlar olabilir), hata + yeniden dene gösterir.
+  bool _serverFailed = false;
+
   @override
   void initState() {
     super.initState();
@@ -316,10 +320,16 @@ class _ProfileRecordsSectionState extends State<ProfileRecordsSection> {
       try {
         final server = await widget.repository.loadMyServerRecords();
         if (!mounted || epoch != _epoch) return;
-        setState(() => _server = server);
+        setState(() {
+          _server = server;
+          _serverFailed = false;
+        });
       } catch (error, stack) {
         // Sunucu sayıları gelmediyse ilgili satırlar hiç çizilmez.
         ErrorReporter.record(error, stack, reason: 'profile records server');
+        if (mounted && epoch == _epoch) {
+          setState(() => _serverFailed = true);
+        }
       }
     }
     if (mounted && epoch == _epoch && !_settled) {
@@ -378,6 +388,7 @@ class _ProfileRecordsSectionState extends State<ProfileRecordsSection> {
       for (final row in rows)
         if (row.value != '—') row,
     ];
+    final failedEmpty = known.isEmpty && _serverFailed;
     if (known.isEmpty) {
       // Başlıksız tek kompakt boş durum (rekor + son maç birlikte, K9).
       return Column(
@@ -406,15 +417,25 @@ class _ProfileRecordsSectionState extends State<ProfileRecordsSection> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        context.t(K.recordsEmptyTitle),
+                        context.t(
+                          failedEmpty ? K.loadFailedShort : K.recordsEmptyTitle,
+                        ),
                         style: SahneType.bodyStrong.copyWith(color: t.tx),
                       ),
                       const SizedBox(height: SahneSpace.x1),
                       Text(
-                        context.t(K.recordsEmptyBody),
+                        context.t(
+                          failedEmpty ? K.checkConnection : K.recordsEmptyBody,
+                        ),
                         style: SahneType.caption.copyWith(color: t.tx2),
                       ),
-                      if (widget.onStartPlay != null)
+                      if (failedEmpty)
+                        SahneButton.text(
+                          buttonKey: const ValueKey('profile-records-retry'),
+                          label: context.t(K.retryShort),
+                          onPressed: _reload,
+                        )
+                      else if (widget.onStartPlay != null)
                         SahneButton.text(
                           buttonKey: const ValueKey('profile-records-start'),
                           label: context.t(K.recordsEmptyAction),

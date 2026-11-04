@@ -123,7 +123,9 @@ class _QuizTutorialOverlayState extends State<QuizTutorialOverlay> {
     return Stack(
       key: _stackKey,
       children: [
-        widget.child,
+        // Rehber açıkken alttaki içerik ekran okuyucudan gizlenir; ağaç
+        // biçimi sabit kalır ki çocuğun durumu rehber kapanınca kaybolmasın.
+        ExcludeSemantics(excluding: _show, child: widget.child),
         if (_show)
           CoachMarkOverlay(
             isKu: widget.isKu,

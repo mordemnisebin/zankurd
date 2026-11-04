@@ -92,8 +92,19 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
 
   /// Filtre geçişinde önceki veri korunur: gri boş ekran yerine mevcut
   /// liste + ince yükleme çubuğu gösterilir (2026-07-19 canlı denetim P1).
+  ///
+  /// Önbellek DÖNEM anahtarlıdır: Hafta yüklendikten sonra Gün/Ay seçilip
+  /// istek hata verirse eski dönemin puanları yeni dönem başlığı altında
+  /// görünür ve hata da gizlenirdi. Başka dönemin verisi asla gösterilmez.
   List<LeaderboardEntry>? _lastEntries;
+  LeaderboardPeriod? _lastEntriesPeriod;
   List<Friend>? _lastFriends;
+  LeaderboardPeriod? _lastFriendsPeriod;
+
+  List<LeaderboardEntry>? get _staleEntries =>
+      _lastEntriesPeriod == _period ? _lastEntries : null;
+  List<Friend>? get _staleFriends =>
+      _lastFriendsPeriod == _period ? _lastFriends : null;
 
   /// Oyuncunun kendi satırı; ilk 10'da değilse sırasını yine de
   /// gösterebilmek için ayrıca yüklenir.
@@ -312,7 +323,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             // listedeyken; değilse sabit şerit aynı eylemi taşır).
             if (_listsMe(entries)) ...[
               const SizedBox(height: SahneSpace.sectionTop),
-              LeaderboardClimbCard(onStart: _startQuickRace),
+              LeaderboardClimbCard(
+                onStart: widget.onOpenPlay ?? _startQuickRace,
+              ),
             ],
           ],
         );
@@ -355,7 +368,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             return const SizedBox.shrink();
           }
           return _PinnedMyRank(
-            child: _NotRankedStrip(isKu: ku, onStart: _startQuickRace),
+            child: _NotRankedStrip(
+              isKu: ku,
+              onStart: widget.onOpenPlay ?? _startQuickRace,
+            ),
           );
         }
         return _PinnedMyRank(
@@ -395,6 +411,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         // et" düğmesiyle durmaya devam ediyordu — Apple 1.2'nin istediği
         // "bu kişiyi bir daha görmeyeyim" sözü tek yüzeyde tutulmuyordu
         // (2026-08-14 denetimi).
+        final period = _period;
         _friendsFuture =
             Future.wait([
               widget.repository.loadFriendsLeaderboard(period: _period),
@@ -406,6 +423,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                   .where((f) => !blocked.contains(f.friendId))
                   .toList();
               _lastFriends = visible;
+              _lastFriendsPeriod = period;
               return visible;
             });
       });
@@ -424,6 +442,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         // buradaki kopya derinlemesine savunmadır. Engel listesi
         // okunamazsa (`loadBlockedPlayerIds` hatayı taşır) liste süzgeçsiz
         // gösterilmez: son başarılı liste kalır, yoksa hata durumu çizilir.
+        final period = _period;
         _future =
             Future.wait([
               widget.repository.loadLeaderboard(limit: 10, period: _period),
@@ -435,6 +454,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                   .where((e) => !blocked.contains(e.playerId))
                   .toList();
               _lastEntries = visible;
+              _lastEntriesPeriod = period;
               return visible;
             });
       });
@@ -594,7 +614,20 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     ).push(AppRoute.to(ContestScreen(repository: widget.repository)));
   }
 
+  /// Soru yüklenirken tekrarlı dokunuşlar birden çok quiz rotası açmasın.
+  bool _startingRace = false;
+
   Future<void> _startQuickRace() async {
+    if (_startingRace) return;
+    _startingRace = true;
+    try {
+      await _startQuickRaceImpl();
+    } finally {
+      _startingRace = false;
+    }
+  }
+
+  Future<void> _startQuickRaceImpl() async {
     final questions = await widget.repository.loadQuestions(limit: 10);
     if (!mounted) return;
     final raceQuestions = questions.isEmpty
@@ -794,7 +827,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     return FutureBuilder<List<Friend>>(
       future: _friendsFuture,
       builder: (ctx, snap) {
-        final stale = _lastFriends;
+        final stale = _staleFriends;
         final Widget content;
         if (snap.connectionState == ConnectionState.waiting && stale == null) {
           content = _loadingIndicator(context);
@@ -848,7 +881,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     return FutureBuilder<List<LeaderboardEntry>>(
       future: _future,
       builder: (ctx, snap) {
-        final stale = _lastEntries;
+        final stale = _staleEntries;
         if (snap.connectionState == ConnectionState.waiting && stale == null) {
           return _page(context, ku, content: _loadingIndicator(context));
         }
