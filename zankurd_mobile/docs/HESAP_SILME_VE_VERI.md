@@ -19,15 +19,20 @@ silme zincirinin güncel işleyişi ve açık işlerdir.
    satırı silinir. RPC içindeki doğrudan `DELETE FROM storage.objects` YEDEK yoldur
    (fiziksel dosyayı silmez; hata verirse artık hesap silmeyi geri almaz).
 
-## Açık iş 1: build 43 ve öncesinde artakalan avatar dosyaları
+## Avatar kalıntıları: saatlik sunucu süpürmesi (2026-11-04)
 
-Eski istemci yalnız RPC'yi çağırır; Storage API çağrısı yapmaz. Doğrudan SQL
-silmesi fiziksel dosyayı silmediği için o hesapların `avatars/<uid>/…` dosyaları
-kalmış olabilir. Çözüm: servis anahtarlı (service role) bir **Edge Function /
-zamanlanmış iş**: `avatars` kovasındaki üst klasörleri listele, `auth.users`'ta
-karşılığı olmayan `<uid>` klasörlerinin nesnelerini Storage API `remove` ile sil.
-Servis anahtarı istemciye ASLA girmez; bu yüzden istemci tarafında uygulanmadı.
-Yeni istemci (bu sürüm) kendi dosyalarını RPC'den önce zaten siler.
+Eski istemci (build 43) yalnız RPC'yi çağırır; RPC içindeki doğrudan SQL silmesi
+fiziksel dosyayı silmez, yeni istemcide de Storage silme hatası yutulur. `avatars`
+kovası herkese açıktır, bu yüzden silinmiş kullanıcıların dosyaları kalabilirdi.
+Çözüm: `supabase/functions/avatar-sweep` (service role; `x-cron-secret` = CRON_SECRET,
+`verify_jwt = false`). Kovanın kökündeki uuid klasörlerini sayfa sayfa listeler;
+kullanıcısı `profiles` VEYA `auth.users`'ta bulunmayanların nesnelerini Storage API
+ile siler. uuid olmayan klasör, kullanıcısı var olan klasör ve hata veren sayfa
+ASLA silinmez; çalıştırma başına en çok 1000 nesne (kalan sonraki saat); günlüğe
+yalnız sayılar yazılır. `pg_cron` işi `avatar-supurme` her saat 17. dakikada
+`send-push` ile aynı Vault desenini kullanır (`avatar_sweep_url` + `cron_secret`).
+Dağıtım sırası ve geri alma `supabase/applied.md` satırında. Silmeden sonra dosya
+genel URL'den bir sonraki süpürmeye dek (en çok ~1 saat) erişilebilir kalabilir.
 
 ## Açık iş 2: RevenueCat müşteri kaydı silme
 

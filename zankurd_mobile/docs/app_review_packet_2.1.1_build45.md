@@ -1,12 +1,11 @@
-# ZanKurd iOS/Android 2.1.1 (45) — App Review packet (TASLAK)
+# ZanKurd iOS 2.1.1 (45)
 
 Candidate build: 2.1.1 (45)
 
-Status: DRAFT, prepared 4 November 2026 from the commit range
-`956f0904..HEAD` (42 commits since build 44 code). The repository is still at
-`version: 2.1.1+44` in `zankurd_mobile/pubspec.yaml`; the build number must be
-bumped to 45 before any package is produced. No package has been built, signed,
-uploaded or submitted for this draft. Live rollout and store submission are
+Status: local candidate, prepared 4 November 2026 from the commit range
+`956f0904..HEAD` (since the build 44 code). The repository is at
+`version: 2.1.1+45` in `zankurd_mobile/pubspec.yaml`. No package has been built,
+signed, uploaded or submitted yet. Live rollout and store submission are
 pending owner approval.
 
 ## Product and review path
@@ -109,7 +108,7 @@ confirm the live state in `zankurd_mobile/supabase/applied.md` before upload.
 
 ## Before uploading build 45
 
-1. Bump `version` to `2.1.1+45` in `zankurd_mobile/pubspec.yaml`.
+1. Confirm `version: 2.1.1+45` in `zankurd_mobile/pubspec.yaml` (already set).
 2. Run `zankurd_mobile/tool/ci_yerel.sh --tam` successfully on this exact source.
 3. On iOS and Android, test: permission allowed/denied, foreground/background/
    terminated app, refreshed token, account switch, guest deletion, friend

@@ -1166,6 +1166,7 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
         try {
           final prefs = await SharedPreferences.getInstance();
           await LocalProgressScope.clearUserOwnedKeys(prefs, deletedId);
+          await AgeGate.forgetUser(deletedId);
           unawaited(ChatMuteStore.instance.load(null));
         } catch (e, s) {
           localProgressCleared = false;

@@ -2809,6 +2809,8 @@ class SupabaseZanKurdRepository
         return StreakRepairResult(switch (response['error']) {
           'insufficient balance' => StreakRepairOutcome.insufficient,
           'monthly_limit' => StreakRepairOutcome.monthlyLimit,
+          'break day out of range' ||
+          'invalid break day' => StreakRepairOutcome.windowClosed,
           _ => StreakRepairOutcome.failed,
         });
       }

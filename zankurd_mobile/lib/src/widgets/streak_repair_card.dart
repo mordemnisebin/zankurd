@@ -86,7 +86,7 @@ class _StreakRepairCardState extends State<StreakRepairCard> {
             _busy = false;
             _errorKey = K.streakRepairMonthly;
           });
-        case StreakRepairOutcome.failed:
+        case StreakRepairOutcome.windowClosed || StreakRepairOutcome.failed:
           setState(() {
             _busy = false;
             _errorKey = K.streakRepairFailed;
