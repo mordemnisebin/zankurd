@@ -1628,15 +1628,15 @@
     "promptTr": "Hangisi süt verir? ___",
     "answers": [
       "Bizin",
-      "Hesp",
-      "Kûçik",
-      "Pisîk"
+      "Mirîşk",
+      "Masî",
+      "Mar"
     ],
     "answersTr": [
       "Keçi",
-      "At",
-      "Köpek",
-      "Kedi"
+      "Tavuk",
+      "Balık",
+      "Yılan"
     ],
     "correctAnswer": "Bizin",
     "correctAnswerTr": "Keçi",

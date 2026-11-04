@@ -750,4 +750,46 @@ const Map<String, String> reviewedNearDuplicates = {
       "offline_2175 ~ restore_2026_08_07_0014: farklı bilgi: doğru cevaplar farklı",
   'c7facd9a105810aae1feada9aaa56d83':
       "edit_cografya_0037 ~ restore_2026_08_07_0014: farklı bilgi: doğru cevaplar farklı",
+  'a36968b554510d4c9e24bd53f73f26e5':
+      "ds_edebiyat_0214 ~ ds_edebiyat_0222: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '5891a09106ab4bc615929a510cb32817':
+      "ds_edebiyat_0218 ~ ds_edebiyat_0222: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  'cc90d05149a783fb57fadd6520e732ba':
+      "ds_edebiyat_0220 ~ ds_edebiyat_0222: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '3dcf5775a8eb9ddeb95fa57d9f57121c':
+      "ds_edebiyat_0222 ~ ds_edebiyat_0224: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '00874c4852cf73f3f133c80e80ecaa60':
+      "ds_muzik_0132 ~ ds_muzik_0143: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '31a99da0ef010ee4a153269ada2281b8':
+      "ds_muzik_0135 ~ ds_muzik_0143: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '91651a2308796d9c4a5cf8898edfdb37':
+      "ds_ziman_0027 ~ ds_ziman_1031: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '06be626f18ad32dd8abfad396eed43dc':
+      "ds_edebiyat_0206 ~ ds_edebiyat_0222: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '5b3bcd658e928ef5ec068f5838aa8049':
+      "ds_teknoloji_0068 ~ ds_teknoloji_0071: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '71077cd6184a0b90b87840adc3002a95':
+      "ds_teknoloji_0054 ~ ds_teknoloji_0066: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '420c4b37097ca30930d2091f72259264':
+      "ds_teknoloji_0060 ~ ds_teknoloji_0066: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '29d8631553a665663bae46a1b99b6851':
+      "ds_teknoloji_0060 ~ ds_teknoloji_0068: aynı kavram (Boolean/Mantiqî) iki soruda; ikisi de etkin, sahibe listelendi (hazir/alan7_tekrarlar.tsv); alan 7 düzeltmesinden sonra parmak izi değişti",
+  'c91084c4a68215a6805ad17c4909fed9':
+      "ds_teknoloji_0060 ~ ds_teknoloji_0071: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '9e46d2d47af4ccc411486b775910ff07':
+      "ds_teknoloji_0055 ~ ds_teknoloji_0066: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '54eb9d3900d7e5bd6e7d4eaef1b02d48':
+      "ds_teknoloji_0055 ~ ds_teknoloji_0071: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  'a47750296fc713d6c399b731ea947c8a':
+      "ds_teknoloji_0055 ~ ds_teknoloji_0060: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  'b5d34686005b663616eed23730f525b8':
+      "ds_cand_0159 ~ ds_cand_1169: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '6a30e090b8fe286e500e7a15b8cfbe30':
+      "ds_cand_0159 ~ ds_cand_1165: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '90235ff2e17fd39e04a6599aa1429f7a':
+      "ds_cand_0159 ~ ds_cand_0251: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '8df4c17882dcfb37ded18ad78fc5cc12':
+      "ds_edebiyat_0210 ~ ds_edebiyat_0222: farklı bilgi: doğru cevaplar farklı (alan 7 düzeltmesinden sonra parmak izi değişti, yeniden incelendi)",
+  '1e0ae4ab3650592be5f93cd9044cd1b1':
+      "ds_cand_0226 ~ ds_cand_0240: farklı bilgi: doğru cevaplar farklı (agirê pîroz / agir); ds_cand_0016 yeniden yazıldıktan sonra eşik üstü kaldı",
 };

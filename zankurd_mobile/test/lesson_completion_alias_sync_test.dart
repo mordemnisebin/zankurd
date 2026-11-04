@@ -125,7 +125,82 @@ const _reviewedSlideDifferences = [
     sqlLiteral:
         'Kurmancîde fiil cümlenin sonunda yer alır. Şimdiki/geniş zaman çoğu fiilde di- önekiyle yapılır. Özne + nesne + fiil sırası vardır. Hatin (gelmek) di- almaz: ew tên onlar geliyorlar. Olumsuzluk na- ile yapılır: ez naçim ben gitmiyorum.',
     localLiteral:
-        'Kurmancîde fiil cümlenin sonunda yer alır. Şimdiki/geniş zaman çoğu fiilde di- önekiyle yapılır. Özne + nesne + fiil sırası vardır.\n\nHatin (gelmek) di- almaz: ew tên onlar geliyorlar.\n\nOlumsuzluk na- ile yapılır: ez naçim ben gitmiyorum.',
+        'Kurmancîde sade cümlelerde olağan sıra özne + nesne + fiildir; hareket fiillerinde yer veya yön ögesi fiilden sonra da gelebilir. Şimdiki/geniş zaman çoğu fiilde di- önekiyle yapılır. Özne + nesne + fiil sırası vardır.\n\nHatin (gelmek) di- almaz: ew tên onlar geliyorlar.\n\nOlumsuzluk na- ile yapılır: ez naçim ben gitmiyorum.',
+  ),
+  // 2026-11-07 GPT-6 Pro alan 7: yanlış öğretici kural cümleleri düzeltildi
+  // (fiil daima sonda değil; ay adı -ê alır genellemesi; nesne tekilse...).
+  // Sunucu: supabase/2026-11-07_icerik_alan7.sql (ders slaytı metin parçası).
+  (
+    lessonId: 'questions_1',
+    order: 1,
+    field: 'tr',
+    sqlLiteral:
+        'İnsanlar ve eşyalar hakkında sorular. Kî (kim) insanlar için, çi (ne) eşyalar için kullanılır. Fiil cümlenin sonunda çekimlenir.',
+    localLiteral:
+        'İnsanlar ve eşyalar hakkında sorular. Kî (kim) insanlar için, çi (ne) eşyalar için kullanılır. Sade cümlelerde olağan sıra özne + nesne + fiildir; hareket fiilleriyle yer veya yön ögesi fiilden sonra da gelebilir.',
+  ),
+  (
+    lessonId: 'questions_1',
+    order: 2,
+    field: 'tr',
+    sqlLiteral:
+        'Yer ve zaman soruları. Ku (nerede/nereye) ve kengî (ne zaman) sorulan öğenin yerinde durur; fiil sonda kalır. Cevap yer veya zaman bildirir.',
+    localLiteral:
+        'Yer ve zaman soruları. Ku (nerede/nereye) ve kengî (ne zaman) sorulan öğenin yerinde durur; olağan sırada fiil sonda kalır; hareket fiilleriyle yer veya yön ögesi fiilden sonra da gelebilir. Cevap yer veya zaman bildirir.',
+  ),
+  (
+    lessonId: 'questions_1',
+    order: 5,
+    field: 'ku',
+    sqlLiteral:
+        'Pirsan çêke!\n\nRêza pirsê: peyva pirsê li cihê bersivê dimîne, lêker li dawiyê ye.\n\n• Tu kî yî?: sen kimsin?\n• Ew li ku ye?: o nerededir?\n• Ew kengî dixwîne?: o ne zaman okuyor?\n• Tu çima dikî?: neden yapıyorsun?\n• Ev çend in?: bunlar kaç tanedir?\n• Kîjan baş e?: hangisi iyidir?',
+    localLiteral:
+        'Pirsan çêke!\n\nRêza pirsê: peyva pirsê li cihê bersivê dimîne, lêker bi gelemperî li dawiyê ye.\n\n• Tu kî yî?: sen kimsin?\n• Ew li ku ye?: o nerededir?\n• Ew kengî dixwîne?: o ne zaman okuyor?\n• Tu çima dikî?: neden yapıyorsun?\n• Ev çend in?: bunlar kaç tanedir?\n• Kîjan baş e?: hangisi iyidir?',
+  ),
+  (
+    lessonId: 'questions_1',
+    order: 5,
+    field: 'tr',
+    sqlLiteral:
+        'Kurmancî soru dizilişi: soru kelimesi sorulan öğenin yerinde kalır, çekimli fiil sonda olur. Evet/hayır sorusunda ayrı soru kelimesi gerekmez.',
+    localLiteral:
+        'Kurmancî soru dizilişi: soru kelimesi sorulan öğenin yerinde kalır, çekimli fiil olağan sırada sonda olur; hareket fiillerinde yer veya yön ögesi fiilden sonra da gelebilir. Evet/hayır sorusunda ayrı soru kelimesi gerekmez.',
+  ),
+  (
+    lessonId: 'verbs_1',
+    order: 1,
+    field: 'ku',
+    sqlLiteral:
+        'Lêker çi ye?\n\nDi kurmancî de lêker di dawiya hevokê de ye. Dema niha bi pêşgira di- çêdibe:\n\n• ez nan dixwim: ben ekmek yiyorum\n• tu çay vedixwî: sen çay içiyorsun\n• ew diçe: o gidiyor\n• em dikin: biz yapıyoruz\n• hûn dibînin: siz görüyorsunuz\n\nHatin cuda ye, di- naxe:\n\n• ew tên: onlar geliyorlar\n\nForma neyînî bi na- ye:\n\n• ez naçim: ben gitmiyorum',
+    localLiteral:
+        'Lêker çi ye?\n\nDi hevokên sade de rêza asayî kirde + berkar + lêker e; bi lêkerên tevgerê armanc dikare piştî lêkerê bê. Dema niha bi pêşgira di- çêdibe:\n\n• ez nan dixwim: ben ekmek yiyorum\n• tu çay vedixwî: sen çay içiyorsun\n• ew diçe: o gidiyor\n• em dikin: biz yapıyoruz\n• hûn dibînin: siz görüyorsunuz\n\nHatin cuda ye, di- naxe:\n\n• ew tên: onlar geliyorlar\n\nForma neyînî bi na- ye:\n\n• ez naçim: ben gitmiyorum',
+  ),
+  (
+    lessonId: 'past_1',
+    order: 3,
+    field: 'tr',
+    sqlLiteral:
+        'Geçmiş zamanda geçişli fiiller min, te, wî, wê ve me ile çekilir. ez yerine min, tu yerine te gelir. Nesne tekilse fiil xwar ve dît olarak kalır. Bu kurala ergatif denir. Örnek: min xwar: yedim / te xwar: yedin / wî xwar: o yedi (erkek) / wê xwar: o yedi (kadın) / me xwar: yedik / min dît: gördüm / te dît: gördün',
+    localLiteral:
+        'Geçmiş zamanda geçişli fiiller min, te, wî, wê ve me ile çekilir. ez yerine min, tu yerine te gelir. Nesne üçüncü tekil kişiyse fiil xwar ve dît olarak kalır; fiil nesnenin kişi ve sayısına göre uyum gösterir. Bu kurala ergatif denir. Örnek: min xwar: yedim / te xwar: yedin / wî xwar: o yedi (erkek) / wê xwar: o yedi (kadın) / me xwar: yedik / min dît: gördüm / te dît: gördün',
+  ),
+  (
+    lessonId: 'months_1',
+    order: 5,
+    field: 'ku',
+    sqlLiteral:
+        'Meh di Hevokê de:\n\nDi hevokê de navê mehê -ê digire. Mînak:\n\n• meha Gulanê: Mayıs ayı\n• di meha Gulanê de: Mayıs ayında\n• di Adarê de: Mart’ta\n• Newroz di 21ê Adarê de ye: Nevruz 21 Mart’tadır\n• Ev meh Kewçêr e: Bu ay Ekim’dir\n• Rojbûna min di Tîrmehê de ye: Doğum günüm Temmuz’dadır',
+    localLiteral:
+        'Meh di Hevokê de:\n\nDi mînakên "meha Gulanê" û "di Adarê de" de navê mehê di rewşa tewandî de ye. Mînak:\n\n• meha Gulanê: Mayıs ayı\n• di meha Gulanê de: Mayıs ayında\n• di Adarê de: Mart’ta\n• Newroz di 21ê Adarê de ye: Nevruz 21 Mart’tadır\n• Ev meh Kewçêr e: Bu ay Ekim’dir\n• Rojbûna min di Tîrmehê de ye: Doğum günüm Temmuz’dadır',
+  ),
+  (
+    lessonId: 'months_1',
+    order: 5,
+    field: 'tr',
+    sqlLiteral:
+        'Cümlede ay adı -ê eki alır: Gulan → di meha Gulanê de (Mayıs ayında), Adar → di 21ê Adarê de (21 Mart’ta). Tarihte sayıya da -ê eklenir: 21ê.',
+    localLiteral:
+        'Ay adı, "meha Gulanê" gibi tamlamalarda ve "di Adarê de" gibi edatlı yapılarda bükümlü (-ê) biçimde kullanılır: Gulan → di meha Gulanê de (Mayıs ayında), Adar → di 21ê Adarê de (21 Mart’ta). Tarihte sayıya da -ê eklenir: 21ê.',
   ),
 ];
 
@@ -282,7 +357,7 @@ void main() {
       );
       expect(allows(), isTrue);
       expect(allows(lessonId: 'unknown'), isFalse);
-      expect(allows(order: 2), isFalse);
+      expect(allows(order: difference.order == 2 ? 3 : 2), isFalse);
       expect(allows(field: 'example'), isFalse);
       expect(allows(sqlLiteral: '${difference.sqlLiteral} '), isFalse);
       expect(allows(localLiteral: '${difference.localLiteral} '), isFalse);

@@ -103,7 +103,20 @@ const _promptFixSqls = [
   'supabase/2026-10-23_icerik_taramasi.sql',
   // 2026-10-29 Opus–Astra kapışması: jüri onaylı Kurmancî kök düzeltmeleri.
   'supabase/2026-10-29_icerik_kapisma_ku.sql',
+  // 2026-11-07 GPT-6 Pro alan 7 (temp tablo biçimi, `_alan7PromptRe`).
+  'supabase/2026-11-07_icerik_alan7.sql',
 ];
+// 2026-11-07 alan 7 göçü (temp tablo biçimi): ('uuid','yerel','prompt','eski','yeni','kaynak')
+final _alan7PromptRe = RegExp(
+  r"^  \('([0-9a-f-]{36})','[^']*','prompt','(?:[^']|'')*','((?:[^']|'')*)','(?:json|server)'\)",
+  multiLine: true,
+);
+
+// Yinelenen sorunun yeniden yazımı: ('uuid','yerel','eski_kok','eski_dogru',e1..e4,'yeni_kok',...)
+final _alan7RewriteRe = RegExp(
+  r"^  \('([0-9a-f-]{36})','[^']*','(?:[^']|'')*','(?:[^']|'')*','(?:[^']|'')*','(?:[^']|'')*','(?:[^']|'')*','(?:[^']|'')*','((?:[^']|'')*)',",
+  multiLine: true,
+);
 
 // update questions set\n  prompt = '…'[, …] where id = 'uuid';
 final _promptFixRe = RegExp(
@@ -116,6 +129,12 @@ String? _promptFixFor(String sql, String id) {
   String? son;
   for (final m in _promptFixRe.allMatches(sql)) {
     if (m.group(2) == id) son = m.group(1)!.replaceAll("''", "'");
+  }
+  for (final m in _alan7PromptRe.allMatches(sql)) {
+    if (m.group(1) == id) son = m.group(2)!.replaceAll("''", "'");
+  }
+  for (final m in _alan7RewriteRe.allMatches(sql)) {
+    if (m.group(1) == id) son = m.group(2)!.replaceAll("''", "'");
   }
   return son;
 }

@@ -844,31 +844,31 @@
     "category": "Paradigma",
     "difficulty": 2,
     "type": "multipleChoice",
-    "prompt": "Nivîskarê Mem û Zînê ku ji berhemên klasîk ên edebiyata Kurmancî ye kî ye?",
-    "promptTr": "Kurmancî edebiyatının klasik eserlerinden Mem û Zîn'in yazarı kimdir?",
+    "prompt": "Kîjan berhema Ehmedê Xanî li ser bingehên bawerî û kelama îslamî bi awayê menzûm hatiye nivîsandin?",
+    "promptTr": "Ehmedê Xanî'nin hangi eseri İslam inanç esasları ve kelamı üzerine manzum olarak yazılmıştır?",
     "answers": [
-      "Şerefxanê Bedlîsî",
-      "Celadet Alî Bedirxan",
-      "Mela Mehmûdê Bazîdî",
-      "Ehmedê Xanî"
+      "Nehcul Enam",
+      "Mewlûda Nebî",
+      "Şêxê Senan",
+      "Eqîdeya Îmanê"
     ],
     "answersTr": [
-      "Şeref Han Bitlisî",
-      "Celadet Alî Bedirxan",
-      "Molla Mahmud Bâyezîdî",
-      "Ehmedê Xanî"
+      "Nehcul Enam",
+      "Mewlûda Nebî",
+      "Şêxê Senan",
+      "Eqîdeya Îmanê"
     ],
-    "correctAnswer": "Ehmedê Xanî",
-    "correctAnswerTr": "Ehmedê Xanî",
-    "explanation": "Mem û Zîn, Ehmedê Xanî'nin en tanınmış eseridir ve klasik Kürt edebiyatının başlıca yapıtları arasında yer alır.",
-    "explanationKu": "Mem û Zîn berhema herî naskirî ya Ehmedê Xanî ye û di nav berhemên sereke yên edebiyata kurdî ya klasîk de cih digire.",
-    "explanationTr": "Mem û Zîn, Ehmedê Xanî'nin en tanınmış eseridir ve klasik Kürt edebiyatının başlıca yapıtları arasında yer alır.",
+    "correctAnswer": "Eqîdeya Îmanê",
+    "correctAnswerTr": "Eqîdeya Îmanê",
+    "explanation": "\"Eqîdeya Îmanê\", Ehmedê Xanî'nin İslam inanç esaslarını ve kelami konuları Kurmancî ile açıkladığı manzum eseridir.",
+    "explanationKu": "\"Eqîdeya Îmanê\" berhema Ehmedê Xanî ya menzûm e ku tê de rêgezên baweriya îslamî û mijarên kelamî bi kurmancî hatine ravekirin.",
+    "explanationTr": "\"Eqîdeya Îmanê\", Ehmedê Xanî'nin İslam inanç esaslarını ve kelami konuları Kurmancî ile açıkladığı manzum eseridir.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "en.wikipedia.org",
       "sourceReference": "https://en.wikipedia.org/wiki/Ehmed%C3%AA_Xan%C3%AE",
       "reviewStatus": "approved",
-      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30",
       "qualityVersion": 2
@@ -1723,14 +1723,14 @@
     "promptTr": "Mangrov ormanlarının kıyı ekosistemlerinde önemli işlevlerinden biri hangisidir?",
     "answers": [
       "Ji holê rakirina bi tevahî ya şoriya ava deryayê",
-      "Dabînkirina jîngeheke parastî ji bo masiyên ciwan",
       "Lezkirina çêbûna volkanan li binê okyanûsê",
+      "Dabînkirina jîngeheke parastî ji bo masiyên ciwan",
       "Sekinandina bi tevahî ya tevgerên med û cezrê"
     ],
     "answersTr": [
       "Deniz suyunun tuzluluğunu tamamen ortadan kaldırmak",
-      "Genç balıklar için korunaklı yaşam alanı sağlamak",
       "Okyanus tabanında volkan oluşumunu hızlandırmak",
+      "Genç balıklar için korunaklı yaşam alanı sağlamak",
       "Gelgit hareketlerini bütünüyle durdurmak"
     ],
     "correctAnswer": "Dabînkirina jîngeheke parastî ji bo masiyên ciwan",

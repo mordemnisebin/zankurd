@@ -392,11 +392,11 @@
       "Müzikal"
     ],
     "correctAnswerTr": "Belgesel",
-    "explanation": "Belgesel gerçek olay ve kişileri kaydeder; kurmaca filmlerin tersine oyuncular rol yapmaz ve hayali bir dünya kurulmaz.",
+    "explanation": "Belgesel gerçek olay ve kişileri kaydeder; kurmaca filmlerin tersine hayali bir dünya kurulmaz, ancak olayların yeniden canlandırılması gibi anlatım yöntemleri kullanılabilir.",
     "difficulty": 1,
     "type": "multipleChoice",
-    "explanationTr": "Belgesel gerçek olay ve kişileri kaydeder; kurmaca filmlerin tersine oyuncular rol yapmaz ve hayali bir dünya kurulmaz.",
-    "explanationKu": "Belgefîlm bûyer û mirovên rastîn tomar dike; berevajî fîlmên çîrokî, lîstikvan rol nagirin û cîhaneke xeyalî nayê avakirin.",
+    "explanationTr": "Belgesel gerçek olay ve kişileri kaydeder; kurmaca filmlerin tersine hayali bir dünya kurulmaz, ancak olayların yeniden canlandırılması gibi anlatım yöntemleri kullanılabilir.",
+    "explanationKu": "Belgefîlm bûyer û mirovên rastîn tomar dike; berevajî fîlmên çîrokî, cîhaneke xeyalî nayê avakirin, lê dibe ku ji nû ve lîstina bûyeran jî tê de hebe.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -4438,11 +4438,11 @@
       "Işık enerjisini"
     ],
     "correctAnswerTr": "Potansiyel enerjiyi",
-    "explanation": "Yüksekte tutulan su yerçekimi potansiyel enerjisi depolar; borudan düşerken bu enerji harekete, türbinde de elektriğe dönüşür. Isı ve kimyasal enerji başka santral türlerinin girdisidir.",
+    "explanation": "Yüksekte tutulan su yerçekimi potansiyel enerjisi depolar; borudan düşerken bu enerji harekete dönüşür, türbini döndürür ve jeneratör bu hareketi elektriğe çevirir. Isı ve kimyasal enerji başka santral türlerinin girdisidir.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Yüksekte tutulan su yerçekimi potansiyel enerjisi depolar; borudan düşerken bu enerji harekete, türbinde de elektriğe dönüşür. Isı ve kimyasal enerji başka santral türlerinin girdisidir.",
-    "explanationKu": "Ava ku li bilindiyê tê girtin enerjiya potansiyel a rakêşiyê hildide; dema ku ji boriyê dadikeve, ev enerjî vediguhere tevgerê, di tîrbînê de jî vediguhere elektrîkê. Germahî û enerjiya kîmyewî nirxên têketî yên cureyên din ên santralan in.",
+    "explanationTr": "Yüksekte tutulan su yerçekimi potansiyel enerjisi depolar; borudan düşerken bu enerji harekete dönüşür, türbini döndürür ve jeneratör bu hareketi elektriğe çevirir. Isı ve kimyasal enerji başka santral türlerinin girdisidir.",
+    "explanationKu": "Ava ku li bilindiyê tê girtin enerjiya potansiyel a rakêşiyê hildide; dema ku ji boriyê dadikeve, ev enerjî vediguhere tevgerê, tîrbînê dizivirîne û jenerator vê tevgerê vediguherîne elektrîkê. Germahî û enerjiya kîmyewî nirxên têketî yên cureyên din ên santralan in.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -5118,11 +5118,11 @@
       "Yaklaşık 36.000 km"
     ],
     "correctAnswerTr": "Yaklaşık 36.000 km",
-    "explanation": "Bu yükseklikte bir tur tam yirmi dört saat sürer, uydu da yerden bakınca gökyüzünde sabit görünür; yayın uyduları bu yüzden oraya konur. 400 km alçak yörüngedir, orada bir tur doksan dakikadır.",
+    "explanation": "Bu yükseklikte bir tur yaklaşık yirmi dört saat (daha kesin olarak bir yıldız günü) sürer, uydu da yerden bakınca gökyüzünde sabit görünür; yayın uyduları bu yüzden oraya konur. 400 km alçak yörüngedir, orada bir tur doksan dakikadır.",
     "difficulty": 4,
     "type": "multipleChoice",
-    "explanationTr": "Bu yükseklikte bir tur tam yirmi dört saat sürer, uydu da yerden bakınca gökyüzünde sabit görünür; yayın uyduları bu yüzden oraya konur. 400 km alçak yörüngedir, orada bir tur doksan dakikadır.",
-    "explanationKu": "Li vê bilindahiyê zivirek tam bîst û çar saetan didome, heke mirov ji erdê lê binêre peyk di ezmên de sabît xuya dike; ji ber vê yekê peykên weşanê li wir tên bicihkirin. 400 km orbîteke nizm e, li wir zivirek nod deqîqeyan dajo.",
+    "explanationTr": "Bu yükseklikte bir tur yaklaşık yirmi dört saat (daha kesin olarak bir yıldız günü) sürer, uydu da yerden bakınca gökyüzünde sabit görünür; yayın uyduları bu yüzden oraya konur. 400 km alçak yörüngedir, orada bir tur doksan dakikadır.",
+    "explanationKu": "Li vê bilindahiyê zivirek nêzîkî bîst û çar saetan didome, heke mirov ji erdê lê binêre peyk di ezmên de sabît xuya dike; ji ber vê yekê peykên weşanê li wir tên bicihkirin. 400 km orbîteke nizm e, li wir zivirek nod deqîqeyan dajo.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -7133,10 +7133,10 @@
       "Kew"
     ],
     "correctAnswerTr": "Gur",
-    "explanation": "Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; sürüyle gezip koyuna saldıran gurttur.",
+    "explanation": "Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; sürüyle gezip koyuna saldıran kurttur.",
     "difficulty": 2,
     "type": "multipleChoice",
-    "explanationTr": "Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; sürüyle gezip koyuna saldıran gurttur.",
+    "explanationTr": "Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; sürüyle gezip koyuna saldıran kurttur.",
     "explanationKu": "Gur bi tirkî \"kurt\" e. Hirç \"ayı\", rovî \"tilki\", kew jî \"keklik\" e; gurê ku bi kerî digere dijminê pez e.",
     "metadata": {
       "dialect": "kurmanci",

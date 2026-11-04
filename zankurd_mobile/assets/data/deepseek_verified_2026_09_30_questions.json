@@ -274,15 +274,15 @@
   {
     "id": "ds_cografya_0086",
     "category": "Cîhan",
-    "prompt": "Kîjan parzemîn nêzî ji sedî 30ê axa cîhanê digire û li bakurê Okyanûsa Hindê ye?",
+    "prompt": "Çiyayê herî bilind ê li parzemîna Asyayê û cîhanê kîjan e?",
     "answers": [
-      "Afrîka",
-      "Ewropa",
-      "Asya",
-      "Awistralya"
+      "Çiyayê Kilîmancaroyê",
+      "Çiyayê Elbrusê",
+      "Çiyayê Everestê",
+      "Çiyayê Aconcaguayê"
     ],
-    "correctAnswer": "Asya",
-    "explanation": "Asya, Hint Okyanusu'nun kuzeyindedir ve dünya kara alanının yaklaşık %30'unu kaplar.",
+    "correctAnswer": "Çiyayê Everestê",
+    "explanation": "Everest Dağı, Asya kıtasındaki Himalaya sıradağlarında yer alır ve 8.848 metre ile dünyanın en yüksek zirvesidir.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -290,20 +290,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Asia",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Hangi kıta dünya kara alanının yaklaşık %30'unu kaplar ve Hint Okyanusu'nun kuzeyindedir?",
+    "promptTr": "Asya kıtasının ve dünyanın en yüksek dağı hangisidir?",
     "answersTr": [
-      "Afrika",
-      "Avrupa",
-      "Asya",
-      "Avustralya"
+      "Kilimanjaro Dağı",
+      "Elbrus Dağı",
+      "Everest Dağı",
+      "Aconcagua Dağı"
     ],
-    "correctAnswerTr": "Asya",
-    "explanationKu": "Asya li bakurê Okyanûsa Hindê ye û nêzî ji sedî 30ê axa cîhanê digire.",
-    "explanationTr": "Asya, Hint Okyanusu'nun kuzeyindedir ve dünya kara alanının yaklaşık %30'unu kaplar."
+    "correctAnswerTr": "Everest Dağı",
+    "explanationKu": "Çiyayê Everestê di zincîreçiyayên Hîmalayayê de li parzemîna Asyayê cih digire û bi 8.848 metreyan lûtkeya herî bilind a cîhanê ye.",
+    "explanationTr": "Everest Dağı, Asya kıtasındaki Himalaya sıradağlarında yer alır ve 8.848 metre ile dünyanın en yüksek zirvesidir."
   },
   {
     "id": "ds_cografya_0081",
@@ -860,7 +860,7 @@
       "Bilindahî"
     ],
     "correctAnswer": "Azîmût",
-    "explanation": "Azimut, kuzey yönünden saat yönünde, yatay düzlemde ölçülen açıdır. Enlem ve boylam ise koordinattır, açı değil.",
+    "explanation": "Azimut, kuzey yönünden saat yönünde, yatay düzlemde ölçülen açıdır. Enlem ekvatora, boylam ise başlangıç meridyenine göre açısal konumu belirtir.",
     "type": "multipleChoice",
     "difficulty": 3,
     "metadata": {
@@ -881,7 +881,7 @@
     ],
     "correctAnswerTr": "Azimut",
     "explanationKu": "Azîmût goşeya ku ji aliyê bakur ve li ser rûyekî asoyî tê pîvandin e.",
-    "explanationTr": "Azimut, kuzey yönünden saat yönünde, yatay düzlemde ölçülen açıdır. Enlem ve boylam ise koordinattır, açı değil."
+    "explanationTr": "Azimut, kuzey yönünden saat yönünde, yatay düzlemde ölçülen açıdır. Enlem ekvatora, boylam ise başlangıç meridyenine göre açısal konumu belirtir."
   },
   {
     "id": "ds_cografya_0201",
@@ -1532,15 +1532,15 @@
   {
     "id": "ds_dirok_0031",
     "category": "Dîrok",
-    "prompt": "Hawar ji bilî kovarê, di warê çi de jî girîng bû?",
+    "prompt": "Hejmara yekem a kovara Hawarê di 15ê Gulana 1932an de li kîjan bajarî hate weşandin?",
     "answers": [
-      "Çandina genim",
-      "Avakirina rêyan",
-      "Alfabeya Kurdî",
-      "Çêkirina çekan"
+      "Qahîre",
+      "Bexda",
+      "Şam",
+      "Bêrût"
     ],
-    "correctAnswer": "Alfabeya Kurdî",
-    "explanation": "Hawar, Celadet Alî Bedirxan'ın geliştirdiği Latin Kürt alfabesinin kabulünde temel bir rol oynadı. Dergi bu alfabeyi yaydı.",
+    "correctAnswer": "Şam",
+    "explanation": "Hawar dergisi 15 Mayıs 1932'de Şam'da yayımlanmaya başlamış olup bu tarih Kürt Dil Bayramı olarak kutlanmaktadır.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -1548,20 +1548,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Hawar_(magazine)",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Hawar, dergi olmanın yanı sıra hangi alanda da önemliydi?",
+    "promptTr": "Hawar dergisinin ilk sayısı 15 Mayıs 1932 tarihinde hangi şehirde yayımlandı?",
     "answersTr": [
-      "Buğday ekimi",
-      "Yol yapımı",
-      "Kürt alfabesi",
-      "Silah yapımı"
+      "Kahire",
+      "Bağdat",
+      "Şam",
+      "Beyrut"
     ],
-    "correctAnswerTr": "Kürt alfabesi",
-    "explanationKu": "Hawar ji bo pejirandina alfabeya Latînî ya Kurdî ya ku Celadet Alî Bedirxan pêşve bir, roleke bingehîn lîst. Kovar vê alfabeyê belav kir.",
-    "explanationTr": "Hawar, Celadet Alî Bedirxan'ın geliştirdiği Latin Kürt alfabesinin kabulünde temel bir rol oynadı. Dergi bu alfabeyi yaydı."
+    "correctAnswerTr": "Şam",
+    "explanationKu": "Kovara Hawarê di 15ê Gulana 1932an de li bajarê Şamê dest bi weşanê kir û ev roj wekî Cejna Zimanê Kurdî tê pîrozkirin.",
+    "explanationTr": "Hawar dergisi 15 Mayıs 1932'de Şam'da yayımlanmaya başlamış olup bu tarih Kürt Dil Bayramı olarak kutlanmaktadır."
   },
   {
     "id": "ds_dirok_0033",
@@ -1736,15 +1736,15 @@
   {
     "id": "ds_dirok_0043",
     "category": "Dîrok",
-    "prompt": "Hawar ji bo kîjan alfabeyê wek çavkaniya sereke tê zanîn?",
+    "prompt": "Kovara Hawarê ji aliyê kîjan rewşenbîr û zimanzanê kurd ve hate derxistin?",
     "answers": [
-      "Alfabeya Erebî ya Kurdî",
-      "Alfabeya Latînî ya Kurdî",
-      "Alfabeya Kirîlî ya Kurdî",
-      "Alfabeya Tirkî"
+      "Cegerxwîn",
+      "Celadet Elî Bedirxan",
+      "Erebê Şemo",
+      "Qanatê Kurdo"
     ],
-    "correctAnswer": "Alfabeya Latînî ya Kurdî",
-    "explanation": "Hawar, Kürtçe Latin alfabesinin yayılması için ana kaynak olarak bilinir. Bu alfabe Celadet Ali Bedirhan tarafından geliştirilmiştir.",
+    "correctAnswer": "Celadet Elî Bedirxan",
+    "explanation": "Hawar dergisi Celadet Ali Bedirhan öncülüğünde çıkarılmış ve Latin harfli Kürt alfabesi ile dilbilgisinin temelini oluşturmuştur.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -1752,20 +1752,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Hawar_(magazine)",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Hawar, hangi alfabe için ana kaynak olarak bilinir?",
+    "promptTr": "Hawar dergisi hangi Kürt aydın ve dilbilimci tarafından çıkarılmıştır?",
     "answersTr": [
-      "Kürtçe Arap Alfabesi",
-      "Kürtçe Latin Alfabesi",
-      "Kürtçe Kiril Alfabesi",
-      "Türk Alfabesi"
+      "Cegerxwîn",
+      "Celadet Ali Bedirhan",
+      "Erebê Şemo",
+      "Qanatê Kurdo"
     ],
-    "correctAnswerTr": "Kürtçe Latin Alfabesi",
-    "explanationKu": "Hawar ji bo belavkirina alfabeya Latînî ya Kurdî wek çavkaniya sereke tê zanîn. Ev alfabe ji aliyê Celadet Alî Bedirxan ve hate pêşve xistin.",
-    "explanationTr": "Hawar, Kürtçe Latin alfabesinin yayılması için ana kaynak olarak bilinir. Bu alfabe Celadet Ali Bedirhan tarafından geliştirilmiştir."
+    "correctAnswerTr": "Celadet Ali Bedirhan",
+    "explanationKu": "Kovara Hawarê bi pêşengiya Celadet Elî Bedirxan hate weşandin û bingeha rêziman û alfabeya kurdî ya latînî danî.",
+    "explanationTr": "Hawar dergisi Celadet Ali Bedirhan öncülüğünde çıkarılmış ve Latin harfli Kürt alfabesi ile dilbilgisinin temelini oluşturmuştur."
   },
   {
     "id": "ds_dirok_0055",
@@ -1846,7 +1846,7 @@
       "Asûr"
     ],
     "correctAnswer": "Akkad",
-    "explanation": "Sargon tarafından kurulan Akkad İmparatorluğu, Mezopotamya'yı birleştiren ilk imparatorluktu. Sümer, Babil ve Asur daha sonra geldi.",
+    "explanation": "Sargon tarafından kurulan Akkad İmparatorluğu, Mezopotamya'yı birleştiren ilk imparatorluktu. Sümer şehir devletleri Akkad'dan önce vardı; Babil ve Asur ise sonradan öne çıktı.",
     "type": "multipleChoice",
     "difficulty": 3,
     "metadata": {
@@ -1866,8 +1866,8 @@
       "Asur"
     ],
     "correctAnswerTr": "Akkad",
-    "explanationKu": "Împaratoriya Akkadê, ku ji aliyê Sargon ve hate avakirin, yekem împaratoriya ku Mezopotamyayê yek kir. Sumer, Babîl û Asûr paşê hatin.",
-    "explanationTr": "Sargon tarafından kurulan Akkad İmparatorluğu, Mezopotamya'yı birleştiren ilk imparatorluktu. Sümer, Babil ve Asur daha sonra geldi."
+    "explanationKu": "Împaratoriya Akkadê, ku ji aliyê Sargon ve hate avakirin, yekem împaratorî bû ku Mezopotamya yek kir. Bajar-dewletên Sumerê berî Împaratoriya Akkadê hebûn; Babîl û Asûr paşê hatin.",
+    "explanationTr": "Sargon tarafından kurulan Akkad İmparatorluğu, Mezopotamya'yı birleştiren ilk imparatorluktu. Sümer şehir devletleri Akkad'dan önce vardı; Babil ve Asur ise sonradan öne çıktı."
   },
   {
     "id": "ds_dirok_0058",
@@ -2450,15 +2450,15 @@
   {
     "id": "ds_dirok_0143",
     "category": "Dîrok",
-    "prompt": "Hejmara yekem a rojnameya Kurdistanê di kîjan salê de derket?",
+    "prompt": "Hejmara yekem a rojnameya \"Kurdistan\"ê di sala 1898an de li Qahîreyê ji aliyê kê ve hate derxistin?",
     "answers": [
-      "1898",
-      "1908",
-      "1920",
-      "1940"
+      "Mîqdad Mîdhet Bedirxan",
+      "Pîremêrd",
+      "Huznî Mukriyanî",
+      "Memdûh Selîm"
     ],
-    "correctAnswer": "1898",
-    "explanation": "Kurdistan gazetesinin ilk sayısı 22 Nisan 1898'de Kahire'de çıktı; yayın 1902'ye kadar 31 sayı sürdü.",
+    "correctAnswer": "Mîqdad Mîdhet Bedirxan",
+    "explanation": "\"Kurdistan\" gazetesi, 22 Nisan 1898 tarihinde Kahire'de Mikdad Midhat Bedirhan tarafından yayımlanmaya başlamıştır.",
     "type": "multipleChoice",
     "difficulty": 3,
     "metadata": {
@@ -2466,20 +2466,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Kurdistan_(newspaper)",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kurdistan gazetesinin ilk sayısı hangi yılda çıktı?",
+    "promptTr": "İlk Kürt gazetesi olan \"Kurdistan\"ın ilk sayısı 1898 yılında Kahire'de kim tarafından çıkarıldı?",
     "answersTr": [
-      "1898",
-      "1908",
-      "1920",
-      "1940"
+      "Mikdad Midhat Bedirhan",
+      "Pîremêrd",
+      "Hüznî Mukriyanî",
+      "Memduh Selim"
     ],
-    "correctAnswerTr": "1898",
-    "explanationKu": "Hejmara yekem a rojnameya Kurdistanê di 22ê Nîsana 1898an de li Qahîreyê derket.",
-    "explanationTr": "Kurdistan gazetesinin ilk sayısı 22 Nisan 1898'de Kahire'de çıktı; yayın 1902'ye kadar 31 sayı sürdü."
+    "correctAnswerTr": "Mikdad Midhat Bedirhan",
+    "explanationKu": "Rojnameya \"Kurdistan\"ê di 22yê Nîsana 1898an de li Qahîreyê ji aliyê Mîqdad Mîdhet Bedirxan ve hate weşandin.",
+    "explanationTr": "\"Kurdistan\" gazetesi, 22 Nisan 1898 tarihinde Kahire'de Mikdad Midhat Bedirhan tarafından yayımlanmaya başlamıştır."
   },
   {
     "id": "ds_dirok_0151",
@@ -3886,7 +3886,7 @@
       "Samuel Beckett"
     ],
     "correctAnswer": "Samuel Beckett",
-    "explanation": "Samuel Beckett, 1969'da Nobel Edebiyat Ödülü'nü kazandı. \"Godot\"yu Beklerken' adlı eseriyle tanınır.",
+    "explanation": "Samuel Beckett, 1969'da Nobel Edebiyat Ödülü'nü kazandı. \"Godot'yu Beklerken\" adlı eseriyle tanınır.",
     "type": "multipleChoice",
     "difficulty": 3,
     "metadata": {
@@ -3907,7 +3907,7 @@
     ],
     "correctAnswerTr": "Samuel Beckett",
     "explanationKu": "Samuel Beckett di sala 1969an de Xelata Nobelê ya Edebiyatê wergirt. Ew bi berhema xwe ya \"Waiting for Godot\" tê naskirin.",
-    "explanationTr": "Samuel Beckett, 1969'da Nobel Edebiyat Ödülü'nü kazandı. \"Godot\"yu Beklerken' adlı eseriyle tanınır."
+    "explanationTr": "Samuel Beckett, 1969'da Nobel Edebiyat Ödülü'nü kazandı. \"Godot'yu Beklerken\" adlı eseriyle tanınır."
   },
   {
     "id": "ds_edebiyat_0224",
@@ -4838,7 +4838,7 @@
       "Leipzig"
     ],
     "correctAnswer": "Bonn",
-    "explanation": "Beethoven, 17 Aralık 1770'te günümüzde Almanya'da bulunan Bonn şehrinde doğmuştur.",
+    "explanation": "Beethoven, 1770'te günümüzde Almanya'da bulunan Bonn şehrinde doğmuştur; 17 Aralık 1770 onun vaftiz tarihidir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -4858,8 +4858,8 @@
       "Leipzig"
     ],
     "correctAnswerTr": "Bonn",
-    "explanationKu": "Beethoven di 17ê kanûna pêşîn a sala 1770ê de li bajarê Bonnê, ku niha li Almanyayê ye, ji dayik bûye.",
-    "explanationTr": "Beethoven, 17 Aralık 1770'te günümüzde Almanya'da bulunan Bonn şehrinde doğmuştur."
+    "explanationKu": "Beethoven di sala 1770ê de li bajarê Bonnê, ku niha li Almanyayê ye, ji dayik bûye; 17ê kanûna pêşîn a 1770ê roja vaftîzkirina wî ye.",
+    "explanationTr": "Beethoven, 1770'te günümüzde Almanya'da bulunan Bonn şehrinde doğmuştur; 17 Aralık 1770 onun vaftiz tarihidir."
   },
   {
     "id": "ds_muzik_0135",
@@ -4906,7 +4906,7 @@
       "1791"
     ],
     "correctAnswer": "1770",
-    "explanation": "Beethoven, 17 Aralık 1770'te Bonn'da doğmuştur.",
+    "explanation": "Beethoven, 1770'te Bonn'da doğmuştur; 17 Aralık 1770 onun vaftiz tarihidir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -4926,8 +4926,8 @@
       "1791"
     ],
     "correctAnswerTr": "1770",
-    "explanationKu": "Beethoven di 17ê kanûna pêşîn a sala 1770ê de li Bonnê ji dayik bûye.",
-    "explanationTr": "Beethoven, 17 Aralık 1770'te Bonn'da doğmuştur."
+    "explanationKu": "Beethoven di sala 1770ê de li Bonnê ji dayik bûye; 17ê kanûna pêşîn a 1770ê roja vaftîzkirina wî ye.",
+    "explanationTr": "Beethoven, 1770'te Bonn'da doğmuştur; 17 Aralık 1770 onun vaftiz tarihidir."
   },
   {
     "id": "ds_muzik_0150",
@@ -5102,7 +5102,7 @@
   {
     "id": "ds_muzik_0162",
     "category": "Cîhan",
-    "prompt": "Kîjan celebê muzîkê di salên 1990yan de li Seattle derketiye?",
+    "prompt": "Kîjan celebê muzîkê di salên 1980yan de li Seattle derketiye?",
     "answers": [
       "Pop",
       "Grunge",
@@ -5122,7 +5122,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "1990'larda Seattle'da hangi müzik türü ortaya çıkmıştır?",
+    "promptTr": "1980'lerde Seattle'da hangi müzik türü ortaya çıkmıştır?",
     "answersTr": [
       "Pop",
       "Grunge",
@@ -5130,7 +5130,7 @@
       "Country"
     ],
     "correctAnswerTr": "Grunge",
-    "explanationKu": "Grunge di salên 1990yan de li Seattle derketiye. Ev celeb muzîkê ji rockê derketiye û bi gîtarên xwe yên giran û dengên xwe yên xemgîn ve tê naskirin.",
+    "explanationKu": "Grunge di salên 1980yan de li Seattle derketiye û di salên 1990yan de belav bûye. Ev celeb muzîkê ji rockê derketiye û bi gîtarên xwe yên giran û dengên xwe yên xemgîn ve tê naskirin.",
     "explanationTr": "Grunge, 1980'larda Seattle'da ortaya çıkmıştır. Bu müzik türü rock'tan türemiştir ve ağır gitarları ve hüzünlü sesleriyle tanınır. 1990'larda ana akıma yayıldı."
   },
   {
@@ -5280,7 +5280,7 @@
       "Georges Bizet"
     ],
     "correctAnswer": "Georges Bizet",
-    "explanation": "Georges Bizet, \"Carmen\" operasıyla tanınır. Bu opera 1875 yılında bestelenmiştir ve en ünlü Fransız operalarından biridir.",
+    "explanation": "Georges Bizet, \"Carmen\" operasıyla tanınır. Bu opera 1875'te ilk kez sahnelendi ve en ünlü Fransız operalarından biridir.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -5300,8 +5300,8 @@
       "Georges Bizet"
     ],
     "correctAnswerTr": "Georges Bizet",
-    "explanationKu": "Georges Bizet bi opera xwe ya \"Carmen\" tê naskirin. Ev opera di sala 1875ê de hatiye nivîsandin û yek ji navdartirîn operayên fransî ye.",
-    "explanationTr": "Georges Bizet, \"Carmen\" operasıyla tanınır. Bu opera 1875 yılında bestelenmiştir ve en ünlü Fransız operalarından biridir."
+    "explanationKu": "Georges Bizet bi operaya xwe ya \"Carmen\" tê naskirin. Ev opera cara yekem di sala 1875ê de hatiye pêşkêşkirin û yek ji navdartirîn operayên fransî ye.",
+    "explanationTr": "Georges Bizet, \"Carmen\" operasıyla tanınır. Bu opera 1875'te ilk kez sahnelendi ve en ünlü Fransız operalarından biridir."
   },
   {
     "id": "ds_muzik_0195",
@@ -5374,15 +5374,15 @@
   {
     "id": "ds_muzik_0213",
     "category": "Cîhan",
-    "prompt": "Kîjan têgîn ji bo nîşankirina hevahengiya dengan tê bikaranîn?",
+    "prompt": "Di muzîkê de, koma dengan a ku bi lêdana herî kêm sê dengên cuda di heman demê de pêk tê çi ye?",
     "answers": [
-      "Rîtm",
-      "Tempo",
-      "Armonî",
-      "Nota"
+      "Solo",
+      "Melodî",
+      "Akor",
+      "Nakarat"
     ],
-    "correctAnswer": "Armonî",
-    "explanation": "Armoni, seslerin uyumunu belirtmek için kullanılır. Ritim zamanı, tempo hızı ve nota da yüksekliği gösterir.",
+    "correctAnswer": "Akor",
+    "explanation": "Akor, farklı yükseklikteki en az üç notanın aynı anda tınlamasıyla oluşur ve müzikte armoninin temelini oluşturur.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -5390,20 +5390,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Harmony",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Seslerin uyumunu belirtmek için hangi terim kullanılır?",
+    "promptTr": "Müzikte en az üç farklı sesin aynı anda birlikte çalınmasıyla oluşan ses kümesine ne ad verilir?",
     "answersTr": [
-      "Ritim",
-      "Tempo",
-      "Armoni",
-      "Nota"
+      "Solo",
+      "Melodi",
+      "Akor",
+      "Nakarat"
     ],
-    "correctAnswerTr": "Armoni",
-    "explanationKu": "Armonî ji bo nîşankirina hevahengiya dengan tê bikaranîn. Rîtm demê, tempo lezê û nota jî bilindahiyê nîşan dide.",
-    "explanationTr": "Armoni, seslerin uyumunu belirtmek için kullanılır. Ritim zamanı, tempo hızı ve nota da yüksekliği gösterir."
+    "correctAnswerTr": "Akor",
+    "explanationKu": "Akor ji lêdana herî kêm sê notayên bi bilindahiyên cuda di heman demê de pêk tê û bingeha armoniyê ava dike.",
+    "explanationTr": "Akor, farklı yükseklikteki en az üç notanın aynı anda tınlamasıyla oluşur ve müzikte armoninin temelini oluşturur."
   },
   {
     "id": "ds_sinema_0032",
@@ -6550,7 +6550,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Derin öğrenmede, modelin verilerden bağımsız olarak öğrenip veri yapısını keşfettiği süreç için kullanılan kavram hangisidir?",
+    "promptTr": "Derin öğrenmede, modelin etiketlenmemiş verilerdeki yapı ve örüntüleri kendi başına keşfederek öğrendiği süreç için kullanılan kavram hangisidir?",
     "answersTr": [
       "Denetimli öğrenme",
       "Denetimsiz öğrenme",
@@ -7040,15 +7040,15 @@
   {
     "id": "ds_teknoloji_0242",
     "category": "Teknolojî",
-    "prompt": "Kîjan peyk ji bo destnîşankirina cihê rast ê li ser rûyê Erdê ji bo rêveçûna otomobîlan tê bikaranîn?",
+    "prompt": "Kîjan cureyê peykê ji bo şopandina rewşa hewayê, ewran û bahozên li ser rûyê Erdê tê bikaranîn?",
     "answers": [
       "Peyka ragihandinê",
-      "Peyka GPSê",
       "Peyka meteorolojîk",
-      "Peyka keşfê"
+      "Peyka navîgasyonê",
+      "Peyka astronomiyê"
     ],
-    "correctAnswer": "Peyka GPSê",
-    "explanation": "GPS uyduları, otomobillerin, uçakların ve gemilerin navigasyonu için Dünya yüzeyindeki kesin konumu belirlemek amacıyla kullanılır. İletişim, meteoroloji ve keşif uyduları ise başka amaçlar için kullanılır.",
+    "correctAnswer": "Peyka meteorolojîk",
+    "explanation": "Meteoroloji uyduları uzaydan bulut hareketlerini, sıcaklıkları ve fırtınaları izleyerek hava tahmini için veri sağlar.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -7056,20 +7056,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Global_Positioning_System",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Otomobillerin navigasyonu için Dünya yüzeyindeki kesin konumu belirlemek amacıyla hangi uydu kullanılır?",
+    "promptTr": "Dünya üzerindeki hava durumunu, bulutları ve fırtınaları izlemek için hangi uydu türü kullanılır?",
     "answersTr": [
       "İletişim uydusu",
-      "GPS uydusu",
       "Meteoroloji uydusu",
-      "Keşif uydusu"
+      "Navigasyon uydusu",
+      "Astronomi uydusu"
     ],
-    "correctAnswerTr": "GPS uydusu",
-    "explanationKu": "Peykên GPSê ji bo destnîşankirina cihê rast li ser rûyê Erdê ji bo rêveçûna otomobîlan, balafiran û keştiyan têne bikaranîn. Peykên ragihandinê, meteorolojîk û keşfê ji bo armancên din têne bikaranîn.",
-    "explanationTr": "GPS uyduları, otomobillerin, uçakların ve gemilerin navigasyonu için Dünya yüzeyindeki kesin konumu belirlemek amacıyla kullanılır. İletişim, meteoroloji ve keşif uyduları ise başka amaçlar için kullanılır."
+    "correctAnswerTr": "Meteoroloji uydusu",
+    "explanationKu": "Peykên meteorolojîk ji fezayê tevgera ewran, germahî û bahozan dişopînin û ji bo pêşbîniya rewşa hewayê daneyan dişînin.",
+    "explanationTr": "Meteoroloji uyduları uzaydan bulut hareketlerini, sıcaklıkları ve fırtınaları izleyerek hava tahmini için veri sağlar."
   },
   {
     "id": "ds_teknoloji_0252",
@@ -7490,7 +7490,7 @@
       "Dema raborî"
     ],
     "correctAnswer": "Dema bê",
-    "explanation": "Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmancî'de bu zaman \"ê\" veya \"dê\" yardımcı fiili ve mastar ile kurulur, örn. \"ez ê biçim\" veya \"ew dê bê\".",
+    "explanation": "Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmancî'de bu zaman \"ê\" veya \"dê\" gelecek zaman parçacığı ve dilek kipinde çekimli fiil ile kurulur, örn. \"ez ê biçim\" veya \"ew dê bê\".",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -7511,7 +7511,7 @@
     ],
     "correctAnswerTr": "Gelecek zaman",
     "explanationKu": "Dema bê ji bo kiryarên ku dê di pêşerojê de biqewimin tê bikaranîn. Di kurmancî de ev dem bi alîkariya \"ê\" an \"dê\" û raweya bilanî tê avakirin, wek \"ez ê biçim\" an \"ew dê bê\".",
-    "explanationTr": "Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmancî'de bu zaman \"ê\" veya \"dê\" yardımcı fiili ve mastar ile kurulur, örn. \"ez ê biçim\" veya \"ew dê bê\"."
+    "explanationTr": "Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmancî'de bu zaman \"ê\" veya \"dê\" gelecek zaman parçacığı ve dilek kipinde çekimli fiil ile kurulur, örn. \"ez ê biçim\" veya \"ew dê bê\"."
   },
   {
     "id": "ds_ziman_0031",
@@ -7675,11 +7675,11 @@
     "promptTr": "Hangi kelime \"q\" harfiyle yazılır?",
     "answersTr": [
       "Kelek",
-      "Gül",
-      "Kalem",
+      "Gul",
+      "Qelem",
       "Zer"
     ],
-    "correctAnswerTr": "Kalem",
+    "correctAnswerTr": "Qelem",
     "explanationKu": "Peyva \"qelem\" bi tîpa \"q\"ê dest pê dike. \"Kelek\" bi \"k\"ê, \"Gul\" bi \"g\"ê û \"Zer\" bi \"z\"ê tê nivîsîn.",
     "explanationTr": "\"Qelem\" (Kalem) kelimesi \"q\" harfiyle başlar. \"Kelek\" \"k\" ile, \"Gul\" (Gül) \"g\" ile ve \"Zer\" (Sarı) \"z\" ile yazılır."
   },
@@ -8374,7 +8374,7 @@
       "bê"
     ],
     "correctAnswer": "tê",
-    "explanation": "\"Hatin\" fiilinin şimdiki zamanı \"tê\" ile söylenir. \"Hat\" geçmiş zaman, \"dihat\" sürekli geçmiş zaman ve \"bê\" emir kipidir.",
+    "explanation": "\"Hatin\" fiilinin şimdiki zamanı \"tê\" ile söylenir. \"Hat\" geçmiş zaman, \"dihat\" sürekli geçmiş zaman, \"bê\" ise üçüncü tekil kişi dilek kipi biçimidir; tekil emir kipi \"were\"dir.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -8394,8 +8394,8 @@
       "bê"
     ],
     "correctAnswerTr": "tê",
-    "explanationKu": "Dema niha ya \"hatin\" bi \"tê\" tê gotin. \"Hat\" dema borî ye, \"dihat\" dema borî ya berdewam e û \"bê\" ferman e.",
-    "explanationTr": "\"Hatin\" fiilinin şimdiki zamanı \"tê\" ile söylenir. \"Hat\" geçmiş zaman, \"dihat\" sürekli geçmiş zaman ve \"bê\" emir kipidir."
+    "explanationKu": "Dema niha ya \"hatin\" bi \"tê\" tê gotin. \"Hat\" dema borî ye, \"dihat\" dema borî ya berdewam e û \"bê\" forma kesê sêyem ê yekjimar a raweya bilanî ye; fermana yekjimar \"were\" ye.",
+    "explanationTr": "\"Hatin\" fiilinin şimdiki zamanı \"tê\" ile söylenir. \"Hat\" geçmiş zaman, \"dihat\" sürekli geçmiş zaman, \"bê\" ise üçüncü tekil kişi dilek kipi biçimidir; tekil emir kipi \"were\"dir."
   },
   {
     "id": "ds_ziman_0035",
@@ -8912,12 +8912,12 @@
     "category": "Ziman",
     "prompt": "Di kurmancî de peyva \"dar\" ji bo çi tê bikaranîn?",
     "answers": [
-      "riwekek e ku fêkî dide",
+      "riwekeke mezin û bi qurm",
       "ajalek e ku difire",
       "çiyayekî bilind",
       "cureyekî avê"
     ],
-    "correctAnswer": "riwekek e ku fêkî dide",
+    "correctAnswer": "riwekeke mezin û bi qurm",
     "explanation": "\"Dar\" kelimesi Kürtçede, elma ağacı gibi gövdeli büyük bitkiler için kullanılır. O bir hayvan, dağ veya su değildir.",
     "type": "multipleChoice",
     "difficulty": 1,
@@ -8932,12 +8932,12 @@
     },
     "promptTr": "Kürtçede \"dar\" kelimesi ne için kullanılır?",
     "answersTr": [
-      "Meyve veren bir bitki",
+      "Gövdeli büyük bir bitki (ağaç)",
       "Uçan bir hayvan",
       "Yüksek bir dağ",
       "Bir tür su"
     ],
-    "correctAnswerTr": "Meyve veren bir bitki",
+    "correctAnswerTr": "Gövdeli büyük bir bitki (ağaç)",
     "explanationKu": "Peyva \"dar\" di kurmancî de ji bo riwekên mezin û bi qurm tê bikaranîn, wek dara sêvê. Ew ne ajal, ne çiya û ne jî av e.",
     "explanationTr": "\"Dar\" kelimesi Kürtçede, elma ağacı gibi gövdeli büyük bitkiler için kullanılır. O bir hayvan, dağ veya su değildir."
   },
@@ -10172,8 +10172,8 @@
     "answers": [
       "agirê tirsê",
       "agirê mirinê",
-      "agirê pîroz",
-      "agirê xemê"
+      "agirê xemê",
+      "agirê pîroz"
     ],
     "correctAnswer": "agirê pîroz",
     "explanation": "Newroz'da kutsal ateş yakılır çünkü Newroz bahar bayramıdır ve ateş saflık ile yenilenmenin sembolüdür.",
@@ -10192,8 +10192,8 @@
     "answersTr": [
       "korku ateşi",
       "ölüm ateşi",
-      "kutsal ateş",
-      "keder ateşi"
+      "keder ateşi",
+      "kutsal ateş"
     ],
     "correctAnswerTr": "kutsal ateş",
     "explanationKu": "Di Newrozê de agirê pîroz tê vêxistin ji ber ku Newroz cejna biharê ye û agir sembola paqijî û nûbûnê ye.",
@@ -10327,11 +10327,11 @@
     "promptTr": "Ramazan Bayramı'nda genellikle ne verilir?",
     "answersTr": [
       "et",
-      "fitre (zekât-ı fıtır)",
+      "fitre",
       "ekmek",
       "süt"
     ],
-    "correctAnswerTr": "fitre (zekât-ı fıtır)",
+    "correctAnswerTr": "fitre",
     "explanationKu": "Berî Cejna Remezanê zekata fitreyê tê dayîn; zekata giştî peywireke din a salane ye.",
     "explanationTr": "Ramazan Bayramı öncesinde verilen sadaka fitredir (zakat al-fitr). Genel zekât ayrı ve yıllık bir yükümlülüktür."
   },
@@ -13723,7 +13723,7 @@
     "correctAnswerTr": "Kavramsal ve ilişkisel soyut (abstrakt) isimler",
     "explanation": "\"-tî / -atî\" eki somut isimlerden soyut kavram isimleri türetir: heval (arkadaş) -> hevaltî (arkadaşlık), mirov (insan) -> mirovatî (insanlık).",
     "explanationTr": "\"-tî / -atî\" eki somut isimlerden soyut kavram isimleri türetir: heval (arkadaş) -> hevaltî (arkadaşlık), mirov (insan) -> mirovatî (insanlık).",
-    "explanationKu": "Paşgira \"-tî / -atî\"yê ji navdêr û rengdêran navên razber û têgehî çêdike (hevaltî, biratî, zanyarî/zanatî).",
+    "explanationKu": "Paşgira \"-tî / -atî\"yê ji navdêr û rengdêran navên razber û têgehî çêdike (hevaltî, biratî, mirovatî).",
     "metadata": {
       "reviewStatus": "approved",
       "sourceReference": "https://dergipark.org.tr/en/pub/kurdiname/article/1448052",
@@ -14451,7 +14451,7 @@
       "Yağmur ormanı",
       "Tayga ormanı",
       "Yaprak döken orman",
-      "Çevre ormanı"
+      "Tropikal orman"
     ],
     "correctAnswerTr": "Tayga ormanı",
     "explanationKu": "Daristana taygayê li herêmên sar, bi zivistanên dirêj û havînên kurt, tê dîtin.",
@@ -18849,12 +18849,12 @@
     "prompt": "Kîjan berhem ji aliyê William Shakespeare ve hatiye nivîsandin?",
     "answers": [
       "Hamlet",
-      "Dîwana Mem û Zîn",
+      "Mem û Zîn",
       "Şahname",
       "Îlyada"
     ],
     "correctAnswer": "Hamlet",
-    "explanation": "Hamlet, Shakespeare'in en ünlü eserlerinden biridir. Mem û Zîn Divanı Ahmedê Xanî'ye, Şahname Firdevsî'ye, İlyada ise Homeros'a aittir.",
+    "explanation": "Hamlet, Shakespeare'in en ünlü eserlerinden biridir. Mem û Zîn mesnevisi Ahmedê Xanî'ye, Şahname Firdevsî'ye, İlyada ise Homeros'a aittir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -18869,13 +18869,13 @@
     "promptTr": "Aşağıdaki eserlerden hangisi William Shakespeare tarafından yazılmıştır?",
     "answersTr": [
       "Hamlet",
-      "Mem û Zîn Divanı",
+      "Mem û Zîn",
       "Şahname",
       "İlyada"
     ],
     "correctAnswerTr": "Hamlet",
-    "explanationKu": "Hamlet yek ji berhemên navdar ên Shakespeare e. Dîwana Mem û Zîn a Ehmedê Xanî ye, Şahname ya Fîrdewsî ye, Îlyada jî ya Homêros e.",
-    "explanationTr": "Hamlet, Shakespeare'in en ünlü eserlerinden biridir. Mem û Zîn Divanı Ahmedê Xanî'ye, Şahname Firdevsî'ye, İlyada ise Homeros'a aittir."
+    "explanationKu": "Hamlet yek ji berhemên navdar ên Shakespeare e. Mem û Zîn mesnewiya Ehmedê Xanî ye, Şahname ya Fîrdewsî ye, Îlyada jî ya Homêros e.",
+    "explanationTr": "Hamlet, Shakespeare'in en ünlü eserlerinden biridir. Mem û Zîn mesnevisi Ahmedê Xanî'ye, Şahname Firdevsî'ye, İlyada ise Homeros'a aittir."
   },
   {
     "id": "ds_edebiyat_0128",
@@ -19866,15 +19866,15 @@
   {
     "id": "ds_muzik_0103",
     "category": "Cîhan",
-    "prompt": "Di muzîkê de, rêzkirina dengan li gorî demê çi ye?",
+    "prompt": "Di muzîkê de, nîşana nivîskî ya ku bilindahî û dirêjahiya dengekî diyar dike çi ye?",
     "answers": [
-      "Rîtm",
       "Nota",
-      "Navber",
-      "Aheng"
+      "Porte",
+      "Gam",
+      "Oktav"
     ],
-    "correctAnswer": "Rîtm",
-    "explanation": "Ritim müzikte seslerin zamana göre dizilişidir. Nota seslerin işaretidir, aralık sesler arasındaki mesafedir ve armoni de seslerin uyumudur.",
+    "correctAnswer": "Nota",
+    "explanation": "Nota, müzik seslerinin yüksekliğini ve sürelerini porte üzerinde göstermek için kullanılan yazılı işaretlerdir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -19882,33 +19882,33 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Rhythm",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Müzikte, seslerin zamana göre dizilişi nedir?",
+    "promptTr": "Müzikte bir sesin yüksekliğini ve süresini gösteren yazılı işarete ne ad verilir?",
     "answersTr": [
-      "Ritim",
       "Nota",
-      "Aralık",
-      "Armoni"
+      "Porte",
+      "Gam",
+      "Oktav"
     ],
-    "correctAnswerTr": "Ritim",
-    "explanationKu": "Rîtm di muzîkê de rêjdana dengan li gorî demê ye. Nota nîşaneya dengan e, navber dûrahiya di navbera dengan de ye û aheng jî hevahengiya dengan e.",
-    "explanationTr": "Ritim müzikte seslerin zamana göre dizilişidir. Nota seslerin işaretidir, aralık sesler arasındaki mesafedir ve armoni de seslerin uyumudur."
+    "correctAnswerTr": "Nota",
+    "explanationKu": "Nota nîşanên nivîskî ne ku ji bo diyarkirina bilindahî û dirêjahiya dengan li ser porteyê tên bikaranîn.",
+    "explanationTr": "Nota, müzik seslerinin yüksekliğini ve sürelerini porte üzerinde göstermek için kullanılan yazılı işaretlerdir."
   },
   {
     "id": "ds_muzik_0106",
     "category": "Cîhan",
-    "prompt": "Di muzîkê de, leza ku bi piranî bi \"beats per minute\" tê pîvandin çi ye?",
+    "prompt": "Di muzîkê de, amûra ku bi lêdanên birêkûpêk leza parçeyekî dipîve û rêberiyê ji muzîkjenan re dike çi ye?",
     "answers": [
-      "Rîtm",
-      "Aheng",
-      "Melodî",
-      "Tempo"
+      "Diyapazon",
+      "Amplîfîkator",
+      "Mîkser",
+      "Metronom"
     ],
-    "correctAnswer": "Tempo",
-    "explanation": "Tempo müzikte müziğin hızıdır ve çoğunlukla \"dakikadaki vuruş\" ile ölçülür. Ritim seslerin dizilişidir, armoni seslerin uyumudur ve melodi de seslerin dizisidir.",
+    "correctAnswer": "Metronom",
+    "explanation": "Metronom, müzisyenlerin doğru hızı koruması için dakikada belirli sayıda düzenli vuruş üreten mekanik veya elektronik bir alettir.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -19916,20 +19916,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Tempo",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Müzikte, çoğunlukla \"dakikadaki vuruş\" ile ölçülen hız nedir?",
+    "promptTr": "Müzikte, düzenli vuruşlarla bir eserin hızını ölçen ve müzisyenlere rehberlik eden alet nedir?",
     "answersTr": [
-      "Ritim",
-      "Armoni",
-      "Melodi",
-      "Tempo"
+      "Diyapazon",
+      "Amplifikatör",
+      "Mikser",
+      "Metronom"
     ],
-    "correctAnswerTr": "Tempo",
-    "explanationKu": "Tempo di muzîkê de leza muzîkê ye û bi piranî bi \"beats per minute\" tê pîvandin. Rîtm rêjdana dengan e, aheng hevahengiya dengan e û melodî jî rêzika dengan e.",
-    "explanationTr": "Tempo müzikte müziğin hızıdır ve çoğunlukla \"dakikadaki vuruş\" ile ölçülür. Ritim seslerin dizilişidir, armoni seslerin uyumudur ve melodi de seslerin dizisidir."
+    "correctAnswerTr": "Metronom",
+    "explanationKu": "Metronom amûreke mekanîkî yan elektronîk e ku di deqîqeyê de bi hejmareke diyarkirî lêdanan derdixe da ku muzîkjen leza rast biparêzin.",
+    "explanationTr": "Metronom, müzisyenlerin doğru hızı koruması için dakikada belirli sayıda düzenli vuruş üreten mekanik veya elektronik bir alettir."
   },
   {
     "id": "ds_muzik_0139",
@@ -20248,7 +20248,7 @@
       "Hotel California"
     ],
     "correctAnswer": "(I Can't Get No) Satisfaction",
-    "explanation": "The Rolling Stones, \"(I Can\"t Get No) Satisfaction' şarkısıyla çok ünlü olmuştur. Bu şarkı 1965'te çıkmış ve rock'ın klasiklerinden biri olarak kabul edilir.",
+    "explanation": "The Rolling Stones, \"(I Can't Get No) Satisfaction\" şarkısıyla çok ünlü olmuştur. Bu şarkı 1965'te çıkmış ve rock'ın klasiklerinden biri olarak kabul edilir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -20269,7 +20269,7 @@
     ],
     "correctAnswerTr": "(I Can't Get No) Satisfaction",
     "explanationKu": "The Rolling Stones bi strana xwe ya \"(I Can't Get No) Satisfaction\" pir navdar bûn. Ev stran di sala 1965an de derketiye û wekî yek ji klasîkên rockê tê hesibandin.",
-    "explanationTr": "The Rolling Stones, \"(I Can\"t Get No) Satisfaction' şarkısıyla çok ünlü olmuştur. Bu şarkı 1965'te çıkmış ve rock'ın klasiklerinden biri olarak kabul edilir."
+    "explanationTr": "The Rolling Stones, \"(I Can't Get No) Satisfaction\" şarkısıyla çok ünlü olmuştur. Bu şarkı 1965'te çıkmış ve rock'ın klasiklerinden biri olarak kabul edilir."
   },
   {
     "id": "ds_muzik_0177",
@@ -20328,7 +20328,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Operada, tek sesli şarkı için hangi kelime kullanılır?",
+    "promptTr": "Operada, bir solistin söylediği şarkı için hangi kelime kullanılır?",
     "answersTr": [
       "Arya",
       "Koro",
@@ -20520,7 +20520,7 @@
       "1925"
     ],
     "correctAnswer": "1895",
-    "explanation": "\"La Sortie de l\"usine Lumière à Lyon' filmi 1895'te Lumière kardeşler tarafından çekildi. Bu film tarihin ilk filmlerinden biridir ve sinemanın başlangıcını gösterir.",
+    "explanation": "\"La Sortie de l'usine Lumière à Lyon\" filmi 1895'te Lumière kardeşler tarafından çekildi. Bu film tarihin ilk filmlerinden biridir ve sinemanın başlangıcını gösterir.",
     "type": "multipleChoice",
     "difficulty": 3,
     "metadata": {
@@ -20532,7 +20532,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Auguste ve Louis Lumière tarafından çekilen \"La Sortie de l\"usine Lumière à Lyon' adlı ilk film hangi yılda çekildi?",
+    "promptTr": "Auguste ve Louis Lumière tarafından çekilen \"La Sortie de l'usine Lumière à Lyon\" adlı ilk film hangi yılda çekildi?",
     "answersTr": [
       "1905",
       "1915",
@@ -20541,7 +20541,7 @@
     ],
     "correctAnswerTr": "1895",
     "explanationKu": "Fîlma \"La Sortie de l'usine Lumière à Lyon\" di sala 1895an de ji aliyê birayên Lumière ve hate kişandin. Ev fîlm yek ji fîlmên yekem ên dîrokê ye û destpêka sînemayê nîşan dide.",
-    "explanationTr": "\"La Sortie de l\"usine Lumière à Lyon' filmi 1895'te Lumière kardeşler tarafından çekildi. Bu film tarihin ilk filmlerinden biridir ve sinemanın başlangıcını gösterir."
+    "explanationTr": "\"La Sortie de l'usine Lumière à Lyon\" filmi 1895'te Lumière kardeşler tarafından çekildi. Bu film tarihin ilk filmlerinden biridir ve sinemanın başlangıcını gösterir."
   },
   {
     "id": "ds_sinema_0087",
@@ -20682,15 +20682,15 @@
   {
     "id": "ds_sinema_0086",
     "category": "Cîhan",
-    "prompt": "Kîjan derhênerê japonî fîlma \"Rashomon\" derxist?",
+    "prompt": "Fîlmê Akira Kurosawa yê bi navê \"Rashomon\" di sala 1951an de li kîjan festîvala navneteweyî xelata mezin a \"Şêrê Zêrîn\" wergirt?",
     "answers": [
-      "Kenji Mizoguchi",
-      "Yasujirō Ozu",
-      "Akira Kurosawa",
-      "Masaki Kobayashi"
+      "Cannes",
+      "Berlîn",
+      "Venedîk",
+      "Locarno"
     ],
-    "correctAnswer": "Akira Kurosawa",
-    "explanation": "Akira Kurosawa, 1950'de gösterime giren bu filmin yönetmenidir ve Japon sinemasını dünyaya tanıtmıştır.",
+    "correctAnswer": "Venedîk",
+    "explanation": "\"Rashomon\" filmi, 1951 Venedik Film Festivali'nde Altın Aslan ödülünü kazanarak Japon sinemasının dünya çapında tanınmasını sağladı.",
     "type": "multipleChoice",
     "difficulty": 3,
     "metadata": {
@@ -20698,20 +20698,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Rashomon",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Hangi Japon yönetmen \"Rashomon\" filmini yönetti?",
+    "promptTr": "Akira Kurosawa'nın \"Rashomon\" adlı filmi, 1951 yılında hangi uluslararası film festivalinde büyük ödül olan \"Altın Aslan\"ı kazandı?",
     "answersTr": [
-      "Kenji Mizoguchi",
-      "Yasujirō Ozu",
-      "Akira Kurosawa",
-      "Masaki Kobayashi"
+      "Cannes",
+      "Berlin",
+      "Venedik",
+      "Locarno"
     ],
-    "correctAnswerTr": "Akira Kurosawa",
-    "explanationKu": "Akira Kurosawa derhênerê vî fîlmî ye ku di sala 1950î de derket û sînemaya japonî bi cîhanê da nasîn.",
-    "explanationTr": "Akira Kurosawa, 1950'de gösterime giren bu filmin yönetmenidir ve Japon sinemasını dünyaya tanıtmıştır."
+    "correctAnswerTr": "Venedik",
+    "explanationKu": "Fîlmê \"Rashomon\" di sala 1951an de li Festîvala Fîlman a Venedîkê xelata Şêrê Zêrîn wergirt û sînemaya japonî bi cîhanê da nasîn.",
+    "explanationTr": "\"Rashomon\" filmi, 1951 Venedik Film Festivali'nde Altın Aslan ödülünü kazanarak Japon sinemasının dünya çapında tanınmasını sağladı."
   },
   {
     "id": "ds_sinema_0094",
@@ -20804,7 +20804,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Hangi Amerikalı yönetmen \"Schindler\"s List' filmini yönetti?",
+    "promptTr": "Hangi Amerikalı yönetmen \"Schindler's List\" filmini yönetti?",
     "answersTr": [
       "Martin Scorsese",
       "Steven Spielberg",
@@ -20886,15 +20886,15 @@
   {
     "id": "ds_sinema_0109",
     "category": "Cîhan",
-    "prompt": "Kîjan têgeha sînemayê ji bo pêvajoya hilbijartina wêneyan û lihevxistina wan ji bo çêkirina fîlmekî tê bikaranîn?",
+    "prompt": "Di sînemayê de, metna nivîskî ya ku çîrok, dîmen û axaftinên fîlmekî bi hûrgilî dihewîne çi ye?",
     "answers": [
       "Kadraj",
+      "Dekor",
       "Senaryo",
-      "Montaj",
-      "Diyalog"
+      "Fragman"
     ],
-    "correctAnswer": "Montaj",
-    "explanation": "Montaj (kurgu), bir film oluşturmak için görüntüleri seçme, kesme ve birleştirme sürecidir. Bu süreç filmin ritmini ve hikaye anlatımını kontrol etmek için önemlidir. Kadraj görülen görüntüdür, senaryo hikayedir, diyalog ise konuşmadır.",
+    "correctAnswer": "Senaryo",
+    "explanation": "Senaryo, bir filmin tüm sahnelerinin, karakter hareketlerinin ve diyaloglarının yer aldığı yazılı metindir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -20902,20 +20902,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Film_editing",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Bir film oluşturmak için görüntüleri seçme ve birleştirme süreci için hangi sinema terimi kullanılır?",
+    "promptTr": "Sinemada bir filmin öyküsünü, sahnelerini ve konuşmalarını ayrıntılı olarak içeren yazılı metne ne ad verilir?",
     "answersTr": [
       "Kadraj",
+      "Dekor",
       "Senaryo",
-      "Montaj",
-      "Diyalog"
+      "Fragman"
     ],
-    "correctAnswerTr": "Montaj",
-    "explanationKu": "Montaj (editing) pêvajoya hilbijartina wêneyan, birîna wan û lihevxistina wan e ji bo çêkirina fîlmekî. Ev pêvajo ji bo kontrolkirina rîtm û çîrokbêjiya fîlmê girîng e. Kadraj wêneyê ku tê dîtin e, senaryo çîrok e, diyalog jî axaftin e.",
-    "explanationTr": "Montaj (kurgu), bir film oluşturmak için görüntüleri seçme, kesme ve birleştirme sürecidir. Bu süreç filmin ritmini ve hikaye anlatımını kontrol etmek için önemlidir. Kadraj görülen görüntüdür, senaryo hikayedir, diyalog ise konuşmadır."
+    "correctAnswerTr": "Senaryo",
+    "explanationKu": "Senaryo nexşerêya nivîskî ya fîlmekî ye ku hemû dîmen, tevger û axaftinên karakteran tê de tên nivîsandin.",
+    "explanationTr": "Senaryo, bir filmin tüm sahnelerinin, karakter hareketlerinin ve diyaloglarının yer aldığı yazılı metindir."
   },
   {
     "id": "ds_sinema_0127",
@@ -21234,7 +21234,7 @@
       "1998"
     ],
     "correctAnswer": "1993",
-    "explanation": "Steven Spielberg'in \"Schindler\"s List' filmi 1993'te gösterime girdi. Bu film, Holokost sırasında birçok Yahudi'yi kurtaran Oskar Schindler'i konu alır.",
+    "explanation": "Steven Spielberg'in \"Schindler's List\" filmi 1993'te gösterime girdi. Bu film, Holokost sırasında birçok Yahudi'yi kurtaran Oskar Schindler'i konu alır.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -21246,7 +21246,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Steven Spielberg'in \"Schindler\"s List' filmi hangi yılda gösterime girdi?",
+    "promptTr": "Steven Spielberg'in \"Schindler's List\" filmi hangi yılda gösterime girdi?",
     "answersTr": [
       "1990",
       "1995",
@@ -21255,7 +21255,7 @@
     ],
     "correctAnswerTr": "1993",
     "explanationKu": "Fîlmê \"Schindler's List\" yê Steven Spielberg di sala 1993an de derket. Ev fîlm li ser Oskar Schindler e ku di dema Holokostê de gelek cihû rizgar kirin.",
-    "explanationTr": "Steven Spielberg'in \"Schindler\"s List' filmi 1993'te gösterime girdi. Bu film, Holokost sırasında birçok Yahudi'yi kurtaran Oskar Schindler'i konu alır."
+    "explanationTr": "Steven Spielberg'in \"Schindler's List\" filmi 1993'te gösterime girdi. Bu film, Holokost sırasında birçok Yahudi'yi kurtaran Oskar Schindler'i konu alır."
   },
   {
     "id": "ds_sinema_0160",
@@ -21404,7 +21404,7 @@
       "Zazu"
     ],
     "correctAnswer": "Mufasa",
-    "explanation": "Mufasa, Simba'nın babasıdır ve \"The Lion King\" filminde kralların kralıdır. Scar, Mufasa'nın krallığı ele geçirmek isteyen kardeşidir.",
+    "explanation": "Mufasa, Simba'nın babasıdır ve \"The Lion King\" filminde aslanların kralıdır. Scar, Mufasa'nın krallığı ele geçirmek isteyen kardeşidir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -21425,7 +21425,7 @@
     ],
     "correctAnswerTr": "Mufasa",
     "explanationKu": "Mufasa bavê Simba ye û qiralê şêran e di fîlmê \"The Lion King\" de. Scar birayê Mufasa ye ku dixwaze qiraliyê bi dest bixe.",
-    "explanationTr": "Mufasa, Simba'nın babasıdır ve \"The Lion King\" filminde kralların kralıdır. Scar, Mufasa'nın krallığı ele geçirmek isteyen kardeşidir."
+    "explanationTr": "Mufasa, Simba'nın babasıdır ve \"The Lion King\" filminde aslanların kralıdır. Scar, Mufasa'nın krallığı ele geçirmek isteyen kardeşidir."
   },
   {
     "id": "ds_sinema_0179",
@@ -21838,15 +21838,15 @@
   {
     "id": "ds_teknoloji_0073",
     "category": "Teknolojî",
-    "prompt": "Di bernamekirinê de, kîjan struktur ji bo hilanîna çend nirxên bêdubare û bê rêz tê bikaranîn?",
+    "prompt": "Di bernamekirinê de, kîjan struktura daneyê nirxan bi awayê cotên kilît û nirx radigire?",
     "answers": [
-      "Guherbar",
-      "Xelek",
-      "Kom",
-      "Şert"
+      "Lîste",
+      "Rêzik",
+      "Ferheng",
+      "Dar"
     ],
-    "correctAnswer": "Kom",
-    "explanation": "Küme (set), programlamada bir değerler kümesi olabilen bir değeri saklamak için kullanılır. Değişken, döngü ve koşul ise diğer kavramlardır ancak kümeleri saklamak için kullanılmazlar.",
+    "correctAnswer": "Ferheng",
+    "explanation": "Sözlük (Dictionary/Map), verilere hızlı erişim sağlamak amacıyla her değeri benzersiz bir anahtarla eşleştirerek saklayan veri yapısıdır.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -21854,20 +21854,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Set_(abstract_data_type)",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Programlamada, birden fazla benzersiz ve sırasız değeri saklamak için hangi yapı kullanılır?",
+    "promptTr": "Programlamada verileri anahtar-değer çiftleri hâlinde tutan veri yapısı hangisidir?",
     "answersTr": [
-      "Değişken",
-      "Döngü",
-      "Küme",
-      "Koşul"
+      "Liste",
+      "Dizi",
+      "Sözlük",
+      "Ağaç"
     ],
-    "correctAnswerTr": "Küme",
-    "explanationKu": "Kom (set) di bernamekirinê de ji bo hilanîna nirxekê ya ku dikare bibe komek nirxan tê bikaranîn. Guherbar, xelek û şert jî têgehên din in lê ne ji bo hilanîna koman in.",
-    "explanationTr": "Küme (set), programlamada bir değerler kümesi olabilen bir değeri saklamak için kullanılır. Değişken, döngü ve koşul ise diğer kavramlardır ancak kümeleri saklamak için kullanılmazlar."
+    "correctAnswerTr": "Sözlük",
+    "explanationKu": "Ferheng (Dictionary/Map) struktureke daneyê ye ku her nirxekî bi kilîteke bêhempa ve girê dide da ku gihîştina daneyê bilez bibe.",
+    "explanationTr": "Sözlük (Dictionary/Map), verilere hızlı erişim sağlamak amacıyla her değeri benzersiz bir anahtarla eşleştirerek saklayan veri yapısıdır."
   },
   {
     "id": "ds_teknoloji_0066",
@@ -21880,7 +21880,7 @@
       "Şert"
     ],
     "correctAnswer": "Kom",
-    "explanation": "Küme (set), programlamada tekrarsız bir değerler kümesini saklamak için kullanılır. Değişken, döngü ve koşul ise diğer kavramlardır ancak kümeleri saklamak için kullanılmazlar.",
+    "explanation": "Küme (set), programlamada tekrarsız bir değerler kümesini saklamak için kullanılır. Değişken her veri türünü tutabilir, ancak hangi değerin saklanacağını veri türü belirler; döngü ve koşul ise veri türü değil, denetim yapılarıdır.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -21900,21 +21900,21 @@
       "Koşul"
     ],
     "correctAnswerTr": "Küme",
-    "explanationKu": "Kom (set) di bernamekirinê de ji bo hilanîna komek nirxan bêyî dubarekirinê tê bikaranîn. Guherbar, xelek û şert jî têgehên din in lê ne ji bo hilanîna koman in.",
-    "explanationTr": "Küme (set), programlamada tekrarsız bir değerler kümesini saklamak için kullanılır. Değişken, döngü ve koşul ise diğer kavramlardır ancak kümeleri saklamak için kullanılmazlar."
+    "explanationKu": "Kom (set) di bernamekirinê de ji bo hilanîna komek nirxan bêyî dubarekirinê tê bikaranîn. Guherbar dikare her cureyê daneyê hilgire, lê cureyê daneyê diyar dike ka çi nirx tê hilanîn; xelek û şert jî avahiyên kontrolê ne, ne cureyên daneyê ne.",
+    "explanationTr": "Küme (set), programlamada tekrarsız bir değerler kümesini saklamak için kullanılır. Değişken her veri türünü tutabilir, ancak hangi değerin saklanacağını veri türü belirler; döngü ve koşul ise veri türü değil, denetim yapılarıdır."
   },
   {
     "id": "ds_teknoloji_0068",
     "category": "Teknolojî",
-    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekî ku dikare bibe rast an derew tê bikaranîn?",
+    "prompt": "Di bernamekirinê de, kîjan cureyê daneyê ji bo hilanîna nivîs û rêzên tîpan tê bikaranîn?",
     "answers": [
-      "Guherbar",
-      "Xelek",
-      "Mantiqî",
-      "Şert"
+      "Integer",
+      "Float",
+      "String",
+      "Double"
     ],
-    "correctAnswer": "Mantiqî",
-    "explanation": "Mantıksal (logical), programlamada doğru veya yanlış olabilen bir değeri saklamak için kullanılır. Değişken, döngü ve koşul ise diğer kavramlardır ancak mantıksal değerleri saklamak için kullanılmazlar.",
+    "correctAnswer": "String",
+    "explanation": "Programlama dillerinde String veri tipi, metinleri ve karakter dizilerini temsil etmek ve saklamak için kullanılır.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -21922,20 +21922,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Boolean_data_type",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Programlamada, doğru veya yanlış olabilen bir değeri saklamak için hangi kavram kullanılır?",
+    "promptTr": "Programlamada metinleri ve karakter dizilerini saklamak için hangi veri tipi kullanılır?",
     "answersTr": [
-      "Değişken",
-      "Döngü",
-      "Mantıksal",
-      "Koşul"
+      "Integer",
+      "Float",
+      "String",
+      "Double"
     ],
-    "correctAnswerTr": "Mantıksal",
-    "explanationKu": "Mantiqî (logical) di bernamekirinê de ji bo hilanîna nirxekê ya ku dikare bibe rast an derew tê bikaranîn. Guherbar, xelek û şert jî têgehên din in lê ne ji bo hilanîna nirxên mantiqî ne.",
-    "explanationTr": "Mantıksal (logical), programlamada doğru veya yanlış olabilen bir değeri saklamak için kullanılır. Değişken, döngü ve koşul ise diğer kavramlardır ancak mantıksal değerleri saklamak için kullanılmazlar."
+    "correctAnswerTr": "String",
+    "explanationKu": "Di zimanên bernamekirinê de cureyê daneyê yê String ji bo temsîlkirin û hilanîna nivîsan tê bikaranîn.",
+    "explanationTr": "Programlama dillerinde String veri tipi, metinleri ve karakter dizilerini temsil etmek ve saklamak için kullanılır."
   },
   {
     "id": "ds_teknoloji_0071",
@@ -21948,7 +21948,7 @@
       "Şert"
     ],
     "correctAnswer": "Nivîs",
-    "explanation": "Metin (text), programlamada bir karakter dizisi olabilen bir değeri saklamak için kullanılır. Değişken, döngü ve koşul ise diğer kavramlardır ancak metin saklamak için kullanılmazlar.",
+    "explanation": "Metin (text), programlamada bir karakter dizisi olabilen bir değeri saklamak için kullanılır. Değişken her veri türünü tutabilir, ancak hangi değerin saklanacağını veri türü belirler; döngü ve koşul ise veri türü değil, denetim yapılarıdır.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -21968,8 +21968,8 @@
       "Koşul"
     ],
     "correctAnswerTr": "Metin",
-    "explanationKu": "Nivîs (text) di bernamekirinê de ji bo hilanîna nirxekê ya ku dikare bibe navnîşek tîpan tê bikaranîn. Guherbar, xelek û şert jî têgehên din in lê ne ji bo hilanîna nivîsê ne.",
-    "explanationTr": "Metin (text), programlamada bir karakter dizisi olabilen bir değeri saklamak için kullanılır. Değişken, döngü ve koşul ise diğer kavramlardır ancak metin saklamak için kullanılmazlar."
+    "explanationKu": "Nivîs (text) di bernamekirinê de ji bo hilanîna nirxekê ya ku dikare bibe navnîşek tîpan tê bikaranîn. Guherbar dikare her cureyê daneyê hilgire, lê cureyê daneyê diyar dike ka çi nirx tê hilanîn; xelek û şert jî avahiyên kontrolê ne, ne cureyên daneyê ne.",
+    "explanationTr": "Metin (text), programlamada bir karakter dizisi olabilen bir değeri saklamak için kullanılır. Değişken her veri türünü tutabilir, ancak hangi değerin saklanacağını veri türü belirler; döngü ve koşul ise veri türü değil, denetim yapılarıdır."
   },
   {
     "id": "ds_teknoloji_0054",
@@ -22016,7 +22016,7 @@
       "Boolean"
     ],
     "correctAnswer": "Boolean",
-    "explanation": "Boolean, programlamada doğru veya yanlış değerini saklamak için kullanılır. Değişken, döngü ve koşul diğer terimlerdir ancak doğru/yanlış değerlerini saklamak için kullanılmazlar.",
+    "explanation": "Boolean, programlamada doğru veya yanlış değerini saklamak için kullanılır. Değişken her veri türünü tutabilir, ancak hangi değerin saklanacağını veri türü belirler; döngü ve koşul ise veri türü değil, denetim yapılarıdır.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -22036,8 +22036,8 @@
       "Boolean"
     ],
     "correctAnswerTr": "Boolean",
-    "explanationKu": "Boolean di bernamekirinê de ji bo hilanîna nirxekê ya rast an derew tê bikaranîn. Guherbar, xelek û şert jî têgehên din in lê ne ji bo hilanîna nirxên rast/derew in.",
-    "explanationTr": "Boolean, programlamada doğru veya yanlış değerini saklamak için kullanılır. Değişken, döngü ve koşul diğer terimlerdir ancak doğru/yanlış değerlerini saklamak için kullanılmazlar."
+    "explanationKu": "Boolean di bernamekirinê de ji bo hilanîna nirxekê ya rast an derew tê bikaranîn. Guherbar dikare her cureyê daneyê hilgire, lê cureyê daneyê diyar dike ka çi nirx tê hilanîn; xelek û şert jî avahiyên kontrolê ne, ne cureyên daneyê ne.",
+    "explanationTr": "Boolean, programlamada doğru veya yanlış değerini saklamak için kullanılır. Değişken her veri türünü tutabilir, ancak hangi değerin saklanacağını veri türü belirler; döngü ve koşul ise veri türü değil, denetim yapılarıdır."
   },
   {
     "id": "ds_teknoloji_0055",
@@ -22050,7 +22050,7 @@
       "Şert"
     ],
     "correctAnswer": "Array",
-    "explanation": "Dizi, programlamada bilgisayar belleğinde bir değerler listesi saklamak için kullanılır. Değişken, döngü ve koşul diğer terimlerdir ancak liste saklamak için kullanılmazlar.",
+    "explanation": "Dizi, programlamada bilgisayar belleğinde bir değerler listesi saklamak için kullanılır. Değişken her veri türünü tutabilir, ancak hangi değerin saklanacağını veri türü belirler; döngü ve koşul ise veri türü değil, denetim yapılarıdır.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -22070,8 +22070,8 @@
       "Koşul"
     ],
     "correctAnswerTr": "Dizi",
-    "explanationKu": "Array di bernamekirinê de ji bo hilanîna navnîşek nirxan di bîra komputerê de tê bikaranîn. Guherbar, xelek û şert jî têgehên din in lê ne ji bo hilanîna navnîşan in.",
-    "explanationTr": "Dizi, programlamada bilgisayar belleğinde bir değerler listesi saklamak için kullanılır. Değişken, döngü ve koşul diğer terimlerdir ancak liste saklamak için kullanılmazlar."
+    "explanationKu": "Array di bernamekirinê de ji bo hilanîna navnîşek nirxan di bîra komputerê de tê bikaranîn. Guherbar dikare her cureyê daneyê hilgire, lê cureyê daneyê diyar dike ka çi nirx tê hilanîn; xelek û şert jî avahiyên kontrolê ne, ne cureyên daneyê ne.",
+    "explanationTr": "Dizi, programlamada bilgisayar belleğinde bir değerler listesi saklamak için kullanılır. Değişken her veri türünü tutabilir, ancak hangi değerin saklanacağını veri türü belirler; döngü ve koşul ise veri türü değil, denetim yapılarıdır."
   },
   {
     "id": "ds_teknoloji_0091",
@@ -22620,7 +22620,7 @@
   {
     "id": "ds_teknoloji_0191",
     "category": "Teknolojî",
-    "prompt": "Di têlefoneke jîr de, kîjan teknolojî ji bo cihnasiyê tê bikaranîn?",
+    "prompt": "Di têlefoneke jîr de, kîjan teknolojî ji bo cihnasiyê bi sînyalên peykan tê bikaranîn?",
     "answers": [
       "GPS",
       "Bluetooth",
@@ -22640,7 +22640,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Akıllı telefonda konum belirleme için hangi teknoloji kullanılır?",
+    "promptTr": "Akıllı telefonda uydu sinyalleriyle konum belirleme için hangi teknoloji kullanılır?",
     "answersTr": [
       "GPS",
       "Bluetooth",
@@ -22760,11 +22760,11 @@
     "answers": [
       "App Store",
       "Steam",
-      "Epic Games",
+      "Microsoft Store",
       "Google Play"
     ],
     "correctAnswer": "Google Play",
-    "explanation": "Google Play, Android cihazlara uygulama indirmek için kullanılan bir mağazadır. App Store Apple'ındır, Steam ve Epic Games bilgisayar oyunları içindir.",
+    "explanation": "Google Play, Android cihazlara uygulama indirmek için kullanılan bir mağazadır. App Store Apple'ındır, Steam ve Microsoft Store ise bilgisayar mağazalarıdır.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -22780,12 +22780,12 @@
     "answersTr": [
       "App Store",
       "Steam",
-      "Epic Games",
+      "Microsoft Store",
       "Google Play"
     ],
     "correctAnswerTr": "Google Play",
-    "explanationKu": "Google Play dikanek e ji bo barkirina sepanan li ser cîhazên Android. App Store ya Apple e, Steam û Epic Games ji bo lîstikên komputerê ne.",
-    "explanationTr": "Google Play, Android cihazlara uygulama indirmek için kullanılan bir mağazadır. App Store Apple'ındır, Steam ve Epic Games bilgisayar oyunları içindir."
+    "explanationKu": "Google Play dikanek e ji bo barkirina sepanan li ser cîhazên Android. App Store ya Apple e, Steam û Microsoft Store dikanên komputerê ne.",
+    "explanationTr": "Google Play, Android cihazlara uygulama indirmek için kullanılan bir mağazadır. App Store Apple'ındır, Steam ve Microsoft Store ise bilgisayar mağazalarıdır."
   },
   {
     "id": "ds_teknoloji_0183",
@@ -23410,7 +23410,7 @@
       "Pisagor"
     ],
     "correctAnswer": "Pi",
-    "explanation": "Pi (π), bir çemberin çevresinin çapına oranıdır. Sonsuz bir sayıdır ve yaklaşık olarak 3.14159'dur.",
+    "explanation": "Pi (π), bir çemberin çevresinin çapına oranıdır. Sonlu, irrasyonel bir sayıdır; ondalık açılımı sonsuz ve devirsizdir, yaklaşık olarak 3,14159'dur.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -23430,8 +23430,8 @@
       "Pisagor"
     ],
     "correctAnswerTr": "Pi",
-    "explanationKu": "Pi (π) rêjeya di navbera dora çemberê û çapa wê ye. Ew hejmareke bêdawî ye û nêzîkî 3,14159 e.",
-    "explanationTr": "Pi (π), bir çemberin çevresinin çapına oranıdır. Sonsuz bir sayıdır ve yaklaşık olarak 3.14159'dur."
+    "explanationKu": "Pi (π) rêjeya di navbera dora çemberê û çapa wê ye. Reqemên wê yên piştî bêhnokê bêdawî ne û nirxa wê nêzîkî 3,14159 e.",
+    "explanationTr": "Pi (π), bir çemberin çevresinin çapına oranıdır. Sonlu, irrasyonel bir sayıdır; ondalık açılımı sonsuz ve devirsizdir, yaklaşık olarak 3,14159'dur."
   },
   {
     "id": "ds_teknoloji_0288",
@@ -23614,7 +23614,7 @@
       "Min kiribû"
     ],
     "correctAnswer": "Ez ê bikim",
-    "explanation": "\"kirin\" fiilinin gelecek zamanı \"ez ê bikim\" formuyla gösterilir. \"Ez dikim\" şimdiki zaman, \"ez kirim\" geçmiş zaman ve \"ez kiribûm\" ise geçmiş zamanın hikayesidir.",
+    "explanation": "\"kirin\" fiilinin gelecek zamanı \"ez ê bikim\" formuyla gösterilir. \"Ez dikim\" şimdiki zaman, \"min kir\" geçmiş zaman ve \"min kiribû\" ise geçmiş zamanın hikayesidir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -23630,12 +23630,12 @@
     "answersTr": [
       "Ez dikim",
       "Ez ê bikim",
-      "Ez kirim",
-      "Ez kiribûm"
+      "Min kir",
+      "Min kiribû"
     ],
     "correctAnswerTr": "Ez ê bikim",
     "explanationKu": "Dema bê ya lêkera \"kirin\" bi forma \"ez ê bikim\" tê nîşankirin. \"Ez dikim\" dema niha ye, \"min kir\" dema borî ye, û \"min kiribû\" jî dema dûdar a borî ye.",
-    "explanationTr": "\"kirin\" fiilinin gelecek zamanı \"ez ê bikim\" formuyla gösterilir. \"Ez dikim\" şimdiki zaman, \"ez kirim\" geçmiş zaman ve \"ez kiribûm\" ise geçmiş zamanın hikayesidir."
+    "explanationTr": "\"kirin\" fiilinin gelecek zamanı \"ez ê bikim\" formuyla gösterilir. \"Ez dikim\" şimdiki zaman, \"min kir\" geçmiş zaman ve \"min kiribû\" ise geçmiş zamanın hikayesidir."
   },
   {
     "id": "ds_ziman_0076",
@@ -23674,15 +23674,15 @@
   {
     "id": "ds_ziman_0080",
     "category": "Ziman",
-    "prompt": "Kîjan peyv ji bo tiştê ku em pê derî vedikin an digirin tê bikaranîn?",
+    "prompt": "Di dîwarê xaniyan de beşa ku ji bo ketina ronahî û hewayê ya hundir tê çêkirin çi ye?",
     "answers": [
-      "pirtûk",
-      "qelem",
-      "kaxez",
-      "mifte"
+      "Derence",
+      "Ban",
+      "Stûn",
+      "Pencere"
     ],
-    "correctAnswer": "mifte",
-    "explanation": "Anahtar, kapıları ve kilitleri açıp kapatmak için kullanılır. Kitap, kalem ve kağıt bunun için değildir.",
+    "correctAnswer": "Pencere",
+    "explanation": "Pencere, binaların duvarında odanın aydınlanmasını ve havalanmasını sağlayan açıklıktır.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -23690,20 +23690,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Lock_and_key",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kapıyı açıp kapattığımız şey hangi kelimedir?",
+    "promptTr": "Evlerin duvarında içeriye ışık ve hava girmesi için yapılan bölüme ne ad verilir?",
     "answersTr": [
-      "kitap",
-      "kalem",
-      "kağıt",
-      "anahtar"
+      "Merdiven",
+      "Çatı",
+      "Sütun",
+      "Pencere"
     ],
-    "correctAnswerTr": "anahtar",
-    "explanationKu": "Mifte, ji bo vekirin û girtina derî û qilifan tê bikaranîn. Pirtûk, qelem û kaxez ne ji bo vê yekê ne.",
-    "explanationTr": "Anahtar, kapıları ve kilitleri açıp kapatmak için kullanılır. Kitap, kalem ve kağıt bunun için değildir."
+    "correctAnswerTr": "Pencere",
+    "explanationKu": "Pencere vebûna di dîwarê avahiyan de ye ku hundirê odeyê ronî dike û dihêle hewa biguhere.",
+    "explanationTr": "Pencere, binaların duvarında odanın aydınlanmasını ve havalanmasını sağlayan açıklıktır."
   },
   {
     "id": "ds_ziman_0084",
@@ -24139,8 +24139,8 @@
     "promptTr": "Hangi cümle Kurmancî şimdiki zamanı gösterir?",
     "answersTr": [
       "Ew nanî dixwe",
-      "Ew nanî xwar",
-      "Ew nanî dixwar",
+      "Wî nan xwar",
+      "Wî nan dixwar",
       "Ew nanî bixwe"
     ],
     "correctAnswerTr": "Ew nanî dixwe",
@@ -24150,15 +24150,15 @@
   {
     "id": "ds_ziman_1101",
     "category": "Ziman",
-    "prompt": "Di malê de ji bo rûniştinê, kîjan mobîlya bi gelemperî tê bikaranîn?",
+    "prompt": "Di malê de ji bo daleqandin û hilanîna cil û bergan kîjan mobîlya tê bikaranîn?",
     "answers": [
       "Mase",
-      "Dolab",
       "Kursî",
+      "Dolab",
       "Nivîn"
     ],
-    "correctAnswer": "Kursî",
-    "explanation": "Sandalye oturmak içindir; masa, dolap ve yatak da mobilyadır ancak oturmak için değildir.",
+    "correctAnswer": "Dolab",
+    "explanation": "Dolap, evde giysileri ve eşyaları düzenli biçimde saklamak için kullanılan kapaklı ve raflı mobilyadır.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -24166,25 +24166,25 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Chair",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Evde oturmak için genellikle hangi mobilya kullanılır?",
+    "promptTr": "Evde giysileri asmak ve saklamak için hangi mobilya kullanılır?",
     "answersTr": [
       "Masa",
-      "Dolap",
       "Sandalye",
+      "Dolap",
       "Yatak"
     ],
-    "correctAnswerTr": "Sandalye",
-    "explanationKu": "Kursî ji bo rûniştinê ye; mase, dolab û nivîn jî mobîlya ne lê ji bo rûniştinê ne.",
-    "explanationTr": "Sandalye oturmak içindir; masa, dolap ve yatak da mobilyadır ancak oturmak için değildir."
+    "correctAnswerTr": "Dolap",
+    "explanationKu": "Dolab mobîlyayeke bi derî û refik e ku li malê ji bo parastin û rêkûpêkkirina cil û bergan tê bikaranîn.",
+    "explanationTr": "Dolap, evde giysileri ve eşyaları düzenli biçimde saklamak için kullanılan kapaklı ve raflı mobilyadır."
   },
   {
     "id": "ds_ziman_0125",
     "category": "Ziman",
-    "prompt": "Kîjan ajal bi şev digere û bi roj xwe vedişêre?",
+    "prompt": "Kîjan ajal bi şev digere, bi roj xwe vedişêre û dikare bifire?",
     "answers": [
       "rovî",
       "ker",
@@ -24204,7 +24204,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Hangi hayvan gece dolaşır ve gündüz kendini gizler?",
+    "promptTr": "Hangi hayvan gece dolaşır, gündüz kendini gizler ve uçabilir?",
     "answersTr": [
       "Tilki",
       "Eşek",
@@ -24490,15 +24490,15 @@
   {
     "id": "ds_cand_0016",
     "category": "Çand",
-    "prompt": "Di Newrozê de çi tê pêxistin?",
+    "prompt": "Cejna Newrozê mizgîniya hatina kîjan demsalê dide?",
     "answers": [
-      "Av",
-      "Ba",
-      "Agir",
-      "Erd"
+      "Payîz",
+      "Zivistan",
+      "Bihar",
+      "Havîn"
     ],
-    "correctAnswer": "Agir",
-    "explanation": "Newroz'da ateş yakılır; bu arınma içindir.",
+    "correctAnswer": "Bihar",
+    "explanation": "Newroz 21 Mart'ta kutlanır ve ilkbaharın ilk günü ile doğanın uyanışı olarak kabul edilir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -24506,20 +24506,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Nowruz",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Newroz'da ne yakılır?",
+    "promptTr": "Newroz bayramı hangi mevsimin gelişini müjdeler?",
     "answersTr": [
-      "Su",
-      "Rüzgar",
-      "Ateş",
-      "Toprak"
+      "Sonbahar",
+      "Kış",
+      "İlkbahar",
+      "Yaz"
     ],
-    "correctAnswerTr": "Ateş",
-    "explanationKu": "Di Newrozê de agir tê şewitandin; ev ji bo paqijiyê ye.",
-    "explanationTr": "Newroz'da ateş yakılır; bu arınma içindir."
+    "correctAnswerTr": "İlkbahar",
+    "explanationKu": "Newroz di 21ê Adarê de tê pîrozkirin û wekî roja yekem a biharê û vejîna xwezayê tê qebûlkirin.",
+    "explanationTr": "Newroz 21 Mart'ta kutlanır ve ilkbaharın ilk günü ile doğanın uyanışı olarak kabul edilir."
   },
   {
     "id": "ds_cand_0012",
@@ -24736,7 +24736,7 @@
       "Mewlûd tê xwendin"
     ],
     "correctAnswer": "Xwarin tê amadekirin",
-    "explanation": "Kürt misafirperverliğinde, misafirler için genellikle yemek hazırlanır, böylece misafir iyi ağırlanır. Kapı kapatmak, ışık söndürmek ve cami okumak misafirperverlik adetleri değildir.",
+    "explanation": "Kürt misafirperverliğinde, misafirler için genellikle yemek hazırlanır, böylece misafir iyi ağırlanır. Kapı kapatmak, ışık söndürmek ve mevlit okumak misafirperverlik adetleri değildir.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -24757,7 +24757,7 @@
     ],
     "correctAnswerTr": "Yemek hazırlanır",
     "explanationKu": "Di mêvanperweriya kurdî de, xwarin bi gelemperî ji bo mêvanan tê amadekirin da ku ew baş werin pêşwazîkirin. Derî girtin, çira vemirandin û mewlûd xwendin ne adetên mêvanperweriyê ne.",
-    "explanationTr": "Kürt misafirperverliğinde, misafirler için genellikle yemek hazırlanır, böylece misafir iyi ağırlanır. Kapı kapatmak, ışık söndürmek ve cami okumak misafirperverlik adetleri değildir."
+    "explanationTr": "Kürt misafirperverliğinde, misafirler için genellikle yemek hazırlanır, böylece misafir iyi ağırlanır. Kapı kapatmak, ışık söndürmek ve mevlit okumak misafirperverlik adetleri değildir."
   },
   {
     "id": "ds_cand_1178",
@@ -24898,15 +24898,15 @@
   {
     "id": "ds_cand_0233",
     "category": "Çand",
-    "prompt": "Kîjan cejn bi gelemperî ji bo bîranîna Îbrahîm Pêxember tê pîrozkirin?",
+    "prompt": "Di çanda îslamî de, Cejna Qurbanê bi kîjan îbadeta mezin a ku li bajarê Mekeyê tê bicihanîn re di heman demê de tê pîrozkirin?",
     "answers": [
-      "Cejna Qurbanê",
-      "Cejna Remezanê",
-      "Newroz",
-      "Sersal"
+      "Hec",
+      "Rojî",
+      "Zekat",
+      "Fitre"
     ],
-    "correctAnswer": "Cejna Qurbanê",
-    "explanation": "Kurban Bayramı, Hz. İbrahim'i anmak için kutlanır çünkü o kurban bayramıdır ve kurban genellikle koyun veya sığırdan verilir.",
+    "correctAnswer": "Hec",
+    "explanation": "Kurban Bayramı, Zilhicce ayında Mekke'de yerine getirilen hac ibadeti ile aynı dönemde kutlanır.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -24914,20 +24914,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Eid_al-Adha",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Hangi bayram genellikle Hz. İbrahim'i anmak için kutlanır?",
+    "promptTr": "İslam kültüründe Kurban Bayramı, Mekke şehrinde yerine getirilen hangi büyük ibadet ile aynı dönemde kutlanır?",
     "answersTr": [
-      "Kurban Bayramı",
-      "Ramazan Bayramı",
-      "Newroz",
-      "Yılbaşı"
+      "Hac",
+      "Oruç",
+      "Zekât",
+      "Fitre"
     ],
-    "correctAnswerTr": "Kurban Bayramı",
-    "explanationKu": "Cejna Qurbanê ji bo bîranîna Îbrahîm Pêxember tê pîrozkirin ji ber ku ew cejna qurbaniyê ye û qurbanî bi gelemperî ji pez an jî dewaran tê dayîn.",
-    "explanationTr": "Kurban Bayramı, Hz. İbrahim'i anmak için kutlanır çünkü o kurban bayramıdır ve kurban genellikle koyun veya sığırdan verilir."
+    "correctAnswerTr": "Hac",
+    "explanationKu": "Cejna Qurbanê di meha Zîlhiceyê de bi îbadeta hecê ya li Mekeyê re di heman demê de tê pîrozkirin.",
+    "explanationTr": "Kurban Bayramı, Zilhicce ayında Mekke'de yerine getirilen hac ibadeti ile aynı dönemde kutlanır."
   },
   {
     "id": "ds_cand_0237",
@@ -25497,9 +25497,9 @@
     ],
     "correctAnswer": "Herêma qedexeya firînê li bakur ava kir û vegera penaberan hêsantir kir",
     "correctAnswerTr": "Kuzeyde uçuşa yasak bölge oluşturup mültecilerin dönüşünü kolaylaştırdı",
-    "explanation": "BM 688 sayılı kararıyla kurulan güvenli bölge (Çekiç Güç), Saddam ordusunun saldırılarını durdurmuş ve 1992'de Federe Kürdistan parlamentosunun kurulmasını sağlamıştır.",
-    "explanationTr": "BM 688 sayılı kararıyla kurulan güvenli bölge (Çekiç Güç), Saddam ordusunun saldırılarını durdurmuş ve 1992'de Federe Kürdistan parlamentosunun kurulmasını sağlamıştır.",
-    "explanationKu": "Bi vê biryarê re herêma qedexeya hewayî hate avakirin û rê li ber avakirina statuya xweser a Başûr vebû.",
+    "explanation": "BM 688 sayılı karar Irak'ın Kürt sivillere yönelik baskısını kınadı; kararın ardından koalisyon kuzeyde uçuşa yasak bölge ve güvenli bölge oluşturdu (Çekiç Güç). Bu düzenleme Saddam ordusunun saldırılarını durdurdu ve 1992'de Federe Kürdistan parlamentosunun kurulmasının önünü açtı.",
+    "explanationTr": "BM 688 sayılı karar Irak'ın Kürt sivillere yönelik baskısını kınadı; kararın ardından koalisyon kuzeyde uçuşa yasak bölge ve güvenli bölge oluşturdu (Çekiç Güç). Bu düzenleme Saddam ordusunun saldırılarını durdurdu ve 1992'de Federe Kürdistan parlamentosunun kurulmasının önünü açtı.",
+    "explanationKu": "Piştî vê biryarê koalîsyonê herêma qedexeya firînê ava kir û rê li ber avakirina statuya xweser a Başûr vebû.",
     "metadata": {
       "reviewStatus": "approved",
       "sourceReference": "https://www.afhistory.af.mil/FAQs/Fact-Sheets/Article/458953/1991-operation-provide-comfort-and-northern-watch/",
@@ -25709,20 +25709,20 @@
     "promptTr": "RISC işlemci mimarisinin CISC mimarisine kıyasla benimsediği temel tasarım felsefesi nedir?",
     "answers": [
       "Zêdekirina fermanên tevlihev ên ku gelek operasyonên bîrgehê bi hev re dikin",
-      "Bikaranîna fermanên sade û yek-mezinahî yên ku di yek dewrê de bi dawî dibin",
+      "Bikaranîna fermanên sade û yek-mezinahî yên ji bo pîplînê guncav",
       "Rakirina hemû qeydkeran (registers) ji nav pêvajoyê û girêdana bi RAMê re",
       "Tenê bikaranîna zimanên şirovekirî yên wekî Python di asta hişkalavê de"
     ],
     "answersTr": [
       "Tek bir komutla birden fazla karmaşık bellek ve aritmetik işlemini birleştirmek",
-      "Tek saat döngüsünde çalışan sabit uzunluklu basit komutlar ve Load/Store mimarisi kullanmak",
+      "Boru hattına uygun, sabit uzunluklu basit komutlar ve Load/Store mimarisi kullanmak",
       "İşlemci içerisindeki tüm yazmaçları (register) kaldırıp doğrudan RAM'e bağlanmak",
       "Donanım mikroişlemci seviyesinde yalnızca yorumlanan yüksek seviyeli dilleri çalıştırmak"
     ],
-    "correctAnswer": "Bikaranîna fermanên sade û yek-mezinahî yên ku di yek dewrê de bi dawî dibin",
-    "correctAnswerTr": "Tek saat döngüsünde çalışan sabit uzunluklu basit komutlar ve Load/Store mimarisi kullanmak",
+    "correctAnswer": "Bikaranîna fermanên sade û yek-mezinahî yên ji bo pîplînê guncav",
+    "correctAnswerTr": "Boru hattına uygun, sabit uzunluklu basit komutlar ve Load/Store mimarisi kullanmak",
     "explanation": "RISC sade, sabit uzunluklu komutlar ve ayrık Load/Store mimarisiyle boru hattı verimini artırır; CISC ise değişken uzunluklu karmaşık komutlar içerir.",
-    "explanationKu": "RISC fermanan hêsan dike da ku pîplîn hêsantir bibe û her ferman di yek dewrê de bimeşe; operasyonên bîrgehê tenê bi Load/Store tên kirin.",
+    "explanationKu": "RISC fermanan hêsan dike da ku pîplîn hêsantir bibe û piraniya fermanan di dewrên kurt de bimeşin; operasyonên bîrgehê tenê bi Load/Store tên kirin.",
     "explanationTr": "RISC sade, sabit uzunluklu komutlar ve ayrık Load/Store mimarisiyle boru hattı verimini artırır; CISC ise değişken uzunluklu karmaşık komutlar içerir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -26288,7 +26288,7 @@
   {
     "id": "ds_teknoloji_0110",
     "category": "Teknolojî",
-    "prompt": "Kîjan beşa komputerê ji bo hilanîna daneyan dema ku komputer vekirî ye tê bikaranîn?",
+    "prompt": "Kîjan beşa komputerê dema komputer vekirî ye daneyan bi awayekî demkî digire û dema hêz tê birîn naveroka wê wenda dibe?",
     "answers": [
       "Hard disk",
       "RAM",
@@ -26308,7 +26308,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Bilgisayar açıkken verileri depolamak için bilgisayarın hangi parçası kullanılır?",
+    "promptTr": "Bilgisayar açıkken verileri geçici olarak tutan ve güç kesilince içeriği silinen parça hangisidir?",
     "answersTr": [
       "Sabit Disk",
       "RAM",
@@ -26356,15 +26356,15 @@
   {
     "id": "ds_teknoloji_0124",
     "category": "Teknolojî",
-    "prompt": "Kîjan beşa komputerê ji bo hilanîna daneyan bi awayekî demkî dema ku bername tê xebitandin tê bikaranîn?",
+    "prompt": "Kîjan parçeyê komputerê wekî mejiyê pergalê tê nasîn û fermanên bernameyan û hesabên matematîkî pêk tîne?",
     "answers": [
-      "RAM",
-      "Hard disk",
       "CPU",
-      "Karta torê"
+      "RAM",
+      "SSD",
+      "PSU"
     ],
-    "correctAnswer": "RAM",
-    "explanation": "RAM (Rastgele Erişimli Bellek), bir program çalıştırıldığında verileri geçici olarak depolamak için kullanılır. CPU'nun hızlıca erişebilmesi için verileri kısa bir süre tutar. Sabit disk kalıcı depolamadır, CPU işlemleri yapar ve ağ kartı ağ bağlantısı içindir.",
+    "correctAnswer": "CPU",
+    "explanation": "CPU (Merkezî İşlem Birimi), bilgisayardaki tüm mantıksal ve matematiksel işlemleri yürüten temel donanım birimidir.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -26372,20 +26372,20 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Random-access_memory",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Bir program çalıştırıldığında verileri geçici olarak depolamak için bilgisayarın hangi parçası kullanılır?",
+    "promptTr": "Bilgisayarın beyni olarak bilinen ve program komutları ile matematiksel işlemleri yürüten donanım parçası hangisidir?",
     "answersTr": [
-      "RAM",
-      "Sabit disk",
       "CPU",
-      "Ağ kartı"
+      "RAM",
+      "SSD",
+      "PSU"
     ],
-    "correctAnswerTr": "RAM",
-    "explanationKu": "RAM (Bîra Xebatê ya Rast) ji bo hilanîna daneyan bi awayekî demkî dema ku bername tê xebitandin tê bikaranîn. Ew daneyan ji bo demek kurt dihêle ku CPU zû bigihîje wan. Hard disk hilanîna daîmî ye, CPU pêvajoyê dike û karta torê ji bo torê ye.",
-    "explanationTr": "RAM (Rastgele Erişimli Bellek), bir program çalıştırıldığında verileri geçici olarak depolamak için kullanılır. CPU'nun hızlıca erişebilmesi için verileri kısa bir süre tutar. Sabit disk kalıcı depolamadır, CPU işlemleri yapar ve ağ kartı ağ bağlantısı içindir."
+    "correctAnswerTr": "CPU",
+    "explanationKu": "CPU (Yekeya Pêvajoya Navendî) parçeyê sereke yê komputerê ye ku hemû ferman û kiryarên mantiqî û matematîkî bi rê ve dibe.",
+    "explanationTr": "CPU (Merkezî İşlem Birimi), bilgisayardaki tüm mantıksal ve matematiksel işlemleri yürüten temel donanım birimidir."
   },
   {
     "id": "ds_teknoloji_0112",
@@ -26772,7 +26772,7 @@
       "Daniel Day-Lewis"
     ],
     "correctAnswer": "Liam Neeson",
-    "explanation": "Liam Neeson, Steven Spielberg'in \"Schindler\"in Listesi' filminde Oskar Schindler rolünü canlandırdı. Bu film 1993'te gösterime girdi ve Holokost sırasında birçok Yahudi'yi kurtaran Schindler'in hayatını konu alır. Ben Kingsley Itzhak Stern, Ralph Fiennes ise Amon Göth rolünü oynadı.",
+    "explanation": "Liam Neeson, Steven Spielberg'in \"Schindler'in Listesi\" filminde Oskar Schindler rolünü canlandırdı. Bu film 1993'te gösterime girdi ve Holokost sırasında birçok Yahudi'yi kurtaran Schindler'in hayatını konu alır. Ben Kingsley Itzhak Stern, Ralph Fiennes ise Amon Göth rolünü oynadı.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -26784,7 +26784,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Steven Spielberg'in \"Schindler\"in Listesi' filminde Oskar Schindler rolünü hangi aktör canlandırdı?",
+    "promptTr": "Steven Spielberg'in \"Schindler'in Listesi\" filminde Oskar Schindler rolünü hangi aktör canlandırdı?",
     "answersTr": [
       "Liam Neeson",
       "Ben Kingsley",
@@ -26793,7 +26793,7 @@
     ],
     "correctAnswerTr": "Liam Neeson",
     "explanationKu": "Liam Neeson di fîlma \"Schindler's List\" a Steven Spielberg de rola Oskar Schindler lîstiye. Ev fîlm di sala 1993yan de derket û li ser jiyana Schindler e, yê ku di dema Holokostê de gelek cihû rizgar kirin. Ben Kingsley rola Itzhak Stern lîstiye û Ralph Fiennes rola Amon Göth lîstiye.",
-    "explanationTr": "Liam Neeson, Steven Spielberg'in \"Schindler\"in Listesi' filminde Oskar Schindler rolünü canlandırdı. Bu film 1993'te gösterime girdi ve Holokost sırasında birçok Yahudi'yi kurtaran Schindler'in hayatını konu alır. Ben Kingsley Itzhak Stern, Ralph Fiennes ise Amon Göth rolünü oynadı."
+    "explanationTr": "Liam Neeson, Steven Spielberg'in \"Schindler'in Listesi\" filminde Oskar Schindler rolünü canlandırdı. Bu film 1993'te gösterime girdi ve Holokost sırasında birçok Yahudi'yi kurtaran Schindler'in hayatını konu alır. Ben Kingsley Itzhak Stern, Ralph Fiennes ise Amon Göth rolünü oynadı."
   },
   {
     "id": "ds_sinema_0210",
@@ -26934,7 +26934,7 @@
   {
     "id": "ds_teknoloji_0007",
     "category": "Teknolojî",
-    "prompt": "Kîjan protokol ji bo gihîştina pelan ji dûr ve tê bikaranîn?",
+    "prompt": "Kîjan protokol ji bo veguhestina pelan tê bikaranîn û ji bo fermanan û daneyan girêdanên cuda bi kar tîne?",
     "answers": [
       "HTTP",
       "FTP",
@@ -26954,7 +26954,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Uzaktaki dosyalara erişmek için hangi protokol kullanılır?",
+    "promptTr": "Komutları ve dosya verilerini ayrı bağlantılardan ileten protokol hangisidir?",
     "answersTr": [
       "HTTP",
       "FTP",
@@ -27036,7 +27036,7 @@
   {
     "id": "ds_teknoloji_0033",
     "category": "Teknolojî",
-    "prompt": "Kîjan teknolojî ji bo nasnameya dîjîtal a bikarhêner tê bikaranîn?",
+    "prompt": "Kîjan belgeya X.509 nasnameya xwediyê mifteyê bi mifteya giştî ve girê dide?",
     "answers": [
       "Îmzeya dîjîtal",
       "Token",
@@ -27056,7 +27056,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Kullanıcının dijital kimliği için hangi teknoloji kullanılır?",
+    "promptTr": "Bir kimliği açık anahtara bağlayan X.509 belgesi hangisidir?",
     "answersTr": [
       "Dijital imza",
       "Token",

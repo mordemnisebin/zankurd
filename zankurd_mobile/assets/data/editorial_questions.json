@@ -2089,9 +2089,9 @@
       "Dîcle"
     ],
     "correctAnswer": "Dîcle",
-    "explanation": "Büyük Zap, Hakkâri'den doğar ve Dicle'ye karışır.",
-    "explanationKu": "Zapê Mezin ji Colemêrgê diherike û digihîje Dîcleyê.",
-    "explanationTr": "Büyük Zap, Hakkâri'den doğar ve Dicle'ye karışır.",
+    "explanation": "Büyük Zap, Van'daki Haravil Dağı'nın kuzeyinden doğar, Hakkâri'den geçer ve Dicle'ye karışır.",
+    "explanationKu": "Zapê Mezin ji Çiyayê Haravilê yê li Wanê derdikeve, di Colemêrgê re derbas dibe û digihîje Dîcleyê.",
+    "explanationTr": "Büyük Zap, Van'daki Haravil Dağı'nın kuzeyinden doğar, Hakkâri'den geçer ve Dicle'ye karışır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6136,9 +6136,9 @@
     "prompt": "Kovara \"Ronahî\" ji aliyê kê ve hat weşandin?",
     "answers": [
       "Celadet Alî Bedirxan",
-      "pergala niştecihbûna domdar",
-      "rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin",
-      "yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin"
+      "Mîqdad Mîdhat Bedirxan",
+      "Cegerxwîn",
+      "Mehmed Uzun"
     ],
     "correctAnswer": "Celadet Alî Bedirxan",
     "explanation": "Ronahî (1942), Hawar'dan sonra Celadet tarafından Şam'da çıkarıldı.",
@@ -6154,9 +6154,9 @@
     "promptTr": "\"Ronahî\" dergisi kim tarafından çıkarıldı?",
     "answersTr": [
       "Celadet Alî Bedirxan",
-      "kalıcı yerleşim düzeni",
-      "Süleymaniye'de basılan erken dönem Kürtçe gazete",
-      "Latin alfabesiyle basılan ilk Kürtçe dergi"
+      "Mîqdad Mîdhat Bedirxan",
+      "Cegerxwîn",
+      "Mehmed Uzun"
     ],
     "correctAnswerTr": "Celadet Alî Bedirxan"
   },

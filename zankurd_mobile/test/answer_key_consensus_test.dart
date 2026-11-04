@@ -112,6 +112,32 @@ void main() {
     // Buraya bir kayıt eklemek, kaynağını yazmayı gerektirir. Liste kısa
     // kalmalı; uzarsa bekçi anlamını yitirir.
     const reviewedOverrides = <String, String>{
+      // Yinelenen sorular farklı bir olguyu soran yeni sorulara yeniden yazıldı
+      // (2026-11-07; ≥2 modelin aynı metinde uyuşması). Doğru şık yeni olgunun
+      // cevabıdır; eski hükümler eski sorunun metnine aitti.
+      'ds_sinema_0086': 'Venedîk',
+      'ds_dirok_0031': 'Şam',
+      'ds_dirok_0043': 'Celadet Elî Bedirxan',
+      'ds_dirok_0143': 'Mîqdad Mîdhet Bedirxan',
+      'ds_muzik_0106': 'Metronom',
+      'ds_muzik_0103': 'Nota',
+      'ds_muzik_0213': 'Akor',
+      'ds_sinema_0109': 'Senaryo',
+      'ds_teknoloji_0242': 'Peyka meteorolojîk',
+      'ds_teknoloji_0068': 'String',
+      'ds_teknoloji_0073': 'Ferheng',
+      'ds_ziman_1101': 'Dolab',
+      'ds_ziman_0080': 'Pencere',
+      'ds_cografya_0086': 'Çiyayê Everestê',
+      'ds_cand_0016': 'Bihar',
+      'ds_cand_0233': 'Hec',
+      'ds_teknoloji_0124': 'CPU',
+      // 2026-11-07 GPT-6 Pro alan 7: doğru şıkkın METNİ düzeltildi, ANLAM
+      // değişmedi (≥2 modelin aynı metinde uyuşması); çapraz kontrol hükümleri
+      // metin sakladığı için eskidi.
+      'ds_ziman_1126': 'riwekeke mezin û bi qurm',
+      'ds_teknoloji_0348':
+          'Bikaranîna fermanên sade û yek-mezinahî yên ji bo pîplînê guncav',
       // Aşağıdaki üçünde ANLAM değişmedi, şıkkın METNİ değişti; çapraz
       // kontrol hükümleri metin sakladığı için eskidi (2026-08-19, dış
       // kalite denetimi). Hükümler yanlış değil, adres değiştirdi.

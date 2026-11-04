@@ -70,7 +70,7 @@
     "category": "Ziman",
     "type": "fillInBlank",
     "difficulty": 2,
-    "prompt": "Di hevoka \"Ez ... mirovî dibînim.\" de forma tewandî ya nîşandera nêr a yekjimar binivîse: \"Ez ___ mirovî dibînim.\"",
+    "prompt": "Di hevoka \"Ez ... mirovî dibînim.\" de forma tewandî ya nîşandera dûr a nêr a yekjimar binivîse: \"Ez ___ mirovî dibînim.\"",
     "promptTr": "\"O adamı görüyorum\" cümlesinde eril tekil işaret sözcüğünün bükümlü biçimini yaz: \"Ez ___ mirovî dibînim.\"",
     "answers": [
       "wî"
@@ -172,8 +172,8 @@
     "category": "Ziman",
     "type": "fillInBlank",
     "difficulty": 3,
-    "prompt": "Di dema borî ya lêkera derbasdar de, lêkerê li gorî berkara kesê yekem a yekjimar temam bike: \"Wî ez ___.\"",
-    "promptTr": "Geçmiş zamanda geçişli fiili birinci tekil kişi nesnesine göre tamamla: \"Wî ez ___.\"",
+    "prompt": "Di dema borî ya lêkera derbasdar a \"dîtin\" de, lêkerê li gorî berkara kesê yekem a yekjimar temam bike: \"Wî ez ___.\"",
+    "promptTr": "Geçmiş zamanda geçişli \"dîtin\" (görmek) fiilini birinci tekil kişi nesnesine göre tamamla: \"Wî ez ___.\"",
     "answers": [
       "dîtim"
     ],
