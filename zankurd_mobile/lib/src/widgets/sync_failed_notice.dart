@@ -25,31 +25,41 @@ class SyncFailedNotice extends StatelessWidget {
           child: Material(
             color: t.errTint,
             borderRadius: BorderRadius.circular(12),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(12),
-              onTap: () => SyncManager.maybeInstance?.retryFailedItems(),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: SahneSpace.x3,
-                  vertical: SahneSpace.x2,
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      AppIcons.triangleExclamation,
-                      size: 16,
-                      color: t.errTx,
+            child: Semantics(
+              // Dokunmanın yeniden denemeyi başlattığını okuyucuya söyler.
+              onTapHint: context.t(K.retry),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () => SyncManager.maybeInstance?.retryFailedItems(),
+                child: ConstrainedBox(
+                  // Tek satırda 36 pt kalıyordu; dokunma alanı en az 48.
+                  constraints: const BoxConstraints(minHeight: sahneTapTarget),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: SahneSpace.x3,
+                      vertical: SahneSpace.x2,
                     ),
-                    const SizedBox(width: SahneSpace.x2),
-                    Expanded(
-                      child: Text(
-                        context.t(K.pSenkronizeEdilemedi, {
-                          'p0': groupThousands(failed),
-                        }),
-                        style: SahneType.captionStrong.copyWith(color: t.errTx),
-                      ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          AppIcons.triangleExclamation,
+                          size: 16,
+                          color: t.errTx,
+                        ),
+                        const SizedBox(width: SahneSpace.x2),
+                        Expanded(
+                          child: Text(
+                            context.t(K.pSenkronizeEdilemedi, {
+                              'p0': groupThousands(failed),
+                            }),
+                            style: SahneType.captionStrong.copyWith(
+                              color: t.errTx,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),

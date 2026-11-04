@@ -150,6 +150,12 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
                     onPlay: question.hasHiddenAnswer
                         ? null
                         : () => _playFrom(index - 1, questions),
+                    // Cevabı gizli kayıtta soru iki satırda kesiliyordu ve
+                    // dokununca hiçbir şey olmuyordu; tam soru + şıklar
+                    // salt okunur açılır, doğru cevap gösterilmez.
+                    onView: question.hasHiddenAnswer
+                        ? () => _showReadOnly(context, question)
+                        : null,
                     onRemove: () => _removeFavorite(question),
                   ),
                 );
@@ -157,6 +163,43 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
             );
           },
         ),
+      ),
+    );
+  }
+
+  Future<void> _showReadOnly(BuildContext context, QuizQuestion question) {
+    final isKu = context.isKu;
+    final t = SahneTokens.of(context);
+    return showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        key: const ValueKey('favorite-readonly-dialog'),
+        scrollable: true,
+        title: Text(question.promptFor(isKu: isKu)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            for (final option in question.answersFor(isKu: isKu))
+              Padding(
+                padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                child: Text(
+                  option,
+                  style: SahneType.body.copyWith(color: t.tx),
+                ),
+              ),
+            Text(
+              dialogContext.t(K.favoriteAnswerHiddenHint),
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+          ],
+        ),
+        actions: [
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(dialogContext.t(K.close)),
+          ),
+        ],
       ),
     );
   }
@@ -242,12 +285,14 @@ class _FavoriteQuestionTile extends StatelessWidget {
     required this.question,
     required this.onPlay,
     required this.onRemove,
+    this.onView,
   });
 
   final QuizQuestion question;
   // null: cevabı sunucuda saklı (question.hasHiddenAnswer) — yeniden
   // oynatılamaz, yalnız görüntülenir.
   final VoidCallback? onPlay;
+  final VoidCallback? onView;
   final VoidCallback onRemove;
 
   @override
@@ -255,7 +300,7 @@ class _FavoriteQuestionTile extends StatelessWidget {
     final t = SahneTokens.of(context);
     final large = MediaQuery.textScalerOf(context).scale(16) >= 24;
     return SahneSurfaceCard(
-      onTap: onPlay,
+      onTap: onPlay ?? onView,
       padding: const EdgeInsetsDirectional.fromSTEB(
         SahneSpace.x3,
         SahneSpace.x3,

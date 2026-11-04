@@ -535,21 +535,29 @@ class SahneListRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          title,
-          style: SahneType.bodyStrong.copyWith(
-            color: !enabled
-                ? t.disabledFg
-                : destructive
-                ? t.errTx
-                : t.tx,
+        // Başlık ve alt başlık satırın etiketinde zaten okunur, yinelenmesin;
+        // ama `footer` (düello listesindeki "Dürt" düğmesi, başarım ilerleme
+        // değerleri) kendi düğümleriyle erişilebilir kalır — önceden bütün
+        // sütun dışlanıp footer ağaçtan siliniyordu.
+        ExcludeSemantics(
+          child: Text(
+            title,
+            style: SahneType.bodyStrong.copyWith(
+              color: !enabled
+                  ? t.disabledFg
+                  : destructive
+                  ? t.errTx
+                  : t.tx,
+            ),
           ),
         ),
         if (subtitle != null)
-          Text(
-            subtitle!,
-            style: (subtitleProminent ? SahneType.body : SahneType.caption)
-                .copyWith(color: enabled ? t.tx2 : t.disabledFg),
+          ExcludeSemantics(
+            child: Text(
+              subtitle!,
+              style: (subtitleProminent ? SahneType.body : SahneType.caption)
+                  .copyWith(color: enabled ? t.tx2 : t.disabledFg),
+            ),
           ),
         if (footer != null) ...[const SizedBox(height: SahneSpace.x1), footer!],
       ],
@@ -605,12 +613,12 @@ class SahneListRow extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          ExcludeSemantics(child: text),
+                          text,
                           const SizedBox(height: SahneSpace.x1),
                           trail,
                         ],
                       )
-                    : ExcludeSemantics(child: text),
+                    : text,
               ),
               if (!stacked && trail != null) ...[
                 const SizedBox(width: SahneSpace.x2),

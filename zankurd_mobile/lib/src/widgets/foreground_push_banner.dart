@@ -193,6 +193,7 @@ class _Banner extends StatelessWidget {
               Semantics(
                 label: context.t(K.pushBannerDismiss),
                 button: true,
+                onTap: onDismiss,
                 excludeSemantics: true,
                 child: IconButton(
                   key: const ValueKey('foreground-push-dismiss'),

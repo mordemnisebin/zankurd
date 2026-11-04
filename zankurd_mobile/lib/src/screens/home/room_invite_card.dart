@@ -383,9 +383,10 @@ class _RoomInviteCardState extends State<RoomInviteCard>
     return Padding(
       key: const ValueKey('room-invite-card'),
       padding: EdgeInsets.only(top: widget.topGap ? SahneSpace.cardGap : 0),
+      // Üst düğümdeki yinelenen etiket kaldırıldı: başlık ve meta metni
+      // zaten okunur, davet bilgisi iki kez duyuluyordu.
       child: Semantics(
         container: true,
-        label: '$title. $meta',
         child: SahneSurfaceCard(
           child: Builder(
             builder: (context) {

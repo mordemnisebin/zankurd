@@ -400,6 +400,47 @@ class _CompactMissionRow extends StatelessWidget {
         child: Text(count, style: SahneType.bodyStrong.copyWith(color: t.tx2)),
       );
     }
+    // Ödülü al düğmesi ekranın %40'ına FittedBox ile küçültülüyordu: 320 pt
+    // + 2× KU metinde 48 pt hedef ~34 pt'e düşüyordu. Büyük yazıda eylem alt
+    // satıra iner ve ölçeklenmeden tam boyda kalır.
+    final stackClaim =
+        canClaim && MediaQuery.textScalerOf(context).scale(16) / 16 > 1.3;
+    final head = Row(
+      children: [
+        ExcludeSemantics(
+          child: _IconTile(
+            icon: done
+                ? AppIcons.check
+                : _MissionTile._missionIcon(mission.type),
+            size: 36,
+          ),
+        ),
+        const SizedBox(width: SahneSpace.x3),
+        Expanded(
+          child: ExcludeSemantics(
+            child: Text(
+              label,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: SahneType.bodyStrong.copyWith(color: done ? t.tx2 : t.tx),
+            ),
+          ),
+        ),
+        if (!stackClaim) ...[
+          const SizedBox(width: SahneSpace.x2),
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.sizeOf(context).width * 0.4,
+            ),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: AlignmentDirectional.centerEnd,
+              child: trailing,
+            ),
+          ),
+        ],
+      ],
+    );
     return Padding(
       key: ValueKey('home-mission-row-${mission.type.name}'),
       padding: const EdgeInsets.only(top: SahneSpace.x2),
@@ -409,42 +450,19 @@ class _CompactMissionRow extends StatelessWidget {
         value: done ? Tr.forKu(K.tamamlandi, isKu) : count,
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 48),
-          child: Row(
-            children: [
-              ExcludeSemantics(
-                child: _IconTile(
-                  icon: done
-                      ? AppIcons.check
-                      : _MissionTile._missionIcon(mission.type),
-                  size: 36,
-                ),
-              ),
-              const SizedBox(width: SahneSpace.x3),
-              Expanded(
-                child: ExcludeSemantics(
-                  child: Text(
-                    label,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: SahneType.bodyStrong.copyWith(
-                      color: done ? t.tx2 : t.tx,
+          child: stackClaim
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    head,
+                    const SizedBox(height: SahneSpace.x2),
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: trailing,
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: SahneSpace.x2),
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: MediaQuery.sizeOf(context).width * 0.4,
-                ),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: AlignmentDirectional.centerEnd,
-                  child: trailing,
-                ),
-              ),
-            ],
-          ),
+                  ],
+                )
+              : head,
         ),
       ),
     );

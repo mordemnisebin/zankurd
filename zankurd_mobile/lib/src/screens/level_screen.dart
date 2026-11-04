@@ -471,6 +471,7 @@ class _CompactLockedLevel extends StatelessWidget {
       container: true,
       button: true,
       label: context.t(K.pKilitliOncekiSeviyeyi, {'p0': name}),
+      onTap: onTap,
       excludeSemantics: true,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,

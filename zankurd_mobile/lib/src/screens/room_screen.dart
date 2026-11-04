@@ -3106,6 +3106,7 @@ class _WaitingPlayerTile extends StatelessWidget {
               Semantics(
                 button: true,
                 label: context.t(K.inviteFriends),
+                onTap: onInvite,
                 excludeSemantics: true,
                 child: SahneTappable(
                   key: const ValueKey('room-waiting-invite'),

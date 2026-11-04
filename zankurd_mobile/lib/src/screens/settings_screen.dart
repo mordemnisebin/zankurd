@@ -1166,6 +1166,8 @@ class _SettingsScreenState extends State<SettingsScreen>
     final continueDelete = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
+        // 2× yazıda küçük ekranı aşan metin kaydırılır; eylemler altta kalır.
+        scrollable: true,
         title: Text(context.t(K.deleteConfirmTitle)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -1362,6 +1364,8 @@ class _FinalDeleteDialogState extends State<_FinalDeleteDialog> {
   Widget build(BuildContext context) {
     final confirmWord = widget.confirmWord;
     return AlertDialog(
+      // Klavye açılınca daralan alanda alan ve eylemler kaydırılabilir kalır.
+      scrollable: true,
       title: Text(context.t(K.finalConfirm)),
       content: Column(
         mainAxisSize: MainAxisSize.min,

@@ -184,8 +184,8 @@ class AsyncDuelReviewRow extends StatelessWidget {
           Text(
             '${context.t(K.correctAnswerLabel)}: ${question.correctText}',
             key: ValueKey('async-duel-review-correct-${question.index}'),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+            // Uzun doğru cevap ("…sinema_0251") tek satırda kesiliyordu ve
+            // başka yerde tam hâli yoktu; sarar.
             style: SahneType.captionStrong.copyWith(color: t.okTx),
           ),
           const SizedBox(height: SahneSpace.x2),

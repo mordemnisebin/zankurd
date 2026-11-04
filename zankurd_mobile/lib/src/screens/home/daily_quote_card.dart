@@ -94,9 +94,10 @@ class _DailyQuoteCardState extends State<DailyQuoteCard> {
     return Padding(
       key: const ValueKey('home-daily-quote'),
       padding: const EdgeInsets.only(top: SahneSpace.cardGap),
+      // Üst düğümdeki yinelenen etiket kaldırıldı: görünür başlık ve metinler
+      // zaten okunur, aynı söz iki kez duyuluyordu.
       child: Semantics(
         container: true,
-        label: '$label. ${quote.ku}${showTr ? '. ${quote.tr}' : ''}',
         child: SahneSurfaceCard(
           // Tur 2 R8: söz sayfanın SON, küçük kartı (görev ve konulardan
           // daha az ağırlık): dar iç boşluk, gövde yazı boyu.

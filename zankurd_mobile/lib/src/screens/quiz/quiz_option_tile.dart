@@ -395,42 +395,41 @@ class QuizOptionTile extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           tile,
+          // Etiket iki yandan sınırlı: 2× yazıda "Doğru cevap · Senin cevabın"
+          // tek satıra sığmayıp şık alanını (320/375 pt) aşıyordu; artık
+          // sarar, metin küçültülmez.
           PositionedDirectional(
             top: -8,
+            start: SahneSpace.x3,
             end: SahneSpace.x3,
             child: IgnorePointer(
-              child: DecoratedBox(
-                decoration: BoxDecoration(color: t.s1),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (correct)
-                        Text(
-                          context.t(K.correctAnswerLabel),
-                          style: SahneType.captionStrong.copyWith(
-                            color: t.tx,
-                            fontSize: 14,
-                          ),
-                        ),
-                      if (correct && selected)
-                        Text(
-                          ' · ',
-                          style: SahneType.captionStrong.copyWith(
-                            color: t.tx,
-                            fontSize: 14,
-                          ),
-                        ),
-                      if (selected)
-                        Text(
-                          context.t(K.quizAnswerOwner),
-                          style: SahneType.captionStrong.copyWith(
-                            color: t.tx,
-                            fontSize: 14,
-                          ),
-                        ),
-                    ],
+              child: Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(color: t.s1),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Builder(
+                      builder: (context) {
+                        final style = SahneType.captionStrong.copyWith(
+                          color: t.tx,
+                          fontSize: 14,
+                        );
+                        return Wrap(
+                          alignment: WrapAlignment.end,
+                          children: [
+                            if (correct)
+                              Text(
+                                context.t(K.correctAnswerLabel),
+                                style: style,
+                              ),
+                            if (correct && selected) Text(' · ', style: style),
+                            if (selected)
+                              Text(context.t(K.quizAnswerOwner), style: style),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),

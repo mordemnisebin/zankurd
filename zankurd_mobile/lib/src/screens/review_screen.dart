@@ -523,37 +523,48 @@ class _AnswerLine extends StatelessWidget {
       _AnswerState.wrong => (t.errTint, t.errTx, t.errTx, AppIcons.xmark),
       _AnswerState.idle => (t.s2, t.tx2, null, null),
     };
+    // Sonuç yalnız renk + etiketsiz ✓/✗ ikonuyla veriliyordu; ekran okuyucu
+    // metni okuyup doğru/yanlış olduğunu öğrenemiyordu.
+    final stateLabel = switch (state) {
+      _AnswerState.correct => context.t(K.correctAnswerLabel),
+      _AnswerState.wrong => context.t(K.wrong),
+      _AnswerState.idle => null,
+    };
     return Padding(
       padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: bg,
-          shape: ring == null
-              ? SahneShape.m
-              : SahneShape.withSide(SahneShape.m, ring, width: SahneRing.r2),
-        ),
-        child: ConstrainedBox(
-          // a11y-tap-target: noninteractive — cevap satırı; salt görsel,
-          // dokunma hedefi değil.
-          constraints: const BoxConstraints(minHeight: 44),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: SahneSpace.x4,
-              vertical: SahneSpace.x2,
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    text,
-                    style: SahneType.bodyStrong.copyWith(color: fg),
+      child: Semantics(
+        label: stateLabel == null ? text : '$text, $stateLabel',
+        excludeSemantics: true,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: bg,
+            shape: ring == null
+                ? SahneShape.m
+                : SahneShape.withSide(SahneShape.m, ring, width: SahneRing.r2),
+          ),
+          child: ConstrainedBox(
+            // a11y-tap-target: noninteractive — cevap satırı; salt görsel,
+            // dokunma hedefi değil.
+            constraints: const BoxConstraints(minHeight: 44),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: SahneSpace.x4,
+                vertical: SahneSpace.x2,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      text,
+                      style: SahneType.bodyStrong.copyWith(color: fg),
+                    ),
                   ),
-                ),
-                if (icon != null) ...[
-                  const SizedBox(width: SahneSpace.x2),
-                  Icon(icon, color: fg, size: 20),
+                  if (icon != null) ...[
+                    const SizedBox(width: SahneSpace.x2),
+                    Icon(icon, color: fg, size: 20),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),

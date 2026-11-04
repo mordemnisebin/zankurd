@@ -266,39 +266,53 @@ class UpdateRequiredScreen extends StatelessWidget {
         key: const ValueKey('update-required-screen'),
         backgroundColor: t.bg,
         body: SafeArea(
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 440),
-              child: Padding(
-                padding: const EdgeInsets.all(SahneSpace.x6),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Icon(Icons.system_update_rounded, size: 56, color: t.actTx),
-                    const SizedBox(height: SahneSpace.x5),
-                    Semantics(
-                      header: true,
-                      child: Text(
-                        context.t(K.updateRequiredTitle),
-                        textAlign: TextAlign.center,
-                        style: SahneType.title.copyWith(color: t.tx),
+          // Küçük ekranda 2x yazıyla içerik yüksekliği ekranı aşar; tek çıkış
+          // olan mağaza düğmesi görünmez kalmasın diye gövde kaydırılır,
+          // sığdığında eskisi gibi ortalanır.
+          child: LayoutBuilder(
+            builder: (context, box) => SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: box.maxHeight),
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 440),
+                    child: Padding(
+                      padding: const EdgeInsets.all(SahneSpace.x6),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Icon(
+                            Icons.system_update_rounded,
+                            size: 56,
+                            color: t.actTx,
+                          ),
+                          const SizedBox(height: SahneSpace.x5),
+                          Semantics(
+                            header: true,
+                            child: Text(
+                              context.t(K.updateRequiredTitle),
+                              textAlign: TextAlign.center,
+                              style: SahneType.title.copyWith(color: t.tx),
+                            ),
+                          ),
+                          const SizedBox(height: SahneSpace.x3),
+                          Text(
+                            context.t(K.updateRequiredBody),
+                            textAlign: TextAlign.center,
+                            style: SahneType.body.copyWith(color: t.tx2),
+                          ),
+                          const SizedBox(height: SahneSpace.x8),
+                          SahneButton.primary(
+                            buttonKey: const ValueKey('update-required-store'),
+                            label: context.t(K.updateRequiredAction),
+                            expand: true,
+                            onPressed: onOpenStore,
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: SahneSpace.x3),
-                    Text(
-                      context.t(K.updateRequiredBody),
-                      textAlign: TextAlign.center,
-                      style: SahneType.body.copyWith(color: t.tx2),
-                    ),
-                    const SizedBox(height: SahneSpace.x8),
-                    SahneButton.primary(
-                      buttonKey: const ValueKey('update-required-store'),
-                      label: context.t(K.updateRequiredAction),
-                      expand: true,
-                      onPressed: onOpenStore,
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),

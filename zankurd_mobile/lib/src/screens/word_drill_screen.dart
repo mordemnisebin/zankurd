@@ -343,6 +343,12 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
                   dense: true,
                   title: r.question.entry.termKu,
                   subtitle: r.question.entry.meaningTr,
+                  // Sonuç yalnız renkli ikonla veriliyordu; etikete yazılır.
+                  semanticLabel: [
+                    r.question.entry.termKu,
+                    r.question.entry.meaningTr,
+                    context.t(r.correct ? K.correct : K.wrong),
+                  ].join(', '),
                   trailing: Icon(
                     r.correct ? AppIcons.circleCheck : AppIcons.circleXmark,
                     size: 20,
