@@ -126,6 +126,15 @@ export function validPushExpiry(value: unknown): value is string {
     Number.isFinite(Date.parse(value));
 }
 
+/// Aynı iş için her (yeniden) gönderimde AYNI kimlik: Android `notification.tag`
+/// ve APNs `apns-collapse-id`. FCM kabulünden sonra ACK'in tamamı düşerse lease
+/// yeniden alınır ve aynı iş tekrar gönderilir; kimlik aynı olduğundan cihazda
+/// ikinci bir sistem bildirimi değil, birincinin yerine geçen tek bildirim olur.
+/// APNs sınırı 64 bayttır; iş kimliği (uuid/sayı) bunu aşmaz, yine de kırpılır.
+export function pushCollapseId(jobId: string): string {
+  return `zk-${jobId}`.slice(0, 64);
+}
+
 /// FCM v1 verileri yalnız dize; kimlik ve tür kuyruktaki güvenilir alandan gelir.
 export function buildFcmMessage(
   job: PushJob,
@@ -160,9 +169,14 @@ export function buildFcmMessage(
       token,
       notification: { title: job.title || "ZanKurd", body: job.body || "" },
       data,
-      android: { priority: urgent ? "HIGH" : "NORMAL", ttl: `${ttl}s` },
+      android: {
+        priority: urgent ? "HIGH" : "NORMAL",
+        ttl: `${ttl}s`,
+        notification: { tag: pushCollapseId(job.job_id) },
+      },
       apns: {
         headers: {
+          "apns-collapse-id": pushCollapseId(job.job_id),
           "apns-priority": urgent ? "10" : "5",
           "apns-expiration": `${nowSeconds + ttl}`,
         },

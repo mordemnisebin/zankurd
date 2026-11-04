@@ -39,6 +39,11 @@ def expiry_seconds(value: object) -> int | None:
         return None
 
 
+def collapse_id(job_id: str) -> str:
+    """Aynı iş her yeniden gönderimde aynı kimliği taşır (Android tag / APNs collapse-id)."""
+    return f"zk-{job_id}"[:64]
+
+
 def build_message(job: dict, token: str, now_seconds: int | None = None) -> dict:
     data = {"job_id": job["job_id"]}
     if job.get("kind"):
@@ -59,8 +64,11 @@ def build_message(job: dict, token: str, now_seconds: int | None = None) -> dict
         "token": token,
         "notification": {"title": job.get("title") or "ZanKurd", "body": job.get("body") or ""},
         "data": data,
-        "android": {"priority": "HIGH" if urgent else "NORMAL", "ttl": f"{ttl}s"},
-        "apns": {"headers": {"apns-priority": "10" if urgent else "5", "apns-expiration": str(now + ttl)}},
+        "android": {"priority": "HIGH" if urgent else "NORMAL", "ttl": f"{ttl}s",
+                    "notification": {"tag": collapse_id(job["job_id"])}},
+        "apns": {"headers": {"apns-collapse-id": collapse_id(job["job_id"]),
+                             "apns-priority": "10" if urgent else "5",
+                             "apns-expiration": str(now + ttl)}},
     }}
 
 

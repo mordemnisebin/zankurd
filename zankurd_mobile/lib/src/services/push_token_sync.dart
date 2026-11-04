@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 import '../config/feature_flags.dart';
+import '../data/offline_zankurd_repository.dart';
 import '../data/zankurd_repository.dart';
 import '../providers/repository_holder.dart';
 import '../utils/error_reporter.dart';
@@ -34,7 +35,41 @@ class PushTokenSync {
     this.repositoryHolder,
     this.debugLog,
     this.remoteEnabled,
+    this.retryDelays = defaultRetryDelays,
   });
+
+  /// Kayıt RPC'si geçici hatayla düşerse artan gecikmeyle yeniden denenir
+  /// (GPT-6 Pro ALAN 4: eskiden hata yutuluyor, kayıt ancak sonraki
+  /// resume/reconnect'e kalıyordu). Liste tükenince durulur; sonraki
+  /// resume yine dener.
+  static const defaultRetryDelays = <Duration>[
+    Duration(seconds: 5),
+    Duration(seconds: 15),
+    Duration(seconds: 45),
+    Duration(minutes: 2),
+    Duration(minutes: 5),
+  ];
+  final List<Duration> retryDelays;
+
+  static Timer? _retryTimer;
+  static int _retryAttempt = 0;
+
+  /// Bu cihazın sunucuya başarıyla yazılmış son jetonu. Çıkışta
+  /// `clear_my_fcm_token(p_token)` ile yalnız BU cihazın jetonu bırakılır;
+  /// aynı hesabın ikinci cihazının jetonu silinmez.
+  static String? lastRegisteredToken;
+
+  static void _cancelRetry() {
+    _retryTimer?.cancel();
+    _retryTimer = null;
+    _retryAttempt = 0;
+  }
+
+  @visibleForTesting
+  static void resetForTest() {
+    _cancelRetry();
+    lastRegisteredToken = null;
+  }
 
   // Bütün kabuk/kaynak örnekleri aynı cihaz token'ını kaydeder. Çıkış
   // bariyeri eski okumaları geçersiz kılar ve başlamış RPC'leri temizleme
@@ -53,6 +88,7 @@ class PushTokenSync {
   }) async {
     _sessionEpoch++;
     _suspended++;
+    _cancelRetry();
     try {
       // Timeout RPC'yi iptal etmiş sayılmaz: süre aşılırsa action hiç
       // çalışmaz ve mevcut oturum korunur. Kullanıcı yeniden deneyebilir.
@@ -151,7 +187,10 @@ class PushTokenSync {
       _latestRequest = request;
       bool isCurrent() => isSessionCurrent() && request == _latestRequest;
       final write = (_writeTail ?? Future<void>.value()).then((_) async {
-        if (isCurrent()) await repository.setFcmToken(token.trim());
+        if (isCurrent()) {
+          await repository.setFcmToken(token.trim());
+          lastRegisteredToken = token.trim();
+        }
       });
       // Bir RPC hatası sonraki kaydı veya çıkış bariyerini kilitlemez.
       final settled = write.then<void>(
@@ -164,9 +203,25 @@ class PushTokenSync {
       } finally {
         if (identical(_writeTail, settled)) _writeTail = null;
       }
+      if (isCurrent()) _cancelRetry();
     } catch (error, stack) {
       _debug('sync failed');
       ErrorReporter.record(error, stack, reason: 'push_token_sync');
+      _scheduleRetry(epoch);
     }
+  }
+
+  void _scheduleRetry(int epoch) {
+    if (_suspended > 0 || epoch != _sessionEpoch) return;
+    // Uzak sunucu yoksa (çevrimdışı depo) yeniden denemenin anlamı yok.
+    if (_repository is OfflineZanKurdRepository) return;
+    if (_retryAttempt >= retryDelays.length) return;
+    final delay = retryDelays[_retryAttempt++];
+    _retryTimer?.cancel();
+    _retryTimer = Timer(delay, () {
+      _retryTimer = null;
+      if (_suspended > 0 || epoch != _sessionEpoch) return;
+      unawaited(_sync());
+    });
   }
 }

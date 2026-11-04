@@ -509,3 +509,29 @@ Deno.test("shouldClaimNextBatch: boş talep, bütçe, unsettled ve üst sınır 
     "üst sınırın altında devam",
   );
 });
+
+// GPT-6 Pro ALAN 4: FCM kabulünden sonra ACK'in tamamı düşerse aynı iş yeniden
+// gönderilir; kimlik yoksa Android'de ikinci bir sistem bildirimi doğar. Sessiz:
+// gönderim "başarılı" görünür, yalnız cihazda çift bildirim olur.
+Deno.test("buildFcmMessage: aynı iş aynı Android tag ve APNs collapse-id'yi taşır", () => {
+  const job = {
+    job_id: "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+    kind: "friend_request",
+    title: "t",
+    body: "b",
+    fcm_token: "t",
+    expires_at: "2100-01-01T00:00:00Z",
+    data: {},
+  } as unknown as Parameters<typeof buildFcmMessage>[0];
+  const a = buildFcmMessage(job, "t1").message as Record<string, any>;
+  const b = buildFcmMessage(job, "t1").message as Record<string, any>;
+  assert(a.android.notification.tag === b.android.notification.tag, "tag kararlı");
+  assert(
+    a.apns.headers["apns-collapse-id"] === a.android.notification.tag,
+    "apns collapse-id = tag",
+  );
+  assert(new TextEncoder().encode(a.apns.headers["apns-collapse-id"]).length <= 64, "64 bayt");
+  const other = buildFcmMessage({ ...job, job_id: "other" }, "t1")
+    .message as Record<string, any>;
+  assert(other.android.notification.tag !== a.android.notification.tag, "iş başına farklı");
+});

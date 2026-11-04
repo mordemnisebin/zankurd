@@ -1,5 +1,6 @@
 import Flutter
 import UIKit
+import UserNotifications
 
 @main
 @objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate {
@@ -7,6 +8,12 @@ import UIKit
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+    // Yerel (flutter_local_notifications) bildirim dokunuşları Flutter'a
+    // ulaşsın: Firebase kendi delegesini kurarken FCM olmayan bildirimleri
+    // eklentiye ileten önceki delege bulunmuyordu (GPT-6 Pro ALAN 4).
+    // `super` çağrısından ÖNCE atanır; FlutterAppDelegate zaten
+    // UNUserNotificationCenterDelegate uygular.
+    UNUserNotificationCenter.current().delegate = self
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 

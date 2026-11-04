@@ -13,7 +13,9 @@ class PushOutboxTest(unittest.TestCase):
     def test_payload_delivery_metadata(self):
         message = sender.build_message(JOB, "token", now_seconds=1000)["message"]
         self.assertEqual(message["data"], {"job_id": "j", "kind": "room_invite", "room_id": "r", "invite_id": "i"})
-        self.assertEqual(message["android"], {"priority": "HIGH", "ttl": "300s"})
+        self.assertEqual(message["android"], {"priority": "HIGH", "ttl": "300s",
+                                              "notification": {"tag": "zk-j"}})
+        self.assertEqual(message["apns"]["headers"]["apns-collapse-id"], "zk-j")
         self.assertEqual(message["apns"]["headers"]["apns-expiration"], "1300")
 
     def test_success_ack_error_only_retries_ack(self):

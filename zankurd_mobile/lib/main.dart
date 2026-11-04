@@ -278,11 +278,31 @@ Future<Widget> _bootApp() async {
   // Zaman sınırlı: Firebase'in yanıt vermemesi uygulamanın açılmasını
   // engellememeli. `catch` yalnız fırlatmayı yakalar, asılı kalmayı
   // yakalamaz — bkz. `bootStep`.
+  // Bildirime dokunuş + ön plan push aboneliği: ilk kare zaman aşımına
+  // uğrasa bile Firebase SONRADAN hazır olunca da kurulur (tekrar çağrılabilir;
+  // `wireFirebase` statik bayrakla, `wire` aboneliği değiştirerek çift
+  // abonelikten korunur).
+  Future<void> wireFirebasePush() async {
+    // Bildirime dokununca doğru ekrana yönlendirme yalnız Firebase
+    // gerçekten kurulduysa anlamlıdır (`onMessageOpenedApp`/
+    // `getInitialMessage` Firebase App'e ihtiyaç duyar).
+    unawaited(PushTapRouter.wireFirebase());
+    // Uygulama açıkken gelen push'u üstte bant olarak gösterir.
+    ForegroundPushCenter.wire();
+  }
+
   final firebaseFuture = initializeFirebaseForBoot(
+    onLateReady: wireFirebasePush,
     initialize: () async {
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
+      try {
+        await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+        );
+        FirebaseReadiness.complete(true);
+      } catch (_) {
+        FirebaseReadiness.complete(false);
+        rethrow;
+      }
     },
     // Kurulur kurulmaz İKİ ölçüm de kapatılır; rıza varsa aşağıda
     // açılır. 2.1.1+41 ve öncesinde rıza varsayılan açıktı ve SDK'lar
@@ -410,12 +430,7 @@ Future<Widget> _bootApp() async {
   startInBackground(
     firebaseFuture.then((firebaseReady) async {
       if (!firebaseReady) return;
-      // Bildirime dokununca doğru ekrana yönlendirme yalnız Firebase
-      // gerçekten kurulduysa anlamlıdır (`onMessageOpenedApp`/
-      // `getInitialMessage` Firebase App'e ihtiyaç duyar).
-      unawaited(PushTapRouter.wireFirebase());
-      // Uygulama açıkken gelen push'u üstte bant olarak gösterir.
-      ForegroundPushCenter.wire();
+      await wireFirebasePush();
       if (analyticsConsentProvider.crashReportsEnabled && !kIsWeb) {
         return ErrorReporter.setCollectionEnabled(true);
       }
@@ -810,7 +825,7 @@ class ZanKurdApp extends StatelessWidget {
             pushTokenSync: PushTokenSync(
               source: kIsWeb
                   ? const NoopPushTokenSource()
-                  : const FirebasePushTokenSource(),
+                  : FirebasePushTokenSource(),
               repository: repository,
               repositoryHolder: repositoryHolder,
             ),

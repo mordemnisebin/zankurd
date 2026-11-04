@@ -3901,6 +3901,8 @@ class SupabaseZanKurdRepository
       await client.rpc<void>('set_fcm_token', params: {'p_token': token});
     } catch (e, s) {
       _recordError(e, s, reason: 'setFcmToken failed');
+      // Hata yutulursa çağıran kaydı başarılı sanar ve yeniden denemez.
+      rethrow;
     }
   }
 
