@@ -171,4 +171,9 @@ const questionBankAssets = <String>[
   // 3.8 Flash + Grok 4.7 okumasından geçti. Bekçi:
   // `test/beginner_track_4_test.dart`.
   'assets/data/dersler4_2026_10_25_questions.json',
+  // 2026-11-07: YENİ SORULAR. Sînema, Paradigma, Siyaset, Muzîk ve Edebiyat
+  // havuzları en inceleriydi; Gemini ve ChatGPT (web) taslağı, yazar olmayan
+  // web modeli + komut satırı oyuyla çapraz incelendi. Sunucu eşi:
+  // `supabase/2026-11-07_yeni_sorular.sql`.
+  'assets/data/yeni_2026_11_07_questions.json',
 ];
