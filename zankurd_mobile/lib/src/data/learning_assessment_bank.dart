@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import '../models/question_metadata.dart';
 import '../models/quiz_question.dart';
 import 'learner_lexicon.dart';
@@ -125,6 +126,22 @@ class LearningAssessmentBank {
     ];
   }
 
+  /// Kurmancî "e" kopulası: ünlüyle biten sözcükten sonra `ye`, ünsüzle
+  /// bitenden sonra `e` (ör. "Bira ye", "Dest e"). Eskiden yön başına
+  /// sabitti (KU→TR hep `ye`, TR→KU hep `e`) ve "Erkek kardeş ye" gibi
+  /// bozuk cümle üretiyordu. Seçim, sözcüğün son HARFİNE göre yapılır.
+  @visibleForTesting
+  static String copulaFor(String word) {
+    final letters = word.trim().replaceAll(
+      RegExp(r'[^A-Za-zÇĞİÖŞÜÂÊÎÛçğıöşüâêîû]+$'),
+      '',
+    );
+    if (letters.isEmpty) return 'e';
+    return 'aeêiîouûöüıâAEÊIİÎOUÛÖÜÂ'.contains(letters[letters.length - 1])
+        ? 'ye'
+        : 'e';
+  }
+
   static QuizQuestion? _question({
     required LearnerLexiconEntry entry,
     required LearnerLexiconSource source,
@@ -141,8 +158,8 @@ class LearningAssessmentBank {
     // Türkçe okurken de Kürtçe terim görünüyordu. Artık sorunun yönüne
     // göre ayrı cümleler kurulur.
     final explanationKu = kuToTr
-        ? '“${entry.termKu}” bi Tirkî “${entry.meaningTr}” ye.'
-        : '“${entry.meaningTr}” bi Kurmancî “${entry.termKu}” e.';
+        ? '“${entry.termKu}” bi Tirkî “${entry.meaningTr}” ${copulaFor(entry.meaningTr)}.'
+        : '“${entry.meaningTr}” bi Kurmancî “${entry.termKu}” ${copulaFor(entry.termKu)}.';
     final explanationTr = kuToTr
         ? '“${entry.termKu}” Türkçede “${entry.meaningTr}” demektir.'
         : '“${entry.meaningTr}” Kurmancîde “${entry.termKu}” olarak söylenir.';

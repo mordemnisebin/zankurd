@@ -68,7 +68,7 @@ class LearnerLexicon {
     ),
     'everyday_3': LearnerLexiconSource(
       id: 'everyday_3',
-      titleKu: 'Pratikên rojane',
+      titleKu: 'Pratîkên rojane',
       titleTr: 'Günlük pratik ifadeler',
       categoryKu: 'Jiyana rojane',
       categoryTr: 'Gündelik hayat',
@@ -5521,7 +5521,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-kesfvan',
       termKu: 'Keşfvan',
-      meaningTr: 'kaşif',
+      meaningTr: 'kâşif',
       sourceId: 'questions',
       forms: ['keşfvanê', 'keşfvanan'],
     ),
@@ -5643,7 +5643,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-naskirin',
       termKu: 'Naskirin',
-      meaningTr: 'tanınmak, bilinmek',
+      meaningTr: 'tanımak',
       sourceId: 'questions',
       forms: ['naskirî', 'naskirina'],
     ),

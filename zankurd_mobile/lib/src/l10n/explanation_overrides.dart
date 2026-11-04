@@ -784,8 +784,9 @@ const Map<String, ExplanationOverride> explanationOverrides = {
         '"Dil" hem "kalp" hem jî "dil (ziman)" e. Di helbest û stranên kurdî de '
         'dil cîhê hest û gotinê ye.',
     tr:
-        '"Dil" hem "kalp" hem "dil (lisan)" anlamına gelebilir. Şiir ve '
-        'türkülerde duygu ve sözün yuvasıdır.',
+        '"Dil" "kalp" demektir; "gönül" anlamında da kullanılır. Türkçedeki '
+        '"dil" ise Kurmancîde "ziman"dır. Şiir ve türkülerde duygu ve sözün '
+        'yuvasıdır.',
   ),
   'offline_0045': ExplanationOverride(
     ku:

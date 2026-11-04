@@ -17,6 +17,24 @@ import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
+/// Bir cevap kaydının ekranda gösterilecek açıklaması: yazılmış açıklama >
+/// override > şablon eleme > kural motoru. Liste, hafıza kartı ve sonuç
+/// ekranı bunu ortak kullanır; ham `explanation` alanı doğrudan basılmaz.
+@visibleForTesting
+String resolveAnswerExplanation(AnswerRecord record, bool isKu) {
+  final authored = isKu ? record.explanationKu : record.explanationTr;
+  if (authored != null &&
+      authored.trim().isNotEmpty &&
+      !isTemplateExplanation(authored)) {
+    return authored;
+  }
+  return resolveRawExplanation(
+    id: record.id,
+    explanation: record.explanation,
+    isKu: isKu,
+  );
+}
+
 class ReviewScreen extends StatefulWidget {
   const ReviewScreen({
     required this.records,
@@ -307,17 +325,7 @@ class _ReviewCardState extends State<_ReviewCard> {
     // "Şirove: <Türkçe cümle>" gösteriyordu. Motor yedektir, kaynak
     // değil (2026-07-27).
     final isKu = context.isKu;
-    final authored = isKu ? record.explanationKu : record.explanationTr;
-    final String explanationText =
-        (authored != null &&
-            authored.trim().isNotEmpty &&
-            !isTemplateExplanation(authored))
-        ? authored
-        : resolveRawExplanation(
-            id: record.id,
-            explanation: record.explanation,
-            isKu: isKu,
-          );
+    final String explanationText = resolveAnswerExplanation(record, isKu);
 
     final Widget status = isUnanswered
         ? SahneStatusBadge.blank(label: context.t(K.blankBadge))
@@ -695,12 +703,10 @@ class _FlashcardViewState extends State<_FlashcardView> {
     final record =
         widget.records[_currentIndex.clamp(0, widget.records.length - 1)];
     final isKu = context.isKu;
-    // Boş dil alanı ortak açıklamayı gölgelemesin (liste görünümü de
-    // boşluğu yok sayar).
-    final localized = isKu ? record.explanationKu : record.explanationTr;
-    final explanationText = (localized?.trim().isNotEmpty ?? false)
-        ? localized!
-        : record.explanation;
+    // Liste görünümüyle AYNI çözümleyici: hafıza kartı ham `explanation`ı
+    // basıyordu ve Kurmancî turda `offline_0016` kartının arkasında ham
+    // Türkçe "Doğru anlam: ..." görünüyordu.
+    final explanationText = resolveAnswerExplanation(record, isKu);
     final reduceMotion = sahneMotionReduced(context);
 
     return Column(

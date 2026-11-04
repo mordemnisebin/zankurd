@@ -58,7 +58,10 @@ class DailyMission {
   String get labelKu => switch (type) {
     MissionType.answerCorrect => '$target bersivên rast bide',
     MissionType.completeQuiz => '$target pêşbirk biqedîne',
-    MissionType.useWildcard => '$target joker bikar bîne',
+    MissionType.useWildcard =>
+      target == 1
+          ? 'Carekê alîkariyê bi kar bîne'
+          : '$target caran alîkariyê bi kar bîne',
     // Günlük seri zincîr'dir; `Seriya` tur içi Rêz ile karışır.
     // Koruma düğmesi (`K.streakProtectAction`) aynı kökü kullanır.
     MissionType.keepStreak => 'Zincîra xwe biparêze',
@@ -70,7 +73,7 @@ class DailyMission {
     MissionType.answerCorrect => '$target doğru cevap ver',
     MissionType.completeQuiz => '$target yarış tamamla',
     MissionType.useWildcard => '$target joker kullan',
-    MissionType.keepStreak => 'Serisini koru',
+    MissionType.keepStreak => 'Serini koru',
     // Kurmancî etiketi konuyu çeviriyordu, Türkçe etiketi ham anahtarı
     // yazıyordu: görev "Cografya kategorisinde oyna" (ğ'siz), "Muzîk",
     // "Dîrok" diyordu; yani Türkçe arayüzde konu adı hem yanlış yazılıyor

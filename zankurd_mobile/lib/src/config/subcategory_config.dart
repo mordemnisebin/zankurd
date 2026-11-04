@@ -46,13 +46,13 @@ class SubcategoryConfig {
       SubcategoryInfo(
         id: 'folklor',
         nameKu: 'Folklor û Çîrok',
-        nameTr: 'Folklor & Hikayeler',
+        nameTr: 'Folklor & Hikâyeler',
         descriptionKu: 'Çanda gelêrî û çîrokên kurdî',
         descriptionTr: 'Kürt halk kültürü ve masalları',
       ),
       SubcategoryInfo(
         id: 'cejn',
-        nameKu: 'Cejn û Dûmahî',
+        nameKu: 'Cejn û Kevneşopî',
         nameTr: 'Bayramlar & Gelenekler',
         descriptionKu: 'Rojên taybet û kevneşopî',
         descriptionTr: 'Özel günler ve ananeler',
@@ -66,7 +66,7 @@ class SubcategoryConfig {
       ),
       SubcategoryInfo(
         id: 'tistonek',
-        nameKu: 'Tiştonek / Bilmece',
+        nameKu: 'Tiştonek',
         nameTr: 'Bilmeceler & Zekâ',
         descriptionKu: 'Bilmeceyên kurdî yên gelêrî',
         descriptionTr: 'Geleneksel Kürt bilmeceleri ve zeka soruları',
@@ -90,7 +90,7 @@ class SubcategoryConfig {
       SubcategoryInfo(
         id: 'sexsiyet',
         nameKu: 'Şexsiyetên Dîrokî',
-        nameTr: 'Tarihi Şahsiyetler',
+        nameTr: 'Tarihî Şahsiyetler',
         descriptionKu: 'Kesên navdar û pêşeng',
         descriptionTr: 'Öncü ve tanınmış şahsiyetler',
       ),
@@ -129,7 +129,7 @@ class SubcategoryConfig {
       SubcategoryInfo(
         id: 'bajar_ci',
         nameKu: 'Bajar û Cî',
-        nameTr: 'Şehirler & Mekanlar',
+        nameTr: 'Şehirler & Mekânlar',
         descriptionKu: 'Bajar û navçeyên kurdî',
         descriptionTr: 'Kürt şehirleri ve bölgeleri',
       ),

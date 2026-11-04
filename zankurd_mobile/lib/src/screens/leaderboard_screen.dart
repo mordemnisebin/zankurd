@@ -543,7 +543,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         if (i > 0) above = entries[i - 1];
       }
     }
-    final labels = ku ? ['Roj', 'Heft', 'Meh'] : ['Gün', 'Hafta', 'Ay'];
+    final labels = ku ? ['Roj', 'Hefte', 'Meh'] : ['Gün', 'Hafta', 'Ay'];
     final period = labels[LeaderboardPeriod.values.indexOf(_period)];
     LeaderboardArenaHeader header(LeaderboardEntry? me, int? nextScore) {
       final ranked = me != null && me.rank > 0 && me.totalScore > 0;
@@ -1251,7 +1251,7 @@ class _PeriodRail extends StatelessWidget {
     final labels = [
       if (league) Tr.forKu(K.lgSegment, ku),
       ...(ku
-          ? ['Roj', 'Heft', 'Meh', 'Heval']
+          ? ['Roj', 'Hefte', 'Meh', 'Heval']
           : ['Gün', 'Hafta', 'Ay', 'Arkadaş']),
     ];
     // Çip görselde 44; dokunma kutusu ve ekran okuyucu düğümü 48

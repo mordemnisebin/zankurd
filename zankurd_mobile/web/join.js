@@ -13,6 +13,7 @@
       codeLabel: 'Koda vexwendinê',
       copy: 'Kodê kopî bike',
       copied: 'Hate kopîkirin',
+      languageToggleLabel: 'Ziman biguherîne',
       openApp: 'Di sepanê de veke',
       noApp: 'Sepan tune?',
       playWeb: 'Di gerokê de bilîze',
@@ -24,6 +25,7 @@
       codeLabel: 'Davet kodu',
       copy: 'Kodu kopyala',
       copied: 'Kopyalandı',
+      languageToggleLabel: 'Dili değiştir',
       openApp: 'Uygulamada aç',
       noApp: 'Uygulama yok mu?',
       playWeb: 'Tarayıcıda oyna',
@@ -74,6 +76,7 @@
     $('no-app').textContent = s.noApp;
     $('web-link').textContent = s.playWeb;
     $('lang-toggle').textContent = lang === 'tr' ? 'KU' : 'TR';
+    $('lang-toggle').setAttribute('aria-label', s.languageToggleLabel);
   }
 
   function openApp() {

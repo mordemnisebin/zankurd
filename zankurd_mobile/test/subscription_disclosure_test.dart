@@ -218,6 +218,13 @@ void main() {
       expect(monthlyEquivalentPrice('₺1.199,88', 1199.88), '₺99,99');
     });
 
+    test('virgül binlik ayırıcıysa ondalık ayırıcı nokta kalır', () {
+      // Bekçi: yalnız `contains(',')` bakan eski kural yıllık \$1,200.00'ü
+      // aylık \$100,00 yapıyordu (binlik ile ondalık karışıyordu).
+      expect(monthlyEquivalentPrice(r'$1,200.00', 1200), r'$100.00');
+      expect(monthlyEquivalentPrice('₺1.200,00', 1200), '₺100,00');
+    });
+
     test('fiyat bilinmiyorken birim fiyat uydurulmaz', () {
       // RevenueCat ürünü çözemediğinde `price` 0 döner. O anda "≈ ₺0,00/ay"
       // yazmak, olmayan bir fiyatı varmış gibi göstermek olurdu.

@@ -1234,7 +1234,7 @@ class _MasteryRow extends StatelessWidget {
             Text(
               accuracy == null
                   ? '${groupThousands(count)}/${groupThousands(threshold)} · ${Tr.forKu(K.masteryEvidencePending, isKu, {'correct': groupThousands(count)})}'
-                  : '${groupThousands(count)}/${groupThousands(threshold)} · ${Tr.forKu(K.masteryEvidenceLabel, isKu, {'correct': groupThousands(count), 'answered': groupThousands(answered), 'accuracy': groupThousands(accuracy)})}',
+                  : '${groupThousands(count)}/${groupThousands(threshold)} · ${Tr.forKu(K.masteryEvidenceLabel, isKu, {'correct': groupThousands(count), 'answered': groupThousands(answered), 'accuracy': PercentFormat.value(accuracy, isKu: isKu)})}',
               style: SahneType.caption.copyWith(color: t.tx2),
             ),
         ],

@@ -364,7 +364,7 @@ void main() {
       coinReward: 30,
     );
     expect(keep.labelKu, 'Zincîra xwe biparêze');
-    expect(keep.labelTr, 'Serisini koru');
+    expect(keep.labelTr, 'Serini koru');
 
     final seriya = RegExp(r'\bseriya\b', caseSensitive: false);
     for (final type in MissionType.values) {

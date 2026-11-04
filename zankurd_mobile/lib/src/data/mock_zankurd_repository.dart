@@ -2729,7 +2729,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'everyday_3',
         slug: 'everyday_3',
-        titleKu: 'Pratikên rojane',
+        titleKu: 'Pratîkên rojane',
         titleTr: 'Günlük pratik ifadeler',
         category: 'everyday',
         iconName: 'forum',
