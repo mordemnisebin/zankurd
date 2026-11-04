@@ -172,6 +172,8 @@ void main() {
           'correctAnswerTr',
         },
         'ds_teknoloji_0130': {'answers', 'correctAnswer'},
+        // 2026-11-09 simülatör turu 5: karışan şık yazımı (nivistina → razana), anlam ve konum aynı.
+        'ds_ziman_0138': {'answers', 'correctAnswer'},
         'ds_cand_0033': {'explanation', 'explanationTr', 'prompt', 'promptTr'},
         'ds_cand_0035': {'explanation', 'explanationTr', 'prompt', 'promptTr'},
         'ds_cand_0159': {

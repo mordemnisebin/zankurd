@@ -485,6 +485,7 @@ class _QuizScreenState extends State<QuizScreen>
         target,
         photoKey: _photoKeyFor(index),
         topKey: _promptCardKeyFor(index),
+        cardTopWins: widget.practice,
         duration: const Duration(milliseconds: 320),
         // Öğrenme akışında doğru şıkkın hemen altında açıklama kutusu
         // belirir ve asıl öğretici içerik odur; karo yukarı alınarak
@@ -529,6 +530,7 @@ class _QuizScreenState extends State<QuizScreen>
         target,
         photoKey: _photoKeyFor(index),
         topKey: _promptCardKeyFor(index),
+        cardTopWins: widget.practice,
         duration: sahneMotionReduced(context)
             ? Duration.zero
             : const Duration(milliseconds: 320),

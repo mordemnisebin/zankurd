@@ -105,6 +105,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
   /// "Ayrıntılı istatistik" bağlantısıyla açılan ayrıntı paneli.
   bool _statsDetailsOpen = false;
 
+  /// Ayrıntı panelinin anahtarı: açılınca görünür alana kaydırılır.
+  final GlobalKey _statsDetailsKey = GlobalKey();
+
+  /// "Ayrıntılı istatistik" bağlantısı paneli, altı karonun ARKASINDA açar;
+  /// ilk ekranda hiçbir şey değişmiyor gibiydi (simülatör turu 5, 108B-110B:
+  /// üç dokunuş = aç/kapat/aç, oyuncu "ölü dokunuş" sandı). Açılınca panel
+  /// görünür alana kaydırılır.
+  void _toggleStatsDetails() {
+    final opening = !_statsDetailsOpen;
+    setState(() => _statsDetailsOpen = opening);
+    if (!opening) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final target = _statsDetailsKey.currentContext;
+      if (target == null) return;
+      Scrollable.ensureVisible(
+        target,
+        alignment: 0.05,
+        duration: sahneMotionReduced(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 300),
+        curve: Curves.easeOutCubic,
+      );
+    });
+  }
+
   Map<String, Map<String, int>>? _weeklyHistory;
   bool _loading = true;
 
@@ -501,8 +527,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SahneSectionHeader(
             title: context.t(K.myStats),
             actionLabel: context.t(K.detailedStats),
-            onAction: () =>
-                setState(() => _statsDetailsOpen = !_statsDetailsOpen),
+            onAction: _toggleStatsDetails,
           ),
           // Sunucu satırı yoksa yerel ilerleme de gizleniyordu: çevrimdışı
           // 2 soru cevaplamış oyuncu kendi cevapladığı soru sayısını
@@ -667,39 +692,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
           // Detaylı analiz (grafik, kategori ustalığı, güçlü/zayıf yön) —
           // sadelik için varsayılan kapalı; başlıktaki bağlantı açar.
           if (_statsDetailsOpen)
-            SahneSurfaceCard(
-              key: const ValueKey('profile-detailed-stats'),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _SubHeading(context.t(K.weeklyPerformance)),
-                  const SizedBox(height: SahneSpace.x3),
-                  if (_weeklyHistory == null)
-                    SizedBox(
-                      height: 160,
-                      child: Center(
-                        child: Text(
-                          context.t(K.performanceLoadFail),
-                          style: SahneType.caption.copyWith(
-                            color: SahneTokens.of(context).tx2,
+            KeyedSubtree(
+              key: _statsDetailsKey,
+              child: SahneSurfaceCard(
+                key: const ValueKey('profile-detailed-stats'),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _SubHeading(context.t(K.weeklyPerformance)),
+                    const SizedBox(height: SahneSpace.x3),
+                    if (_weeklyHistory == null)
+                      SizedBox(
+                        height: 160,
+                        child: Center(
+                          child: Text(
+                            context.t(K.performanceLoadFail),
+                            style: SahneType.caption.copyWith(
+                              color: SahneTokens.of(context).tx2,
+                            ),
                           ),
                         ),
+                      )
+                    else
+                      WeeklyPerformanceChart(
+                        history: _weeklyHistory!,
+                        isKu: ku,
                       ),
-                    )
-                  else
-                    WeeklyPerformanceChart(history: _weeklyHistory!, isKu: ku),
-                  const SizedBox(height: SahneSpace.x6),
-                  _PedagogicalAnalyticsSection(isKu: ku),
-                  const SizedBox(height: SahneSpace.x6),
-                  StrengthMapSection(
-                    isKu: ku,
-                    refreshSignal: widget.refreshSignal,
-                  ),
-                  if (_masteryStore != null) ...[
                     const SizedBox(height: SahneSpace.x6),
-                    _MasterySection(store: _masteryStore!, isKu: ku),
+                    _PedagogicalAnalyticsSection(isKu: ku),
+                    const SizedBox(height: SahneSpace.x6),
+                    StrengthMapSection(
+                      isKu: ku,
+                      refreshSignal: widget.refreshSignal,
+                    ),
+                    if (_masteryStore != null) ...[
+                      const SizedBox(height: SahneSpace.x6),
+                      _MasterySection(store: _masteryStore!, isKu: ku),
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
           // 2026-10-24: kişisel rekorlar ve son maçlar. Çevrimdışı/yerel
