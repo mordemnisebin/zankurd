@@ -40,6 +40,7 @@ import 'lesson_completion_store.dart';
 import 'learning_lesson_aliases.dart';
 import 'local_progress_scope.dart';
 import 'mock_zankurd_repository.dart';
+import 'pending_operation_store.dart';
 import 'xp_store.dart';
 import 'zankurd_repository.dart';
 
@@ -3441,9 +3442,63 @@ class SupabaseZanKurdRepository
     }
   }
 
+  /// `false`: sunucuda `spin_wheel_once` yok (göç uygulanmamış); eski iki
+  /// çağrılı yol kullanılır. Yalnız KESİN "işlev yok" yanıtı saklanır.
+  bool _spinOnceSupported = true;
+
+  /// Sunucu kimlikli tek çağrı: günlük hak, olmazsa satın alınmış ek hak;
+  /// aynı kimlikle tekrar ÖNCEKİ ödülü döndürür (ek hak yakılmaz). Kimlik
+  /// çağrıdan önce kalıcı yazılır, yalnız kesin yanıtta silinir
+  /// (`PendingOperationStore`). Dönüş: ödül; hak yoksa 0.
+  Future<int?> _awardSpinOnce() async {
+    final owner = currentUserId;
+    if (!_spinOnceSupported || owner == null) return null;
+    final key = await PendingOperationStore.idFor('spin', owner);
+    final dynamic response;
+    try {
+      response = await client.rpc<dynamic>(
+        'spin_wheel_once',
+        params: {'p_idempotency_key': key},
+      );
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) {
+        _spinOnceSupported = false;
+        await PendingOperationStore.clear('spin', owner);
+        return null;
+      }
+      _recordError(error, stack, reason: 'spin_wheel_once failed');
+      rethrow; // Kimlik KALIR: yeniden deneme aynı kimlikle gider.
+    }
+    final row = _firstRow(response);
+    if (row == null) return 0; // Beklenmeyen biçim: kimlik kalır.
+    await PendingOperationStore.clear('spin', owner);
+    if (row['success'] != true) return 0;
+    final amount = (row['amount'] as num?)?.toInt() ?? 0;
+    // Yerel "bugün çevirdim" işareti yalnız GÜNLÜK hak için (eski yol gibi).
+    if (amount > 0 && row['kind'] == 'daily') await _markSpunToday();
+    return amount;
+  }
+
+  Future<void> _markSpunToday() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final marker = _spinMarker(spinDayKey(DateTime.now()));
+      if (marker != null) await prefs.setString(_lastSpinKey, marker);
+    } catch (error, stack) {
+      _recordError(
+        error,
+        stack,
+        reason: 'awardSpinCoins preference update failed',
+      );
+    }
+  }
+
   @override
   Future<int> awardSpinCoins() async {
     try {
+      final once = await _awardSpinOnce();
+      if (once != null) return once;
+
       final row = _firstRow(await client.rpc<dynamic>('award_spin_coins'));
       if (row == null) return 0;
 
@@ -3456,19 +3511,7 @@ class SupabaseZanKurdRepository
       }
 
       final amount = (row['reward_amount'] as num?)?.toInt() ?? 0;
-      if (amount > 0) {
-        try {
-          final prefs = await SharedPreferences.getInstance();
-          final marker = _spinMarker(spinDayKey(DateTime.now()));
-          if (marker != null) await prefs.setString(_lastSpinKey, marker);
-        } catch (error, stack) {
-          _recordError(
-            error,
-            stack,
-            reason: 'awardSpinCoins preference update failed',
-          );
-        }
-      }
+      if (amount > 0) await _markSpunToday();
       return amount;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'awardSpinCoins failed');
@@ -4783,6 +4826,58 @@ class SupabaseZanKurdRepository
     );
   }
 
+  /// `false`: sunucuda istek kimlikli düello aşırı yüklemeleri yok (göç
+  /// uygulanmamış); eski anahtarsız çağrı kullanılır.
+  bool _duelRequestIdSupported = true;
+
+  /// Düello oluşturan RPC'yi KALICI istek kimliğiyle çağırır. Kimlik çağrıdan
+  /// önce yazılır; yanıtı kaybolan çağrının yeniden denemesi sunucuda önceki
+  /// düelloyu bulur (yeni düello açmaz). Başarıyla ayrıştırılan yanıtta
+  /// silinir; taşıma hatasında ve sunucu hatasında kalır (en çok 10 dakika,
+  /// kapsam değişirse yenilenir).
+  Future<AsyncDuelStart> _createDuelOnce({
+    required String kind,
+    required String scope,
+    required String legacyRpc,
+    required Map<String, dynamic> legacyParams,
+  }) async {
+    final owner = currentUserId;
+    dynamic response;
+    var usedKey = false;
+    if (_duelRequestIdSupported && owner != null) {
+      final requestId = await PendingOperationStore.idFor(
+        kind,
+        owner,
+        scope: scope,
+        maxAge: const Duration(minutes: 10),
+      );
+      try {
+        response = await client.rpc(
+          legacyRpc,
+          params: {...legacyParams, 'p_request_id': requestId},
+        );
+        usedKey = true;
+      } catch (error, stack) {
+        if (!isMissingRpcError(error)) {
+          _recordError(error, stack, reason: 'duel request-id rpc failed');
+          rethrow; // Kimlik KALIR.
+        }
+        _duelRequestIdSupported = false;
+        await PendingOperationStore.clear(kind, owner);
+      }
+    }
+    if (!usedKey) {
+      response = await client.rpc(legacyRpc, params: legacyParams);
+    }
+    final start = await _withDuelProfiles(
+      AsyncDuelStart.fromJson(_requiredJsonObject(response, legacyRpc)),
+    );
+    if (usedKey && owner != null) {
+      await PendingOperationStore.clear(kind, owner);
+    }
+    return start;
+  }
+
   @override
   Future<AsyncDuelStart> startAsyncDuel({String? category}) async {
     try {
@@ -4790,14 +4885,11 @@ class SupabaseZanKurdRepository
         await signInAnonymously();
       }
       await ensureProfile();
-      final response = await client.rpc(
-        'start_async_duel',
-        params: {'p_category': category},
-      );
-      return _withDuelProfiles(
-        AsyncDuelStart.fromJson(
-          _requiredJsonObject(response, 'start_async_duel'),
-        ),
+      return await _createDuelOnce(
+        kind: 'duel_start',
+        scope: category ?? '',
+        legacyRpc: 'start_async_duel',
+        legacyParams: {'p_category': category},
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'startAsyncDuel failed');
@@ -5181,14 +5273,11 @@ class SupabaseZanKurdRepository
         await signInAnonymously();
       }
       await ensureProfile();
-      final response = await client.rpc(
-        'create_async_duel_challenge',
-        params: {'p_category': category, 'p_friend_id': friendId},
-      );
-      return _withDuelProfiles(
-        AsyncDuelStart.fromJson(
-          _requiredJsonObject(response, 'create_async_duel_challenge'),
-        ),
+      return await _createDuelOnce(
+        kind: 'duel_challenge',
+        scope: '${category ?? ''}|${friendId ?? ''}',
+        legacyRpc: 'create_async_duel_challenge',
+        legacyParams: {'p_category': category, 'p_friend_id': friendId},
       );
     } catch (error, stack) {
       if (isMissingRpcError(error)) _challengeRpcSupported = false;

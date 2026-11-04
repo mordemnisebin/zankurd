@@ -23,6 +23,8 @@ import '../services/notification_service.dart';
 import '../services/notification_sync.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../data/streak_store.dart';
+import '../services/streak_repair_service.dart';
 import '../utils/join_deep_link.dart';
 import '../widgets/branded_loader.dart';
 import '../widgets/offline_banner.dart';
@@ -276,9 +278,23 @@ class _AppShellState extends State<AppShell>
     if (!mounted || !context.read<AuthProvider>().isAuthenticated) return;
     final repository = _repository;
     final user = repository.currentUserId;
-    final recovered = await PaidFreezeRecoveryService.recoverPendingSolo(
+    var recovered = await PaidFreezeRecoveryService.recoverPendingSolo(
       repository,
     );
+    // Ödenmiş ama yerelde uygulanamamış seri onarımı (kalıcı niyet).
+    try {
+      if (repository.currentUserId == user &&
+          LocalProgressScope.activeUserId == user) {
+        recovered =
+            await StreakRepairService.recoverPending(
+              repository: repository,
+              store: await StreakStore.load(),
+            ) ||
+            recovered;
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'streak repair recovery');
+    }
     if (!recovered ||
         !mounted ||
         !identical(_repository, repository) ||

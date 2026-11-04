@@ -574,7 +574,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // düşerse görev alınmamış kalır ve "XP kazandın" denmez.
     final claimed = await missionStore.claimRewardAfter(mission, () async {
       final xpStore = await XPStore.load();
-      await xpStore.addXP(mission.xpReward);
+      await xpStore.addXP(
+        mission.xpReward,
+        operationId: missionStore.claimOperationId(mission),
+      );
     });
     if (!claimed) return;
 
