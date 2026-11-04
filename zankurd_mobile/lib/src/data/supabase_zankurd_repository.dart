@@ -102,6 +102,7 @@ int _requiredInt(Map<String, dynamic> json, List<String> keys) {
 /// `get_my_favorite_questions` tek çağrıda en çok 200 kimlik alır; parça
 /// boyutu bunun çok altında tutulur.
 const _favoriteResolveChunk = 50;
+const _favoriteResolveConcurrency = 3;
 
 final _uuidPattern = RegExp(
   r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$',
@@ -2553,36 +2554,58 @@ class SupabaseZanKurdRepository
     List<String> ids,
   ) async {
     final resolved = <String, QuizQuestion>{};
-    for (var start = 0; start < ids.length; start += _favoriteResolveChunk) {
-      final chunk = ids.sublist(
-        start,
-        min(start + _favoriteResolveChunk, ids.length),
-      );
-      try {
-        final response = await client.rpc(
-          'get_my_favorite_questions',
-          params: {'p_ids': chunk},
-        );
-        if (response is! List) continue;
-        for (final row in response.whereType<Map>()) {
-          final question = QuizQuestion.fromServerRow(
-            Map<String, dynamic>.from(row),
+    final chunks = <List<String>>[
+      for (var start = 0; start < ids.length; start += _favoriteResolveChunk)
+        ids.sublist(start, min(start + _favoriteResolveChunk, ids.length)),
+    ];
+    // Parçalar seri beklenmiyordu: 500 favori 10 ardışık gidiş-dönüştü
+    // (GPT-6 Pro alan 10). Küçük bir eşzamanlılık sınırıyla işçiler ortak
+    // kuyruktan çeker; taşıma hatası ilk fırlatana kadar işler.
+    var next = 0;
+    var migrationMissing = false;
+    Object? fatal;
+    StackTrace? fatalStack;
+    Future<void> worker() async {
+      while (fatal == null && !migrationMissing) {
+        if (next >= chunks.length) return;
+        final chunk = chunks[next++];
+        try {
+          final response = await client.rpc(
+            'get_my_favorite_questions',
+            params: {'p_ids': chunk},
           );
-          resolved[question.id] = question;
+          if (response is! List) continue;
+          for (final row in response.whereType<Map>()) {
+            final question = QuizQuestion.fromServerRow(
+              Map<String, dynamic>.from(row),
+            );
+            resolved[question.id] = question;
+          }
+        } catch (error, stack) {
+          if (error is PostgrestException && error.code == 'PGRST202') {
+            // Göç henüz uygulanmadı: kalan parçalar da aynı yanıtı verir.
+            migrationMissing = true;
+            return;
+          }
+          _recordError(
+            error,
+            stack,
+            reason: 'loadFavoriteQuestions server resolve failed',
+          );
+          if (isLikelyOfflineError(error)) {
+            fatal ??= error;
+            fatalStack ??= stack;
+            return;
+          }
         }
-      } catch (error, stack) {
-        if (error is PostgrestException && error.code == 'PGRST202') {
-          // Göç henüz uygulanmadı: kalan parçalar da aynı yanıtı verir.
-          return resolved;
-        }
-        _recordError(
-          error,
-          stack,
-          reason: 'loadFavoriteQuestions server resolve failed',
-        );
-        if (isLikelyOfflineError(error)) rethrow;
       }
     }
+
+    await Future.wait([
+      for (var i = 0; i < min(_favoriteResolveConcurrency, chunks.length); i++)
+        worker(),
+    ]);
+    if (fatal != null) Error.throwWithStackTrace(fatal!, fatalStack!);
     return resolved;
   }
 

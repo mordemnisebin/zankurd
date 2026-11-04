@@ -1,5 +1,6 @@
 import 'package:zankurd_mobile/src/utils/number_format.dart';
 
+import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/material.dart';
 
 import '../config/category_visuals.dart';
@@ -28,15 +29,42 @@ class FavoriteQuestionsScreen extends StatefulWidget {
 class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
   late Future<List<QuizQuestion>> _favoritesFuture;
 
+  /// Son başarıyla yüklenen liste; silmede yeniden indirmek yerine bundan
+  /// düşülür (GPT-6 Pro alan 10: her silme bütün uzak çözümü tekrarlıyordu).
+  List<QuizQuestion>? _loaded;
+
   @override
   void initState() {
     super.initState();
-    _favoritesFuture = widget.repository.loadFavoriteQuestions();
+    _favoritesFuture = _fetch();
+  }
+
+  Future<List<QuizQuestion>> _fetch() async {
+    final list = await widget.repository.loadFavoriteQuestions();
+    _loaded = list;
+    return list;
   }
 
   void _reload() {
     setState(() {
-      _favoritesFuture = widget.repository.loadFavoriteQuestions();
+      _favoritesFuture = _fetch();
+    });
+  }
+
+  void _dropLocally(QuizQuestion question) {
+    final current = _loaded;
+    if (current == null) {
+      _reload();
+      return;
+    }
+    final next = [
+      for (final q in current)
+        if (q.id != question.id) q,
+    ];
+    _loaded = next;
+    setState(() {
+      // Eşzamanlı Future: FutureBuilder bir kare "yükleniyor" göstermez.
+      _favoritesFuture = SynchronousFuture(next);
     });
   }
 
@@ -70,7 +98,7 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(context.t(K.questionRemoved))));
-    _reload();
+    _dropLocally(question);
   }
 
   @override

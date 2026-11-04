@@ -32,15 +32,35 @@ class TimeoutHttpClient extends http.BaseClient {
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
     final limit = timeoutFor(request.url);
-    final response = await _inner
-        .send(request)
-        .timeout(
-          limit,
-          onTimeout: () => throw TimeoutException(
+    final pending = _inner.send(request);
+    var timedOut = false;
+    final http.StreamedResponse response;
+    try {
+      response = await pending.timeout(
+        limit,
+        onTimeout: () {
+          timedOut = true;
+          throw TimeoutException(
             'Request timed out: ${request.method} ${request.url.path}',
             limit,
+          );
+        },
+      );
+    } catch (_) {
+      if (timedOut) {
+        // `Future.timeout` alttaki isteği DURDURMAZ: başlıklar süre dolduktan
+        // sonra gelirse yanıt gövdesi kimsenin okumadığı bir akışta kalıp
+        // bağlantıyı tutuyordu (GPT-6 Pro alan 10). Geç gelen yanıtın akışını
+        // iptal ederek bağlantıyı bırakırız; paylaşılan istemci kapanmaz.
+        unawaited(
+          pending.then<void>(
+            (late) => late.stream.listen((_) {}).cancel(),
+            onError: (Object _) {},
           ),
         );
+      }
+      rethrow;
+    }
     // Sınır yalnız BAŞLIKLARIN gelişine uygulanıyordu: başlıkları gelip
     // gövdesi yarıda takılan yanıt süresiz asılı kalıyordu (Codex denetimi
     // 2026-10-29). Gövdede de her parça arasında aynı sınır boşta kalma

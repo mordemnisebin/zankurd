@@ -113,7 +113,14 @@ class _PronunciationSheetState extends State<PronunciationSheet> {
   @override
   void initState() {
     super.initState();
-    _sweepStale();
+    // İlk kareden SONRA: panel açılışı geçici dizin boyutuna bağlı disk işini
+    // beklemez (GPT-6 Pro alan 10). Süpürme ilk karenin sonunda EŞZAMANLI koşar (eşzamansız olsaydı yeni
+    // kayda yarışabilirdi); kayıt
+    // ancak bir kullanıcı dokunuşundan sonra başlar, yani süpürme her zaman
+    // yeni kayıt dosyasından önce biter (yeni dosyayı silemez).
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _sweepStale();
+    });
   }
 
   /// Önceki oturumdan kalan kayıtları siler (uygulama kayıt sırasında
