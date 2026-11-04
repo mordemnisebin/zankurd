@@ -8705,19 +8705,16 @@ class LearnerLexicon {
     final index = _wordIndex ??= _buildWordIndex();
     final exact = index[key];
     if (exact != null) return exact;
-    LearnerLexiconEntry? best;
-    var bestLength = 0;
-    for (final item in index.entries) {
-      final length = item.key.length;
-      if (length >= 4 &&
-          length > bestLength &&
-          key.length - length <= 3 &&
-          key.startsWith(item.key)) {
-        best = item.value;
-        bestLength = length;
-      }
+    // Kök en az 4 harf, geriye en çok 3 harflik ek kalır: aday uzunluklar
+    // yalnız key.length..key.length-3. Uzundan kısaya ilk eşleşme "en uzun
+    // kök"tür; bütün indeksi taramak yerine en çok 3 map araması (GPT-6 Pro
+    // alan 10).
+    final shortest = key.length - 3 < 4 ? 4 : key.length - 3;
+    for (var length = key.length - 1; length >= shortest; length--) {
+      final hit = index[key.substring(0, length)];
+      if (hit != null) return hit;
     }
-    return best;
+    return null;
   }
 
   static Map<String, LearnerLexiconEntry>? _wordIndex;

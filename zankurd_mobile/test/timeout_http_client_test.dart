@@ -27,6 +27,7 @@ class _StalledBodyClient extends http.BaseClient {
 }
 
 void main() {
+  lateResponseCancelTest();
   // Codex denetimi 2026-10-29 (performans #5): sınır yalnız başlıklara
   // uygulanıyordu; gövdesi takılan yanıt süresiz asılıyordu.
   test(
@@ -68,4 +69,38 @@ void main() {
     final source = File('lib/main.dart').readAsStringSync();
     expect(source, contains('httpClient: TimeoutHttpClient()'));
   });
+}
+
+// Bekçi: başlık zaman aşımından SONRA gelen yanıt gövdesi iptal edilmeli
+// (GPT-6 Pro alan 10, 2026-11-04). `Future.timeout` alttaki isteği durdurmaz;
+// geç yanıt okunmadan kalırsa bağlantı ve gövde kaynağı sızar.
+void lateResponseCancelTest() {
+  test(
+    'başlık sınırı aşıldıktan sonra gelen yanıtın akışı iptal edilir',
+    () async {
+      final late = Completer<http.StreamedResponse>();
+      var cancelled = false;
+      final controller = StreamController<List<int>>(
+        onCancel: () => cancelled = true,
+      );
+      final client = TimeoutHttpClient(
+        _CompleterClient(late.future),
+        (_) => const Duration(milliseconds: 20),
+      );
+      await expectLater(
+        client.get(Uri.parse('https://example.supabase.co/rest/v1/x')),
+        throwsA(isA<TimeoutException>()),
+      );
+      late.complete(http.StreamedResponse(controller.stream, 200));
+      await Future<void>.delayed(const Duration(milliseconds: 20));
+      expect(cancelled, isTrue);
+    },
+  );
+}
+
+class _CompleterClient extends http.BaseClient {
+  _CompleterClient(this._future);
+  final Future<http.StreamedResponse> _future;
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) => _future;
 }

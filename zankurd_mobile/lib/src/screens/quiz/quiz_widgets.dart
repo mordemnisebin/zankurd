@@ -40,9 +40,16 @@ const int _questionImageMemCacheWidth = 1080;
 /// `_QuestionImage`'ın çizdiği görselle AYNI önbellek anahtarını veren
 /// sağlayıcı: sıradaki sorunun görseli önceden yüklenirken
 /// (`_precacheNextQuestionVisual`) çizimde yeniden indirilmesin.
-ImageProvider _questionImageProvider(String url) {
+///
+/// Yerel (asset) görselde de aynı `ResizeImage` sarmalı kullanılır: kart
+/// `Image.asset(cacheWidth: 1080)` çizer; ön yükleme düz `AssetImage` ile
+/// yapılınca anahtarlar eşleşmiyor, ön yükleme boşa gidiyordu (GPT-6 Pro
+/// alan 10). Büyütme görünümü tam çözünürlük için [full] ister.
+ImageProvider _questionImageProvider(String url, {bool full = false}) {
   if (url.startsWith('asset://')) {
-    return AssetImage(url.replaceFirst('asset://', ''));
+    final asset = AssetImage(url.replaceFirst('asset://', ''));
+    if (full) return asset;
+    return ResizeImage.resizeIfNeeded(_questionImageMemCacheWidth, null, asset);
   }
   return ResizeImage.resizeIfNeeded(
     _questionImageMemCacheWidth,
@@ -256,7 +263,7 @@ class _ZoomableQuestionImageState extends State<_ZoomableQuestionImage> {
 
   void _open() {
     if (_route?.isActive ?? false) return;
-    final provider = _questionImageProvider(widget.url);
+    final provider = _questionImageProvider(widget.url, full: true);
     final label = widget.label;
     final route = DialogRoute<void>(
       context: context,

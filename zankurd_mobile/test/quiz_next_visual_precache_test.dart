@@ -46,7 +46,13 @@ void main() {
       tester.element(find.byType(QuizScreen)),
     );
     final key = await tester.runAsync(
-      () => const AssetImage(second).obtainKey(config),
+      // Kartın çizdiği `Image.asset(cacheWidth: 1080)` ile AYNI anahtar
+      // (GPT-6 Pro alan 10): düz AssetImage anahtarı kartla eşleşmiyordu.
+      () => ResizeImage.resizeIfNeeded(
+        1080,
+        null,
+        const AssetImage(second),
+      ).obtainKey(config),
     );
     expect(
       imageCache.statusForKey(key!).tracked,
