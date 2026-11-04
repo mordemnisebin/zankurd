@@ -3516,7 +3516,14 @@ class _CrowdStandings extends StatelessWidget {
       }
       blocks.add(
         SahneListGroup(
-          children: [for (final row in pending) WholeScrollRow(child: row)],
+          children: [
+            // Bloğun İLK satırı hiç gizlenmez: başlığın altı boş kalmasın
+            // (simülatör turu 5, 89B/89C: "Rêzbendiya pêşbirkê" altı boştu).
+            // Sonraki satırlar alt sınırda yarım gösterilmez (T17), kaydırınca
+            // görünür.
+            for (final (i, row) in pending.indexed)
+              if (blocks.isEmpty && i == 0) row else WholeScrollRow(child: row),
+          ],
         ),
       );
       pending = <Widget>[];

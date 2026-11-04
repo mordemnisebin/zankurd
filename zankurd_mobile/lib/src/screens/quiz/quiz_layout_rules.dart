@@ -69,6 +69,7 @@ void _revealKeepingPhoto(
   required double alignment,
   required Duration duration,
   Curve curve = Curves.easeOutCubic,
+  bool cardTopWins = false,
 }) {
   final renderObject = target.findRenderObject();
   if (renderObject == null || !renderObject.attached) return;
@@ -121,6 +122,23 @@ void _revealKeepingPhoto(
     }
   }
   offset = offset.clamp(position.minScrollExtent, position.maxScrollExtent);
+  // Simülatör turu 5 (2026-11-04): yukarıdaki "tamamen kayar" kararı gövdenin
+  // en alt kaydırma sınırına takılınca kart yine YARIM kesik kalıyordu (üç
+  // satırlık soru, 375x667). Kart tamamen kaydırılamıyorsa üstü görünür
+  // kalır; açıklamanın kalanı kayarak okunur. Yalnız `cardTopWins` (alıştırma /
+  // mini sınav: alt perde zorluk düğmeleriyle yüksek) iken uygulanır; ders ve
+  // yarışta açıklama satırının perdenin üstünde görünmesi önceliklidir
+  // (`quiz_stage_scroll_test` S1).
+  if (cardTopWins && card is RenderBox && card.attached && card.hasSize) {
+    final cardTop = viewport.getOffsetToReveal(card, 0).offset;
+    final cardBottom = cardTop + card.size.height;
+    if (offset > cardTop - 4 && offset < cardBottom - 0.5) {
+      offset = (cardTop - 4).clamp(
+        position.minScrollExtent,
+        position.maxScrollExtent,
+      );
+    }
+  }
   if (duration == Duration.zero) {
     position.jumpTo(offset);
   } else {

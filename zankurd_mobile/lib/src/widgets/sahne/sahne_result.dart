@@ -1,5 +1,6 @@
 import 'package:zankurd_mobile/src/utils/number_format.dart';
 
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:provider/provider.dart';
 
 import '../../providers/reduced_motion_provider.dart';
+import '../../theme/app_icons.dart';
 import '../../theme/sahne.dart';
 import '../rolling_count.dart';
 import 'sahne_buttons.dart';
@@ -343,22 +345,25 @@ class SahneResultScaffold extends StatelessWidget {
             ),
           );
         } else {
-          scroll = ListView(
-            // Bölümler tek bir öğrenme yüzeyidir; kısa ekranlarda da
-            // erişilebilirlik ağacına birlikte girsinler. Kayıt sayısı tur
-            // soru sayısıyla sınırlı olduğu için geniş önbellek güvenlidir.
-            scrollCacheExtent: const ScrollCacheExtent.pixels(2500),
-            // Gövde zaten alt perdenin ÜSTÜNDE biter (`SahneStageScaffold`
-            // perde boyunu gövdeden düşer); listenin kendi alt boşluğu yalnız
-            // 16'dır: son bölüm perdenin 16 üstünde durur (perde boyu bir daha
-            // eklenmez — eskiden güvenli alanlı telefonda çifte boşluk vardı).
-            padding: EdgeInsets.fromLTRB(
-              side,
-              SahneSpace.x2,
-              side,
-              SahneSpace.x4,
+          scroll = _ResultMoreBelow(
+            builder: (controller) => ListView(
+              controller: controller,
+              // Bölümler tek bir öğrenme yüzeyidir; kısa ekranlarda da
+              // erişilebilirlik ağacına birlikte girsinler. Kayıt sayısı tur
+              // soru sayısıyla sınırlı olduğu için geniş önbellek güvenlidir.
+              scrollCacheExtent: const ScrollCacheExtent.pixels(2500),
+              // Gövde zaten alt perdenin ÜSTÜNDE biter (`SahneStageScaffold`
+              // perde boyunu gövdeden düşer); listenin kendi alt boşluğu yalnız
+              // 16'dır: son bölüm perdenin 16 üstünde durur (perde boyu bir daha
+              // eklenmez — eskiden güvenli alanlı telefonda çifte boşluk vardı).
+              padding: EdgeInsets.fromLTRB(
+                side,
+                SahneSpace.x2,
+                side,
+                SahneSpace.x4,
+              ),
+              children: items,
             ),
-            children: items,
           );
         }
         // Işınlar kahramanın dışına taşar; üst satırın (kapat, bağlam)
@@ -417,6 +422,96 @@ class SahneResultScaffold extends StatelessWidget {
         ),
         body: body,
       ),
+    );
+  }
+}
+
+/// Sonuç listesi altta devam ediyorsa (ödül kartı, sıralama satırları alt
+/// perdenin arkasında kesiliyor) alt ortada küçük bir "aşağı" düğmesi gösterir;
+/// dokununca listenin sonuna kayar. Kusur: simülatör turu 5'te (390x844)
+/// "Hat qezenckirin" kartının altı düz kesikti ve kaydırılabildiği anlaşılmıyordu.
+class _ResultMoreBelow extends StatefulWidget {
+  const _ResultMoreBelow({required this.builder});
+
+  final Widget Function(ScrollController controller) builder;
+
+  @override
+  State<_ResultMoreBelow> createState() => _ResultMoreBelowState();
+}
+
+class _ResultMoreBelowState extends State<_ResultMoreBelow> {
+  final ScrollController _controller = ScrollController();
+  bool _more = false;
+
+  void _sync(ScrollMetrics m) {
+    final more = m.extentAfter > 8;
+    if (more != _more) setState(() => _more = more);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Stack(
+      children: [
+        NotificationListener<ScrollMetricsNotification>(
+          onNotification: (n) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (mounted) _sync(n.metrics);
+            });
+            return false;
+          },
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (n) {
+              _sync(n.metrics);
+              return false;
+            },
+            child: widget.builder(_controller),
+          ),
+        ),
+        if (_more)
+          Positioned(
+            bottom: SahneSpace.x2,
+            left: 0,
+            right: 0,
+            child: Center(
+              // Süs: aynı içerik kaydırmayla erişilebilir; ekran okuyucuya
+              // ek bir düğme sunulmaz.
+              child: ExcludeSemantics(
+                child: GestureDetector(
+                  key: const ValueKey('result-more-below'),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    if (!_controller.hasClients) return;
+                    unawaited(
+                      _controller.animateTo(
+                        _controller.position.maxScrollExtent,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOutCubic,
+                      ),
+                    );
+                  },
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: t.s2,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: t.edge),
+                    ),
+                    child: SizedBox.square(
+                      dimension: 32,
+                      child: Icon(AppIcons.chevronDown, size: 18, color: t.tx),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

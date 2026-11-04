@@ -11,6 +11,7 @@ import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/services/quiz_reward_settlement_service.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
+import 'package:zankurd_mobile/src/widgets/whole_scroll_row.dart';
 import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
 
 import 'support/realistic_device.dart';
@@ -161,6 +162,51 @@ void main() {
       await tester.pumpAndSettle();
       expect(last.hitTestable(), findsOneWidget);
       expect(tester.getRect(row).bottom, lessThanOrEqualTo(viewport.bottom));
+    },
+  );
+
+  // Simülatör turu 5 (89B/89C): sıralamanın ilk satırı alt sınırda "yarım"
+  // sayılıp gizlenince başlığın altı BOŞ kalıyordu. Bloğun ilk satırı hiç
+  // gizlenmez; sonrakiler T17 gereği gizlenmeye devam eder.
+  testWidgets(
+    'sıralama başlığının altı boş kalmaz: ilk satır sınırda görünür',
+    (tester) async {
+      var straddled = 0;
+      await _pumpResult(tester, crowd: true, win: false, ku: true);
+      tester.view.physicalSize = const Size(402, 700);
+      await tester.pumpAndSettle();
+      final first = find
+          .byWidgetPredicate(
+            (w) =>
+                w is SahneListRow &&
+                w.key is ValueKey<String> &&
+                (w.key! as ValueKey<String>).value.startsWith(
+                  'crowd-standing-',
+                ) &&
+                !(w.key! as ValueKey<String>).value.contains('-me-'),
+          )
+          .first;
+      final state = tester.state<ScrollableState>(
+        find.byType(Scrollable).first,
+      );
+      final viewport = tester.getRect(find.byType(Scrollable).first);
+      for (var y = 0.0; y <= state.position.maxScrollExtent; y += 4) {
+        state.position.jumpTo(y);
+        await tester.pump();
+        final rect = tester.getRect(first);
+        if (rect.top < viewport.bottom - 4 &&
+            rect.bottom > viewport.bottom + 0.5) {
+          straddled++;
+          // Kırpıcı Rect.zero verirse satır boş çizilir: ilk satırın üstünde
+          // tam-satır kırpıcı olmamalı.
+          expect(
+            find.ancestor(of: first, matching: find.byType(WholeScrollRow)),
+            findsNothing,
+            reason: 'Kaydırma $y: ilk satır gizlenebilir (başlık altı boş).',
+          );
+        }
+      }
+      expect(straddled, greaterThan(0), reason: 'Sınır durumu bulunmalı.');
     },
   );
 

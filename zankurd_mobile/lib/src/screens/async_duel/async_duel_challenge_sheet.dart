@@ -7,6 +7,8 @@ import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../models/async_duel.dart';
 import '../../models/friend.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth_provider.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/error_reporter.dart';
@@ -98,8 +100,20 @@ class _ChallengeSheetState extends State<_ChallengeSheet> {
       _friendsFailed = false;
     });
     if (_friends != null) return;
+    // Misafir hesabın arkadaşı olamaz ve sunucu çağrısı yanıtsız kalabiliyordu:
+    // dokunuş "ölü" görünüyordu (simülatör turu 5, 96B-98B). Misafire sunucuya
+    // sorulmadan boş durum (bağlantı / rastgele rakip yolları) gösterilir.
+    final guest = context.read<AuthProvider?>()?.isGuest ?? false;
+    if (guest) {
+      setState(() => _friends = const <Friend>[]);
+      return;
+    }
     try {
-      final friends = await widget.repository.loadFriends();
+      // Yanıtsız kalan ağ çağrısı sonsuz dönen göstergede takılmasın: süre
+      // dolunca "yüklenemedi + yeniden dene" görünür.
+      final friends = await widget.repository.loadFriends().timeout(
+        const Duration(seconds: 12),
+      );
       if (!mounted) return;
       setState(() => _friends = friends);
     } catch (error, stack) {
