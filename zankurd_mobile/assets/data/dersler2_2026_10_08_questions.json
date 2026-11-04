@@ -1514,7 +1514,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "prompt": "Kîjan hevok rast e?",
-    "promptTr": "Hangi cümle doğrudur?",
+    "promptTr": "Hangi Kurmancî cümle doğrudur?",
     "answers": [
       "Ev kiras e.",
       "Kiras ev e sor.",
@@ -1522,13 +1522,13 @@
       "Ev e kiras."
     ],
     "answersTr": [
-      "Bu gömlektir.",
-      "Gömlek bu kırmızıdır (yanlış sıra).",
-      "Kırmızı gömlek bu (yanlış sıra).",
-      "Bu gömlektir (yanlış sıra)."
+      "Ev kiras e.",
+      "Kiras ev e sor.",
+      "Sor kiras ev.",
+      "Ev e kiras."
     ],
     "correctAnswer": "Ev kiras e.",
-    "correctAnswerTr": "Bu gömlektir.",
+    "correctAnswerTr": "Ev kiras e.",
     "explanation": "Doğru sıra Ev + ad + e biçimindedir.",
     "explanationKu": "Rêza rast Ev + navdêr + e ye.",
     "explanationTr": "Doğru sıra Ev + ad + e biçimindedir.",
@@ -3725,8 +3725,8 @@
     "category": "Ziman",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Ez her roj nan ___. Kîjan lêker rast e?",
-    "promptTr": "Ben her gün ekmek ... Hangi fiil doğrudur?",
+    "prompt": "Ez her roj nan ___. Lêkera \"xwarin\" li gorî \"ez\" çawa tê kişandin?",
+    "promptTr": "Ben her gün ekmek ___. \"Yemek\" (xwarin) fiili \"ez\" (ben) ile nasıl çekilir?",
     "answers": [
       "dixwim",
       "diçim",
@@ -4291,8 +4291,8 @@
     "category": "Ziman",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Ji bo \"ew\" bi lêkera xwarinê kîjan lêker rast e?",
-    "promptTr": "\"ew\" öznesi ile xwarin (yemek) fiilinde hangi çekim doğrudur?",
+    "prompt": "Ji bo \"ew\" (yekjimar) bi lêkera xwarinê kîjan lêker rast e?",
+    "promptTr": "Tekil \"ew\", yani \"o\" öznesi ile xwarin (yemek) fiilinde hangi çekim doğrudur?",
     "answers": [
       "dixwim",
       "dixwî",

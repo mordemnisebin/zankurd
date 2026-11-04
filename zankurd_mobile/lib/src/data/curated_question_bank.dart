@@ -393,7 +393,7 @@ const curatedQuestionBank = <QuizQuestion>[
     id: 'curated_movement_0012',
     category: 'Siyaset',
     prompt:
-        'Di hevoka "Jin di meclîsê de dengê xwe bilind kir" de "dengê xwe bilind kir" çi tê wate kirin?',
+        'Di hevoka "Jinê di meclîsê de dengê xwe bilind kir" de "dengê xwe bilind kir" çi tê wate kirin?',
     answers: [
       'Raman û daxwaza xwe eşkere kir',
       'Bi dengê muzîkê razî bû',
@@ -402,7 +402,7 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswer: 'Raman û daxwaza xwe eşkere kir',
     promptTr:
-        '"Jin di meclîsê de dengê xwe bilind kir" cümlesinde "dengê xwe bilind kir" ne anlama gelir?',
+        '"Jinê di meclîsê de dengê xwe bilind kir" cümlesinde "dengê xwe bilind kir" ne anlama gelir?',
     answersTr: [
       'Düşüncesini ve talebini açıkça dile getirdi',
       'Müziğin sesine razı oldu',
@@ -1210,15 +1210,15 @@ const curatedQuestionBank = <QuizQuestion>[
     answersTr: ['1992', '2003', '2005', '2017'],
     correctAnswerTr: '1992',
     explanation:
-        'Di 1992î de piştî rizgarbûnê, HKK (Hikumeta Herêma Kurdistanê) ava kirin; ew yekem hikûmeta kurdî ya nûdem bû.',
+        'Hikûmeta Herêma Kurdistanê (HKK) di sala 1992an de, piştî hilbijartinên parlamentoyê, hat avakirin.',
     difficulty: 2,
     metadata: _academikSource,
     explanationKu:
-        'Piştî 1991ê Hikûmeta Herêma Kurdistanê hat avakirin; ew yekem '
-        'hikûmeta kurdî ya nûdem bû.',
+        'Hikûmeta Herêma Kurdistanê di sala 1992an de, piştî '
+        'hilbijartinên parlamentoyê, hat avakirin.',
     explanationTr:
-        '1991’den sonra Kürdistan Bölgesel Hükümeti kuruldu; bu, modern '
-        'dönemin ilk Kürt hükümetiydi.',
+        '1992’de, parlamento seçimlerinin ardından Kürdistan Bölgesel '
+        'Hükümeti kuruldu.',
   ),
   // ── Muzîk ────────────────────────────────────────────────────────────────
   QuizQuestion(

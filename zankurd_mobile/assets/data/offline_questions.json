@@ -1807,27 +1807,27 @@
   {
     "id": "offline_2183",
     "category": "Muzîk",
-    "prompt": "Evdalê Zeynikê di kîjan sedsalê de jiya?",
+    "prompt": "Evdalê Zeynikê di kîjan sedsalê de wefat kir?",
     "answers": [
       "17.",
       "20.",
       "19.",
       "15."
     ],
-    "correctAnswer": "19.",
-    "explanation": "Büyük dengbêj Evdalê Zeynikê 19. yüzyılda yaşadı.",
+    "correctAnswer": "20.",
+    "explanation": "Büyük dengbêj Evdalê Zeynikê 1913'te, yani 20. yüzyılda vefat etti.",
     "type": "multipleChoice",
     "difficulty": 4,
-    "explanationKu": "Dengbêjê mezin Evdalê Zeynikê di sedsala 19em de jiya.",
-    "explanationTr": "Büyük dengbêj Evdalê Zeynikê 19. yüzyılda yaşadı.",
-    "promptTr": "Evdalê Zeynikê hangi yüzyılda yaşadı?",
+    "explanationKu": "Dengbêjê mezin Evdalê Zeynikê di sala 1913an de wefat kir, yanî di sedsala 20an de.",
+    "explanationTr": "Büyük dengbêj Evdalê Zeynikê 1913'te, yani 20. yüzyılda vefat etti.",
+    "promptTr": "Evdalê Zeynikê hangi yüzyılda vefat etti?",
     "answersTr": [
       "17.",
       "20.",
       "19.",
       "15."
     ],
-    "correctAnswerTr": "19."
+    "correctAnswerTr": "20."
   },
   {
     "id": "offline_2191",
@@ -4882,7 +4882,7 @@
     "answersTr": [
       "xwarin",
       "bihîstin",
-      "rêvekirin",
+      "rêvebirin",
       "hezkirin"
     ],
     "correctAnswerTr": "hezkirin"
@@ -5297,7 +5297,7 @@
     "promptTr": "\"kalkmak\" Kurmancîde nasıl denir?",
     "answersTr": [
       "nivîn",
-      "siyah",
+      "reş",
       "rabûn",
       "diçim"
     ],
@@ -5642,7 +5642,7 @@
     "promptTr": "\"ülke/vatan\" Kurmancîde nasıl denir?",
     "answersTr": [
       "welat",
-      "beyaz",
+      "spî",
       "stran",
       "nivîn"
     ],
@@ -5692,7 +5692,7 @@
       "nivîn",
       "jin",
       "rast",
-      "beyaz"
+      "spî"
     ],
     "correctAnswerTr": "nivîn"
   },
@@ -6950,12 +6950,12 @@
     "explanationTr": "Dersim 1937–38, devletin bölgede yürüttüğü askerî harekâtı ve bu sırada yaşanan toplu öldürme ve sürgünleri anlatır.",
     "promptTr": "\"Dersim 1937\" nedir?",
     "answersTr": [
-      "Dêrsim bölgesinde yaşanan askerî harekât ve kriz",
+      "Dêrsim bölgesinde yaşanan askerî harekât ve toplu öldürmeler",
       "Irak'ta kendini Kürdistan kralı ilan eden lider",
       "Kurdistan gazetesini çıkaran ilk Kürt gazeteci",
       "Mîrê Kor"
     ],
-    "correctAnswerTr": "Dêrsim bölgesinde yaşanan askerî harekât ve kriz"
+    "correctAnswerTr": "Dêrsim bölgesinde yaşanan askerî harekât ve toplu öldürmeler"
   },
   {
     "id": "offline_7145",
@@ -7810,25 +7810,25 @@
     "category": "Dîrok",
     "prompt": "\"Merwanî\" çi ye?",
     "answers": [
-      "xanedaniya kurd a serdema navîn a bi navenda Amedê",
+      "xanedaniya kurd a serdema navîn a bi navenda Meyafarqînê (Farqînê)",
       "hukumdariya kurd a ku di serdema Osmanî de xweser mabû",
       "hêza mezin a serdema kevnar a bi navenda Zagrosê",
       "mîrektiya kurd a bihêz a bi navenda Silêmaniyê"
     ],
-    "correctAnswer": "xanedaniya kurd a serdema navîn a bi navenda Amedê",
-    "explanation": "Mervaniler Orta Çağ'da Diyarbakır çevresinde hüküm sürmüş bir Kürt hanedanıdır; merkezi Diyarbakır'dı.",
+    "correctAnswer": "xanedaniya kurd a serdema navîn a bi navenda Meyafarqînê (Farqînê)",
+    "explanation": "Mervaniler Orta Çağ'da Diyarbakır çevresinde hüküm sürmüş bir Kürt hanedanıdır; merkezi Meyyâfârikîn (Silvan)'dı.",
     "type": "multipleChoice",
     "difficulty": 4,
-    "explanationKu": "Merwanî xanedaniyeke kurd a serdema navîn e; li derdora Amedê hukum kir û navenda wê Amed bû.",
-    "explanationTr": "Mervaniler Orta Çağ'da Diyarbakır çevresinde hüküm sürmüş bir Kürt hanedanıdır; merkezi Diyarbakır'dı.",
+    "explanationKu": "Merwanî xanedaniyeke kurd a serdema navîn e; li derdora Amedê hukum kir û navenda wê Meyafarqîn (Farqîn) bû.",
+    "explanationTr": "Mervaniler Orta Çağ'da Diyarbakır çevresinde hüküm sürmüş bir Kürt hanedanıdır; merkezi Meyyâfârikîn (Silvan)'dı.",
     "promptTr": "\"Merwanî\" nedir?",
     "answersTr": [
-      "Amed merkezli ortaçağ Kürt hanedanı",
+      "Meyyâfârikîn (Silvan) merkezli ortaçağ Kürt hanedanı",
       "Osmanlı döneminde özerk kalmış Kürt hükümdarlığı",
       "antik çağda Zagros merkezli büyük güç",
       "Silêmanî merkezli güçlü Kürt beyliği"
     ],
-    "correctAnswerTr": "Amed merkezli ortaçağ Kürt hanedanı"
+    "correctAnswerTr": "Meyyâfârikîn (Silvan) merkezli ortaçağ Kürt hanedanı"
   },
   {
     "id": "offline_7798",
@@ -8317,12 +8317,12 @@
     "category": "Cografya",
     "prompt": "\"Kratera Nemrûdê\" li ku / wek çi tê zanîn?",
     "answers": [
-      "çiyayê ku gola kraterê ya duyemîn a herî mezin a cîhanê lê ye",
+      "çiyayekî volkanîk ê bi gola kraterê li nêzî Tetwanê",
       "çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parçe dikin",
       "çiyayê volkanîk ê nefeal ê li bakurê Gola Wanê",
       "gola bendavê ya çêkirî ya li nêzî Silêmaniyê"
     ],
-    "correctAnswer": "çiyayê ku gola kraterê ya duyemîn a herî mezin a cîhanê lê ye",
+    "correctAnswer": "çiyayekî volkanîk ê bi gola kraterê li nêzî Tetwanê",
     "explanation": "Nemrut, Tatvan yakınlarında sönmüş volkanik bir dağdır; zirvesindeki çanakta büyük bir krater gölü oluşmuştur ve dağ bu özelliğiyle tanınır.",
     "type": "multipleChoice",
     "difficulty": 3,
@@ -8330,12 +8330,12 @@
     "explanationTr": "Nemrut, Tatvan yakınlarında sönmüş volkanik bir dağdır; zirvesindeki çanakta büyük bir krater gölü oluşmuştur ve dağ bu özelliğiyle tanınır.",
     "promptTr": "\"Nemrut krateri\" nerede / ne olarak bilinir?",
     "answersTr": [
-      "dünyanın en büyük ikinci krater gölüne sahip dağ",
+      "Tatvan yakınlarında krater gölü bulunan volkanik dağ",
       "Kürdistan coğrafyasını baştan başa bölen dağlar",
       "Van Gölü'nün kuzeyinde yer alan sönmüş volkanik dağ",
       "Silêmanî yakınlarındaki yapay baraj gölü"
     ],
-    "correctAnswerTr": "dünyanın en büyük ikinci krater gölüne sahip dağ"
+    "correctAnswerTr": "Tatvan yakınlarında krater gölü bulunan volkanik dağ"
   },
   {
     "id": "offline_8331",
@@ -8938,8 +8938,8 @@
     "prompt": "Wateya peyva \"newal\" bi tirkî çi ye?",
     "answers": [
       "tepe",
-      "ada",
       "vadi",
+      "ada",
       "kıyı"
     ],
     "correctAnswer": "vadi",
@@ -8954,8 +8954,8 @@
     "promptTr": "\"newal\" kelimesinin Türkçe karşılığı nedir?",
     "answersTr": [
       "tepe",
-      "ada",
       "vadi",
+      "ada",
       "kıyı"
     ],
     "correctAnswerTr": "vadi"
@@ -9579,8 +9579,8 @@
       "dengê ku çîrokê vedibêje"
     ],
     "correctAnswer": "dengê ku çîrokê vedibêje",
-    "explanation": "Anlatıcı ne kahraman ne de mekândır; hikâyeyi okura aktaran sestir.",
-    "explanationKu": "Vebêj ne leheng û ne cih e; ew dengê ku çîrokê ji xwendevan re vedibêje ye.",
+    "explanation": "Anlatıcı, hikâyeyi okura aktaran sestir; hikâyenin kahramanlarından biri de olabilir.",
+    "explanationKu": "Vebêj dengê ku çîrokê ji xwendevan re vedibêje ye; ew dikare yek ji kesayetên çîrokê jî be.",
     "type": "multipleChoice",
     "difficulty": 3,
     "promptTr": "\"vebêj\" terimi neyi ifade eder?",
@@ -9591,7 +9591,7 @@
       "hikâyeyi aktaran ses"
     ],
     "correctAnswerTr": "hikâyeyi aktaran ses",
-    "explanationTr": "Anlatıcı ne kahraman ne de mekândır; hikâyeyi okura aktaran sestir."
+    "explanationTr": "Anlatıcı, hikâyeyi okura aktaran sestir; hikâyenin kahramanlarından biri de olabilir."
   },
   {
     "id": "offline_9473",
@@ -9961,12 +9961,12 @@
     "explanationTr": "Nalî, 19. yüzyılda Baban beyliği döneminde Soranice yazan divan şairidir; Soranî klasik şiirin kurucu adlarından sayılır.",
     "promptTr": "Nalî kimdi?",
     "answersTr": [
-      "dil ve alfabe çalışmalarını yaygınlaştırdığı için",
-      "Kürt dili ve edebiyatı üzerine çalışan akademisyen",
-      "Sorani klasik şiir okulunun en büyük divan şairi",
-      "ilk Kürt edebi ve siyasi yayınlarından biri"
+      "Hawar dergisinin edebî ekolünün kurucusu",
+      "ilk modern Kürt romanının yazarı",
+      "Baban klasik edebiyat okulunun başlıca şairlerinden biri",
+      "Kurmancî gramerini yazan dilbilimci"
     ],
-    "correctAnswerTr": "Sorani klasik şiir okulunun en büyük divan şairi"
+    "correctAnswerTr": "Baban klasik edebiyat okulunun başlıca şairlerinden biri"
   },
   {
     "id": "offline_9918",
@@ -11929,10 +11929,10 @@
     "category": "Paradigma",
     "prompt": "Ji bo \"netewa demokratîk\" pênaseya derbasdar kîjan e?",
     "answers": [
+      "hevpariyeke pirkulturî û wekhev di welatekî hevbeş de",
       "ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne",
       "belgeya ku prensîbên hevjiyana civakê diyar dike",
-      "têgihiştineke zanistî ya neyekdestî ku xizmeta civakê dike",
-      "hevpariyeke pirkulturî û wekhev di welatekî hevbeş de"
+      "têgihiştineke zanistî ya neyekdestî ku xizmeta civakê dike"
     ],
     "correctAnswer": "hevpariyeke pirkulturî û wekhev di welatekî hevbeş de",
     "explanation": "Demokratik ulus tek bir dil ya da etnisite üzerine kurulmaz; farklı kimliklerin eşit birlikteliğidir ve birliği zorla değil gönüllülükle olur.",
@@ -11942,10 +11942,10 @@
     "explanationKu": "Netewa demokratîk li ser zimanek an etnîsîteyeke yekane nayê avakirin; ew hevjiyana wekhev a nasnameyên cuda ye û yekîtiya wê bi dilxwazî ye, ne bi zorê.",
     "promptTr": "\"Demokratik ulus\" için geçerli tanım hangisidir?",
     "answersTr": [
+      "ortak bir ülkede çok kültürlü ve eşit birliktelik",
       "doğayı yalnızca sömürülecek bir nesne olarak görmediği için",
       "toplumun birlikte yaşama ilkelerini belirleyen belge",
-      "tekelleşmemiş, topluma hizmet eden bilim anlayışı",
-      "ortak bir ülkede çok kültürlü ve eşit birliktelik"
+      "tekelleşmemiş, topluma hizmet eden bilim anlayışı"
     ],
     "correctAnswerTr": "ortak bir ülkede çok kültürlü ve eşit birliktelik"
   },
@@ -13611,24 +13611,24 @@
     "prompt": "Daçekên hevedudanî çi ne?",
     "answers": [
       "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de",
-      "peyvên wekî \"di... de, bi... re, ji... re\" ku têkiliyên cih nîşan didin",
+      "peyvên wekî \"di... de, bi... re, ji... re\" ku têkiliyên wekî cih, hevaltiyê û arasteyê nîşan didin",
       "avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide",
       "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin"
     ],
-    "correctAnswer": "peyvên wekî \"di... de, bi... re, ji... re\" ku têkiliyên cih nîşan didin",
-    "explanation": "\"daçekên hevedudanî\" tê vê wateyê: peyvên wekî \"di... de, bi... re, ji... re\" ku têkiliyên cih nîşan didin.",
+    "correctAnswer": "peyvên wekî \"di... de, bi... re, ji... re\" ku têkiliyên wekî cih, hevaltiyê û arasteyê nîşan didin",
+    "explanation": "\"daçekên hevedudanî\" tê vê wateyê: peyvên wekî \"di... de, bi... re, ji... re\" ku têkiliyên wekî cih, hevaltiyê û arasteyê nîşan didin.",
     "type": "multipleChoice",
     "difficulty": 5,
-    "explanationKu": "\"daçekên hevedudanî\" tê vê wateyê: peyvên wekî \"di... de, bi... re, ji... re\" ku têkiliyên cih nîşan didin.",
-    "explanationTr": "\"daçekên hevedudanî\" şu anlama gelir: yer ilişkilerini gösteren \"di... de, bi... re, ji... re\" gibi sözcükler.",
+    "explanationKu": "\"daçekên hevedudanî\" tê vê wateyê: peyvên wekî \"di... de, bi... re, ji... re\" ku têkiliyên wekî cih, hevaltiyê û arasteyê nîşan didin.",
+    "explanationTr": "\"daçekên hevedudanî\" şu anlama gelir: yer, birliktelik ve yönelme gibi ilişkileri gösteren \"di... de, bi... re, ji... re\" gibi sözcükler.",
     "promptTr": "\"Daçekên hevedudanî\" nedir?",
     "answersTr": [
       "ad ya da zamirlerin cümledeki rolüne göre ek değiştirmesi",
-      "yer ilişkilerini gösteren \"di... de, bi... re, ji... re\" gibi sözcükler",
+      "yer, birliktelik ve yönelme gibi ilişkileri gösteren \"di... de, bi... re, ji... re\" gibi sözcükler",
       "çok uzak bir geçmişte olan eylemi gösteren fiil yapısı",
       "Celadet Bedirxan'ın hazırladığı Latin harfli Kürt alfabesi sistemi"
     ],
-    "correctAnswerTr": "yer ilişkilerini gösteren \"di... de, bi... re, ji... re\" gibi sözcükler"
+    "correctAnswerTr": "yer, birliktelik ve yönelme gibi ilişkileri gösteren \"di... de, bi... re, ji... re\" gibi sözcükler"
   },
   {
     "id": "offline_curated_20126",
@@ -16040,16 +16040,16 @@
     "prompt": "Tiştoka \"Heta jê nekirî mezin nabe\" bersiva wê çi ye?",
     "answers": [
       "Dîwar",
-      "Kolin",
+      "Çal",
       "Dar",
       "Rê"
     ],
-    "correctAnswer": "Kolin",
-    "explanation": "Ev tiştokeke zekayê ye, bersiva wê \"kolin\" an \"çal\" (çukur) e.",
+    "correctAnswer": "Çal",
+    "explanation": "Ev tiştokeke zekayê ye, bersiva wê \"çal\" (çukur) e.",
     "type": "multipleChoice",
     "difficulty": 2,
-    "explanationTr": "Bu bir zekâ bilmecesidir; cevabı \"kolin\" ya da \"çal\" (çukur).",
-    "explanationKu": "Ev tiştokeke zekayê ye, bersiva wê \"kolin\" an \"çal\" (çukur) e.",
+    "explanationTr": "Bu bir zekâ bilmecesidir; cevabı \"çal\" (çukur).",
+    "explanationKu": "Ev tiştokeke zekayê ye, bersiva wê \"çal\" (çukur) e.",
     "promptTr": "\"Ondan alınmadıkça büyümez\" bilmecesinin cevabı nedir?",
     "answersTr": [
       "Duvar",
@@ -18465,9 +18465,9 @@
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. Ava Zapê ji çiyayên Colemêrgê derdikeve û ber bi başûr ve bi herikîneke xurt diherike; ew şaxeke Dîcleyê ye.",
-    "explanationKu": "Rast e. Ava Zapê ji çiyayên Colemêrgê derdikeve û ber bi başûr ve bi herikîneke xurt diherike; ew şaxeke Dîcleyê ye.",
-    "explanationTr": "Doğru. Zap Suyu Hakkâri dağlarından doğup güneye doğru güçlü bir akışla ilerler; Dicle'nin bir koludur.",
+    "explanation": "Rast e. Ava Zapê ji Çiyayê Haravilê yê li Wanê derdikeve, di çiyayên Colemêrgê re derbas dibe û ber bi başûr ve bi herikîneke xurt diherike; ew şaxeke Dîcleyê ye.",
+    "explanationKu": "Rast e. Ava Zapê ji Çiyayê Haravilê yê li Wanê derdikeve, di çiyayên Colemêrgê re derbas dibe û ber bi başûr ve bi herikîneke xurt diherike; ew şaxeke Dîcleyê ye.",
+    "explanationTr": "Doğru. Zap Suyu Van'daki Haravil Dağı'ndan doğar, Hakkâri dağlarından geçerek güneye doğru güçlü bir akışla ilerler; Dicle'nin bir koludur.",
     "type": "trueFalse",
     "difficulty": 3,
     "promptTr": "Doğru mu yanlış mı: \"Ava Zapê\", Colemêrg'den inen, güneyin su enerjisini besleyen coşkun akarsudur.",
@@ -23783,7 +23783,7 @@
     "explanationKu": "Sepan bernameyek e ku ji bo amûrên mobîl tê çêkirin; ji dukanê tê barkirin û li ser amûrê dixebite.",
     "promptTr": "El telefonlarına yüklenip çalıştırılan programa ne ad verilir?",
     "answersTr": [
-      "Dosya",
+      "Klasör",
       "Bellek",
       "Yazıcı",
       "Uygulama"
@@ -24351,7 +24351,7 @@
     "explanationKu": "Danegeh agahiyan birêkûpêk digire; ji ber wê lêgerîn bilez pêk tê.",
     "promptTr": "Bilgileri düzenli tutan ve aramayı kolaylaştıran sisteme ne ad verilir?",
     "answersTr": [
-      "Dosya",
+      "Klasör",
       "Hoparlör",
       "Veritabanı",
       "Klavye"

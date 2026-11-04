@@ -1,0 +1,1409 @@
+[
+ {
+  "t": "json",
+  "id": "ds_ziman_0229",
+  "field": "answersTr[1]",
+  "eski": "Gül",
+  "yeni": "Gul"
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_0229",
+  "field": "answersTr[2]",
+  "eski": "Kalem",
+  "yeni": "Qelem"
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_0229",
+  "field": "correctAnswerTr",
+  "eski": "Kalem",
+  "yeni": "Qelem"
+ },
+ {
+  "t": "json",
+  "id": "dersler2_2026_10_08_0045",
+  "field": "answersTr[0]",
+  "eski": "Bu gömlektir.",
+  "yeni": "Ev kiras e."
+ },
+ {
+  "t": "json",
+  "id": "dersler2_2026_10_08_0045",
+  "field": "answersTr[1]",
+  "eski": "Gömlek bu kırmızıdır (yanlış sıra).",
+  "yeni": "Kiras ev e sor."
+ },
+ {
+  "t": "json",
+  "id": "dersler2_2026_10_08_0045",
+  "field": "answersTr[2]",
+  "eski": "Kırmızı gömlek bu (yanlış sıra).",
+  "yeni": "Sor kiras ev."
+ },
+ {
+  "t": "json",
+  "id": "dersler2_2026_10_08_0045",
+  "field": "answersTr[3]",
+  "eski": "Bu gömlektir (yanlış sıra).",
+  "yeni": "Ev e kiras."
+ },
+ {
+  "t": "json",
+  "id": "dersler2_2026_10_08_0045",
+  "field": "correctAnswerTr",
+  "eski": "Bu gömlektir.",
+  "yeni": "Ev kiras e."
+ },
+ {
+  "t": "json",
+  "id": "dersler2_2026_10_08_0045",
+  "field": "promptTr",
+  "eski": "Hangi cümle doğrudur?",
+  "yeni": "Hangi Kurmancî cümle doğrudur?"
+ },
+ {
+  "t": "json",
+  "id": "ders_2026_10_01_0046",
+  "field": "answers[1]",
+  "eski": "Hesp",
+  "yeni": "Mirîşk"
+ },
+ {
+  "t": "json",
+  "id": "ders_2026_10_01_0046",
+  "field": "answers[2]",
+  "eski": "Kûçik",
+  "yeni": "Masî"
+ },
+ {
+  "t": "json",
+  "id": "ders_2026_10_01_0046",
+  "field": "answers[3]",
+  "eski": "Pisîk",
+  "yeni": "Mar"
+ },
+ {
+  "t": "json",
+  "id": "ders_2026_10_01_0046",
+  "field": "answersTr[1]",
+  "eski": "At",
+  "yeni": "Tavuk"
+ },
+ {
+  "t": "json",
+  "id": "ders_2026_10_01_0046",
+  "field": "answersTr[2]",
+  "eski": "Köpek",
+  "yeni": "Balık"
+ },
+ {
+  "t": "json",
+  "id": "ders_2026_10_01_0046",
+  "field": "answersTr[3]",
+  "eski": "Kedi",
+  "yeni": "Yılan"
+ },
+ {
+  "t": "json",
+  "id": "dersler2_2026_10_08_0134",
+  "field": "prompt",
+  "eski": "Ji bo \"ew\" bi lêkera xwarinê kîjan lêker rast e?",
+  "yeni": "Ji bo \"ew\" (yekjimar) bi lêkera xwarinê kîjan lêker rast e?"
+ },
+ {
+  "t": "json",
+  "id": "dersler2_2026_10_08_0134",
+  "field": "promptTr",
+  "eski": "\"ew\" öznesi ile xwarin (yemek) fiilinde hangi çekim doğrudur?",
+  "yeni": "Tekil \"ew\", yani \"o\" öznesi ile xwarin (yemek) fiilinde hangi çekim doğrudur?"
+ },
+ {
+  "t": "json",
+  "id": "fill_ziman_0006",
+  "field": "prompt",
+  "eski": "Di dema borî ya lêkera derbasdar de, lêkerê li gorî berkara kesê yekem a yekjimar temam bike: \"Wî ez ___.\"",
+  "yeni": "Di dema borî ya lêkera derbasdar a \"dîtin\" de, lêkerê li gorî berkara kesê yekem a yekjimar temam bike: \"Wî ez ___.\""
+ },
+ {
+  "t": "json",
+  "id": "fill_ziman_0006",
+  "field": "promptTr",
+  "eski": "Geçmiş zamanda geçişli fiili birinci tekil kişi nesnesine göre tamamla: \"Wî ez ___.\"",
+  "yeni": "Geçmiş zamanda geçişli \"dîtin\" (görmek) fiilini birinci tekil kişi nesnesine göre tamamla: \"Wî ez ___.\""
+ },
+ {
+  "t": "json",
+  "id": "fill_ziman_0003",
+  "field": "prompt",
+  "eski": "Di hevoka \"Ez ... mirovî dibînim.\" de forma tewandî ya nîşandera nêr a yekjimar binivîse: \"Ez ___ mirovî dibînim.\"",
+  "yeni": "Di hevoka \"Ez ... mirovî dibînim.\" de forma tewandî ya nîşandera dûr a nêr a yekjimar binivîse: \"Ez ___ mirovî dibînim.\""
+ },
+ {
+  "t": "json",
+  "id": "dersler2_2026_10_08_0117",
+  "field": "prompt",
+  "eski": "Ez her roj nan ___. Kîjan lêker rast e?",
+  "yeni": "Ez her roj nan ___. Lêkera \"xwarin\" li gorî \"ez\" çawa tê kişandin?"
+ },
+ {
+  "t": "json",
+  "id": "dersler2_2026_10_08_0117",
+  "field": "promptTr",
+  "eski": "Ben her gün ekmek ... Hangi fiil doğrudur?",
+  "yeni": "Ben her gün ekmek ___. \"Yemek\" (xwarin) fiili \"ez\" (ben) ile nasıl çekilir?"
+ },
+ {
+  "t": "json",
+  "id": "hat_0127",
+  "field": "answers[2]",
+  "eski": "Hirmî",
+  "yeni": "Lîmon"
+ },
+ {
+  "t": "json",
+  "id": "hat_0127",
+  "field": "answersTr[2]",
+  "eski": "Armut",
+  "yeni": "Limon"
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_0125",
+  "field": "prompt",
+  "eski": "Kîjan ajal bi şev digere û bi roj xwe vedişêre?",
+  "yeni": "Kîjan ajal bi şev digere, bi roj xwe vedişêre û dikare bifire?"
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_0125",
+  "field": "promptTr",
+  "eski": "Hangi hayvan gece dolaşır ve gündüz kendini gizler?",
+  "yeni": "Hangi hayvan gece dolaşır, gündüz kendini gizler ve uçabilir?"
+ },
+ {
+  "t": "json",
+  "id": "offline_2183",
+  "field": "prompt",
+  "eski": "Evdalê Zeynikê di kîjan sedsalê de jiya?",
+  "yeni": "Evdalê Zeynikê di kîjan sedsalê de wefat kir?"
+ },
+ {
+  "t": "json",
+  "id": "offline_2183",
+  "field": "promptTr",
+  "eski": "Evdalê Zeynikê hangi yüzyılda yaşadı?",
+  "yeni": "Evdalê Zeynikê hangi yüzyılda vefat etti?"
+ },
+ {
+  "t": "json",
+  "id": "offline_2183",
+  "field": "correctAnswer",
+  "eski": "19.",
+  "yeni": "20."
+ },
+ {
+  "t": "json",
+  "id": "offline_2183",
+  "field": "correctAnswerTr",
+  "eski": "19.",
+  "yeni": "20."
+ },
+ {
+  "t": "json",
+  "id": "offline_2183",
+  "field": "explanationKu",
+  "eski": "Dengbêjê mezin Evdalê Zeynikê di sedsala 19em de jiya.",
+  "yeni": "Dengbêjê mezin Evdalê Zeynikê di sala 1913an de wefat kir, yanî di sedsala 20an de."
+ },
+ {
+  "t": "json",
+  "id": "offline_2183",
+  "field": "explanationTr",
+  "eski": "Büyük dengbêj Evdalê Zeynikê 19. yüzyılda yaşadı.",
+  "yeni": "Büyük dengbêj Evdalê Zeynikê 1913'te, yani 20. yüzyılda vefat etti."
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0110",
+  "field": "prompt",
+  "eski": "Kîjan beşa komputerê ji bo hilanîna daneyan dema ku komputer vekirî ye tê bikaranîn?",
+  "yeni": "Kîjan beşa komputerê dema komputer vekirî ye daneyan bi awayekî demkî digire û dema hêz tê birîn naveroka wê wenda dibe?"
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0110",
+  "field": "promptTr",
+  "eski": "Bilgisayar açıkken verileri depolamak için bilgisayarın hangi parçası kullanılır?",
+  "yeni": "Bilgisayar açıkken verileri geçici olarak tutan ve güç kesilince içeriği silinen parça hangisidir?"
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0191",
+  "field": "prompt",
+  "eski": "Di têlefoneke jîr de, kîjan teknolojî ji bo cihnasiyê tê bikaranîn?",
+  "yeni": "Di têlefoneke jîr de, kîjan teknolojî ji bo cihnasiyê bi sînyalên peykan tê bikaranîn?"
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0191",
+  "field": "promptTr",
+  "eski": "Akıllı telefonda konum belirleme için hangi teknoloji kullanılır?",
+  "yeni": "Akıllı telefonda uydu sinyalleriyle konum belirleme için hangi teknoloji kullanılır?"
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0179",
+  "field": "answers[2]",
+  "eski": "Epic Games",
+  "yeni": "Microsoft Store"
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0179",
+  "field": "answersTr[2]",
+  "eski": "Epic Games",
+  "yeni": "Microsoft Store"
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0179",
+  "field": "explanationKu",
+  "eski": "Google Play dikanek e ji bo barkirina sepanan li ser cîhazên Android. App Store ya Apple e, Steam û Epic Games ji bo lîstikên komputerê ne.",
+  "yeni": "Google Play dikanek e ji bo barkirina sepanan li ser cîhazên Android. App Store ya Apple e, Steam û Microsoft Store dikanên komputerê ne."
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0179",
+  "field": "explanationTr",
+  "eski": "Google Play, Android cihazlara uygulama indirmek için kullanılan bir mağazadır. App Store Apple'ındır, Steam ve Epic Games bilgisayar oyunları içindir.",
+  "yeni": "Google Play, Android cihazlara uygulama indirmek için kullanılan bir mağazadır. App Store Apple'ındır, Steam ve Microsoft Store ise bilgisayar mağazalarıdır."
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0007",
+  "field": "prompt",
+  "eski": "Kîjan protokol ji bo gihîştina pelan ji dûr ve tê bikaranîn?",
+  "yeni": "Kîjan protokol ji bo veguhestina pelan tê bikaranîn û ji bo fermanan û daneyan girêdanên cuda bi kar tîne?"
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0007",
+  "field": "promptTr",
+  "eski": "Uzaktaki dosyalara erişmek için hangi protokol kullanılır?",
+  "yeni": "Komutları ve dosya verilerini ayrı bağlantılardan ileten protokol hangisidir?"
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0033",
+  "field": "prompt",
+  "eski": "Kîjan teknolojî ji bo nasnameya dîjîtal a bikarhêner tê bikaranîn?",
+  "yeni": "Kîjan belgeya X.509 nasnameya xwediyê mifteyê bi mifteya giştî ve girê dide?"
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0033",
+  "field": "promptTr",
+  "eski": "Kullanıcının dijital kimliği için hangi teknoloji kullanılır?",
+  "yeni": "Bir kimliği açık anahtara bağlayan X.509 belgesi hangisidir?"
+ },
+ {
+  "t": "json",
+  "id": "sf_cin_0022",
+  "field": "answersTr[0]",
+  "eski": "Çîn",
+  "yeni": "Çin"
+ },
+ {
+  "t": "json",
+  "id": "sf_cin_0022",
+  "field": "answersTr[2]",
+  "eski": "Taywan",
+  "yeni": "Tayvan"
+ },
+ {
+  "t": "json",
+  "id": "sf_cin_0018",
+  "field": "answersTr[2]",
+  "eski": "Îtalya",
+  "yeni": "İtalya"
+ },
+ {
+  "t": "json",
+  "id": "sf_cin_0034",
+  "field": "explanationTr",
+  "eski": "BFI kataloğuna göre filmin yılı 1954'dır.",
+  "yeni": "BFI kataloğuna göre filmin yılı 1954'tür."
+ },
+ {
+  "t": "json",
+  "id": "sf_cin_0040",
+  "field": "explanationTr",
+  "eski": "BFI kataloğuna göre filmin yılı 1963'dir.",
+  "yeni": "BFI kataloğuna göre filmin yılı 1963'tür."
+ },
+ {
+  "t": "json",
+  "id": "sf_cin_0047",
+  "field": "explanationTr",
+  "eski": "BFI kataloğuna göre filmin yılı 1929'dir.",
+  "yeni": "BFI kataloğuna göre filmin yılı 1929'dur."
+ },
+ {
+  "t": "json",
+  "id": "sf_cin_0049",
+  "field": "explanationTr",
+  "eski": "BFI kataloğuna göre filmin yılı 1975'dir.",
+  "yeni": "BFI kataloğuna göre filmin yılı 1975'tir."
+ },
+ {
+  "t": "json",
+  "id": "sf_cin_0029",
+  "field": "explanationTr",
+  "eski": "BFI kataloğuna göre filmin yönetmeni Robert Wiene'dır.",
+  "yeni": "BFI kataloğuna göre filmin yönetmeni Robert Wiene'dir."
+ },
+ {
+  "t": "json",
+  "id": "sf_cin_0032",
+  "field": "explanationTr",
+  "eski": "BFI kataloğuna göre filmin yönetmeni François Truffaut'dır.",
+  "yeni": "BFI kataloğuna göre filmin yönetmeni François Truffaut'dur."
+ },
+ {
+  "t": "json",
+  "id": "sf_cin_0043",
+  "field": "explanationTr",
+  "eski": "BFI kataloğuna göre filmin yönetmeni Alfred Hitchcock'dır.",
+  "yeni": "BFI kataloğuna göre filmin yönetmeni Alfred Hitchcock'tur."
+ },
+ {
+  "t": "json",
+  "id": "sf_cin_0048",
+  "field": "explanationTr",
+  "eski": "BFI kataloğuna göre filmin yönetmeni Andrei Tarkovsky'dır.",
+  "yeni": "BFI kataloğuna göre filmin yönetmeni Andrei Tarkovsky'dir."
+ },
+ {
+  "t": "json",
+  "id": "sf_cin_0052",
+  "field": "explanationTr",
+  "eski": "BFI kataloğuna göre filmin yönetmeni Elem Klimov'dır.",
+  "yeni": "BFI kataloğuna göre filmin yönetmeni Elem Klimov'dur."
+ },
+ {
+  "t": "json",
+  "id": "ds_edebiyat_0222",
+  "field": "explanationTr",
+  "eski": "Samuel Beckett, 1969'da Nobel Edebiyat Ödülü'nü kazandı. \"Godot\"yu Beklerken' adlı eseriyle tanınır.",
+  "yeni": "Samuel Beckett, 1969'da Nobel Edebiyat Ödülü'nü kazandı. \"Godot'yu Beklerken\" adlı eseriyle tanınır."
+ },
+ {
+  "t": "json",
+  "id": "ds_muzik_0170",
+  "field": "explanationTr",
+  "eski": "The Rolling Stones, \"(I Can\"t Get No) Satisfaction' şarkısıyla çok ünlü olmuştur. Bu şarkı 1965'te çıkmış ve rock'ın klasiklerinden biri olarak kabul edilir.",
+  "yeni": "The Rolling Stones, \"(I Can't Get No) Satisfaction\" şarkısıyla çok ünlü olmuştur. Bu şarkı 1965'te çıkmış ve rock'ın klasiklerinden biri olarak kabul edilir."
+ },
+ {
+  "t": "json",
+  "id": "ds_sinema_0106",
+  "field": "promptTr",
+  "eski": "Auguste ve Louis Lumière tarafından çekilen \"La Sortie de l\"usine Lumière à Lyon' adlı ilk film hangi yılda çekildi?",
+  "yeni": "Auguste ve Louis Lumière tarafından çekilen \"La Sortie de l'usine Lumière à Lyon\" adlı ilk film hangi yılda çekildi?"
+ },
+ {
+  "t": "json",
+  "id": "ds_sinema_0106",
+  "field": "explanationTr",
+  "eski": "\"La Sortie de l\"usine Lumière à Lyon' filmi 1895'te Lumière kardeşler tarafından çekildi. Bu film tarihin ilk filmlerinden biridir ve sinemanın başlangıcını gösterir.",
+  "yeni": "\"La Sortie de l'usine Lumière à Lyon\" filmi 1895'te Lumière kardeşler tarafından çekildi. Bu film tarihin ilk filmlerinden biridir ve sinemanın başlangıcını gösterir."
+ },
+ {
+  "t": "json",
+  "id": "ds_sinema_0100",
+  "field": "promptTr",
+  "eski": "Hangi Amerikalı yönetmen \"Schindler\"s List' filmini yönetti?",
+  "yeni": "Hangi Amerikalı yönetmen \"Schindler's List\" filmini yönetti?"
+ },
+ {
+  "t": "json",
+  "id": "ds_sinema_0152",
+  "field": "promptTr",
+  "eski": "Steven Spielberg'in \"Schindler\"s List' filmi hangi yılda gösterime girdi?",
+  "yeni": "Steven Spielberg'in \"Schindler's List\" filmi hangi yılda gösterime girdi?"
+ },
+ {
+  "t": "json",
+  "id": "ds_sinema_0208",
+  "field": "promptTr",
+  "eski": "Steven Spielberg'in \"Schindler\"in Listesi' filminde Oskar Schindler rolünü hangi aktör canlandırdı?",
+  "yeni": "Steven Spielberg'in \"Schindler'in Listesi\" filminde Oskar Schindler rolünü hangi aktör canlandırdı?"
+ },
+ {
+  "t": "json",
+  "id": "ds_sinema_0152",
+  "field": "explanationTr",
+  "eski": "Steven Spielberg'in \"Schindler\"s List' filmi 1993'te gösterime girdi. Bu film, Holokost sırasında birçok Yahudi'yi kurtaran Oskar Schindler'i konu alır.",
+  "yeni": "Steven Spielberg'in \"Schindler's List\" filmi 1993'te gösterime girdi. Bu film, Holokost sırasında birçok Yahudi'yi kurtaran Oskar Schindler'i konu alır."
+ },
+ {
+  "t": "json",
+  "id": "ds_sinema_0208",
+  "field": "explanationTr",
+  "eski": "Liam Neeson, Steven Spielberg'in \"Schindler\"in Listesi' filminde Oskar Schindler rolünü canlandırdı. Bu film 1993'te gösterime girdi ve Holokost sırasında birçok Yahudi'yi kurtaran Schindler'in hayatını konu alır. Ben Kingsley Itzhak Stern, Ralph Fiennes ise Amon Göth rolünü oynadı.",
+  "yeni": "Liam Neeson, Steven Spielberg'in \"Schindler'in Listesi\" filminde Oskar Schindler rolünü canlandırdı. Bu film 1993'te gösterime girdi ve Holokost sırasında birçok Yahudi'yi kurtaran Schindler'in hayatını konu alır. Ben Kingsley Itzhak Stern, Ralph Fiennes ise Amon Göth rolünü oynadı."
+ },
+ {
+  "t": "json",
+  "id": "edit_dirok_0033",
+  "field": "answers[1]",
+  "eski": "pergala niştecihbûna domdar",
+  "yeni": "Mîqdad Mîdhat Bedirxan"
+ },
+ {
+  "t": "json",
+  "id": "edit_dirok_0033",
+  "field": "answers[2]",
+  "eski": "rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin",
+  "yeni": "Cegerxwîn"
+ },
+ {
+  "t": "json",
+  "id": "edit_dirok_0033",
+  "field": "answers[3]",
+  "eski": "yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin",
+  "yeni": "Mehmed Uzun"
+ },
+ {
+  "t": "json",
+  "id": "edit_dirok_0033",
+  "field": "answersTr[1]",
+  "eski": "kalıcı yerleşim düzeni",
+  "yeni": "Mîqdad Mîdhat Bedirxan"
+ },
+ {
+  "t": "json",
+  "id": "edit_dirok_0033",
+  "field": "answersTr[2]",
+  "eski": "Süleymaniye'de basılan erken dönem Kürtçe gazete",
+  "yeni": "Cegerxwîn"
+ },
+ {
+  "t": "json",
+  "id": "edit_dirok_0033",
+  "field": "answersTr[3]",
+  "eski": "Latin alfabesiyle basılan ilk Kürtçe dergi",
+  "yeni": "Mehmed Uzun"
+ },
+ {
+  "t": "json",
+  "id": "kolay_dirok_14",
+  "field": "prompt",
+  "eski": "Kawayê hesinkar çi pîşe dikir?",
+  "yeni": "Li gorî efsaneyê, pîşeya Kawa çi bû?"
+ },
+ {
+  "t": "json",
+  "id": "kolay_dirok_14",
+  "field": "promptTr",
+  "eski": "Demirci Kawa ne iş yapardı?",
+  "yeni": "Efsaneye göre Kawa'nın mesleği neydi?"
+ },
+ {
+  "t": "json",
+  "id": "ds26_cinema_0002",
+  "field": "answersTr[0]",
+  "eski": "geniş açılış çekimi (establishing shot)",
+  "yeni": "geniş açılış çekimi"
+ },
+ {
+  "t": "json",
+  "id": "dersler3_2026_10_08_0134",
+  "field": "answersTr[2]",
+  "eski": "sınıf (sınıfta kullanılan hâl)",
+  "yeni": "sınıf"
+ },
+ {
+  "t": "json",
+  "id": "ds_cand_0242",
+  "field": "answersTr[1]",
+  "eski": "fitre (zekât-ı fıtır)",
+  "yeni": "fitre"
+ },
+ {
+  "t": "json",
+  "id": "offline_5599",
+  "field": "answersTr[1]",
+  "eski": "siyah",
+  "yeni": "reş"
+ },
+ {
+  "t": "json",
+  "id": "offline_5886",
+  "field": "answersTr[1]",
+  "eski": "beyaz",
+  "yeni": "spî"
+ },
+ {
+  "t": "json",
+  "id": "offline_5897",
+  "field": "answersTr[3]",
+  "eski": "beyaz",
+  "yeni": "spî"
+ },
+ {
+  "t": "json",
+  "id": "offline_7778",
+  "field": "answers[0]",
+  "eski": "xanedaniya kurd a serdema navîn a bi navenda Amedê",
+  "yeni": "xanedaniya kurd a serdema navîn a bi navenda Meyafarqînê (Farqînê)"
+ },
+ {
+  "t": "json",
+  "id": "offline_7778",
+  "field": "answersTr[0]",
+  "eski": "Amed merkezli ortaçağ Kürt hanedanı",
+  "yeni": "Meyyâfârikîn (Silvan) merkezli ortaçağ Kürt hanedanı"
+ },
+ {
+  "t": "json",
+  "id": "offline_7778",
+  "field": "explanationKu",
+  "eski": "Merwanî xanedaniyeke kurd a serdema navîn e; li derdora Amedê hukum kir û navenda wê Amed bû.",
+  "yeni": "Merwanî xanedaniyeke kurd a serdema navîn e; li derdora Amedê hukum kir û navenda wê Meyafarqîn (Farqîn) bû."
+ },
+ {
+  "t": "json",
+  "id": "offline_7778",
+  "field": "explanationTr",
+  "eski": "Mervaniler Orta Çağ'da Diyarbakır çevresinde hüküm sürmüş bir Kürt hanedanıdır; merkezi Diyarbakır'dı.",
+  "yeni": "Mervaniler Orta Çağ'da Diyarbakır çevresinde hüküm sürmüş bir Kürt hanedanıdır; merkezi Meyyâfârikîn (Silvan)'dı."
+ },
+ {
+  "t": "json",
+  "id": "offline_8319",
+  "field": "answers[0]",
+  "eski": "çiyayê ku gola kraterê ya duyemîn a herî mezin a cîhanê lê ye",
+  "yeni": "çiyayekî volkanîk ê bi gola kraterê li nêzî Tetwanê"
+ },
+ {
+  "t": "json",
+  "id": "offline_8319",
+  "field": "answersTr[0]",
+  "eski": "dünyanın en büyük ikinci krater gölüne sahip dağ",
+  "yeni": "Tatvan yakınlarında krater gölü bulunan volkanik dağ"
+ },
+ {
+  "t": "json",
+  "id": "edit_cografya_0010",
+  "field": "explanationKu",
+  "eski": "Zapê Mezin ji Colemêrgê diherike û digihîje Dîcleyê.",
+  "yeni": "Zapê Mezin ji Çiyayê Haravilê yê li Wanê derdikeve, di Colemêrgê re derbas dibe û digihîje Dîcleyê."
+ },
+ {
+  "t": "json",
+  "id": "edit_cografya_0010",
+  "field": "explanationTr",
+  "eski": "Büyük Zap, Hakkâri'den doğar ve Dicle'ye karışır.",
+  "yeni": "Büyük Zap, Van'daki Haravil Dağı'nın kuzeyinden doğar, Hakkâri'den geçer ve Dicle'ye karışır."
+ },
+ {
+  "t": "json",
+  "id": "offline_tf_cog_0041",
+  "field": "explanationKu",
+  "eski": "Rast e. Ava Zapê ji çiyayên Colemêrgê derdikeve û ber bi başûr ve bi herikîneke xurt diherike; ew şaxeke Dîcleyê ye.",
+  "yeni": "Rast e. Ava Zapê ji Çiyayê Haravilê yê li Wanê derdikeve, di çiyayên Colemêrgê re derbas dibe û ber bi başûr ve bi herikîneke xurt diherike; ew şaxeke Dîcleyê ye."
+ },
+ {
+  "t": "json",
+  "id": "offline_tf_cog_0041",
+  "field": "explanationTr",
+  "eski": "Doğru. Zap Suyu Hakkâri dağlarından doğup güneye doğru güçlü bir akışla ilerler; Dicle'nin bir koludur.",
+  "yeni": "Doğru. Zap Suyu Van'daki Haravil Dağı'ndan doğar, Hakkâri dağlarından geçerek güneye doğru güçlü bir akışla ilerler; Dicle'nin bir koludur."
+ },
+ {
+  "t": "json",
+  "id": "ds_dirok_0056",
+  "field": "explanationKu",
+  "eski": "Împaratoriya Akkadê, ku ji aliyê Sargon ve hate avakirin, yekem împaratoriya ku Mezopotamyayê yek kir. Sumer, Babîl û Asûr paşê hatin.",
+  "yeni": "Împaratoriya Akkadê, ku ji aliyê Sargon ve hate avakirin, yekem împaratorî bû ku Mezopotamya yek kir. Bajar-dewletên Sumerê berî Împaratoriya Akkadê hebûn; Babîl û Asûr paşê hatin."
+ },
+ {
+  "t": "json",
+  "id": "ds_dirok_0056",
+  "field": "explanationTr",
+  "eski": "Sargon tarafından kurulan Akkad İmparatorluğu, Mezopotamya'yı birleştiren ilk imparatorluktu. Sümer, Babil ve Asur daha sonra geldi.",
+  "yeni": "Sargon tarafından kurulan Akkad İmparatorluğu, Mezopotamya'yı birleştiren ilk imparatorluktu. Sümer şehir devletleri Akkad'dan önce vardı; Babil ve Asur ise sonradan öne çıktı."
+ },
+ {
+  "t": "json",
+  "id": "ds_muzik_0132",
+  "field": "explanationKu",
+  "eski": "Beethoven di 17ê kanûna pêşîn a sala 1770ê de li bajarê Bonnê, ku niha li Almanyayê ye, ji dayik bûye.",
+  "yeni": "Beethoven di sala 1770ê de li bajarê Bonnê, ku niha li Almanyayê ye, ji dayik bûye; 17ê kanûna pêşîn a 1770ê roja vaftîzkirina wî ye."
+ },
+ {
+  "t": "json",
+  "id": "ds_muzik_0132",
+  "field": "explanationTr",
+  "eski": "Beethoven, 17 Aralık 1770'te günümüzde Almanya'da bulunan Bonn şehrinde doğmuştur.",
+  "yeni": "Beethoven, 1770'te günümüzde Almanya'da bulunan Bonn şehrinde doğmuştur; 17 Aralık 1770 onun vaftiz tarihidir."
+ },
+ {
+  "t": "json",
+  "id": "ds_muzik_0143",
+  "field": "explanationKu",
+  "eski": "Beethoven di 17ê kanûna pêşîn a sala 1770ê de li Bonnê ji dayik bûye.",
+  "yeni": "Beethoven di sala 1770ê de li Bonnê ji dayik bûye; 17ê kanûna pêşîn a 1770ê roja vaftîzkirina wî ye."
+ },
+ {
+  "t": "json",
+  "id": "ds_muzik_0143",
+  "field": "explanationTr",
+  "eski": "Beethoven, 17 Aralık 1770'te Bonn'da doğmuştur.",
+  "yeni": "Beethoven, 1770'te Bonn'da doğmuştur; 17 Aralık 1770 onun vaftiz tarihidir."
+ },
+ {
+  "t": "json",
+  "id": "ds_muzik_0162",
+  "field": "prompt",
+  "eski": "Kîjan celebê muzîkê di salên 1990yan de li Seattle derketiye?",
+  "yeni": "Kîjan celebê muzîkê di salên 1980yan de li Seattle derketiye?"
+ },
+ {
+  "t": "json",
+  "id": "ds_muzik_0162",
+  "field": "promptTr",
+  "eski": "1990'larda Seattle'da hangi müzik türü ortaya çıkmıştır?",
+  "yeni": "1980'lerde Seattle'da hangi müzik türü ortaya çıkmıştır?"
+ },
+ {
+  "t": "json",
+  "id": "ds_muzik_0162",
+  "field": "explanationKu",
+  "eski": "Grunge di salên 1990yan de li Seattle derketiye. Ev celeb muzîkê ji rockê derketiye û bi gîtarên xwe yên giran û dengên xwe yên xemgîn ve tê naskirin.",
+  "yeni": "Grunge di salên 1980yan de li Seattle derketiye û di salên 1990yan de belav bûye. Ev celeb muzîkê ji rockê derketiye û bi gîtarên xwe yên giran û dengên xwe yên xemgîn ve tê naskirin."
+ },
+ {
+  "t": "json",
+  "id": "ds_muzik_0190",
+  "field": "explanationKu",
+  "eski": "Georges Bizet bi opera xwe ya \"Carmen\" tê naskirin. Ev opera di sala 1875ê de hatiye nivîsandin û yek ji navdartirîn operayên fransî ye.",
+  "yeni": "Georges Bizet bi operaya xwe ya \"Carmen\" tê naskirin. Ev opera cara yekem di sala 1875ê de hatiye pêşkêşkirin û yek ji navdartirîn operayên fransî ye."
+ },
+ {
+  "t": "json",
+  "id": "ds_muzik_0190",
+  "field": "explanationTr",
+  "eski": "Georges Bizet, \"Carmen\" operasıyla tanınır. Bu opera 1875 yılında bestelenmiştir ve en ünlü Fransız operalarından biridir.",
+  "yeni": "Georges Bizet, \"Carmen\" operasıyla tanınır. Bu opera 1875'te ilk kez sahnelendi ve en ünlü Fransız operalarından biridir."
+ },
+ {
+  "t": "json",
+  "id": "ds26_cinema_0109",
+  "field": "explanationKu",
+  "eski": "Festîvala Cannesê ji sala 1946'an vir ve her gulan li bajarê Cannesê yê li başûrê Fransayê tê lidarxistin. Xelata wê ya sereke Palmiya Zêrîn e û festîval yek ji bûyerên herî girîng ên pîşesaziya fîlmê ye.",
+  "yeni": "Festîvala Cannesê yekem car di Îlona 1946an de hat lidarxistin; ji sala 1952an ve bi gelemperî di meha gulanê de li bajarê Cannesê yê li başûrê Fransayê tê lidarxistin. Xelata wê ya sereke Palmiya Zêrîn e û festîval yek ji bûyerên herî girîng ên pîşesaziya fîlmê ye."
+ },
+ {
+  "t": "json",
+  "id": "ds26_cinema_0109",
+  "field": "explanationTr",
+  "eski": "Cannes Film Festivali, 1946'dan beri her mayıs Fransa'nın güneyindeki Cannes şehrinde düzenlenir. Ana ödülü Altın Palmiye'dir ve festival, film endüstrisinin en önemli etkinliklerindendir.",
+  "yeni": "Cannes Film Festivali ilk kez Eylül 1946'da yapıldı; 1952'den beri genellikle mayıs ayında Fransa'nın güneyindeki Cannes şehrinde düzenlenir. Ana ödülü Altın Palmiye'dir ve festival, film endüstrisinin en önemli etkinliklerindendir."
+ },
+ {
+  "t": "json",
+  "id": "hat_0058",
+  "field": "explanationKu",
+  "eski": "Ji bo belgefîlmî bi malbat û hevkarên Guney re hevpeyvîn hatin kirin û cara yekem li Munîhê hat nîşandan.",
+  "yeni": "Ji bo belgefîlmî bi malbat û hevkarên Guney re hevpeyvîn hatin kirin û cara yekem di 8ê Îlona 2017an de li Torontoyê hat nîşandan."
+ },
+ {
+  "t": "json",
+  "id": "hat_0058",
+  "field": "explanationTr",
+  "eski": "Belgesel için Güney'in ailesi ve çalışma arkadaşlarıyla röportajlar yapıldı ve ilk gösterimi Münih'te oldu.",
+  "yeni": "Belgesel için Güney'in ailesi ve çalışma arkadaşlarıyla röportajlar yapıldı ve ilk gösterimi 8 Eylül 2017'de Toronto'da oldu."
+ },
+ {
+  "t": "json",
+  "id": "ex28_yilmaz_guney_007",
+  "field": "prompt",
+  "eski": "Kîjan berhema Yilmaz Guney wekî \"yekem fîlmê realîst ê sînemaya Tirkiyeyê\" tê hesibandin?",
+  "yeni": "Kîjan fîlmê Yilmaz Guney, ku di sala 1970an de derket, çîroka Cabbarê faytonvan vedibêje?"
+ },
+ {
+  "t": "json",
+  "id": "ex28_yilmaz_guney_007",
+  "field": "promptTr",
+  "eski": "Yılmaz Güney'in hangi eseri \"Türk sinemasının ilk gerçekçi filmi\" kabul edilir?",
+  "yeni": "Yılmaz Güney'in 1970'te çıkan, faytoncu Cabbar'ın hikâyesini anlatan filmi hangisidir?"
+ },
+ {
+  "t": "dart",
+  "id": "curated_siyaset_0010",
+  "file": "lib/src/data/curated_question_bank.dart",
+  "eski": "'Di 1992î de piştî rizgarbûnê, HKK (Hikumeta Herêma Kurdistanê) ava kirin; ew yekem hikûmeta kurdî ya nûdem bû.'",
+  "yeni": "'Hikûmeta Herêma Kurdistanê (HKK) di sala 1992an de, piştî hilbijartinên parlamentoyê, hat avakirin.'"
+ },
+ {
+  "t": "dart",
+  "id": "curated_siyaset_0010",
+  "file": "lib/src/data/curated_question_bank.dart",
+  "eski": "'Piştî 1991ê Hikûmeta Herêma Kurdistanê hat avakirin; ew yekem '\n        'hikûmeta kurdî ya nûdem bû.',",
+  "yeni": "'Hikûmeta Herêma Kurdistanê di sala 1992an de, piştî '\n        'hilbijartinên parlamentoyê, hat avakirin.',"
+ },
+ {
+  "t": "dart",
+  "id": "curated_siyaset_0010",
+  "file": "lib/src/data/curated_question_bank.dart",
+  "eski": "'1991’den sonra Kürdistan Bölgesel Hükümeti kuruldu; bu, modern '\n        'dönemin ilk Kürt hükümetiydi.',",
+  "yeni": "'1992’de, parlamento seçimlerinin ardından Kürdistan Bölgesel '\n        'Hükümeti kuruldu.',"
+ },
+ {
+  "t": "json",
+  "id": "ds_dirok_0338",
+  "field": "explanationKu",
+  "eski": "Bi vê biryarê re herêma qedexeya hewayî hate avakirin û rê li ber avakirina statuya xweser a Başûr vebû.",
+  "yeni": "Piştî vê biryarê koalîsyonê herêma qedexeya firînê ava kir û rê li ber avakirina statuya xweser a Başûr vebû."
+ },
+ {
+  "t": "json",
+  "id": "ds_dirok_0338",
+  "field": "explanationTr",
+  "eski": "BM 688 sayılı kararıyla kurulan güvenli bölge (Çekiç Güç), Saddam ordusunun saldırılarını durdurmuş ve 1992'de Federe Kürdistan parlamentosunun kurulmasını sağlamıştır.",
+  "yeni": "BM 688 sayılı karar Irak'ın Kürt sivillere yönelik baskısını kınadı; kararın ardından koalisyon kuzeyde uçuşa yasak bölge ve güvenli bölge oluşturdu (Çekiç Güç). Bu düzenleme Saddam ordusunun saldırılarını durdurdu ve 1992'de Federe Kürdistan parlamentosunun kurulmasının önünü açtı."
+ },
+ {
+  "t": "json",
+  "id": "bosluk_0075",
+  "field": "explanationKu",
+  "eski": "Di hilbijartina 1992yan de baraj %7 bû; ji ber vê baraja bilind tenê PDK û YNK karîbûn derbasî nav parlamentoyê bibin.",
+  "yeni": "Di hilbijartina 1992yan de baraj %7 bû. Ev baraj ji bo kursiyên giştî bû; 5 kursî jî ji bo xiristiyanan hatibûn veqetandin."
+ },
+ {
+  "t": "json",
+  "id": "bosluk_0075",
+  "field": "explanationTr",
+  "eski": "1992 seçimlerinde baraj %7 idi; bu yüksek baraj nedeniyle sadece KDP ve YNK parlamentoya girebildi.",
+  "yeni": "1992 seçimlerinde baraj %7 idi. Bu baraj genel sandalyeler için geçerliydi; Hristiyanlara ayrılan 5 sandalye ayrıca vardı."
+ },
+ {
+  "t": "json",
+  "id": "bosluk_0096",
+  "field": "explanationKu",
+  "eski": "Magna Carta ne di sala 1315an de, di sala 1215an de li Runnymedeyê ji aliyê Qralê Îngilistanê John ve hatiye îmzekirin.",
+  "yeni": "Magna Carta ne di sala 1315an de, di sala 1215an de li Runnymedeyê ji aliyê Qralê Îngilistanê John ve hatiye morkirin."
+ },
+ {
+  "t": "json",
+  "id": "bosluk_0096",
+  "field": "explanationTr",
+  "eski": "Magna Carta 1315'te değil, 1215 yılında İngiltere Kralı John tarafından Runnymede'de imzalanmıştır.",
+  "yeni": "Magna Carta 1315'te değil, 1215 yılında İngiltere Kralı John tarafından Runnymede'de mühürlenmiştir."
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0066",
+  "field": "explanationKu",
+  "eski": "Kom (set) di bernamekirinê de ji bo hilanîna komek nirxan bêyî dubarekirinê tê bikaranîn. Guherbar, xelek û şert jî têgehên din in lê ne ji bo hilanîna koman in.",
+  "yeni": "Kom (set) di bernamekirinê de ji bo hilanîna komek nirxan bêyî dubarekirinê tê bikaranîn. Guherbar dikare her cureyê daneyê hilgire, lê cureyê daneyê diyar dike ka çi nirx tê hilanîn; xelek û şert jî avahiyên kontrolê ne, ne cureyên daneyê ne."
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0066",
+  "field": "explanationTr",
+  "eski": "Küme (set), programlamada tekrarsız bir değerler kümesini saklamak için kullanılır. Değişken, döngü ve koşul ise diğer kavramlardır ancak kümeleri saklamak için kullanılmazlar.",
+  "yeni": "Küme (set), programlamada tekrarsız bir değerler kümesini saklamak için kullanılır. Değişken her veri türünü tutabilir, ancak hangi değerin saklanacağını veri türü belirler; döngü ve koşul ise veri türü değil, denetim yapılarıdır."
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0071",
+  "field": "explanationKu",
+  "eski": "Nivîs (text) di bernamekirinê de ji bo hilanîna nirxekê ya ku dikare bibe navnîşek tîpan tê bikaranîn. Guherbar, xelek û şert jî têgehên din in lê ne ji bo hilanîna nivîsê ne.",
+  "yeni": "Nivîs (text) di bernamekirinê de ji bo hilanîna nirxekê ya ku dikare bibe navnîşek tîpan tê bikaranîn. Guherbar dikare her cureyê daneyê hilgire, lê cureyê daneyê diyar dike ka çi nirx tê hilanîn; xelek û şert jî avahiyên kontrolê ne, ne cureyên daneyê ne."
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0071",
+  "field": "explanationTr",
+  "eski": "Metin (text), programlamada bir karakter dizisi olabilen bir değeri saklamak için kullanılır. Değişken, döngü ve koşul ise diğer kavramlardır ancak metin saklamak için kullanılmazlar.",
+  "yeni": "Metin (text), programlamada bir karakter dizisi olabilen bir değeri saklamak için kullanılır. Değişken her veri türünü tutabilir, ancak hangi değerin saklanacağını veri türü belirler; döngü ve koşul ise veri türü değil, denetim yapılarıdır."
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0060",
+  "field": "explanationKu",
+  "eski": "Boolean di bernamekirinê de ji bo hilanîna nirxekê ya rast an derew tê bikaranîn. Guherbar, xelek û şert jî têgehên din in lê ne ji bo hilanîna nirxên rast/derew in.",
+  "yeni": "Boolean di bernamekirinê de ji bo hilanîna nirxekê ya rast an derew tê bikaranîn. Guherbar dikare her cureyê daneyê hilgire, lê cureyê daneyê diyar dike ka çi nirx tê hilanîn; xelek û şert jî avahiyên kontrolê ne, ne cureyên daneyê ne."
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0060",
+  "field": "explanationTr",
+  "eski": "Boolean, programlamada doğru veya yanlış değerini saklamak için kullanılır. Değişken, döngü ve koşul diğer terimlerdir ancak doğru/yanlış değerlerini saklamak için kullanılmazlar.",
+  "yeni": "Boolean, programlamada doğru veya yanlış değerini saklamak için kullanılır. Değişken her veri türünü tutabilir, ancak hangi değerin saklanacağını veri türü belirler; döngü ve koşul ise veri türü değil, denetim yapılarıdır."
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0055",
+  "field": "explanationKu",
+  "eski": "Array di bernamekirinê de ji bo hilanîna navnîşek nirxan di bîra komputerê de tê bikaranîn. Guherbar, xelek û şert jî têgehên din in lê ne ji bo hilanîna navnîşan in.",
+  "yeni": "Array di bernamekirinê de ji bo hilanîna navnîşek nirxan di bîra komputerê de tê bikaranîn. Guherbar dikare her cureyê daneyê hilgire, lê cureyê daneyê diyar dike ka çi nirx tê hilanîn; xelek û şert jî avahiyên kontrolê ne, ne cureyên daneyê ne."
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0055",
+  "field": "explanationTr",
+  "eski": "Dizi, programlamada bilgisayar belleğinde bir değerler listesi saklamak için kullanılır. Değişken, döngü ve koşul diğer terimlerdir ancak liste saklamak için kullanılmazlar.",
+  "yeni": "Dizi, programlamada bilgisayar belleğinde bir değerler listesi saklamak için kullanılır. Değişken her veri türünü tutabilir, ancak hangi değerin saklanacağını veri türü belirler; döngü ve koşul ise veri türü değil, denetim yapılarıdır."
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0149",
+  "field": "promptTr",
+  "eski": "Derin öğrenmede, modelin verilerden bağımsız olarak öğrenip veri yapısını keşfettiği süreç için kullanılan kavram hangisidir?",
+  "yeni": "Derin öğrenmede, modelin etiketlenmemiş verilerdeki yapı ve örüntüleri kendi başına keşfederek öğrendiği süreç için kullanılan kavram hangisidir?"
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0281",
+  "field": "explanationKu",
+  "eski": "Pi (π) rêjeya di navbera dora çemberê û çapa wê ye. Ew hejmareke bêdawî ye û nêzîkî 3,14159 e.",
+  "yeni": "Pi (π) rêjeya di navbera dora çemberê û çapa wê ye. Reqemên wê yên piştî bêhnokê bêdawî ne û nirxa wê nêzîkî 3,14159 e."
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0281",
+  "field": "explanationTr",
+  "eski": "Pi (π), bir çemberin çevresinin çapına oranıdır. Sonsuz bir sayıdır ve yaklaşık olarak 3.14159'dur.",
+  "yeni": "Pi (π), bir çemberin çevresinin çapına oranıdır. Sonlu, irrasyonel bir sayıdır; ondalık açılımı sonsuz ve devirsizdir, yaklaşık olarak 3,14159'dur."
+ },
+ {
+  "t": "json",
+  "id": "tech_invent_0022",
+  "field": "explanationKu",
+  "eski": "Ava ku li bilindiyê tê girtin enerjiya potansiyel a rakêşiyê hildide; dema ku ji boriyê dadikeve, ev enerjî vediguhere tevgerê, di tîrbînê de jî vediguhere elektrîkê. Germahî û enerjiya kîmyewî nirxên têketî yên cureyên din ên santralan in.",
+  "yeni": "Ava ku li bilindiyê tê girtin enerjiya potansiyel a rakêşiyê hildide; dema ku ji boriyê dadikeve, ev enerjî vediguhere tevgerê, tîrbînê dizivirîne û jenerator vê tevgerê vediguherîne elektrîkê. Germahî û enerjiya kîmyewî nirxên têketî yên cureyên din ên santralan in."
+ },
+ {
+  "t": "json",
+  "id": "tech_invent_0022",
+  "field": "explanationTr",
+  "eski": "Yüksekte tutulan su yerçekimi potansiyel enerjisi depolar; borudan düşerken bu enerji harekete, türbinde de elektriğe dönüşür. Isı ve kimyasal enerji başka santral türlerinin girdisidir.",
+  "yeni": "Yüksekte tutulan su yerçekimi potansiyel enerjisi depolar; borudan düşerken bu enerji harekete dönüşür, türbini döndürür ve jeneratör bu hareketi elektriğe çevirir. Isı ve kimyasal enerji başka santral türlerinin girdisidir."
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0348",
+  "field": "answers[1]",
+  "eski": "Bikaranîna fermanên sade û yek-mezinahî yên ku di yek dewrê de bi dawî dibin",
+  "yeni": "Bikaranîna fermanên sade û yek-mezinahî yên ji bo pîplînê guncav"
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0348",
+  "field": "answersTr[1]",
+  "eski": "Tek saat döngüsünde çalışan sabit uzunluklu basit komutlar ve Load/Store mimarisi kullanmak",
+  "yeni": "Boru hattına uygun, sabit uzunluklu basit komutlar ve Load/Store mimarisi kullanmak"
+ },
+ {
+  "t": "json",
+  "id": "ds_teknoloji_0348",
+  "field": "explanationKu",
+  "eski": "RISC fermanan hêsan dike da ku pîplîn hêsantir bibe û her ferman di yek dewrê de bimeşe; operasyonên bîrgehê tenê bi Load/Store tên kirin.",
+  "yeni": "RISC fermanan hêsan dike da ku pîplîn hêsantir bibe û piraniya fermanan di dewrên kurt de bimeşin; operasyonên bîrgehê tenê bi Load/Store tên kirin."
+ },
+ {
+  "t": "json",
+  "id": "ds_cografya_0195",
+  "field": "explanationTr",
+  "eski": "Azimut, kuzey yönünden saat yönünde, yatay düzlemde ölçülen açıdır. Enlem ve boylam ise koordinattır, açı değil.",
+  "yeni": "Azimut, kuzey yönünden saat yönünde, yatay düzlemde ölçülen açıdır. Enlem ekvatora, boylam ise başlangıç meridyenine göre açısal konumu belirtir."
+ },
+ {
+  "t": "json",
+  "id": "cinema_0013",
+  "field": "explanationKu",
+  "eski": "Belgefîlm bûyer û mirovên rastîn tomar dike; berevajî fîlmên çîrokî, lîstikvan rol nagirin û cîhaneke xeyalî nayê avakirin.",
+  "yeni": "Belgefîlm bûyer û mirovên rastîn tomar dike; berevajî fîlmên çîrokî, cîhaneke xeyalî nayê avakirin, lê dibe ku ji nû ve lîstina bûyeran jî tê de hebe."
+ },
+ {
+  "t": "json",
+  "id": "cinema_0013",
+  "field": "explanationTr",
+  "eski": "Belgesel gerçek olay ve kişileri kaydeder; kurmaca filmlerin tersine oyuncular rol yapmaz ve hayali bir dünya kurulmaz.",
+  "yeni": "Belgesel gerçek olay ve kişileri kaydeder; kurmaca filmlerin tersine hayali bir dünya kurulmaz, ancak olayların yeniden canlandırılması gibi anlatım yöntemleri kullanılabilir."
+ },
+ {
+  "t": "json",
+  "id": "hat_0119",
+  "field": "explanationKu",
+  "eski": "Masî bi gilgilên xwe bêhnê distîne û avê wek vexwarinê venaxwe; di tiştonekan de sembola jiyana avê ye.",
+  "yeni": "Ev tiştonekeke mecazî ye; gelek masiyên deryayê avê vedixwin. Masî bi gilgilên xwe bêhnê distîne; di tiştonekan de sembola jiyana avê ye."
+ },
+ {
+  "t": "json",
+  "id": "hat_0119",
+  "field": "explanationTr",
+  "eski": "Balık solungaçlarıyla nefes alır ve suyu içecek gibi içmez; bilmecelerde su yaşamının simgesidir.",
+  "yeni": "Bu mecazi bir bilmecedir; deniz balıklarının önemli bölümü su içer. Balık solungaçlarıyla nefes alır; bilmecelerde su yaşamının simgesidir."
+ },
+ {
+  "t": "json",
+  "id": "hat_0126",
+  "field": "explanationKu",
+  "eski": "Ewr ji dilopên avê yên pir biçûk pêk tê; sê cureyên sereke cirrus, stratus û cumulus in.",
+  "yeni": "Ewr ji dilopên avê yên pir biçûk û/an krîstalên qeşayê pêk tê; sê cureyên sereke cirrus, stratus û cumulus in."
+ },
+ {
+  "t": "json",
+  "id": "hat_0126",
+  "field": "explanationTr",
+  "eski": "Bulut çok küçük su damlacıklarından oluşur; üç ana türü sirüs, stratüs ve kümülüstür.",
+  "yeni": "Bulut çok küçük su damlacıkları ve/veya buz kristallerinden oluşur; üç ana türü sirüs, stratüs ve kümülüstür."
+ },
+ {
+  "t": "json",
+  "id": "offline_9459",
+  "field": "explanationKu",
+  "eski": "Vebêj ne leheng û ne cih e; ew dengê ku çîrokê ji xwendevan re vedibêje ye.",
+  "yeni": "Vebêj dengê ku çîrokê ji xwendevan re vedibêje ye; ew dikare yek ji kesayetên çîrokê jî be."
+ },
+ {
+  "t": "json",
+  "id": "offline_9459",
+  "field": "explanationTr",
+  "eski": "Anlatıcı ne kahraman ne de mekândır; hikâyeyi okura aktaran sestir.",
+  "yeni": "Anlatıcı, hikâyeyi okura aktaran sestir; hikâyenin kahramanlarından biri de olabilir."
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_0044",
+  "field": "answersTr[2]",
+  "eski": "Ez kirim",
+  "yeni": "Min kir"
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_0044",
+  "field": "answersTr[3]",
+  "eski": "Ez kiribûm",
+  "yeni": "Min kiribû"
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_0044",
+  "field": "explanationTr",
+  "eski": "\"kirin\" fiilinin gelecek zamanı \"ez ê bikim\" formuyla gösterilir. \"Ez dikim\" şimdiki zaman, \"ez kirim\" geçmiş zaman ve \"ez kiribûm\" ise geçmiş zamanın hikayesidir.",
+  "yeni": "\"kirin\" fiilinin gelecek zamanı \"ez ê bikim\" formuyla gösterilir. \"Ez dikim\" şimdiki zaman, \"min kir\" geçmiş zaman ve \"min kiribû\" ise geçmiş zamanın hikayesidir."
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_1029",
+  "field": "answersTr[1]",
+  "eski": "Ew nanî xwar",
+  "yeni": "Wî nan xwar"
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_1029",
+  "field": "answersTr[2]",
+  "eski": "Ew nanî dixwar",
+  "yeni": "Wî nan dixwar"
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_0028",
+  "field": "explanationTr",
+  "eski": "Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmancî'de bu zaman \"ê\" veya \"dê\" yardımcı fiili ve mastar ile kurulur, örn. \"ez ê biçim\" veya \"ew dê bê\".",
+  "yeni": "Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmancî'de bu zaman \"ê\" veya \"dê\" gelecek zaman parçacığı ve dilek kipinde çekimli fiil ile kurulur, örn. \"ez ê biçim\" veya \"ew dê bê\"."
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_1031",
+  "field": "explanationKu",
+  "eski": "Dema niha ya \"hatin\" bi \"tê\" tê gotin. \"Hat\" dema borî ye, \"dihat\" dema borî ya berdewam e û \"bê\" ferman e.",
+  "yeni": "Dema niha ya \"hatin\" bi \"tê\" tê gotin. \"Hat\" dema borî ye, \"dihat\" dema borî ya berdewam e û \"bê\" forma kesê sêyem ê yekjimar a raweya bilanî ye; fermana yekjimar \"were\" ye."
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_1031",
+  "field": "explanationTr",
+  "eski": "\"Hatin\" fiilinin şimdiki zamanı \"tê\" ile söylenir. \"Hat\" geçmiş zaman, \"dihat\" sürekli geçmiş zaman ve \"bê\" emir kipidir.",
+  "yeni": "\"Hatin\" fiilinin şimdiki zamanı \"tê\" ile söylenir. \"Hat\" geçmiş zaman, \"dihat\" sürekli geçmiş zaman, \"bê\" ise üçüncü tekil kişi dilek kipi biçimidir; tekil emir kipi \"were\"dir."
+ },
+ {
+  "t": "dart",
+  "id": "past_1_s3",
+  "file": "lib/src/data/mock_zankurd_repository.dart",
+  "eski": "Nesne tekilse fiil xwar ve dît olarak kalır.",
+  "yeni": "Nesne üçüncü tekil kişiyse fiil xwar ve dît olarak kalır; fiil nesnenin kişi ve sayısına göre uyum gösterir."
+ },
+ {
+  "t": "dart",
+  "id": "months_1_s5",
+  "file": "lib/src/data/mock_zankurd_repository.dart",
+  "eski": "Di hevokê de navê mehê -ê digire. Mînak:",
+  "yeni": "Di mînakên \"meha Gulanê\" û \"di Adarê de\" de navê mehê di rewşa tewandî de ye. Mînak:"
+ },
+ {
+  "t": "dart",
+  "id": "months_1_s5",
+  "file": "lib/src/data/mock_zankurd_repository.dart",
+  "eski": "Cümlede ay adı -ê eki alır: Gulan →",
+  "yeni": "Ay adı, \"meha Gulanê\" gibi tamlamalarda ve \"di Adarê de\" gibi edatlı yapılarda bükümlü (-ê) biçimde kullanılır: Gulan →"
+ },
+ {
+  "t": "dart",
+  "id": "questions_1_s1",
+  "file": "lib/src/data/mock_zankurd_repository.dart",
+  "eski": "Fiil cümlenin sonunda çekimlenir.",
+  "yeni": "Sade cümlelerde olağan sıra özne + nesne + fiildir; hareket fiilleriyle yer veya yön ögesi fiilden sonra da gelebilir."
+ },
+ {
+  "t": "dart",
+  "id": "questions_1_s2",
+  "file": "lib/src/data/mock_zankurd_repository.dart",
+  "eski": "fiil sonda kalır. Cevap yer",
+  "yeni": "olağan sırada fiil sonda kalır; hareket fiilleriyle yer veya yön ögesi fiilden sonra da gelebilir. Cevap yer"
+ },
+ {
+  "t": "dart",
+  "id": "questions_1_s5",
+  "file": "lib/src/data/mock_zankurd_repository.dart",
+  "eski": "lêker li dawiyê ye.",
+  "yeni": "lêker bi gelemperî li dawiyê ye."
+ },
+ {
+  "t": "dart",
+  "id": "questions_1_s5",
+  "file": "lib/src/data/mock_zankurd_repository.dart",
+  "eski": "çekimli fiil sonda olur.",
+  "yeni": "çekimli fiil olağan sırada sonda olur; hareket fiillerinde yer veya yön ögesi fiilden sonra da gelebilir."
+ },
+ {
+  "t": "dart",
+  "id": "verbs_1_s1",
+  "file": "lib/src/data/mock_zankurd_repository.dart",
+  "eski": "Di kurmancî de lêker di dawiya hevokê de ye. Dema niha",
+  "yeni": "Di hevokên sade de rêza asayî kirde + berkar + lêker e; bi lêkerên tevgerê armanc dikare piştî lêkerê bê. Dema niha"
+ },
+ {
+  "t": "dart",
+  "id": "verbs_1_s1",
+  "file": "lib/src/data/mock_zankurd_repository.dart",
+  "eski": "Kurmancîde fiil cümlenin sonunda yer alır. Şimdiki",
+  "yeni": "Kurmancîde sade cümlelerde olağan sıra özne + nesne + fiildir; hareket fiillerinde yer veya yön ögesi fiilden sonra da gelebilir. Şimdiki"
+ },
+ {
+  "t": "dart",
+  "id": "curated_movement_0012",
+  "file": "lib/src/data/curated_question_bank.dart",
+  "eski": "'Di hevoka \"Jin di meclîsê de dengê xwe bilind kir\" de",
+  "yeni": "'Di hevoka \"Jinê di meclîsê de dengê xwe bilind kir\" de"
+ },
+ {
+  "t": "dart",
+  "id": "curated_movement_0012",
+  "file": "lib/src/data/curated_question_bank.dart",
+  "eski": "'\"Jin di meclîsê de dengê xwe bilind kir\" cümlesinde",
+  "yeni": "'\"Jinê di meclîsê de dengê xwe bilind kir\" cümlesinde"
+ },
+ {
+  "t": "dart",
+  "id": "telefon/pirsa_rojev/choice2",
+  "file": "lib/src/models/stories_2026_10.dart",
+  "eski": "labelTr: 'Şu an biraz işim var ama öğleden sonra yapabilirim.',",
+  "yeni": "labelTr: 'Şu an biraz işim var ama öğleden sonra dışarı çıkabilirim.',"
+ },
+ {
+  "t": "json",
+  "id": "offline_curated_20100",
+  "field": "answers[1]",
+  "eski": "peyvên wekî \"di... de, bi... re, ji... re\" ku têkiliyên cih nîşan didin",
+  "yeni": "peyvên wekî \"di... de, bi... re, ji... re\" ku têkiliyên wekî cih, hevaltiyê û arasteyê nîşan didin"
+ },
+ {
+  "t": "json",
+  "id": "offline_curated_20100",
+  "field": "answersTr[1]",
+  "eski": "yer ilişkilerini gösteren \"di... de, bi... re, ji... re\" gibi sözcükler",
+  "yeni": "yer, birliktelik ve yönelme gibi ilişkileri gösteren \"di... de, bi... re, ji... re\" gibi sözcükler"
+ },
+ {
+  "t": "json",
+  "id": "offline_curated_20100",
+  "field": "explanationKu",
+  "eski": "\"daçekên hevedudanî\" tê vê wateyê: peyvên wekî \"di... de, bi... re, ji... re\" ku têkiliyên cih nîşan didin.",
+  "yeni": "\"daçekên hevedudanî\" tê vê wateyê: peyvên wekî \"di... de, bi... re, ji... re\" ku têkiliyên wekî cih, hevaltiyê û arasteyê nîşan didin."
+ },
+ {
+  "t": "json",
+  "id": "offline_curated_20100",
+  "field": "explanationTr",
+  "eski": "\"daçekên hevedudanî\" şu anlama gelir: yer ilişkilerini gösteren \"di... de, bi... re, ji... re\" gibi sözcükler.",
+  "yeni": "\"daçekên hevedudanî\" şu anlama gelir: yer, birliktelik ve yönelme gibi ilişkileri gösteren \"di... de, bi... re, ji... re\" gibi sözcükler."
+ },
+ {
+  "t": "json",
+  "id": "ex28_rastnivisin_002",
+  "field": "promptTr",
+  "eski": "Kurmancî yazımında iki harfle yazılan özel bir ses (diftong) vardır. Bu iki harf hangileridir?",
+  "yeni": "Kurmancî yazımında iki harfle yazılan özel bir ünsüz sesi (digraf) vardır. Bu iki harf hangileridir?"
+ },
+ {
+  "t": "json",
+  "id": "offline_curated_30029",
+  "field": "answers[1]",
+  "eski": "Kolin",
+  "yeni": "Çal"
+ },
+ {
+  "t": "json",
+  "id": "offline_curated_30029",
+  "field": "explanationKu",
+  "eski": "Ev tiştokeke zekayê ye, bersiva wê \"kolin\" an \"çal\" (çukur) e.",
+  "yeni": "Ev tiştokeke zekayê ye, bersiva wê \"çal\" (çukur) e."
+ },
+ {
+  "t": "json",
+  "id": "offline_curated_30029",
+  "field": "explanationTr",
+  "eski": "Bu bir zekâ bilmecesidir; cevabı \"kolin\" ya da \"çal\" (çukur).",
+  "yeni": "Bu bir zekâ bilmecesidir; cevabı \"çal\" (çukur)."
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_1126",
+  "field": "answers[0]",
+  "eski": "riwekek e ku fêkî dide",
+  "yeni": "riwekeke mezin û bi qurm"
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_1126",
+  "field": "answersTr[0]",
+  "eski": "Meyve veren bir bitki",
+  "yeni": "Gövdeli büyük bir bitki (ağaç)"
+ },
+ {
+  "t": "json",
+  "id": "ds_cografya_0262",
+  "field": "explanationKu",
+  "eski": "Ji ber germahiya zêde ya havînê av zû dihele û hişkesalî nahêle daristanên xwezayî li deştan şîn bibin.",
+  "yeni": "Ji ber germahiya zêde ya havînê av zû hilm dibe û hişkesalî nahêle daristanên xwezayî li deştan şîn bibin."
+ },
+ {
+  "t": "json",
+  "id": "ds_cografya_0262",
+  "field": "answersTr[3]",
+  "eski": "İnsan yerleşiminin ağaç dikimini engellemiş olması",
+  "yeni": "Ağaç dikecek insan nüfusunun bulunmaması"
+ },
+ {
+  "t": "json",
+  "id": "offline_7066",
+  "field": "answersTr[0]",
+  "eski": "Dêrsim bölgesinde yaşanan askerî harekât ve kriz",
+  "yeni": "Dêrsim bölgesinde yaşanan askerî harekât ve toplu öldürmeler"
+ },
+ {
+  "t": "json",
+  "id": "offline_9778",
+  "field": "answersTr[0]",
+  "eski": "dil ve alfabe çalışmalarını yaygınlaştırdığı için",
+  "yeni": "Hawar dergisinin edebî ekolünün kurucusu"
+ },
+ {
+  "t": "json",
+  "id": "offline_9778",
+  "field": "answersTr[1]",
+  "eski": "Kürt dili ve edebiyatı üzerine çalışan akademisyen",
+  "yeni": "ilk modern Kürt romanının yazarı"
+ },
+ {
+  "t": "json",
+  "id": "offline_9778",
+  "field": "answersTr[2]",
+  "eski": "Sorani klasik şiir okulunun en büyük divan şairi",
+  "yeni": "Baban klasik edebiyat okulunun başlıca şairlerinden biri"
+ },
+ {
+  "t": "json",
+  "id": "offline_9778",
+  "field": "answersTr[3]",
+  "eski": "ilk Kürt edebi ve siyasi yayınlarından biri",
+  "yeni": "Kurmancî gramerini yazan dilbilimci"
+ },
+ {
+  "t": "json",
+  "id": "offline_tek_0050",
+  "field": "answersTr[0]",
+  "eski": "Dosya",
+  "yeni": "Klasör"
+ },
+ {
+  "t": "json",
+  "id": "offline_tek_0074",
+  "field": "answersTr[0]",
+  "eski": "Dosya",
+  "yeni": "Klasör"
+ },
+ {
+  "t": "json",
+  "id": "ds26_cinema_0005",
+  "field": "explanationKu",
+  "eski": "Jump cut di nav dîmenekî de ji nişkê ve di dem, mekan an pozîsyonê de çavkaniyekê diafirîne û bêyî qutbûna xwezayî dihêle temaşevan xwe bigihîne. Di Pêla Nû ya Frensî de ev teknîk bi awayekî berbiçav hat bikaranîn.",
+  "yeni": "Jump cut di nav dîmenekî de di dem, mekan an pozîsyonê de guherîneke ji nişkê ve nîşan dide û bêyî qutbûna xwezayî dihêle temaşevan xwe bigihîne. Di Pêla Nû ya Frensî de ev teknîk bi awayekî berbiçav hat bikaranîn."
+ },
+ {
+  "t": "json",
+  "id": "hat_0123",
+  "field": "explanationKu",
+  "eski": "Hêk bi qalikek kelisî cîhana derve diparêze; zerika wê bi proteîn û hesin dewlemend e.",
+  "yeni": "Qalikê kelisî hêkê ji bandorên derve diparêze; zerika wê bi proteîn û hesin dewlemend e."
+ },
+ {
+  "t": "json",
+  "id": "hat_0123",
+  "field": "explanationTr",
+  "eski": "Yumurta kireçli bir kabukla dış dünyayı korur; sarısı protein ve demir bakımından zengindir.",
+  "yeni": "Kireçli kabuk yumurtayı dış etkilerden korur; sarısı protein ve demir bakımından zengindir."
+ },
+ {
+  "t": "json",
+  "id": "hat_0087",
+  "field": "promptTr",
+  "eski": "Kardukların adı hangi antik Yunan yazarının eserinde geçer?",
+  "yeni": "Kardukların adı antik bir Yunan yazarının hangi eserinde geçer?"
+ },
+ {
+  "t": "json",
+  "id": "ds_cografya_0053",
+  "field": "answersTr[3]",
+  "eski": "Çevre ormanı",
+  "yeni": "Tropikal orman"
+ },
+ {
+  "t": "json",
+  "id": "ds_sinema_0178",
+  "field": "explanationTr",
+  "eski": "Mufasa, Simba'nın babasıdır ve \"The Lion King\" filminde kralların kralıdır. Scar, Mufasa'nın krallığı ele geçirmek isteyen kardeşidir.",
+  "yeni": "Mufasa, Simba'nın babasıdır ve \"The Lion King\" filminde aslanların kralıdır. Scar, Mufasa'nın krallığı ele geçirmek isteyen kardeşidir."
+ },
+ {
+  "t": "json",
+  "id": "ds_cand_0159",
+  "field": "explanationTr",
+  "eski": "Kürt misafirperverliğinde, misafirler için genellikle yemek hazırlanır, böylece misafir iyi ağırlanır. Kapı kapatmak, ışık söndürmek ve cami okumak misafirperverlik adetleri değildir.",
+  "yeni": "Kürt misafirperverliğinde, misafirler için genellikle yemek hazırlanır, böylece misafir iyi ağırlanır. Kapı kapatmak, ışık söndürmek ve mevlit okumak misafirperverlik adetleri değildir."
+ },
+ {
+  "t": "json",
+  "id": "ds_cand_1184",
+  "field": "answersTr[1]",
+  "eski": "Sac ekmeğinin sadece bir saat taze kalıp hemen bayatlaması",
+  "yeni": "Sac ekmeğinin sadece bir gün taze kalıp hemen bayatlaması"
+ },
+ {
+  "t": "json",
+  "id": "offline_5270",
+  "field": "answersTr[2]",
+  "eski": "rêvekirin",
+  "yeni": "rêvebirin"
+ },
+ {
+  "t": "json",
+  "id": "ziman_x_0054",
+  "field": "explanationTr",
+  "eski": "Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; sürüyle gezip koyuna saldıran gurttur.",
+  "yeni": "Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; sürüyle gezip koyuna saldıran kurttur."
+ },
+ {
+  "t": "json",
+  "id": "ds_cografya_0265",
+  "field": "explanationTr",
+  "eski": "Kireçtaşının yeraltı suları tarafından kimyasal olarak eritilmesi karstik aşınım şekillerini (mağara, lapa, düden, obruk) oluşturur.",
+  "yeni": "Kireçtaşının yeraltı suları tarafından kimyasal olarak eritilmesi karstik aşınım şekillerini (mağara, lapya, düden, obruk) oluşturur."
+ },
+ {
+  "t": "json",
+  "id": "ds_edebiyat_0127",
+  "field": "answers[1]",
+  "eski": "Dîwana Mem û Zîn",
+  "yeni": "Mem û Zîn"
+ },
+ {
+  "t": "json",
+  "id": "ds_edebiyat_0127",
+  "field": "answersTr[1]",
+  "eski": "Mem û Zîn Divanı",
+  "yeni": "Mem û Zîn"
+ },
+ {
+  "t": "json",
+  "id": "ds_edebiyat_0127",
+  "field": "explanationKu",
+  "eski": "Hamlet yek ji berhemên navdar ên Shakespeare e. Dîwana Mem û Zîn a Ehmedê Xanî ye, Şahname ya Fîrdewsî ye, Îlyada jî ya Homêros e.",
+  "yeni": "Hamlet yek ji berhemên navdar ên Shakespeare e. Mem û Zîn mesnewiya Ehmedê Xanî ye, Şahname ya Fîrdewsî ye, Îlyada jî ya Homêros e."
+ },
+ {
+  "t": "json",
+  "id": "ds_edebiyat_0127",
+  "field": "explanationTr",
+  "eski": "Hamlet, Shakespeare'in en ünlü eserlerinden biridir. Mem û Zîn Divanı Ahmedê Xanî'ye, Şahname Firdevsî'ye, İlyada ise Homeros'a aittir.",
+  "yeni": "Hamlet, Shakespeare'in en ünlü eserlerinden biridir. Mem û Zîn mesnevisi Ahmedê Xanî'ye, Şahname Firdevsî'ye, İlyada ise Homeros'a aittir."
+ },
+ {
+  "t": "json",
+  "id": "tech_invent_0042",
+  "field": "explanationKu",
+  "eski": "Li vê bilindahiyê zivirek tam bîst û çar saetan didome, heke mirov ji erdê lê binêre peyk di ezmên de sabît xuya dike; ji ber vê yekê peykên weşanê li wir tên bicihkirin. 400 km orbîteke nizm e, li wir zivirek nod deqîqeyan dajo.",
+  "yeni": "Li vê bilindahiyê zivirek nêzîkî bîst û çar saetan didome, heke mirov ji erdê lê binêre peyk di ezmên de sabît xuya dike; ji ber vê yekê peykên weşanê li wir tên bicihkirin. 400 km orbîteke nizm e, li wir zivirek nod deqîqeyan dajo."
+ },
+ {
+  "t": "json",
+  "id": "tech_invent_0042",
+  "field": "explanationTr",
+  "eski": "Bu yükseklikte bir tur tam yirmi dört saat sürer, uydu da yerden bakınca gökyüzünde sabit görünür; yayın uyduları bu yüzden oraya konur. 400 km alçak yörüngedir, orada bir tur doksan dakikadır.",
+  "yeni": "Bu yükseklikte bir tur yaklaşık yirmi dört saat (daha kesin olarak bir yıldız günü) sürer, uydu da yerden bakınca gökyüzünde sabit görünür; yayın uyduları bu yüzden oraya konur. 400 km alçak yörüngedir, orada bir tur doksan dakikadır."
+ },
+ {
+  "t": "json",
+  "id": "ds_cografya_0269",
+  "field": "explanationTr",
+  "eski": "Yamaçtan aşağı inen hava kütlesi sürtünme ve adyabatik sıkışmayla her 100 metrede 1°C ısınır; kurutucu etki yapar.",
+  "yeni": "Yamaçtan aşağı inen hava kütlesi alçalırken artan basınçla adyabatik olarak sıkışır ve her 100 metrede yaklaşık 1°C ısınır; kurutucu etki yapar."
+ },
+ {
+  "t": "json",
+  "id": "ds_muzik_0178",
+  "field": "promptTr",
+  "eski": "Operada, tek sesli şarkı için hangi kelime kullanılır?",
+  "yeni": "Operada, bir solistin söylediği şarkı için hangi kelime kullanılır?"
+ },
+ {
+  "t": "json",
+  "id": "ds_ziman_1269",
+  "field": "explanationKu",
+  "eski": "Paşgira \"-tî / -atî\"yê ji navdêr û rengdêran navên razber û têgehî çêdike (hevaltî, biratî, zanyarî/zanatî).",
+  "yeni": "Paşgira \"-tî / -atî\"yê ji navdêr û rengdêran navên razber û têgehî çêdike (hevaltî, biratî, mirovatî)."
+ },
+ {
+  "t": "json",
+  "id": "s034",
+  "field": "tr",
+  "eski": "Çobanın gönlü isterse koçtan bile süt çıkarır.",
+  "yeni": "Çobanın gönlü isterse tekeden bile süt çıkarır."
+ },
+ {
+  "t": "json",
+  "id": "s041",
+  "field": "ku",
+  "eski": "Mêvanê yekî, mêvanê gundek î.",
+  "yeni": "Mêvanê yekî, mêvanê gundekî."
+ }
+]

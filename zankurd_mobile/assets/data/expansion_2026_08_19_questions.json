@@ -237,16 +237,16 @@
     "prompt": "Di nexşeya bi Projeksiyona Mercator de kîjan herêm ji mezinahiya xwe ya rasteqîn pir mezintir xuya dike?",
     "promptTr": "Mercator silindirik projeksiyonu ile çizilen dünya haritalarında hangi bölge gerçek alanına kıyasla en fazla oranda büyük görünür?",
     "answers": [
-      "Girava Gronlandê û herêmên cemserî",
       "Herêma Ekwatorê û daristanên Kongo",
       "Giravên Endonezyayê li başûr",
-      "Nîvgirava Erebistanê ya germ"
+      "Nîvgirava Erebistanê ya germ",
+      "Girava Gronlandê û herêmên cemserî"
     ],
     "answersTr": [
-      "Grönland Adası ve kutup çevresi karaları",
       "Ekvator kuşağı ve Kongo havzası ormanları",
       "Güneydoğu Asya'daki Endonezya adaları",
-      "Arap Yarımadası ve Kızıldeniz kıyıları"
+      "Arap Yarımadası ve Kızıldeniz kıyıları",
+      "Grönland Adası ve kutup çevresi karaları"
     ],
     "correctAnswer": "Girava Gronlandê û herêmên cemserî",
     "correctAnswerTr": "Grönland Adası ve kutup çevresi karaları",
@@ -510,13 +510,13 @@
       "Kış aylarında ova tabanında kalıcı buzulların oluşması",
       "Tarım alanlarının tamamen granit kayaçlarla kaplı olması",
       "Yüksek yaz buharlaşması ve yetersiz yıllık yağış miktarı",
-      "İnsan yerleşiminin ağaç dikimini engellemiş olması"
+      "Ağaç dikecek insan nüfusunun bulunmaması"
     ],
     "correctAnswer": "Evaporasyona (hilkişîna avê) zêde ya havînê û kêmbûna şiliyê",
     "correctAnswerTr": "Yüksek yaz buharlaşması ve yetersiz yıllık yağış miktarı",
     "explanation": "Yüksek sıcaklıklar nedeniyle buharlaşmanın yağıştan fazla olması kuraklığa yol açar ve ağaç yetişmesini engelleyerek step bitki örtüsünü hakim kılar.",
     "explanationTr": "Yüksek sıcaklıklar nedeniyle buharlaşmanın yağıştan fazla olması kuraklığa yol açar ve ağaç yetişmesini engelleyerek step bitki örtüsünü hakim kılar.",
-    "explanationKu": "Ji ber germahiya zêde ya havînê av zû dihele û hişkesalî nahêle daristanên xwezayî li deştan şîn bibin.",
+    "explanationKu": "Ji ber germahiya zêde ya havînê av zû hilm dibe û hişkesalî nahêle daristanên xwezayî li deştan şîn bibin.",
     "type": "multipleChoice",
     "metadata": {
       "reviewStatus": "approved",
@@ -613,8 +613,8 @@
     ],
     "correctAnswer": "Helîna kîmyewî ya kevirên kilsî (karstîk)",
     "correctAnswerTr": "Kalker ve jips gibi kayaçların kimyasal çözünmesi (karstlaşma)",
-    "explanation": "Kireçtaşının yeraltı suları tarafından kimyasal olarak eritilmesi karstik aşınım şekillerini (mağara, lapa, düden, obruk) oluşturur.",
-    "explanationTr": "Kireçtaşının yeraltı suları tarafından kimyasal olarak eritilmesi karstik aşınım şekillerini (mağara, lapa, düden, obruk) oluşturur.",
+    "explanation": "Kireçtaşının yeraltı suları tarafından kimyasal olarak eritilmesi karstik aşınım şekillerini (mağara, lapya, düden, obruk) oluşturur.",
+    "explanationTr": "Kireçtaşının yeraltı suları tarafından kimyasal olarak eritilmesi karstik aşınım şekillerini (mağara, lapya, düden, obruk) oluşturur.",
     "explanationKu": "Ava bin erdê kevirên kilsî dihelîne û di binê erdê de şikeft û çalên kûr ên karstîk çêdike.",
     "type": "multipleChoice",
     "metadata": {
@@ -745,8 +745,8 @@
     ],
     "correctAnswer": "Germahiyê zêde dike û hewayê hişk dike",
     "correctAnswerTr": "Sıcaklığı hızla artırır ve bağıl nemi düşürerek kurutur",
-    "explanation": "Yamaçtan aşağı inen hava kütlesi sürtünme ve adyabatik sıkışmayla her 100 metrede 1°C ısınır; kurutucu etki yapar.",
-    "explanationTr": "Yamaçtan aşağı inen hava kütlesi sürtünme ve adyabatik sıkışmayla her 100 metrede 1°C ısınır; kurutucu etki yapar.",
+    "explanation": "Yamaçtan aşağı inen hava kütlesi alçalırken artan basınçla adyabatik olarak sıkışır ve her 100 metrede yaklaşık 1°C ısınır; kurutucu etki yapar.",
+    "explanationTr": "Yamaçtan aşağı inen hava kütlesi alçalırken artan basınçla adyabatik olarak sıkışır ve her 100 metrede yaklaşık 1°C ısınır; kurutucu etki yapar.",
     "explanationKu": "Bayê Foehnê gava ji çiyê dadikeve newalê, hewayê germ dike û şiliya wê kêm dike.",
     "type": "multipleChoice",
     "metadata": {
@@ -1531,7 +1531,7 @@
     ],
     "answersTr": [
       "Sac ekmeği pişirirken hiçbir yakacak veya ateşe ihtiyaç duyulmaması",
-      "Sac ekmeğinin sadece bir saat taze kalıp hemen bayatlaması",
+      "Sac ekmeğinin sadece bir gün taze kalıp hemen bayatlaması",
       "Tandırın yalnızca çok yüksek zirve kayalıklarında kurulabilmesi",
       "Sacın hafif, kolay taşınabilir ve hızlı pişirmeye uygun olması"
     ],

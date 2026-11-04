@@ -715,7 +715,7 @@ final Story telefonStory = Story(
         StoryChoice(
           labelKu:
               'Niha hinek karê min heye, lê ez dikarim piştî nîvro derkevim derve.',
-          labelTr: 'Şu an biraz işim var ama öğleden sonra yapabilirim.',
+          labelTr: 'Şu an biraz işim var ama öğleden sonra dışarı çıkabilirim.',
           nextNodeId: 'dem_dereng',
           feedbackKu: 'Diyarkirina dema xwe ya guncaw pir baş e.',
           feedbackTr: 'Kendine uygun zamanı belirtmek çok iyidir.',

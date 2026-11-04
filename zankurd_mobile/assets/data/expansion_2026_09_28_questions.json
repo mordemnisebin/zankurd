@@ -208,30 +208,30 @@
     "category": "Çand",
     "difficulty": 3,
     "type": "multipleChoice",
-    "prompt": "Destana Zembîlfiroş a menzûm ji aliyê kîjan helbestvanê klasîk ve hatiye nivîsandin?",
-    "promptTr": "Manzum Zembîlfiroş destanı hangi klasik şair tarafından yazılmıştır?",
+    "prompt": "Bûyerên destana \"Zembîlfiroş\" bi giranî li kîjan bajarokê dîrokî derbas dibin ku birca bi heman navî îro jî li wir e?",
+    "promptTr": "\"Zembîlfiroş\" destanındaki olaylar ağırlıklı olarak, aynı adlı burcun bugün de bulunduğu hangi tarihi ilçede geçmektedir?",
     "answers": [
-      "Feqiyê Teyran",
-      "Ehmedê Xanî",
-      "Melayê Cizîrî",
-      "Elî Herîrî"
+      "Farqîn",
+      "Xelat",
+      "Amêdî",
+      "Heskîf"
     ],
     "answersTr": [
-      "Feqiyê Teyran",
-      "Ehmedê Xanî",
-      "Melayê Cizîrî",
-      "Elî Herîrî"
+      "Silvan",
+      "Ahlat",
+      "Amediye",
+      "Hasankeyf"
     ],
-    "correctAnswer": "Feqiyê Teyran",
-    "correctAnswerTr": "Feqiyê Teyran",
-    "explanation": "Zembîlfiroş, klasik Kurmancî şair Feqiyê Teyran'ın mesnevisidir; eser onun adıyla bilinir.",
-    "explanationKu": "Zembîlfiroş mesnewiyeke Feqiyê Teyran e; ew helbestvanekî klasîk ê kurmancî ye û ev destan bi navê wî tê naskirin.",
-    "explanationTr": "Zembîlfiroş, klasik Kurmancî şair Feqiyê Teyran'ın mesnevisidir; eser onun adıyla bilinir.",
+    "correctAnswer": "Farqîn",
+    "correctAnswerTr": "Silvan",
+    "explanation": "\"Zembîlfiroş\" destanındaki olaylar Silvan'da (Farqîn) geçmektedir ve Zembîlfiroş Burcu tarihi bir kalıntı olarak bugün de Silvan ilçesinde yer almaktadır.",
+    "explanationKu": "Bûyerên destana \"Zembîlfiroş\" li Farqînê (Silîvanê) derbas dibin û Birca Zembîlfiroş wekî bermahiyeke dîrokî îro jî li navçeya Farqînê ye.",
+    "explanationTr": "\"Zembîlfiroş\" destanındaki olaylar Silvan'da (Farqîn) geçmektedir ve Zembîlfiroş Burcu tarihi bir kalıntı olarak bugün de Silvan ilçesinde yer almaktadır.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Zembîlfiroş (destan) - Wîkîpediya",
       "sourceReference": "https://ku.wikipedia.org/wiki/Zemb%C3%AElfiro%C5%9F_(destan)",
-      "reviewedBy": "ajan yazımı (açılmış kaynaktan alıntıyla) + 3 bağımsız doğrulayıcı (olgu, dil, soru zanaatı) + onarım + son denetim",
+      "reviewedBy": "ajan yazımı (açılmış kaynaktan alıntıyla) + 3 bağımsız doğrulayıcı (olgu, dil, soru zanaatı) + onarım + son denetim; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-28",
       "lastContentCheckAt": "2026-09-28",
       "qualityVersion": 2
@@ -1061,15 +1061,15 @@
     "prompt": "Fîlmê \"Kilomètre zéro\" yê Hiner Saleem bû yekem berhema Iraqê ku ji bo xelata sereke ya kîjan festîvalê ket pêşbirka fermî?",
     "promptTr": "Hiner Saleem'in \"Kilomètre zéro\" filmi hangi festivalin büyük ödülü için resmî yarışmaya giren ilk Irak yapımı oldu?",
     "answers": [
-      "Cannes",
       "Venedîk",
       "Berlîn",
+      "Cannes",
       "Toronto"
     ],
     "answersTr": [
-      "Cannes",
       "Venedik",
       "Berlin",
+      "Cannes",
       "Toronto"
     ],
     "correctAnswer": "Cannes",
@@ -1640,15 +1640,15 @@
     "promptTr": "Hangi şair Şivan Perwer için \"şiirlerimin sesi\" demiştir?",
     "answers": [
       "Qedrîcan",
-      "Cegerxwîn",
       "Osman Sebrî",
-      "Arjen Arî"
+      "Arjen Arî",
+      "Cegerxwîn"
     ],
     "answersTr": [
       "Qedrîcan",
-      "Cegerxwîn",
       "Osman Sebrî",
-      "Arjen Arî"
+      "Arjen Arî",
+      "Cegerxwîn"
     ],
     "correctAnswer": "Cegerxwîn",
     "correctAnswerTr": "Cegerxwîn",
@@ -2112,30 +2112,30 @@
     "category": "Muzîk",
     "difficulty": 3,
     "type": "multipleChoice",
-    "prompt": "Koma Wetan, yekem grûpa rockê ya kurdî, li kîjan bajarî hate damezrandin?",
-    "promptTr": "İlk Kürt rock grubu olan Koma Wetan hangi şehirde kuruldu?",
+    "prompt": "Damezrîner, solîst û gîtarîstê Koma Wetan a ku di dîroka muzîka rockê ya kurdî de cîhekî girîng digire kî ye?",
+    "promptTr": "Kürt rock müziği tarihinde önemli bir yere sahip olan Koma Wetan'ın kurucusu, solisti ve bas gitaristi kimdir?",
     "answers": [
-      "Tiflîs",
-      "Yêrêvan",
-      "Mosko",
-      "Bakû"
+      "Keremê Gerdenzerî",
+      "Aram Tîgran",
+      "Karapetê Xaço",
+      "Şivan Perwer"
     ],
     "answersTr": [
-      "Tiflis",
-      "Erivan",
-      "Moskova",
-      "Bakü"
+      "Keremê Gerdenzerî",
+      "Aram Tigran",
+      "Karapetê Xaço",
+      "Şivan Perwer"
     ],
-    "correctAnswer": "Tiflîs",
-    "correctAnswerTr": "Tiflis",
-    "explanation": "Koma Wetan, o dönem Sovyetler Birliği'ne bağlı Gürcistan'ın başkenti Tiflis'te dört genç tarafından kuruldu. Grup, Kafkasyalı Kürt şairlerin şiirlerini rock müziğe uyarladı.",
-    "explanationKu": "Koma Wetan li Tiflîsê, paytexta Gurcistana Sovyetê ya wê demê, ji aliyê çar ciwanan ve hate avakirin. Wan helbestên helbestvanên kurd ên Qefqasyayê bi muzîka rockê kirin stran.",
-    "explanationTr": "Koma Wetan, o dönem Sovyetler Birliği'ne bağlı Gürcistan'ın başkenti Tiflis'te dört genç tarafından kuruldu. Grup, Kafkasyalı Kürt şairlerin şiirlerini rock müziğe uyarladı.",
+    "correctAnswer": "Keremê Gerdenzerî",
+    "correctAnswerTr": "Keremê Gerdenzerî",
+    "explanation": "Koma Wetan, 1973 yılında müzisyen Keremê Gerdenzerî öncülüğünde kurulmuş ve 1979'da \"Bayê Payîzê\" albümünü kaydetmiştir.",
+    "explanationKu": "Koma Wetan di sala 1973an de bi pêşengiya muzîkjen Keremê Gerdenzerî hat avakirin û di sala 1979an de albûma \"Bayê Payîzê\" tomar kir.",
+    "explanationTr": "Koma Wetan, 1973 yılında müzisyen Keremê Gerdenzerî öncülüğünde kurulmuş ve 1979'da \"Bayê Payîzê\" albümünü kaydetmiştir.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Koma Wetan - Vikipedi",
       "sourceReference": "https://tr.wikipedia.org/wiki/Koma_Wetan",
-      "reviewedBy": "ajan yazımı (açılmış kaynaktan alıntıyla) + 3 bağımsız doğrulayıcı (olgu, dil, soru zanaatı) + onarım + son denetim",
+      "reviewedBy": "ajan yazımı (açılmış kaynaktan alıntıyla) + 3 bağımsız doğrulayıcı (olgu, dil, soru zanaatı) + onarım + son denetim; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-28",
       "lastContentCheckAt": "2026-09-28",
       "qualityVersion": 2
@@ -2419,7 +2419,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "prompt": "Di rastnivîsa kurmancî de dengekî taybet (pevdeng) heye ku bi du tîpan tê nivîsîn. Ev herdu tîp kîjan in?",
-    "promptTr": "Kurmancî yazımında iki harfle yazılan özel bir ses (diftong) vardır. Bu iki harf hangileridir?",
+    "promptTr": "Kurmancî yazımında iki harfle yazılan özel bir ünsüz sesi (digraf) vardır. Bu iki harf hangileridir?",
     "answers": [
       "kw",
       "qw",
@@ -4087,30 +4087,30 @@
     "category": "Sînema",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Yilmaz Guney li gundekî ser bi kîjan bajarî ve ji dayik bû?",
-    "promptTr": "Yılmaz Güney hangi ile bağlı bir köyde doğdu?",
+    "prompt": "Derhêner û lîstikvan Yilmaz Guney di sala 1984an de li kîjan bajarî koça dawî kir?",
+    "promptTr": "Yönetmen ve oyuncu Yılmaz Güney 1984 yılında hangi şehirde hayatını kaybetti?",
     "answers": [
-      "Adana",
-      "Hatay",
-      "Dîlok",
-      "Mêrsîn"
+      "Parîs",
+      "Berlîn",
+      "London",
+      "Roma"
     ],
     "answersTr": [
-      "Adana",
-      "Hatay",
-      "Gaziantep",
-      "Mersin"
+      "Paris",
+      "Berlin",
+      "Londra",
+      "Roma"
     ],
-    "correctAnswer": "Adana",
-    "correctAnswerTr": "Adana",
-    "explanation": "Yılmaz Güney 1 Nisan 1937'de Adana'nın bugünkü Yüreğir ilçesine bağlı Yenice köyünde doğdu.",
-    "explanationKu": "Yilmaz Guney di 1ê Nîsana 1937an de li gundê Yeniceyê yê Adanayê ji dayik bû; ew gund niha ser bi navçeya Yüreğirê ve ye.",
-    "explanationTr": "Yılmaz Güney 1 Nisan 1937'de Adana'nın bugünkü Yüreğir ilçesine bağlı Yenice köyünde doğdu.",
+    "correctAnswer": "Parîs",
+    "correctAnswerTr": "Paris",
+    "explanation": "Yılmaz Güney, 9 Eylül 1984 tarihinde Fransa'nın başkenti Paris'te hayatını kaybetti ve Père Lachaise Mezarlığı'na defnedildi.",
+    "explanationKu": "Yilmaz Guney di 9ê Îlona 1984an de li Parîsa paytexta Fransayê koça dawî kir û li Goristana Père Lachaise hate veşartin.",
+    "explanationTr": "Yılmaz Güney, 9 Eylül 1984 tarihinde Fransa'nın başkenti Paris'te hayatını kaybetti ve Père Lachaise Mezarlığı'na defnedildi.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Yılmaz Güney - Vikipedi",
       "sourceReference": "https://tr.wikipedia.org/wiki/Y%C4%B1lmaz_G%C3%BCney",
-      "reviewedBy": "ajan yazımı (açılmış kaynaktan alıntıyla) + 3 bağımsız doğrulayıcı (olgu, dil, soru zanaatı) + onarım + son denetim",
+      "reviewedBy": "ajan yazımı (açılmış kaynaktan alıntıyla) + 3 bağımsız doğrulayıcı (olgu, dil, soru zanaatı) + onarım + son denetim; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-28",
       "lastContentCheckAt": "2026-09-28",
       "qualityVersion": 2
@@ -4121,30 +4121,30 @@
     "category": "Sînema",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Gel bi kîjan nasnavî gazî Yilmaz Guney dikir?",
-    "promptTr": "Halk Yılmaz Güney'e hangi lakapla seslenirdi?",
+    "prompt": "Paşnavê Yilmaz Guney ê rastîn di nasnameyê de çi bû?",
+    "promptTr": "Yılmaz Güney'in kimlikteki gerçek soyadı neydi?",
     "answers": [
-      "Aslan Yürek",
-      "Deli Yusuf",
-      "Çirkin Kral",
-      "Kara Şahin"
+      "Kaya",
+      "Polat",
+      "Pûtûn",
+      "Baran"
     ],
     "answersTr": [
-      "Aslan Yürek",
-      "Deli Yusuf",
-      "Çirkin Kral",
-      "Kara Şahin"
+      "Kaya",
+      "Polat",
+      "Pütün",
+      "Baran"
     ],
-    "correctAnswer": "Çirkin Kral",
-    "correctAnswerTr": "Çirkin Kral",
-    "explanation": "Bu lakap, Yılmaz Atadeniz'in yönettiği ve Güney'in başrolde oynadığı 1966 yapımı \"Çirkin Kral\" filminden gelir.",
-    "explanationKu": "Ev nasnav ji fîlmê \"Çirkin Kral\" (1966) hat, ku Yılmaz Atadeniz kişandibû û Yilmaz Guney tê de rola sereke lîstibû.",
-    "explanationTr": "Bu lakap, Yılmaz Atadeniz'in yönettiği ve Güney'in başrolde oynadığı 1966 yapımı \"Çirkin Kral\" filminden gelir.",
+    "correctAnswer": "Pûtûn",
+    "correctAnswerTr": "Pütün",
+    "explanation": "Yılmaz Güney'in resmi adı Yılmaz Pütün'dür; kendi ifadesiyle \"pütün\", kırılması zor sert yabani meyve çekirdeği anlamına gelir.",
+    "explanationKu": "Navê Yilmaz Guney ê fermî Yilmaz Pûtûn e; li gorî gotina wî \"pûtûn\" tê wateya dendikê fêkiyên kovî yê hişk ku nayê şikandin.",
+    "explanationTr": "Yılmaz Güney'in resmi adı Yılmaz Pütün'dür; kendi ifadesiyle \"pütün\", kırılması zor sert yabani meyve çekirdeği anlamına gelir.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Yılmaz Güney - Vikipedi",
       "sourceReference": "https://tr.wikipedia.org/wiki/Y%C4%B1lmaz_G%C3%BCney",
-      "reviewedBy": "ajan yazımı (açılmış kaynaktan alıntıyla) + 3 bağımsız doğrulayıcı (olgu, dil, soru zanaatı) + onarım + son denetim",
+      "reviewedBy": "ajan yazımı (açılmış kaynaktan alıntıyla) + 3 bağımsız doğrulayıcı (olgu, dil, soru zanaatı) + onarım + son denetim; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-09-28",
       "lastContentCheckAt": "2026-09-28",
       "qualityVersion": 2
@@ -4257,8 +4257,8 @@
     "category": "Sînema",
     "difficulty": 3,
     "type": "multipleChoice",
-    "prompt": "Kîjan berhema Yilmaz Guney wekî \"yekem fîlmê realîst ê sînemaya Tirkiyeyê\" tê hesibandin?",
-    "promptTr": "Yılmaz Güney'in hangi eseri \"Türk sinemasının ilk gerçekçi filmi\" kabul edilir?",
+    "prompt": "Kîjan fîlmê Yilmaz Guney, ku di sala 1970an de derket, çîroka Cabbarê faytonvan vedibêje?",
+    "promptTr": "Yılmaz Güney'in 1970'te çıkan, faytoncu Cabbar'ın hikâyesini anlatan filmi hangisidir?",
     "answers": [
       "Umut",
       "Arkadaş",

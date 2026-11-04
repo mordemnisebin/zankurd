@@ -48,7 +48,21 @@ const _promptFixSqls = [
   'supabase/2026-10-23_icerik_taramasi.sql',
   // 2026-10-29 Opus–Astra kapışması: jüri onaylı Kurmancî kök düzeltmeleri.
   'supabase/2026-10-29_icerik_kapisma_ku.sql',
+  // 2026-11-07 GPT-6 Pro alan 7 (temp tablo biçimi, `_alan7PromptRe`).
+  'supabase/2026-11-07_icerik_alan7.sql',
 ];
+// 2026-11-07 alan 7 göçü (temp tablo biçimi): ('uuid','yerel','prompt','eski','yeni','kaynak')
+final _alan7PromptRe = RegExp(
+  r"^  \('([0-9a-f-]{36})','[^']*','prompt','(?:[^']|'')*','((?:[^']|'')*)','(?:json|server)'\)",
+  multiLine: true,
+);
+
+// Yinelenen sorunun yeniden yazımı: ('uuid','yerel','eski_kok','eski_dogru',e1..e4,'yeni_kok',...)
+final _alan7RewriteRe = RegExp(
+  r"^  \('([0-9a-f-]{36})','[^']*','(?:[^']|'')*','(?:[^']|'')*','(?:[^']|'')*','(?:[^']|'')*','(?:[^']|'')*','(?:[^']|'')*','((?:[^']|'')*)',",
+  multiLine: true,
+);
+
 final _fixRe = RegExp(
   r"^update questions set\n  prompt = '((?:[^']|'')*)'(?:,[\s\S]*?)?\nwhere id = '([0-9a-f-]{36})';",
   multiLine: true,
@@ -97,6 +111,16 @@ void main() {
           for (final m in _fixRe.allMatches(File(file).readAsStringSync()))
             m.group(2)!: m.group(1)!,
       };
+      for (final m in _alan7PromptRe.allMatches(
+        File('supabase/2026-11-07_icerik_alan7.sql').readAsStringSync(),
+      )) {
+        fixes[m.group(1)!] = m.group(2)!;
+      }
+      for (final m in _alan7RewriteRe.allMatches(
+        File('supabase/2026-11-07_icerik_alan7.sql').readAsStringSync(),
+      )) {
+        fixes[m.group(1)!] = m.group(2)!;
+      }
       // Düzeltme göçünün ekleme göçü dışında (uygulanmış göçlerdeki) bir
       // satıra yazdığı istemler de sunucuda sayılır.
       final syncIds = {for (final m in rows) m.group(1)!};

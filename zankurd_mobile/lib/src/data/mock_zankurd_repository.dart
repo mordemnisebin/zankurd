@@ -5,6 +5,8 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'fact_groups.dart';
+
 import '../models/async_duel.dart';
 import '../models/match_history.dart';
 import '../models/my_suggestion.dart';
@@ -1590,7 +1592,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
   static List<QuizQuestion> _dedupeSameFact(List<QuizQuestion> pool) {
     final seen = <String>{};
     return [
-      for (final question in pool)
+      for (final question in FactGroups.keepFirstPerGroup(pool))
         if (_sameFactKey(question) case final key?)
           if (seen.add(key)) question else ...const <QuizQuestion>[]
         else
@@ -1764,6 +1766,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return result;
   }
 
+  @visibleForTesting
+  Future<List<QuizQuestion>> selectFreshForTesting(
+    List<QuizQuestion> pool,
+    int limit,
+  ) => _selectFresh(pool, limit);
+
   /// Görülmemiş soruları öne alan tekrar-önleyici seçim.
   Future<List<QuizQuestion>> _selectFresh(
     List<QuizQuestion> pool,
@@ -1773,7 +1781,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
     final store = await SeenQuestionStore.load();
     // Havuzdan limitten fazlası istenir: sızıntı süzgeci bir kısmını
     // eleyeceği için tam limitte istemek turu eksik bırakırdı.
-    final candidates = store.preferUnseen(pool, limit * 3);
+    // Aynı olguyu soran kimliklerden turda yalnız biri (bkz. fact_groups.dart).
+    final candidates = FactGroups.keepFirstPerGroup(
+      store.preferUnseen(pool, limit * 3),
+    );
     final clean = QuestionSetPolicy.diverseWithoutLeaks(
       candidates,
       limit: limit,
@@ -3511,7 +3522,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         contentKu:
             'Kî? Çi?\n\nPirsên li ser mirovan û tiştan. Kî ji bo mirovan, çi ji bo tiştan tê bikaranîn.\n\n• Kî ye?: kimdir?\n• Kî ne?: kimler?\n• Tu kî yî?: sen kimsin?\n• Ev çi ye?: bu nedir?\n• Tu çi dixwazî?: ne istiyorsun?\n• Navê te çi ye?: adın nedir?',
         contentTr:
-            'İnsanlar ve eşyalar hakkında sorular. Kî (kim) insanlar için, çi (ne) eşyalar için kullanılır. Fiil cümlenin sonunda çekimlenir.',
+            'İnsanlar ve eşyalar hakkında sorular. Kî (kim) insanlar için, çi (ne) eşyalar için kullanılır. Sade cümlelerde olağan sıra özne + nesne + fiildir; hareket fiilleriyle yer veya yön ögesi fiilden sonra da gelebilir.',
       ),
       LessonSlide(
         id: 'questions_1_s2',
@@ -3520,7 +3531,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         contentKu:
             'Ku? Kengî?\n\nPirsên li ser cihî û demê. Ku = li kîjan derê, kengî = di kîjan demê de.\n\n• Tu li ku yî?: neredesin?\n• Dibistan li ku ye?: okul nerede?\n• Tu kengî têyî?: ne zaman geliyorsun?\n• Ders kengî dest pê dike?: ders ne zaman başlıyor?\n• Tu îro kengî têyî?: bugün ne zaman geliyorsun?\n• Tu sibê li ku yî?: yarın neredesin?',
         contentTr:
-            'Yer ve zaman soruları. Ku (nerede/nereye) ve kengî (ne zaman) sorulan öğenin yerinde durur; fiil sonda kalır. Cevap yer veya zaman bildirir.',
+            'Yer ve zaman soruları. Ku (nerede/nereye) ve kengî (ne zaman) sorulan öğenin yerinde durur; olağan sırada fiil sonda kalır; hareket fiilleriyle yer veya yön ögesi fiilden sonra da gelebilir. Cevap yer veya zaman bildirir.',
       ),
       LessonSlide(
         id: 'questions_1_s3',
@@ -3545,9 +3556,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'questions_1',
         order: 5,
         contentKu:
-            'Pirsan çêke!\n\nRêza pirsê: peyva pirsê li cihê bersivê dimîne, lêker li dawiyê ye.\n\n• Tu kî yî?: sen kimsin?\n• Ew li ku ye?: o nerededir?\n• Ew kengî dixwîne?: o ne zaman okuyor?\n• Tu çima dikî?: neden yapıyorsun?\n• Ev çend in?: bunlar kaç tanedir?\n• Kîjan baş e?: hangisi iyidir?',
+            'Pirsan çêke!\n\nRêza pirsê: peyva pirsê li cihê bersivê dimîne, lêker bi gelemperî li dawiyê ye.\n\n• Tu kî yî?: sen kimsin?\n• Ew li ku ye?: o nerededir?\n• Ew kengî dixwîne?: o ne zaman okuyor?\n• Tu çima dikî?: neden yapıyorsun?\n• Ev çend in?: bunlar kaç tanedir?\n• Kîjan baş e?: hangisi iyidir?',
         contentTr:
-            'Kurmancî soru dizilişi: soru kelimesi sorulan öğenin yerinde kalır, çekimli fiil sonda olur. Evet/hayır sorusunda ayrı soru kelimesi gerekmez.',
+            'Kurmancî soru dizilişi: soru kelimesi sorulan öğenin yerinde kalır, çekimli fiil olağan sırada sonda olur; hareket fiillerinde yer veya yön ögesi fiilden sonra da gelebilir. Evet/hayır sorusunda ayrı soru kelimesi gerekmez.',
       ),
     ],
     'verbs_1': [
@@ -3556,9 +3567,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'verbs_1',
         order: 1,
         contentKu:
-            'Lêker çi ye?\n\nDi kurmancî de lêker di dawiya hevokê de ye. Dema niha bi pêşgira di- çêdibe:\n\n• ez nan dixwim: ben ekmek yiyorum\n• tu çay vedixwî: sen çay içiyorsun\n• ew diçe: o gidiyor\n• em dikin: biz yapıyoruz\n• hûn dibînin: siz görüyorsunuz\n\nHatin cuda ye, di- naxe:\n\n• ew tên: onlar geliyorlar\n\nForma neyînî bi na- ye:\n\n• ez naçim: ben gitmiyorum',
+            'Lêker çi ye?\n\nDi hevokên sade de rêza asayî kirde + berkar + lêker e; bi lêkerên tevgerê armanc dikare piştî lêkerê bê. Dema niha bi pêşgira di- çêdibe:\n\n• ez nan dixwim: ben ekmek yiyorum\n• tu çay vedixwî: sen çay içiyorsun\n• ew diçe: o gidiyor\n• em dikin: biz yapıyoruz\n• hûn dibînin: siz görüyorsunuz\n\nHatin cuda ye, di- naxe:\n\n• ew tên: onlar geliyorlar\n\nForma neyînî bi na- ye:\n\n• ez naçim: ben gitmiyorum',
         contentTr:
-            'Kurmancîde fiil cümlenin sonunda yer alır. Şimdiki/geniş zaman çoğu fiilde di- önekiyle yapılır. Özne + nesne + fiil sırası vardır.\n\nHatin (gelmek) di- almaz: ew tên onlar geliyorlar.\n\nOlumsuzluk na- ile yapılır: ez naçim ben gitmiyorum.',
+            'Kurmancîde sade cümlelerde olağan sıra özne + nesne + fiildir; hareket fiillerinde yer veya yön ögesi fiilden sonra da gelebilir. Şimdiki/geniş zaman çoğu fiilde di- önekiyle yapılır. Özne + nesne + fiil sırası vardır.\n\nHatin (gelmek) di- almaz: ew tên onlar geliyorlar.\n\nOlumsuzluk na- ile yapılır: ez naçim ben gitmiyorum.',
       ),
       LessonSlide(
         id: 'verbs_1_s2',
@@ -3904,7 +3915,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         contentKu:
             'Xwarin û Dîtin - Ergativ:\n\nDi dema borî de lêkerên gerguhêz bi min, te, wî, wê û me tên. Mînak:\n\n• min xwar: yedim\n• te xwar: yedin\n• wî xwar: o yedi (erkek)\n• wê xwar: o yedi (kadın)\n• me xwar: yedik\n• min dît: gördüm\n• te dît: gördün',
         contentTr:
-            'Geçmiş zamanda geçişli fiiller min, te, wî, wê ve me ile çekilir. ez yerine min, tu yerine te gelir. Nesne tekilse fiil xwar ve dît olarak kalır. Bu kurala ergatif denir. Örnek: min xwar: yedim / te xwar: yedin / wî xwar: o yedi (erkek) / wê xwar: o yedi (kadın) / me xwar: yedik / min dît: gördüm / te dît: gördün',
+            'Geçmiş zamanda geçişli fiiller min, te, wî, wê ve me ile çekilir. ez yerine min, tu yerine te gelir. Nesne üçüncü tekil kişiyse fiil xwar ve dît olarak kalır; fiil nesnenin kişi ve sayısına göre uyum gösterir. Bu kurala ergatif denir. Örnek: min xwar: yedim / te xwar: yedin / wî xwar: o yedi (erkek) / wê xwar: o yedi (kadın) / me xwar: yedik / min dît: gördüm / te dît: gördün',
       ),
       LessonSlide(
         id: 'past_1_s4',
@@ -4108,9 +4119,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'months_1',
         order: 5,
         contentKu:
-            'Meh di Hevokê de:\n\nDi hevokê de navê mehê -ê digire. Mînak:\n\n• meha Gulanê: Mayıs ayı\n• di meha Gulanê de: Mayıs ayında\n• di Adarê de: Mart’ta\n• Newroz di 21ê Adarê de ye: Nevruz 21 Mart’tadır\n• Ev meh Kewçêr e: Bu ay Ekim’dir\n• Rojbûna min di Tîrmehê de ye: Doğum günüm Temmuz’dadır',
+            'Meh di Hevokê de:\n\nDi mînakên "meha Gulanê" û "di Adarê de" de navê mehê di rewşa tewandî de ye. Mînak:\n\n• meha Gulanê: Mayıs ayı\n• di meha Gulanê de: Mayıs ayında\n• di Adarê de: Mart’ta\n• Newroz di 21ê Adarê de ye: Nevruz 21 Mart’tadır\n• Ev meh Kewçêr e: Bu ay Ekim’dir\n• Rojbûna min di Tîrmehê de ye: Doğum günüm Temmuz’dadır',
         contentTr:
-            'Cümlede ay adı -ê eki alır: Gulan → di meha Gulanê de (Mayıs ayında), Adar → di 21ê Adarê de (21 Mart’ta). Tarihte sayıya da -ê eklenir: 21ê.',
+            'Ay adı, "meha Gulanê" gibi tamlamalarda ve "di Adarê de" gibi edatlı yapılarda bükümlü (-ê) biçimde kullanılır: Gulan → di meha Gulanê de (Mayıs ayında), Adar → di 21ê Adarê de (21 Mart’ta). Tarihte sayıya da -ê eklenir: 21ê.',
       ),
     ],
     'everyday_1': [

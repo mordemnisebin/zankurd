@@ -1,0 +1,458 @@
+[
+ {
+  "id": "hat_0011",
+  "prompt": "Bûyerên berhema klasîk a \"Mem û Zîn\"ê ya Ehmedê Xanî li kîjan bajarî derbas dibin?",
+  "answers": [
+   "Bedlîs",
+   "Cizîr",
+   "Mêrdîn",
+   "Wan"
+  ],
+  "correct": "Cizîr",
+  "oldPrompt": "Berhema klasîk a bi navê \"Mem û Zîn\" ku bingeha romana kurdî tê dîtin, kê nivîsiye?"
+ },
+ {
+  "id": "hat_0025",
+  "prompt": "Berhema navdar a Ehmedê Xanî \"Mem û Zîn\" bi kîjan teşeya helbesta klasîk hatiye nivîsandin?",
+  "answers": [
+   "Mesnewî",
+   "Qesîde",
+   "Rubaî",
+   "Xezel"
+  ],
+  "correct": "Mesnewî",
+  "oldPrompt": "Nivîskarê berhema navdar \"Mem û Zîn\" kî ye?"
+ },
+ {
+  "id": "bilim_0025",
+  "prompt": "Kîjan berhema Ehmedê Xanî li ser bingehên bawerî û kelama îslamî bi awayê menzûm hatiye nivîsandin?",
+  "answers": [
+   "Eqîdeya Îmanê",
+   "Mewlûda Nebî",
+   "Nehcul Enam",
+   "Şêxê Senan"
+  ],
+  "correct": "Eqîdeya Îmanê",
+  "oldPrompt": "Nivîskarê Mem û Zînê ku ji berhemên klasîk ên edebiyata Kurmancî ye kî ye?"
+ },
+ {
+  "id": "hat_0009",
+  "prompt": "Romana \"Şivanê Kurmanca\" ya Erebê Şemo di sala 1935an de li kîjan bajarî hatiye çapkirin?",
+  "answers": [
+   "Bexda",
+   "Qahîre",
+   "Yêrêvan",
+   "Şam"
+  ],
+  "correct": "Yêrêvan",
+  "oldPrompt": "Kîjan nivîskarê kurd romana bi navê \"Şivanê Kurmancan\" nivîsiye, ku wek yekem romana kurmancî tê qebûlkirin?"
+ },
+ {
+  "id": "hat_0012",
+  "prompt": "Mehmed Uzun romana xwe ya yekem a bi navê \"Tu\" di sala 1985an de li kîjan welatê ku lê nefî bû weşand?",
+  "answers": [
+   "Almanya",
+   "Belçîka",
+   "Fransa",
+   "Swêd"
+  ],
+  "correct": "Swêd",
+  "oldPrompt": "Romana bi navê \"Tu\" ku di sala 1985an de li Swêdê hatiye weşandin, kê nivîsiye?"
+ },
+ {
+  "id": "hat_0010",
+  "prompt": "Nivîskarê romana \"Janî Gel\" Îbrahîm Ehmed di navbera salên 1939 û 1949an de kîjan kovara edebî ya navdar derxistiye?",
+  "answers": [
+   "Gelawêj",
+   "Hawar",
+   "Nûdem",
+   "Ronahî"
+  ],
+  "correct": "Gelawêj",
+  "oldPrompt": "Romana bi navê \"Janî Gel\" ku wek yekem romana soranî tê qebûlkirin, kê nivîsiye?"
+ },
+ {
+  "id": "hat_0015",
+  "prompt": "Nivîskarê romana \"Şarî Mûsîqare Spîyekan\" Bextiyar Elî di sala 2017an de li Almanyayê xelata edebiyatê ya li ser navê kîjan helbestvanî wergirt?",
+  "answers": [
+   "Georg Büchner",
+   "Heinrich Böll",
+   "Nelly Sachs",
+   "Paul Celan"
+  ],
+  "correct": "Nelly Sachs",
+  "oldPrompt": "Romana bi navê \"Şarî Mûsîqare Spîyekan\" ku di sala 2006an de hatiye weşandin, kê nivîsiye?"
+ },
+ {
+  "id": "hat_0028",
+  "prompt": "Ehmedê Xanî ferhenga xwe ya menzûm \"Nûbihara Biçûkan\" ji bo ku zarokên kurd bi hêsanî fêrî kîjan zimanî bibin nivîsandiye?",
+  "answers": [
+   "Erebî",
+   "Farisî",
+   "Suryanî",
+   "Tirkî"
+  ],
+  "correct": "Erebî",
+  "oldPrompt": "Kîjan berhem ferhengeke bi helbest e û ji bo zarokan hatiye amadekirin?"
+ },
+ {
+  "id": "hat_0032",
+  "prompt": "Di berhema \"Mem û Zîn\"ê de her du evîndar cara yekem di şahiya kîjan cejna kevneşopî de hev dibînin û gustîlan diguherînin?",
+  "answers": [
+   "Gaxand",
+   "Kosegelî",
+   "Newroz",
+   "Çille"
+  ],
+  "correct": "Newroz",
+  "oldPrompt": "\"Mem û Zîn\" bi kîjan zaravayê hatiye nivîsîn?"
+ },
+ {
+  "id": "ex28_dastangotin_007",
+  "prompt": "Bûyerên destana \"Zembîlfiroş\" bi giranî li kîjan bajarokê dîrokî derbas dibin ku birca bi heman navî îro jî li wir e?",
+  "answers": [
+   "Amêdî",
+   "Farqîn",
+   "Heskîf",
+   "Xelat"
+  ],
+  "correct": "Farqîn",
+  "oldPrompt": "Destana Zembîlfiroş a menzûm ji aliyê kîjan helbestvanê klasîk ve hatiye nivîsandin?"
+ },
+ {
+  "id": "hat_0045",
+  "prompt": "Ji ber ku senarîstê fîlmê \"Yol\" Yilmaz Guney di girtîgehê de bû, derhêneriya fîlmî li ser setê kê pêk anî?",
+  "answers": [
+   "Atif Yilmaz",
+   "Erden Kiral",
+   "Zekî Okten",
+   "Şerîf Goren"
+  ],
+  "correct": "Şerîf Goren",
+  "oldPrompt": "Fîlma Yilmaz Guney û Şerîf Goren a bi navê Yol di kîjan salê de li Cannesê xelata sereke wergirt?"
+ },
+ {
+  "id": "hat_0056",
+  "prompt": "Çîroka her du zarokên sêwî Gulîstan û Firat di fîlmê \"Min Dît\" ê sala 2009an de li kîjan bajarî derbas dibe?",
+  "answers": [
+   "Amed",
+   "Hewlêr",
+   "Mahabad",
+   "Qamişlo"
+  ],
+  "correct": "Amed",
+  "oldPrompt": "Kê fîlmê Min Dît ê sala 2009an derhênerî kir?"
+ },
+ {
+  "id": "ex28_yilmaz_guney_002",
+  "prompt": "Derhêner û lîstikvan Yilmaz Guney di sala 1984an de li kîjan bajarî koça dawî kir?",
+  "answers": [
+   "Berlîn",
+   "London",
+   "Parîs",
+   "Roma"
+  ],
+  "correct": "Parîs",
+  "oldPrompt": "Yilmaz Guney li gundekî ser bi kîjan bajarî ve ji dayik bû?"
+ },
+ {
+  "id": "ex28_yilmaz_guney_003",
+  "prompt": "Paşnavê Yilmaz Guney ê rastîn di nasnameyê de çi bû?",
+  "answers": [
+   "Baran",
+   "Kaya",
+   "Polat",
+   "Pûtûn"
+  ],
+  "correct": "Pûtûn",
+  "oldPrompt": "Gel bi kîjan nasnavî gazî Yilmaz Guney dikir?"
+ },
+ {
+  "id": "hat_0074",
+  "prompt": "Girseya Çiyayê Agiriyê ji bilî parêzgeha Agiriyê di nav sînorên kîjan parêzgehê de cih digire?",
+  "answers": [
+   "Bedlîs",
+   "Mûş",
+   "Çewlîg",
+   "Îdir"
+  ],
+  "correct": "Îdir",
+  "oldPrompt": "Kîjan çiya bi bilindahiya xwe ya nêzî 5137 metreyan çiyayê herî bilind ê herêmê tê naskirin?"
+ },
+ {
+  "id": "hat_0076",
+  "prompt": "Çemê Zapê Biçûk ê ku Bendava Dukanê li ser hatiye avakirin, milê kîjan çemê mezin e?",
+  "answers": [
+   "Aras",
+   "Dîcle",
+   "Firat",
+   "Çoruh"
+  ],
+  "correct": "Dîcle",
+  "oldPrompt": "Kîjan gol û bendav li parêzgeha Silêmaniyê ye û li ser Zapê Biçûk hatiye çêkirin?"
+ },
+ {
+  "id": "hat_0114",
+  "prompt": "Serokê Giştî yê Yekîtiya Niştimanî ya Kurdistanê (YNK) Celal Talebanî di navbera salên 2005 û 2014an de li Iraqê kîjan erka fermî pêk anî?",
+  "answers": [
+   "Serokatiya Dadgeha Bilind",
+   "Serokkomarî",
+   "Serokwezîrî",
+   "Wezîriya Parastinê"
+  ],
+  "correct": "Serokkomarî",
+  "oldPrompt": "Kîjan kes di nav damezrînerên Yekîtiya Niştimanî ya Kurdistanê de bû?"
+ },
+ {
+  "id": "ex28_nujen_015",
+  "prompt": "Damezrîner, solîst û gîtarîstê Koma Wetan a ku di dîroka muzîka rockê ya kurdî de cîhekî girîng digire kî ye?",
+  "answers": [
+   "Aram Tîgran",
+   "Karapetê Xaço",
+   "Keremê Gerdenzerî",
+   "Şivan Perwer"
+  ],
+  "correct": "Keremê Gerdenzerî",
+  "oldPrompt": "Koma Wetan, yekem grûpa rockê ya kurdî, li kîjan bajarî hate damezrandin?"
+ },
+ {
+  "id": "ds_sinema_0086",
+  "prompt": "Fîlmê Akira Kurosawa yê bi navê \"Rashomon\" di sala 1951an de li kîjan festîvala navneteweyî xelata mezin a \"Şêrê Zêrîn\" wergirt?",
+  "answers": [
+   "Berlîn",
+   "Cannes",
+   "Locarno",
+   "Venedîk"
+  ],
+  "correct": "Venedîk",
+  "oldPrompt": "Kîjan derhênerê japonî fîlma \"Rashomon\" derxist?"
+ },
+ {
+  "id": "hat_0110",
+  "prompt": "Serokkomarê Komara Mehabadê ya ku di sala 1946an de hate ragihandin kî bû?",
+  "answers": [
+   "Qazî Mihemed",
+   "Simkoyê Şikak",
+   "Îhsan Nûrî Paşa",
+   "Şêx Mehmûdê Berzencî"
+  ],
+  "correct": "Qazî Mihemed",
+  "oldPrompt": "Komara Mehabadê di kîjan salê de hatiye ragihandin?"
+ },
+ {
+  "id": "kolay_dirok_11",
+  "prompt": "Şerê Cîhanê yê Duyem li Ewropayê di 1ê Îlona 1939an de bi êrîşa Almanyayê ya li ser kîjan welatî dest pê kir?",
+  "answers": [
+   "Polonya",
+   "Portûgal",
+   "Spanya",
+   "Swêd"
+  ],
+  "correct": "Polonya",
+  "oldPrompt": "Şerê Cîhanê yê Duyem kengî bi dawî bû?"
+ },
+ {
+  "id": "kolay_dirok_17",
+  "prompt": "Şerê Cîhanê yê Yekem di kîjan salê de bi dawî bû?",
+  "answers": [
+   "1912",
+   "1918",
+   "1923",
+   "1939"
+  ],
+  "correct": "1918",
+  "oldPrompt": "Şerê Cîhanê yê Yekem kengî dest pê kir?"
+ },
+ {
+  "id": "ds_dirok_0031",
+  "prompt": "Hejmara yekem a kovara Hawarê di 15ê Gulana 1932an de li kîjan bajarî hate weşandin?",
+  "answers": [
+   "Bexda",
+   "Bêrût",
+   "Qahîre",
+   "Şam"
+  ],
+  "correct": "Şam",
+  "oldPrompt": "Hawar ji bilî kovarê, di warê çi de jî girîng bû?"
+ },
+ {
+  "id": "ds_dirok_0043",
+  "prompt": "Kovara Hawarê ji aliyê kîjan rewşenbîr û zimanzanê kurd ve hate derxistin?",
+  "answers": [
+   "Cegerxwîn",
+   "Celadet Elî Bedirxan",
+   "Erebê Şemo",
+   "Qanatê Kurdo"
+  ],
+  "correct": "Celadet Elî Bedirxan",
+  "oldPrompt": "Hawar ji bo kîjan alfabeyê wek çavkaniya sereke tê zanîn?"
+ },
+ {
+  "id": "ds_dirok_0143",
+  "prompt": "Hejmara yekem a rojnameya \"Kurdistan\"ê di sala 1898an de li Qahîreyê ji aliyê kê ve hate derxistin?",
+  "answers": [
+   "Huznî Mukriyanî",
+   "Memdûh Selîm",
+   "Mîqdad Mîdhet Bedirxan",
+   "Pîremêrd"
+  ],
+  "correct": "Mîqdad Mîdhet Bedirxan",
+  "oldPrompt": "Hejmara yekem a rojnameya Kurdistanê di kîjan salê de derket?"
+ },
+ {
+  "id": "ds_muzik_0106",
+  "prompt": "Di muzîkê de, amûra ku bi lêdanên birêkûpêk leza parçeyekî dipîve û rêberiyê ji muzîkjenan re dike çi ye?",
+  "answers": [
+   "Amplîfîkator",
+   "Diyapazon",
+   "Metronom",
+   "Mîkser"
+  ],
+  "correct": "Metronom",
+  "oldPrompt": "Di muzîkê de, leza ku bi piranî bi \"beats per minute\" tê pîvandin çi ye?"
+ },
+ {
+  "id": "ds_muzik_0103",
+  "prompt": "Di muzîkê de, nîşana nivîskî ya ku bilindahî û dirêjahiya dengekî diyar dike çi ye?",
+  "answers": [
+   "Gam",
+   "Nota",
+   "Oktav",
+   "Porte"
+  ],
+  "correct": "Nota",
+  "oldPrompt": "Di muzîkê de, rêzkirina dengan li gorî demê çi ye?"
+ },
+ {
+  "id": "ds_muzik_0213",
+  "prompt": "Di muzîkê de, koma dengan a ku bi lêdana herî kêm sê dengên cuda di heman demê de pêk tê çi ye?",
+  "answers": [
+   "Akor",
+   "Melodî",
+   "Nakarat",
+   "Solo"
+  ],
+  "correct": "Akor",
+  "oldPrompt": "Kîjan têgîn ji bo nîşankirina hevahengiya dengan tê bikaranîn?"
+ },
+ {
+  "id": "ds_sinema_0109",
+  "prompt": "Di sînemayê de, metna nivîskî ya ku çîrok, dîmen û axaftinên fîlmekî bi hûrgilî dihewîne çi ye?",
+  "answers": [
+   "Dekor",
+   "Fragman",
+   "Kadraj",
+   "Senaryo"
+  ],
+  "correct": "Senaryo",
+  "oldPrompt": "Kîjan têgeha sînemayê ji bo pêvajoya hilbijartina wêneyan û lihevxistina wan ji bo çêkirina fîlmekî tê bikaranîn?"
+ },
+ {
+  "id": "ds_teknoloji_0242",
+  "prompt": "Kîjan cureyê peykê ji bo şopandina rewşa hewayê, ewran û bahozên li ser rûyê Erdê tê bikaranîn?",
+  "answers": [
+   "Peyka astronomiyê",
+   "Peyka meteorolojîk",
+   "Peyka navîgasyonê",
+   "Peyka ragihandinê"
+  ],
+  "correct": "Peyka meteorolojîk",
+  "oldPrompt": "Kîjan peyk ji bo destnîşankirina cihê rast ê li ser rûyê Erdê ji bo rêveçûna otomobîlan tê bikaranîn?"
+ },
+ {
+  "id": "ds_teknoloji_0068",
+  "prompt": "Di bernamekirinê de, kîjan cureyê daneyê ji bo hilanîna nivîs û rêzên tîpan tê bikaranîn?",
+  "answers": [
+   "Double",
+   "Float",
+   "Integer",
+   "String"
+  ],
+  "correct": "String",
+  "oldPrompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekî ku dikare bibe rast an derew tê bikaranîn?"
+ },
+ {
+  "id": "ds_teknoloji_0073",
+  "prompt": "Di bernamekirinê de, kîjan struktura daneyê nirxan bi awayê cotên kilît û nirx radigire?",
+  "answers": [
+   "Dar",
+   "Ferheng",
+   "Lîste",
+   "Rêzik"
+  ],
+  "correct": "Ferheng",
+  "oldPrompt": "Di bernamekirinê de, kîjan struktur ji bo hilanîna çend nirxên bêdubare û bê rêz tê bikaranîn?"
+ },
+ {
+  "id": "ds_ziman_1101",
+  "prompt": "Di malê de ji bo daleqandin û hilanîna cil û bergan kîjan mobîlya tê bikaranîn?",
+  "answers": [
+   "Dolab",
+   "Kursî",
+   "Mase",
+   "Nivîn"
+  ],
+  "correct": "Dolab",
+  "oldPrompt": "Di malê de ji bo rûniştinê, kîjan mobîlya bi gelemperî tê bikaranîn?"
+ },
+ {
+  "id": "ds_ziman_0080",
+  "prompt": "Di dîwarê xaniyan de beşa ku ji bo ketina ronahî û hewayê ya hundir tê çêkirin çi ye?",
+  "answers": [
+   "Ban",
+   "Derence",
+   "Pencere",
+   "Stûn"
+  ],
+  "correct": "Pencere",
+  "oldPrompt": "Kîjan peyv ji bo tiştê ku em pê derî vedikin an digirin tê bikaranîn?"
+ },
+ {
+  "id": "ds_cografya_0086",
+  "prompt": "Çiyayê herî bilind ê li parzemîna Asyayê û cîhanê kîjan e?",
+  "answers": [
+   "Çiyayê Aconcaguayê",
+   "Çiyayê Elbrusê",
+   "Çiyayê Everestê",
+   "Çiyayê Kilîmancaroyê"
+  ],
+  "correct": "Çiyayê Everestê",
+  "oldPrompt": "Kîjan parzemîn nêzî ji sedî 30ê axa cîhanê digire û li bakurê Okyanûsa Hindê ye?"
+ },
+ {
+  "id": "ds_cand_0016",
+  "prompt": "Cejna Newrozê mizgîniya hatina kîjan demsalê dide?",
+  "answers": [
+   "Bihar",
+   "Havîn",
+   "Payîz",
+   "Zivistan"
+  ],
+  "correct": "Bihar",
+  "oldPrompt": "Di Newrozê de çi tê pêxistin?"
+ },
+ {
+  "id": "ds_cand_0233",
+  "prompt": "Di çanda îslamî de, Cejna Qurbanê bi kîjan îbadeta mezin a ku li bajarê Mekeyê tê bicihanîn re di heman demê de tê pîrozkirin?",
+  "answers": [
+   "Fitre",
+   "Hec",
+   "Rojî",
+   "Zekat"
+  ],
+  "correct": "Hec",
+  "oldPrompt": "Kîjan cejn bi gelemperî ji bo bîranîna Îbrahîm Pêxember tê pîrozkirin?"
+ },
+ {
+  "id": "ds_teknoloji_0124",
+  "prompt": "Kîjan parçeyê komputerê wekî mejiyê pergalê tê nasîn û fermanên bernameyan û hesabên matematîkî pêk tîne?",
+  "answers": [
+   "CPU",
+   "PSU",
+   "RAM",
+   "SSD"
+  ],
+  "correct": "CPU",
+  "oldPrompt": "Kîjan beşa komputerê ji bo hilanîna daneyan bi awayekî demkî dema ku bername tê xebitandin tê bikaranîn?"
+ }
+]

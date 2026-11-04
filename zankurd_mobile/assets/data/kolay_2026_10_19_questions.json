@@ -585,16 +585,16 @@
     "prompt": "Neteweyên Yekbûyî piştî kîjan şerî hatin damezrandin?",
     "promptTr": "Birleşmiş Milletler hangi savaştan sonra kuruldu?",
     "answers": [
-      "Şerê Cîhanê yê Duyem",
       "Şerê Koreyê",
       "Şerê Cîhanê yê Yekem",
-      "Şerê Sar"
+      "Şerê Sar",
+      "Şerê Cîhanê yê Duyem"
     ],
     "answersTr": [
-      "İkinci Dünya Savaşı",
       "Kore Savaşı",
       "Birinci Dünya Savaşı",
-      "Soğuk Savaş"
+      "Soğuk Savaş",
+      "İkinci Dünya Savaşı"
     ],
     "correctAnswer": "Şerê Cîhanê yê Duyem",
     "correctAnswerTr": "İkinci Dünya Savaşı",
@@ -922,31 +922,31 @@
     "difficulty": 1,
     "id": "kolay_dirok_11",
     "category": "Dîrok",
-    "prompt": "Şerê Cîhanê yê Duyem kengî bi dawî bû?",
-    "promptTr": "İkinci Dünya Savaşı ne zaman sona erdi?",
+    "prompt": "Şerê Cîhanê yê Duyem li Ewropayê di 1ê Îlona 1939an de bi êrîşa Almanyayê ya li ser kîjan welatî dest pê kir?",
+    "promptTr": "İkinci Dünya Savaşı, Avrupa'da 1 Eylül 1939'da Almanya'nın hangi ülkeyi işgaliyle başladı?",
     "answers": [
-      "1945",
-      "1960",
-      "1939",
-      "1918"
+      "Polonya",
+      "Spanya",
+      "Swêd",
+      "Portûgal"
     ],
     "answersTr": [
-      "1945",
-      "1960",
-      "1939",
-      "1918"
+      "Polonya",
+      "İspanya",
+      "İsveç",
+      "Portekiz"
     ],
-    "correctAnswer": "1945",
-    "correctAnswerTr": "1945",
-    "explanation": "İkinci Dünya Savaşı 1945'te sona erdi.",
-    "explanationKu": "Şerê Cîhanê yê Duyem di sala 1945an de bi dawî bû.",
-    "explanationTr": "İkinci Dünya Savaşı 1945'te sona erdi.",
+    "correctAnswer": "Polonya",
+    "correctAnswerTr": "Polonya",
+    "explanation": "İkinci Dünya Savaşı, 1 Eylül 1939 tarihinde Nazi Almanyası'nın Polonya'ya saldırmasıyla resmen başlamıştır.",
+    "explanationKu": "Şerê Cîhanê yê Duyem di 1ê Îlona 1939an de dema ku Almanyaya Nazî êrîşî Polonyayê kir bi awayekî fermî dest pê kir.",
+    "explanationTr": "İkinci Dünya Savaşı, 1 Eylül 1939 tarihinde Nazi Almanyası'nın Polonya'ya saldırmasıyla resmen başlamıştır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
       "sourceTitle": "Kolay soru taslağı 2026-10-19",
       "qualityVersion": 2,
-      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-10-19",
       "lastContentCheckAt": "2026-10-19"
     }
@@ -990,8 +990,8 @@
     "difficulty": 1,
     "id": "kolay_dirok_14",
     "category": "Dîrok",
-    "prompt": "Kawayê hesinkar çi pîşe dikir?",
-    "promptTr": "Demirci Kawa ne iş yapardı?",
+    "prompt": "Li gorî efsaneyê, pîşeya Kawa çi bû?",
+    "promptTr": "Efsaneye göre Kawa'nın mesleği neydi?",
     "answers": [
       "Bazirganî",
       "Hesinkarî",
@@ -1092,31 +1092,31 @@
     "difficulty": 1,
     "id": "kolay_dirok_17",
     "category": "Dîrok",
-    "prompt": "Şerê Cîhanê yê Yekem kengî dest pê kir?",
-    "promptTr": "Birinci Dünya Savaşı ne zaman başladı?",
+    "prompt": "Şerê Cîhanê yê Yekem di kîjan salê de bi dawî bû?",
+    "promptTr": "Birinci Dünya Savaşı hangi yılda sona erdi?",
     "answers": [
-      "1900",
-      "1914",
-      "1939",
-      "1923"
+      "1912",
+      "1918",
+      "1923",
+      "1939"
     ],
     "answersTr": [
-      "1900",
-      "1914",
-      "1939",
-      "1923"
+      "1912",
+      "1918",
+      "1923",
+      "1939"
     ],
-    "correctAnswer": "1914",
-    "correctAnswerTr": "1914",
-    "explanation": "Birinci Dünya Savaşı 1914'te başladı.",
-    "explanationKu": "Şerê Cîhanê yê Yekem di sala 1914an de dest pê kir.",
-    "explanationTr": "Birinci Dünya Savaşı 1914'te başladı.",
+    "correctAnswer": "1918",
+    "correctAnswerTr": "1918",
+    "explanation": "1914 yılında başlayan Birinci Dünya Savaşı, 11 Kasım 1918 tarihinde imzalanan ateşkesle sona ermiştir.",
+    "explanationKu": "Şerê Cîhanê yê Yekem ê ku di sala 1914an de dest pê kiribû, di 11ê Çiriya Paşîn a 1918an de bi agirbestê bi dawî bû.",
+    "explanationTr": "1914 yılında başlayan Birinci Dünya Savaşı, 11 Kasım 1918 tarihinde imzalanan ateşkesle sona ermiştir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
       "sourceTitle": "Kolay soru taslağı 2026-10-19",
       "qualityVersion": 2,
-      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5",
+      "reviewedBy": "Taslak: DeepSeek V4.1; bağımsız jüri: AI Studio Gemini 3.1 Pro ve Grok/ChatGPT (ikisi de KABUL); derleme: Claude Opus 5.5; yinelenen soru yeniden yazıldı (2026-11-07, Gemini 3.8 Flash + Gemini 4 Argon jürisi)",
       "reviewedAt": "2026-10-19",
       "lastContentCheckAt": "2026-10-19"
     }

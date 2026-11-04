@@ -45,12 +45,12 @@
     "correctAnswer": "plana damezrîner",
     "promptTr": "Öykünün geçtiği mekânı ve çevreyi bir bütün olarak gösteren plan hangisidir?",
     "answersTr": [
-      "geniş açılış çekimi (establishing shot)",
+      "geniş açılış çekimi",
       "yakın çekim",
       "tepe çekimi",
       "dondurulmuş kare"
     ],
-    "correctAnswerTr": "geniş açılış çekimi (establishing shot)",
+    "correctAnswerTr": "geniş açılış çekimi",
     "explanationKu": "Plana damezrîner di destpêka dîmenekî de cihê bûyerê, dem û hawîrdora giştî nîşanî temaşevan dide. Ev plan bi gelemperî ji dûr ve tê kişandin da ku temaşevan berî çîrokê cihê bûyerê nas bike.",
     "explanationTr": "Geniş açılış çekimi (establishing shot), bir sahnenin başında olayın geçtiği yeri, zamanı ve genel çevreyi izleyiciye tanıtır. Bu plan genellikle uzaktan çekilir; izleyici öyküye girmeden önce mekânı kavrar.",
     "difficulty": 1,
@@ -84,7 +84,7 @@
       "atlama kesme (jump cut)"
     ],
     "correctAnswerTr": "atlama kesme (jump cut)",
-    "explanationKu": "Jump cut di nav dîmenekî de ji nişkê ve di dem, mekan an pozîsyonê de çavkaniyekê diafirîne û bêyî qutbûna xwezayî dihêle temaşevan xwe bigihîne. Di Pêla Nû ya Frensî de ev teknîk bi awayekî berbiçav hat bikaranîn.",
+    "explanationKu": "Jump cut di nav dîmenekî de di dem, mekan an pozîsyonê de guherîneke ji nişkê ve nîşan dide û bêyî qutbûna xwezayî dihêle temaşevan xwe bigihîne. Di Pêla Nû ya Frensî de ev teknîk bi awayekî berbiçav hat bikaranîn.",
     "explanationTr": "Atlama kesme (jump cut), bir sahne içinde zaman, mekân ya da konumda ani bir sıçrama yaratır ve doğal bir geçiş olmadan izleyiciyi farklı bir ana taşır. Fransız Yeni Dalgası'nda bu teknik belirgin biçimde kullanılmıştır.",
     "difficulty": 3,
     "type": "multipleChoice",
@@ -249,8 +249,8 @@
       "İsviçre"
     ],
     "correctAnswerTr": "Fransa",
-    "explanationKu": "Festîvala Cannesê ji sala 1946'an vir ve her gulan li bajarê Cannesê yê li başûrê Fransayê tê lidarxistin. Xelata wê ya sereke Palmiya Zêrîn e û festîval yek ji bûyerên herî girîng ên pîşesaziya fîlmê ye.",
-    "explanationTr": "Cannes Film Festivali, 1946'dan beri her mayıs Fransa'nın güneyindeki Cannes şehrinde düzenlenir. Ana ödülü Altın Palmiye'dir ve festival, film endüstrisinin en önemli etkinliklerindendir.",
+    "explanationKu": "Festîvala Cannesê yekem car di Îlona 1946an de hat lidarxistin; ji sala 1952an ve bi gelemperî di meha gulanê de li bajarê Cannesê yê li başûrê Fransayê tê lidarxistin. Xelata wê ya sereke Palmiya Zêrîn e û festîval yek ji bûyerên herî girîng ên pîşesaziya fîlmê ye.",
+    "explanationTr": "Cannes Film Festivali ilk kez Eylül 1946'da yapıldı; 1952'den beri genellikle mayıs ayında Fransa'nın güneyindeki Cannes şehrinde düzenlenir. Ana ödülü Altın Palmiye'dir ve festival, film endüstrisinin en önemli etkinliklerindendir.",
     "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
@@ -971,7 +971,7 @@
     "answersTr": [
       "Fransa",
       "Almanya",
-      "Îtalya",
+      "İtalya",
       "Sovyet"
     ],
     "correctAnswerTr": "Almanya",
@@ -1101,9 +1101,9 @@
     "correctAnswer": "Japonya",
     "promptTr": "\"Tokyo Story\" hangi ülkenin yapımıdır?",
     "answersTr": [
-      "Çîn",
+      "Çin",
       "Kore",
-      "Taywan",
+      "Tayvan",
       "Japonya"
     ],
     "correctAnswerTr": "Japonya",
@@ -1207,7 +1207,7 @@
     ],
     "correctAnswerTr": "Robert Wiene",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Robert Wiene ye.",
-    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Robert Wiene'dır.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Robert Wiene'dir.",
     "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
@@ -1240,7 +1240,7 @@
     ],
     "correctAnswerTr": "François Truffaut",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê François Truffaut e.",
-    "explanationTr": "BFI kataloğuna göre filmin yönetmeni François Truffaut'dır.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni François Truffaut'dur.",
     "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
@@ -1306,7 +1306,7 @@
     ],
     "correctAnswerTr": "1954",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1954 e.",
-    "explanationTr": "BFI kataloğuna göre filmin yılı 1954'dır.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1954'tür.",
     "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
@@ -1471,7 +1471,7 @@
     ],
     "correctAnswerTr": "1963",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1963 ye.",
-    "explanationTr": "BFI kataloğuna göre filmin yılı 1963'dir.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1963'tür.",
     "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
@@ -1504,7 +1504,7 @@
     ],
     "correctAnswerTr": "Alfred Hitchcock",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Alfred Hitchcock e.",
-    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Alfred Hitchcock'dır.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Alfred Hitchcock'tur.",
     "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
@@ -1603,7 +1603,7 @@
     ],
     "correctAnswerTr": "1929",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1929 e.",
-    "explanationTr": "BFI kataloğuna göre filmin yılı 1929'dir.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1929'dur.",
     "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
@@ -1636,7 +1636,7 @@
     ],
     "correctAnswerTr": "Andrei Tarkovsky",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Andrei Tarkovsky ye.",
-    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Andrei Tarkovsky'dır.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Andrei Tarkovsky'dir.",
     "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
@@ -1669,7 +1669,7 @@
     ],
     "correctAnswerTr": "1975",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1975 e.",
-    "explanationTr": "BFI kataloğuna göre filmin yılı 1975'dir.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1975'tir.",
     "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
@@ -1768,7 +1768,7 @@
     ],
     "correctAnswerTr": "Elem Klimov",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Elem Klimov e.",
-    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Elem Klimov'dır.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Elem Klimov'dur.",
     "difficulty": 3,
     "type": "multipleChoice",
     "metadata": {
