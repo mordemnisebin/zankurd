@@ -157,7 +157,7 @@
     "correctAnswer": "Akira Kurosawa",
     "correctAnswerTr": "Akira Kurosawa",
     "explanation": "Akira Kurosawa sinemanın en büyük ustalarından biridir ve filmleri birçok Batı filmine ana ilham kaynağı olmuştur.",
-    "explanationKu": "Akira Kurosawa yek ji hosteyên herî mezin ê sînemayê ye û fîlmên wî ji gelek fîlmên rojavayî re bûne îlhama sereke.",
+    "explanationKu": "Akira Kurosawa yek ji hosteyên herî mezin ên sînemayê ye û fîlmên wî ji gelek fîlmên rojavayî re bûne îlhama sereke.",
     "explanationTr": "Akira Kurosawa sinemanın en büyük ustalarından biridir ve filmleri birçok Batı filmine ana ilham kaynağı olmuştur.",
     "metadata": {
       "reviewStatus": "approved",
@@ -225,7 +225,7 @@
     "correctAnswer": "Xwişkên Wachowski",
     "correctAnswerTr": "Wachowski Kardeşler",
     "explanation": "Lana ve Lilly Wachowski bu filmi 1999 yılında yazıp yönettiler ve bilimkurgu sinemasını yeni bir evreye taşıdılar.",
-    "explanationKu": "Lana û Lilly Wachowski ev fîlm di sala 1999an de nivîsîn û kişandin, ku sînemaya zanist-afrandî kir qonaxeke nû.",
+    "explanationKu": "Lana û Lilly Wachowski ev fîlm di sala 1999an de nivîsî û kişand, ku sînemaya zanist-afrandî kir qonaxeke nû.",
     "explanationTr": "Lana ve Lilly Wachowski bu filmi 1999 yılında yazıp yönettiler ve bilimkurgu sinemasını yeni bir evreye taşıdılar.",
     "metadata": {
       "reviewStatus": "approved",
@@ -417,7 +417,7 @@
     "answers": [
       "Rosebud",
       "Victoria",
-      "Freedom",
+      "Azadî",
       "Rosewood"
     ],
     "answersTr": [
@@ -531,7 +531,7 @@
     "correctAnswer": "Soleen Yusef",
     "correctAnswerTr": "Soleen Yusef",
     "explanation": "Yönetmen Soleen Yusef filmde, annelerinin vasiyetini yerine getirmek için ülkelerine dönen üç kardeşi anlatır.",
-    "explanationKu": "Derhêner Soleen Yusef di fîlmê de behsa sê xwîşk û birayan dike ku ji bo cîbicîkirina vasiyeta dayika xwe vegeriyane welatê xwe.",
+    "explanationKu": "Derhêner Soleen Yusef di fîlmê de behsa sê xwişk û birayan dike ku ji bo cîbicîkirina vasiyeta dayika xwe vegeriyane welatê xwe.",
     "explanationTr": "Yönetmen Soleen Yusef filmde, annelerinin vasiyetini yerine getirmek için ülkelerine dönen üç kardeşi anlatır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -616,7 +616,7 @@
     "difficulty": 4,
     "id": "r12_sinema_019",
     "category": "Sînema",
-    "prompt": "Belgefîlma navdar a \"Gulîstan, Land of Roses\" (Gulîstan, Xaka Gulan) ya sala 2016an ku jiyana şervanên jin ên kurd dikişîne, ji aliyê kê ve hatiye derhênerîkirin?",
+    "prompt": "Belgefîlma navdar a \"Gulîstan, Land of Roses\" (Gulîstan, Xaka Gulan) ya sala 2016an ku jiyana şervanên jin ên kurd dikişîne, ji aliyê kê ve hatiye kişandin?",
     "promptTr": "2016 yapımı olan ve Kürt kadın savaşçıların yaşamını konu edinen ünlü \"Gulîstan, Land of Roses\" belgeseli kim tarafından yönetilmiştir?",
     "answers": [
       "Mano Xelîl",
@@ -701,7 +701,7 @@
     "correctAnswer": "Nuri Bilge Ceylan",
     "correctAnswerTr": "Nuri Bilge Ceylan",
     "explanation": "Nuri Bilge Ceylan, bu uzun soluklu filmiyle sinemanın en prestijli ödüllerinden birini kazanan ender yönetmenlerden biri olmuştur.",
-    "explanationKu": "Nuri Bilge Ceylan bi fîlmê xwe yê dirêj bû yek ji derhênerên kêm ên ku vê xelata herî prestîjdar standine.",
+    "explanationKu": "Nuri Bilge Ceylan bi fîlmê xwe yê dirêj bû yek ji derhênerên kêm ên ku ev xelata herî prestîjdar standiye.",
     "explanationTr": "Nuri Bilge Ceylan, bu uzun soluklu filmiyle sinemanın en prestijli ödüllerinden birini kazanan ender yönetmenlerden biri olmuştur.",
     "metadata": {
       "reviewStatus": "approved",
@@ -786,7 +786,7 @@
     "difficulty": 2,
     "id": "r12_sinema_024",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê klasîk ê sînemayê \"Bavê Xaçekî\" (The Godfather) kî ye?",
+    "prompt": "Derhênerê fîlmê klasîk ê sînemayê \"The Godfather\" kî ye?",
     "promptTr": "Sinemanın klasikleşmiş filmi \"Baba\"nın (The Godfather) yönetmeni kimdir?",
     "answers": [
       "Martin Scorsese",
@@ -858,7 +858,7 @@
     "promptTr": "Venedik Film Festivali'nde en iyi filme verilen ana ödülün adı nedir?",
     "answers": [
       "Şêrê Zêrîn",
-      "Hirçê Zêrîn",
+      "Hirça Zêrîn",
       "Palmiyeya Zêrîn",
       "Pilingê Zêrîn"
     ],
@@ -939,7 +939,7 @@
     "correctAnswer": "Ingmar Bergman",
     "correctAnswerTr": "Ingmar Bergman",
     "explanation": "Ingmar Bergman, sinemayı insan ruhunu araştırma aracı olarak kullanan en önemli yönetmenlerden biridir.",
-    "explanationKu": "Ingmar Bergman yek ji wan derhêneran e ku sînemayê wekî amûreke lêkolîna giyanê mirovan bi kar aniye.",
+    "explanationKu": "Ingmar Bergman yek ji wan derhêneran e ku sînema wekî amûreke lêkolîna giyanê mirovan bi kar aniye.",
     "explanationTr": "Ingmar Bergman, sinemayı insan ruhunu araştırma aracı olarak kullanan en önemli yönetmenlerden biridir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -1194,7 +1194,7 @@
     "difficulty": 2,
     "id": "r12_sinema_036",
     "category": "Sînema",
-    "prompt": "Di 13ê Mijdara 1960î de li kîjan bajarê Rojavayê Kurdistanê şewatek di sînemayekê de derket û gelek zarok jiyana xwe ji dest dan?",
+    "prompt": "Di 13ê Mijdara 1960î de li kîjan bajarê Rojavayê Kurdistanê şewatek di sînemayekê de derket û gelek zarokan jiyana xwe ji dest da?",
     "promptTr": "13 Kasım 1960'ta, çok sayıda çocuğun hayatını kaybettiği sinema yangını Suriye'nin hangi kentinde yaşanmıştır?",
     "answers": [
       "Qamişlo",
@@ -1262,7 +1262,7 @@
     "difficulty": 3,
     "id": "r12_sinema_038",
     "category": "Sînema",
-    "prompt": "Fîlmê \"Zagros\" (2017) ê Sahim Omar Kalifa, qala şivankekî kurd dike ku ji ber gotegotên civakê li pey jina xwe diçe kîjan welatê Ewropayê?",
+    "prompt": "Fîlmê \"Zagros\" (2017) ê Sahim Omar Kalifa, qala şivanekî kurd dike ku ji ber gotegotên civakê li pey jina xwe diçe kîjan welatê Ewropayê?",
     "promptTr": "Sahim Omar Kalifa'nın \"Zagros\" (2017) filmi, toplumsal dedikodular yüzünden karısının peşinden Avrupa'nın hangi ülkesine giden bir Kürt çobanı anlatır?",
     "answers": [
       "Almanya",
@@ -1432,7 +1432,7 @@
     "difficulty": 4,
     "id": "r12_sinema_043",
     "category": "Sînema",
-    "prompt": "Di sala 1964an de kîjan fîlmê derhêner Metin Erksan li Festîvala Berlînê Xelata Hirçê Zêrîn wergirt?",
+    "prompt": "Di sala 1964an de kîjan fîlmê derhêner Metin Erksan li Festîvala Berlînê Xelata Hirça Zêrîn wergirt?",
     "promptTr": "Metin Erksan'ın hangi filmi 1964 Berlin Film Festivali'nde Altın Ayı ödülünü kazanmıştır?",
     "answers": [
       "Yılanların Öcü",
@@ -1449,7 +1449,7 @@
     "correctAnswer": "Susuz Yaz",
     "correctAnswerTr": "Susuz Yaz",
     "explanation": "Susuz Yaz, köyde suyun paylaşımı ve mülkiyet çatışmasını ele alır. Film 1964'te Berlin Film Festivali'nin Altın Ayı ödülünü kazandı.",
-    "explanationKu": "\"Susuz Yaz\" li ser pevçûna milkîyetê û dabeşkirina avê li gundekî ye. Ev fîlm di sala 1964an de li Berlînê Hirçê Zêrîn wergirt.",
+    "explanationKu": "\"Susuz Yaz\" li ser pevçûna milkîyetê û dabeşkirina avê li gundekî ye. Vî fîlmî di sala 1964an de li Berlînê Xelata Hirça Zêrîn wergirt.",
     "explanationTr": "Susuz Yaz, köyde suyun paylaşımı ve mülkiyet çatışmasını ele alır. Film 1964'te Berlin Film Festivali'nin Altın Ayı ödülünü kazandı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -1483,7 +1483,7 @@
     "correctAnswer": "Robert De Niro",
     "correctAnswerTr": "Robert De Niro",
     "explanation": "Robert De Niro, \"Benimle mi konuşuyorsun?\" (You talkin' to me?) repliğiyle sinema tarihinde efsanevi bir yer edinmiştir.",
-    "explanationKu": "Robert De Niro bi replîka xwe ya \"Tu bi min re diaxivî?\" (You talkin' to me?) di dîroka sînemayê de cîhekî efsanewî girtiye.",
+    "explanationKu": "Robert De Niro bi replîka xwe ya \"Tu bi min re diaxivî?\" (You talkin' to me?) di dîroka sînemayê de cihekî efsanewî girtiye.",
     "explanationTr": "Robert De Niro, \"Benimle mi konuşuyorsun?\" (You talkin' to me?) repliğiyle sinema tarihinde efsanevi bir yer edinmiştir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -3795,7 +3795,7 @@
     "correctAnswer": "Bi hilbijartina serokwezîrekî nû di heman demê de",
     "correctAnswerTr": "Aynı zamanda yeni bir başbakan seçerek",
     "explanation": "Almanya'da yapıcı güvensizlik oyu uygulanır. Bundestag, ancak üyelerinin çoğunluğuyla yeni bir başbakan seçerek mevcut başbakana güvensizlik bildirebilir.",
-    "explanationKu": "Di Almanyayê de dengdana bêbaweriyê ya avaker heye. Bundestag dikare tenê bi hilbijartina cîgirê wî bi piraniya endaman, bêbaweriya xwe li serokwezîr ragihîne.",
+    "explanationKu": "Di Almanyayê de dengdana bêbaweriyê ya avaker heye. Bundestag dikare tenê bi hilbijartina şûngirê wî bi piraniya endaman, bêbaweriya xwe li serokwezîr ragihîne.",
     "explanationTr": "Almanya'da yapıcı güvensizlik oyu uygulanır. Bundestag, ancak üyelerinin çoğunluğuyla yeni bir başbakan seçerek mevcut başbakana güvensizlik bildirebilir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -3829,7 +3829,7 @@
     "correctAnswer": "Şerê Sî Salî",
     "correctAnswerTr": "Otuz Yıl Savaşları",
     "explanation": "1648 Westfalya Antlaşmaları, Avrupa'daki Otuz Yıl Savaşları'nı sona erdirdi. Uluslararası ilişkiler tarihinde önemli bir dönüm noktasıdır.",
-    "explanationKu": "Peymanên Westfalyayê di sala 1648an de dawî li Şerê Sî Salî yê Ewropayê anîn. Ew di dîroka peywendiyên navneteweyî de girîng in.",
+    "explanationKu": "Peymanên Westfalyayê di sala 1648an de dawî li Şerê Sî Salî yê Ewropayê anî. Ew di dîroka peywendiyên navneteweyî de girîng in.",
     "explanationTr": "1648 Westfalya Antlaşmaları, Avrupa'daki Otuz Yıl Savaşları'nı sona erdirdi. Uluslararası ilişkiler tarihinde önemli bir dönüm noktasıdır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -4203,7 +4203,7 @@
     "correctAnswer": "Dadgeha Cezayî ya Navneteweyî",
     "correctAnswerTr": "Uluslararası Ceza Mahkemesi",
     "explanation": "1998'de kabul edilen Roma Statüsü, Uluslararası Ceza Mahkemesinin hukuki temelini oluşturur. Mahkeme 2002 yılında faaliyete geçti.",
-    "explanationKu": "Statûya Romayê di sala 1998an de hate pejirandin û bingeha qanûnî ya Dadgeha Cezayî ya Navneteweyî ye. Ev dadgeh di sala 2002yan de dest bi kar kir.",
+    "explanationKu": "Statûya Romayê di sala 1998an de hate pejirandin û bingeha qanûnî ya Dadgeha Cezayî ya Navneteweyî ye. Vê dadgehê di sala 2002yan de dest bi kar kir.",
     "explanationTr": "1998'de kabul edilen Roma Statüsü, Uluslararası Ceza Mahkemesinin hukuki temelini oluşturur. Mahkeme 2002 yılında faaliyete geçti.",
     "metadata": {
       "reviewStatus": "approved",
@@ -4322,7 +4322,7 @@
     "difficulty": 4,
     "id": "r12_siyaset_022",
     "category": "Siyaset",
-    "prompt": "Kîjan çar dewlet di sala 1937an de Peymana Saadabadê îmze kirin?",
+    "prompt": "Kîjan çar dewletan di sala 1937an de Peymana Saadabadê îmze kir?",
     "promptTr": "1937 yılında Sadabat Paktı'nı hangi dört devlet imzaladı?",
     "answers": [
       "Tirkiye, Îran, Sûriye û Iraq",
@@ -4530,7 +4530,7 @@
     "promptTr": "1918 Brest-Litovsk Antlaşması hangi devletin Birinci Dünya Savaşı'ndan çekilmesini resmileştirdi?",
     "answers": [
       "Împaratoriya Awistirya-Macaristanê",
-      "Qraliya Îtalyayê",
+      "Keyaniya Îtalyayê",
       "Împaratoriya Alman",
       "Rûsyaya Sovyetê"
     ],
@@ -4597,7 +4597,7 @@
     "prompt": "Peymana 1939an a Molotov–Ribbentropê, ku peymana neêrîşê bû, di navbera kîjan du dewletan de hate îmzekirin?",
     "promptTr": "1939 tarihli Molotov–Ribbentrop Saldırmazlık Paktı hangi iki devlet arasında imzalandı?",
     "answers": [
-      "Almanya û Qraliya Îtalyayê",
+      "Almanya û Keyaniya Îtalyayê",
       "Brîtanya û Komara Fransayê",
       "Almanya û Yekîtiya Sovyetê",
       "Yekîtiya Sovyetê û Japonyayê"
@@ -4645,7 +4645,7 @@
     "correctAnswer": "1943",
     "correctAnswerTr": "1943",
     "explanation": "Tahran Konferansı, 28 Kasım–1 Aralık 1943 tarihlerinde yapıldı. Üç lider, Müttefiklerin İkinci Dünya Savaşı'ndaki stratejisini görüştü.",
-    "explanationKu": "Konferansa Tehranê ji 28ê mijdarê heta 1ê kanûna 1943an pêk hat. Sê serkirdeyan stratejiya Hevalbendan di Şerê Duyem ê Cîhanê de nîqaş kirin.",
+    "explanationKu": "Konferansa Tehranê ji 28ê mijdarê heta 1ê kanûna pêşîn a 1943an pêk hat. Sê serkirdeyan stratejiya Hevalbendan di Şerê Duyem ê Cîhanê de nîqaş kir.",
     "explanationTr": "Tahran Konferansı, 28 Kasım–1 Aralık 1943 tarihlerinde yapıldı. Üç lider, Müttefiklerin İkinci Dünya Savaşı'ndaki stratejisini görüştü.",
     "metadata": {
       "reviewStatus": "approved",
@@ -5007,7 +5007,7 @@
     "answers": [
       "Avakirina hevpeymaniyeke leşkerî ya navneteweyî",
       "Diyarkirina xweseriya herêmên kurdî",
-      "Veguhastina paytexta Iraqê bo bajarê din",
+      "Veguhastina paytexta Iraqê bo bajarekî din",
       "Dabeşkirina Iraqê di navbera dewletên cîran de"
     ],
     "answersTr": [
@@ -5342,7 +5342,7 @@
     "difficulty": 3,
     "id": "r12_edebiyat_005",
     "category": "Edebiyat",
-    "prompt": "Kîjan romana Bextiyar Elî ku behsa kesayeta bi navê \"Muzaferê Subhdem\" dike, yek ji berhemên wî yên herî tê zanîn e?",
+    "prompt": "Kîjan romana Bextiyar Elî ku behsa kesayeta bi navê \"Muzaferê Subhdem\" dike, yek ji berhemên wî yên herî naskirî ye?",
     "promptTr": "Bahtiyar Ali'nin \"Muzaffer Subhdem\" karakterini anlatan, en bilinen eserlerinden olan romanı hangisidir?",
     "answers": [
       "Mala Xeyalan",
@@ -5632,7 +5632,7 @@
     "correctAnswerTr": "Kürtlerin Homeros'u",
     "explanation": "Destansı hafızasının ve dengbêjliğinin zenginliğinden dolayı araştırmacılar ve yazarlar Evdalê Zeynikê'yi \"Kürtlerin Homeros\"u' olarak adlandırmıştır.",
     "explanationKu": "Ji ber zengîniya bîra wî ya destanî û dengbêjiyê, lêkolîneran û nivîskaran Evdalê Zeynikê wekî \"Homerê Kurdan\" bi nav kiriye.",
-    "explanationTr": "Destansı hafızasının ve dengbêjliğinin zenginliğinden dolayı araştırmacılar ve yazarlar Evdalê Zeynikê'yi \"Kürtlerin Homeros\"u' olarak adlandırmıştır.",
+    "explanationTr": "Destansı hafızasının ve dengbêjliğinin zenginliğinden dolayı araştırmacılar ve yazarlar Evdalê Zeynikê'yi \"Kürtlerin Homeros'u\" olarak adlandırmıştır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -6277,7 +6277,7 @@
     "correctAnswer": "Mey",
     "correctAnswerTr": "Mey",
     "explanation": "Balaban ve mey, aynı tür çift kamışlı nefesli çalgının farklı bölgelerde kullanılan adlarıdır. Bu ortak gelenek UNESCO tarafından da tanınmıştır.",
-    "explanationKu": "Balaban û mey navên herêmî yên heman cureya amûra bayî ne. Ev amûr ji darê tê çêkirin û qamîşeke duqat a fireh heye.",
+    "explanationKu": "Balaban û mey navên herêmî yên heman cureya amûra bayî ne. Ev amûr ji darê tê çêkirin û qamîşeke wê ya duqat a fireh heye.",
     "explanationTr": "Balaban ve mey, aynı tür çift kamışlı nefesli çalgının farklı bölgelerde kullanılan adlarıdır. Bu ortak gelenek UNESCO tarafından da tanınmıştır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -6328,7 +6328,7 @@
     "difficulty": 3,
     "id": "r12_muzik_013",
     "category": "Muzîk",
-    "prompt": "Di teoriya muzîkê de nîşaneya \"#\" (Diyez) rola wê çi ye?",
+    "prompt": "Di teoriya muzîkê de rola nîşaneya \"#\" (Diyez) çi ye?",
     "promptTr": "Müzik teorisinde \"#\" (Diyez) işaretinin işlevi nedir?",
     "answers": [
       "Dengî nîv perdeyekê bilind (tûj) dike",
