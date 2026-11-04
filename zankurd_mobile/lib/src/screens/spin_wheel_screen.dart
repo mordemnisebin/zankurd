@@ -181,6 +181,8 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     _checkSpin();
   }
 
+  int? _lastIstanbulDay;
+
   void _startCountdown() {
     _countdownTimer?.cancel();
     _updateCountdown();
@@ -193,6 +195,15 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     // Sunucudaki `can_spin_today` / `award_spin_coins` `public.app_today()`
     // (`Europe/Istanbul`, kalıcı UTC+3) ile gün sınırı çizer.
     final istanbul = DateTime.now().toUtc().add(const Duration(hours: 3));
+    // Ön plandayken İstanbul gece yarısı geçilirse sunucuda yeni ücretsiz hak
+    // açılır ama `_canSpin` dünkü `false`ta kalıyordu; gün değişince durum bir
+    // kez yenilenir.
+    final dayKey = istanbul.year * 10000 + istanbul.month * 100 + istanbul.day;
+    final previousDay = _lastIstanbulDay;
+    _lastIstanbulDay = dayKey;
+    if (previousDay != null && previousDay != dayKey && mounted) {
+      unawaited(_checkSpin());
+    }
     final nextMidnight = DateTime.utc(
       istanbul.year,
       istanbul.month,

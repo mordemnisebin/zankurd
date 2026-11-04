@@ -1607,8 +1607,31 @@ class _AppShellState extends State<AppShell>
       }
 
       errorReason = 'app_shell_pending_room_result';
-      final pending = await _repository.loadMyPendingRoomResult();
+      var pending = await _repository.loadMyPendingRoomResult();
       if (!_continueRoomResumeOrDefer(userId, epoch)) return;
+      // Sunucu hep EN YENİ onaysız sonucu döndürür; ayrılmış (kazanımsız) kayıt
+      // onaylanmadan geçilince arkasındaki gerçek sonuçlar hiç görünmüyordu.
+      // Ayrılan kaydı onaylayıp sıradakini sorgula (sınırlı tur).
+      for (
+        var skipped = 0;
+        pending != null &&
+            pendingResultOwnerLeft(pending, userId) &&
+            skipped < 5;
+        skipped++
+      ) {
+        try {
+          await _repository.acknowledgeRoomResult(pending.room);
+        } catch (error, stack) {
+          (widget.errorRecorder ?? ErrorReporter.record)(
+            error,
+            stack,
+            reason: 'app_shell_ack_left_room_result',
+          );
+          break;
+        }
+        pending = await _repository.loadMyPendingRoomResult();
+        if (!_continueRoomResumeOrDefer(userId, epoch)) return;
+      }
       if (pending == null) {
         _roomResumeCheckedUsers.add(userId);
         return;

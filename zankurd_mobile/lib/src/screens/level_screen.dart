@@ -188,13 +188,24 @@ class _LevelScreenState extends State<LevelScreen> {
       // sonuç ekranı hâlâ üstteydi ve SnackBar onun satırlarını örtüyordu.
       if (result is Map) {
         final store = await LevelProgressStore.load();
-        await store.recordResult(
-          widget.category,
-          widget.subCategory,
-          level.number,
-          correct: (result['correct'] as num?)?.toInt() ?? questions.length,
-          total: questions.length,
-        );
+        try {
+          await store.recordResult(
+            widget.category,
+            widget.subCategory,
+            level.number,
+            correct: (result['correct'] as num?)?.toInt() ?? questions.length,
+            total: questions.length,
+          );
+        } catch (error, stack) {
+          // Kayıt düşmedi: sessiz geçme, kullanıcıya söyle (turu yeniden
+          // oynaması gerekir).
+          ErrorReporter.record(error, stack, reason: 'level result persist');
+          if (mounted) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
+          }
+        }
       }
       await _loadProgress();
     } catch (error, stack) {

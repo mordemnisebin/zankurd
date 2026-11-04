@@ -2149,8 +2149,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
       // yerel modda HİÇ doğru işaretlenemiyordu (2026-08-14 denetimi).
       // Doğruluk artık gönderilen cümlenin `correctAnswer`la birebir
       // (kenar boşlukları dışında) eşleşmesiyle ölçülür.
-      isCorrect =
-          selectedOptionOptionKey.trim() == question.correctAnswer.trim();
+      //
+      // `acceptedAnswers` alternatif dizilimleri de ortak `acceptsAnswer`
+      // yolundan geçer: model onları kabul ederken burada yalnız ana cümle
+      // eşleşiyordu ("hewa îro germ e" gibi geçerli dizilim yanlış sayılıp
+      // puan ve yanlış/SRS kaydı içerikle çelişiyordu).
+      isCorrect = question.acceptsAnswer(selectedOptionOptionKey);
     } else {
       final correctIndex = question.answers.indexOf(question.correctAnswer);
       final correctOptionKey = switch (correctIndex) {

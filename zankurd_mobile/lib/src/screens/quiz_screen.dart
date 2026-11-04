@@ -1746,7 +1746,7 @@ class _QuizScreenState extends State<QuizScreen>
     setState(() => _ratingInFlight = true);
     final id = question.id;
     try {
-      await _trySaveLocalProgress(() async {
+      final saved = await _trySaveLocalProgress(() async {
         final store = await MistakeStore.load();
         return store.markResolvedSM2(
           id,
@@ -1756,6 +1756,10 @@ class _QuizScreenState extends State<QuizScreen>
         );
       }, reason: 'quiz practice rating save failed');
       if (!mounted) return;
+      // Kayıt düşmediyse aynı kartta kal: puan (özellikle son kartınki)
+      // sessizce kaybolmasın. Bellek zaten güncel; yeniden dokunuş yalnız
+      // yeniden yazar, SM-2 ikinci kez uygulanmaz (kart artık defterde değil).
+      if (!saved) return;
       await _next();
     } finally {
       if (mounted) setState(() => _ratingInFlight = false);
@@ -1846,6 +1850,10 @@ class _QuizScreenState extends State<QuizScreen>
       return;
     }
     if (!_usesTimer || answered || completing) return;
+    // Günlük yarışta süre ARKA PLANDA da akar: duraklatılsaydı oyuncu uygulama
+    // dışında düşünüp aynı kalan süreyle dönerdi; sıralamadaki toplam cevap
+    // süresine o zaman eklenmezdi. Dönüşte sayaç gerçek süreyi gösterir.
+    if (widget.dailyQuiz) return;
 
     switch (state) {
       case AppLifecycleState.paused:
@@ -4154,6 +4162,32 @@ class _QuizScreenState extends State<QuizScreen>
               (isFlutterTestEnvironment
                   ? Duration.zero
                   : const Duration(milliseconds: 520));
+    final optionKey = question.optionKeyForAnswer(answer);
+    // Süresiz tek kişilik turda düşünerek verilen doğru cevap hız
+    // sınırını aşıp 0 puan alıyordu (2026-10-25). Burada hız yarışı
+    // yok: doğru cevap taban puanı (100) alır. Kayıttaki süre gerçektir.
+    // Çevrimdışı yedek puan da aynı süreyle hesaplanır (aşağıdaki catch).
+    final scoredResponseMs = !_usesTimer && !_isMultiplayer
+        ? max(0, widget.room.secondsPerQuestion * 1000 - 1)
+        : responseMs;
+    Future<Map<String, dynamic>> sendAnswer() => widget.repository
+        .submitAnswer(
+          room: widget.room,
+          question: question,
+          selectedOptionOptionKey: optionKey,
+          responseMs: scoredResponseMs,
+        )
+        .timeout(
+          _isMultiplayer
+              ? const Duration(seconds: 8)
+              : const Duration(milliseconds: 300),
+        );
+    // Çevrimiçi odada RPC dokunulduğu ANDA gider; 520 ms'lik gerilim tutuşu
+    // yalnız sonucun AÇIKLANMASINI geciktirir. Sunucu süreyi kendi alım
+    // anından ölçtüğü için eskiden süre dolumuna 400 ms kala verilen geçerli
+    // cevap yapay bekleme yüzünden geç kalıyor, hız puanı da düşüyordu.
+    final earlySend = _isMultiplayer && !isTimeout ? sendAnswer() : null;
+    earlySend?.ignore(); // hata aşağıda `await` ile yine fırlar
     if (!isTimeout && hold > Duration.zero) {
       await Future.delayed(hold);
     }
@@ -4161,7 +4195,6 @@ class _QuizScreenState extends State<QuizScreen>
     // yeni soruya uygulama — eski cevabın skor bulaşmasını önler.
     if (!mounted || index != questionIndex) return;
 
-    final optionKey = question.optionKeyForAnswer(answer);
     final verifiedRepository = widget.repository;
     if (widget.room.id == null &&
         !widget.practice &&
@@ -4175,13 +4208,6 @@ class _QuizScreenState extends State<QuizScreen>
       );
     }
 
-    // Süresiz tek kişilik turda düşünerek verilen doğru cevap hız
-    // sınırını aşıp 0 puan alıyordu (2026-10-25). Burada hız yarışı
-    // yok: doğru cevap taban puanı (100) alır. Kayıttaki süre gerçektir.
-    // Çevrimdışı yedek puan da aynı süreyle hesaplanır (aşağıdaki catch).
-    final scoredResponseMs = !_usesTimer && !_isMultiplayer
-        ? max(0, widget.room.secondsPerQuestion * 1000 - 1)
-        : responseMs;
     try {
       // Zaman aşımı: ağ takılırsa gerilim tutuşu sonsuza dek sürmez;
       // catch bloğundaki yerel değerlendirme devreye girer.
@@ -4194,18 +4220,7 @@ class _QuizScreenState extends State<QuizScreen>
       // 8 sn beklemek yalnız oyuncuyu bekletir. Yerel turda bekleme sınırı
       // kısadır; çevrimiçi odada sunucunun yetkili cevabı gerektiği için
       // eski 8 sn korunur.
-      final result = await widget.repository
-          .submitAnswer(
-            room: widget.room,
-            question: question,
-            selectedOptionOptionKey: optionKey,
-            responseMs: scoredResponseMs,
-          )
-          .timeout(
-            _isMultiplayer
-                ? const Duration(seconds: 8)
-                : const Duration(milliseconds: 300),
-          );
+      final result = await (earlySend ?? sendAnswer());
 
       if (!mounted || index != questionIndex) return;
 

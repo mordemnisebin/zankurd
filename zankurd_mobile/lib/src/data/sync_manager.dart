@@ -8,6 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/utils/client_round_id.dart';
 import 'package:zankurd_mobile/src/utils/error_reporter.dart';
 import 'package:zankurd_mobile/src/utils/network_error.dart';
+import 'package:zankurd_mobile/src/utils/test_environment.dart';
 import 'lesson_completion_store.dart';
 import 'local_progress_scope.dart';
 import 'xp_cache_plan.dart';
@@ -264,9 +265,59 @@ class SyncManager {
     return PluginConnectivityMonitor();
   }
 
+  /// Geçici sunucu hatasında kayıtlar kuyrukta korunur ama sonraki deneme için
+  /// zamanlayıcı yoktu: cihaz aynı ağdayken sunucu düzelirse yeni kuyruk
+  /// işlemi/bağlantı olayı gelene dek ödül ve ders kayıtları bekliyordu.
+  /// Kuyruk boşalana dek artan aralıkla (30 sn → 10 dk) yeniden denenir.
+  /// Testlerde kapalıdır (bekleyen Timer testleri bozar).
+  @visibleForTesting
+  static bool? retryTimerOverride;
+
+  /// Test bağlamı belirlenemezse (binding yok) kapalı sayılır.
+  static bool get retryTimerEnabled {
+    final forced = retryTimerOverride;
+    if (forced != null) return forced;
+    try {
+      return !isFlutterTestEnvironment;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static const _retryDelays = [
+    Duration(seconds: 30),
+    Duration(minutes: 1),
+    Duration(minutes: 2),
+    Duration(minutes: 5),
+    Duration(minutes: 10),
+  ];
+  Timer? _retryTimer;
+  int _retryStep = 0;
+
+  @visibleForTesting
+  Duration? get scheduledRetryDelay =>
+      _retryTimer == null ? null : _retryDelays[_retryStep - 1];
+
+  void _scheduleRetryIfPending() {
+    _retryTimer?.cancel();
+    _retryTimer = null;
+    if (_disposed || !_acceptingItems || _queue.isEmpty || !retryTimerEnabled) {
+      if (_queue.isEmpty) _retryStep = 0;
+      return;
+    }
+    final delay = _retryDelays[_retryStep.clamp(0, _retryDelays.length - 1)];
+    if (_retryStep < _retryDelays.length) _retryStep++;
+    _retryTimer = Timer(delay, () {
+      _retryTimer = null;
+      if (!_disposed) unawaited(sync());
+    });
+  }
+
   void dispose() {
     _acceptingItems = false;
     _disposed = true;
+    _retryTimer?.cancel();
+    _retryTimer = null;
     _connectivitySubscription?.cancel();
     _connectivitySubscription = null;
   }
@@ -820,11 +871,16 @@ class SyncManager {
   /// açmasını sağlar; sunucu onayı gelince [_forgetOfflineLesson] bekleyen
   /// kümeden düşer. Yerel yazım kabul edilmezse fırlatır: çağıran "kaydedildi"
   /// demez.
-  Future<void> queueLessonCompletion(String lessonId) async {
+  Future<void> queueLessonCompletion(
+    String lessonId, {
+    String? expectedOwner,
+  }) async {
     final currentUserId = _normalizedUserId(_repository.currentUserId);
+    final expected = _normalizedUserId(expectedOwner);
     if (!_acceptingItems ||
         _ownerUserId == null ||
-        currentUserId != _ownerUserId) {
+        currentUserId != _ownerUserId ||
+        (expected != null && expected != _ownerUserId)) {
       throw StateError(
         'Sync queue owner does not match the authenticated user.',
       );
@@ -935,15 +991,22 @@ class SyncManager {
   }
 
   /// Aynı anahtarlı coin harcaması bir kez kesilir.
+  ///
+  /// [expectedOwner]: işlemi BAŞLATAN hesap. İstek beklerken hesap değişirse
+  /// geciken hata yolu o anki (B) kuyruğa A'nın borcunu yazıyordu; sahipler
+  /// uyuşmazsa fırlatır, çağıran A'nın borcunu B'ye yüklemez.
   Future<void> queueCoinSpend({
     required int amount,
     required String reason,
     required String idempotencyKey,
+    String? expectedOwner,
   }) async {
     final currentUserId = _normalizedUserId(_repository.currentUserId);
+    final expected = _normalizedUserId(expectedOwner);
     if (!_acceptingItems ||
         _ownerUserId == null ||
-        currentUserId != _ownerUserId) {
+        currentUserId != _ownerUserId ||
+        (expected != null && expected != _ownerUserId)) {
       throw StateError(
         'Sync queue owner does not match the authenticated user.',
       );
@@ -1055,6 +1118,7 @@ class SyncManager {
     } finally {
       _syncing = false;
       _notifyNotifiers();
+      _scheduleRetryIfPending();
     }
   }
 

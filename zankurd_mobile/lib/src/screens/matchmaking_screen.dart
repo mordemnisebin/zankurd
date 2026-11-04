@@ -202,7 +202,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   /// süpürülebilir, hapsolmuş kullanıcı süpürülemez. İlk hata hâlâ
   /// gösterilir ve yeniden denenebilir; ısrar eden oyuncu çıkar.
   bool _cancelFailed = false;
-  int _matchmakingAttempt = 0;
+  // STATIC: sayaç ekran ömründen bağımsız olmalı. State'te dururken ekran
+  // kapanıp yenisi açılınca eski State'in geç yanıt temizliği kendi sayacını
+  // "hâlâ güncel" sanıyor, genel `cancelMatchmaking()` ile yeni aramayı iptal
+  // edip dönen güncel odayı terk ediyordu (hükmen kayıp).
+  static int _matchmakingAttempt = 0;
   Future<Map<String, dynamic>>? _joinRequest;
   // Bot diyaloğu açıkken arka plan sayacı gizlenir (zamanlayıcı zaten durmuş
   // olur; ekranda donuk "X sn" çipi kalmasın).

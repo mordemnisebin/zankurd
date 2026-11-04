@@ -110,15 +110,25 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
         _answers,
         totalQuestions: _questions.length,
       );
-      try {
-        final store = await PlacementStore.load();
-        await store.saveResult(result.level);
-      } catch (error, stack) {
-        ErrorReporter.record(
-          error,
-          stack,
-          reason: 'level placement store save failed',
-        );
+      // Bir kez yeniden denenir; yine düşerse kullanıcıya söylenir (sonuç
+      // bellekte gösterilir ama kalıcı olmadığı gizlenmez).
+      for (var attempt = 0; attempt < 2; attempt++) {
+        try {
+          final store = await PlacementStore.load();
+          await store.saveResult(result.level);
+          break;
+        } catch (error, stack) {
+          ErrorReporter.record(
+            error,
+            stack,
+            reason: 'level placement store save failed',
+          );
+          if (attempt == 1 && mounted) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
+          }
+        }
       }
       if (mounted) setState(() => _result = result);
     } catch (error, stack) {

@@ -82,7 +82,7 @@ class LevelProgressStore {
       return true;
     }
     final entries = _played..add(_attempt(category, subCategory, level));
-    await _prefs.setStringList(_key, entries.toList()..sort());
+    await _write(entries);
     return false;
   }
 
@@ -92,7 +92,15 @@ class LevelProgressStore {
     int level,
   ) async {
     final entries = _played..add(_entry(category, subCategory, level));
-    await _prefs.setStringList(_key, entries.toList()..sort());
+    await _write(entries);
+  }
+
+  /// Yazımın sonucu OKUNUR (2026-11 denetimi): `setStringList` `false`
+  /// dönse de çağıran "geçildi" deyip sonraki seviyenin kilidini açıyordu;
+  /// uygulama yeniden açılınca geçiş kayboluyordu. Başarısızlıkta fırlatır.
+  Future<void> _write(Set<String> entries) async {
+    final ok = await _prefs.setStringList(_key, entries.toList()..sort());
+    if (!ok) throw StateError('Level progress could not be persisted.');
   }
 
   /// Hesap değişiminde önceki kullanıcının seviye geçmişini temizler.

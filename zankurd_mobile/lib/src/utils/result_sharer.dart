@@ -30,7 +30,7 @@ class ResultSharer {
   /// Günlük ilk paylaşım ödülü verilebilir mi?
   static Future<bool> canClaimDailyShareReward([DateTime? now]) async {
     final prefs = await SharedPreferences.getInstance();
-    final today = _dateKey(now ?? DateTime.now());
+    final today = _dateKey(now ?? _istanbulNow());
     final last = prefs.getString(_shareRewardDateKey);
     return last != today;
   }
@@ -39,7 +39,7 @@ class ResultSharer {
   /// verdikten sonra çağrılır; önce işaretlemek, sunucu isteği düşerse
   /// oyuncuyu gün boyu ödülsüz bırakırdı.
   static Future<void> markDailyShareRewardClaimed([DateTime? now]) =>
-      _mark(_shareRewardDateKey, _dateKey(now ?? DateTime.now()));
+      _mark(_shareRewardDateKey, _dateKey(now ?? _istanbulNow()));
 
   static Future<void> _mark(String physicalKey, String day) async {
     final prefs = await SharedPreferences.getInstance();
@@ -70,7 +70,7 @@ class ResultSharer {
     DateTime? now,
   }) async {
     final physicalKey = _shareRewardDateKey;
-    final day = _dateKey(now ?? DateTime.now());
+    final day = _dateKey(now ?? _istanbulNow());
     final flightKey = '$physicalKey|$day';
     if (!_inFlight.add(flightKey)) return 0;
     try {
@@ -90,6 +90,13 @@ class ResultSharer {
       _inFlight.remove(flightKey);
     }
   }
+
+  /// Sunucu günü İstanbul (kalıcı UTC+3) takvimidir. Yerel gün kullanılırsa
+  /// farklı saat diliminde önceki sunucu gününde alınmış ödül, yeni sunucu günü
+  /// başladıktan sonra da yerel gün değişmediği için RPC'ye ulaşmadan
+  /// engelleniyordu.
+  static DateTime _istanbulNow() =>
+      DateTime.now().toUtc().add(const Duration(hours: 3));
 
   static String _dateKey(DateTime date) =>
       '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';

@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'local_data_storage.dart';
 import 'local_progress_scope.dart';
+import 'local_progress_write_lock.dart';
 import 'question_bank_loader.dart';
 import '../utils/error_reporter.dart';
 
@@ -29,7 +30,24 @@ import '../utils/error_reporter.dart';
 /// verilmezse her çağrı ayrı oturum sayılır. Tekrar oturumu en çok
 /// gecikenden, eşitte en çok kaçırılandan başlar.
 class MistakeStore {
-  MistakeStore._(this._storage, this._ids, this._metadata, this._history);
+  /// Fiziksel anahtarlar OLUŞTURULURKEN sabitlenir (2026-11 denetimi): `_persist`
+  /// üç ayrı yazım yapıp her seferinde etkin hesaptan anahtar türetiyordu;
+  /// A'nın ilk yazımı sürerken B'ye geçilirse kalan iki yazım (SRS metaverisi,
+  /// günlük geçmiş) B'nin anahtarlarına gidip B'nin verisini eziyordu.
+  MistakeStore._(this._storage, this._ids, this._metadata, this._history)
+    : _idsKeyPinned = _storageKey,
+      _metadataKeyPinned = _metadataKey,
+      _historyKeyPinned = _historyKey,
+      _owner = LocalProgressScope.activeUserId;
+
+  /// Sahip, oluşturulurken sabitlenir: yazımlar eşitlemenin kullandığı sahip
+  /// bazlı kilidin ALTINDA yapılır (kilitsiz yazım, eşitlemenin eski görüntüyü
+  /// yeni yanlış/SRS kaydının üstüne yazmasına yol açıyordu).
+  final String? _owner;
+
+  final String _idsKeyPinned;
+  final String _metadataKeyPinned;
+  final String _historyKeyPinned;
 
   static String get _storageKey =>
       LocalProgressScope.physical('zankurd.mistakeQuestionIds');
@@ -486,19 +504,24 @@ class MistakeStore {
     final storage = _storage;
     if (storage == null) return false;
     try {
-      if (!await storage.setStringList(_storageKey, _ids.toList())) {
-        _recordWriteFailure(_storageKey);
-        return false;
-      }
-      if (!await storage.setString(_metadataKey, jsonEncode(_metadata))) {
-        _recordWriteFailure(_metadataKey);
-        return false;
-      }
-      if (!await storage.setString(_historyKey, jsonEncode(_history))) {
-        _recordWriteFailure(_historyKey);
-        return false;
-      }
-      return true;
+      return await LocalProgressWriteLock.run(_owner, () async {
+        if (!await storage.setStringList(_idsKeyPinned, _ids.toList())) {
+          _recordWriteFailure(_idsKeyPinned);
+          return false;
+        }
+        if (!await storage.setString(
+          _metadataKeyPinned,
+          jsonEncode(_metadata),
+        )) {
+          _recordWriteFailure(_metadataKeyPinned);
+          return false;
+        }
+        if (!await storage.setString(_historyKeyPinned, jsonEncode(_history))) {
+          _recordWriteFailure(_historyKeyPinned);
+          return false;
+        }
+        return true;
+      });
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'mistake_store_persist');
       return false;

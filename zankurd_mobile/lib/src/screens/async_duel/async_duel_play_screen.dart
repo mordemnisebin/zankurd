@@ -518,6 +518,24 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         await _advanceOrFinishUnknown(index);
         return;
       }
+      // Süre dolumu / kapanmış maç KALICI bir durumdur: arka plandaki ekran
+      // son süreyi geçirdiyse sonraki cevap bu hatayı alır. Genel "yeniden
+      // dene" durumuna düşerse aynı cevap kapanmış maça yeniden gönderilirdi.
+      // Güncel sonucu/braketi okuyan kapanış ekranına geçilir.
+      final message = error.toString();
+      if (message.contains('Duel expired') ||
+          message.contains('Match expired')) {
+        if (!mounted || _exitInFlight) return;
+        if (_isTournament) {
+          _popToTournament();
+          return;
+        }
+        if (await _goToResult(null)) return;
+        if (!mounted) return;
+        _dismissExitDialog();
+        await Navigator.of(context).maybePop();
+        return;
+      }
       // Son cevap işlenmiş ama HTTP yanıtı kaybolmuş olabilir. Doğru
       // toplamını yalnız mevcut sunucu sonuç okumasından kurtar.
       if (!_isTournament &&

@@ -1028,14 +1028,28 @@ class _RoomScreenState extends State<RoomScreen> with WidgetsBindingObserver {
   /// değerdeydi — host'un `allPlayersReady` kontrolü sessizce takılıyordu
   /// (2026-08-14 denetimi). Şimdi hata durumunda önceki değere dönülür ve
   /// kullanıcı bir snackbar ile bilgilendirilir.
+  ///
+  /// Ardışık dokunuşlar SIRALANIR (2026-11 denetimi): paralel RPC'lerin
+  /// yanıt sırası korunmuyor, eski isteğin hatası daha yeni seçimi geri
+  /// alabiliyordu. Önceki istek bitmeden yenisi gönderilmez; bekleme sırasında
+  /// daha yeni dokunuş geldiyse bu değer atlanır (son seçim kazanır) ve eski
+  /// isteğin hatası yalnız hâlâ en yeni istekse geri alınır.
+  int _readySeq = 0;
+  Future<void> _readyTail = Future<void>.value();
+
   Future<void> _toggleReady(bool v) async {
+    final seq = ++_readySeq;
     final previousOverride = _readyOverride;
     setState(() => _readyOverride = v);
+    await _readyTail;
+    if (!mounted || seq != _readySeq) return;
+    final request = widget.repository.updateReady(room, v);
+    _readyTail = request.then<void>((_) {}, onError: (_) {});
     try {
-      await widget.repository.updateReady(room, v);
+      await request;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'room_update_ready_failed');
-      if (!mounted) return;
+      if (!mounted || seq != _readySeq) return;
       setState(() => _readyOverride = previousOverride);
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
