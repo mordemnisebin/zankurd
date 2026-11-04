@@ -7,6 +7,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/dialog_action_pair.dart';
+import 'notification_service.dart';
 import 'push_messaging_gateway.dart';
 import 'push_token_sync.dart';
 
@@ -38,6 +39,11 @@ class SocialPushPrompt {
 
   /// İzin verilince token'ı yazan senkronizasyon ([AppShell] bağlar).
   static PushTokenSync? tokenSync;
+
+  /// Tercih değişikliğini sunucuya iten eşitleme ([AppShell] bağlar:
+  /// `NotificationSync.run`). Tercih yerelde açılır, bu da profiles.push_social
+  /// alanına taşır; bağlı değilse kirli işaret sonraki açılışta yazılır.
+  static Future<void> Function()? prefsSync;
 
   static bool _promptedThisSession = false;
 
@@ -98,14 +104,36 @@ class SocialPushPrompt {
       }
       final granted = await PushMessaging.gateway.requestPermission();
       await prefs.setBool(doneKey, true);
-      if (granted) await tokenSync?.sync();
+      if (granted) {
+        // Uygulama içi tercih varsayılan KAPALI (ana anahtar): yalnız OS izni
+        // vermek hiçbir sosyal bildirimi açmazdı. Kullanıcı "Bildirimleri aç"
+        // dediği için ana anahtar ve sosyal tercih açılır, sunucuya yazılır.
+        await enableSocialPreference();
+        await tokenSync?.sync();
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'social push prompt');
     }
   }
 
+  /// Ana bildirim anahtarını ve sosyal push tercihini açar, sunucuya eşitler.
+  /// Hata çağıran akışı bozmaz.
+  @visibleForTesting
+  static Future<void> enableSocialPreference() async {
+    try {
+      final service = NotificationService.instance;
+      if (service == null) return;
+      if (!service.enabled) await service.setEnabled(true);
+      if (!service.socialOn) await service.setSocialOn(true);
+      await prefsSync?.call();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'social push enable pref');
+    }
+  }
+
   @visibleForTesting
   static void resetForTest() {
+    prefsSync = null;
     _promptedThisSession = false;
     tokenSync = null;
   }

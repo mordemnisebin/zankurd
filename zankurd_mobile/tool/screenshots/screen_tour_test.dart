@@ -3586,7 +3586,7 @@ void main() {
               category: 'Ziman',
               status: RoomStatus.active,
               questionCount: 5,
-              players: const [
+              players: [
                 Player(id: 'user', name: 'Tu', score: 120, state: 'Hazır'),
                 Player(
                   id: 'tour-rojda',
