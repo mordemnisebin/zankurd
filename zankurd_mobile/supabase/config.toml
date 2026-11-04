@@ -12,3 +12,7 @@ enable_anonymous_sign_ins = true
 # `supabase functions deploy send-push` platform kapısında 401 verir.
 [functions.send-push]
 verify_jwt = false
+
+# avatar-sweep de aynı paylaşılan sırla korunur (saatlik pg_cron çağırır).
+[functions.avatar-sweep]
+verify_jwt = false

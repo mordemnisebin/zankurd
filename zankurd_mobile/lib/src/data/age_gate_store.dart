@@ -86,16 +86,44 @@ class AgeGate {
       if (prefs.getString(declarationKey) != 'adult') return;
       final owner = prefs.getString(ownerKey);
       if (owner == null || owner.isEmpty) {
-        await prefs.setString(ownerKey, userId);
+        // Sahip yazımı başarısızsa beyan sahipsiz kalır ve sonraki hesap onu
+        // miras alırdı: yazım doğrulanmazsa yetişkin beyanı geçersiz sayılır.
+        if (!await prefs.setString(ownerKey, userId)) {
+          await _invalidateAdult(prefs);
+        }
         return;
       }
       if (owner == userId) return;
-      await prefs.remove(declarationKey);
-      await prefs.remove(askedKey);
-      await prefs.remove(ownerKey);
-      if (declaration == AgeDeclaration.adult) declaration = null;
+      await _invalidateAdult(prefs);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'age_gate_bind');
+      if (declaration == AgeDeclaration.adult) declaration = null;
+    }
+  }
+
+  /// Yetişkin beyanını bellekte ve diskte geçersiz kılar (bilinmiyor = yeniden
+  /// sorulur). Diske silme de başarısız olabilir; bellek yine de temizlenir.
+  static Future<void> _invalidateAdult(SharedPreferences prefs) async {
+    if (declaration == AgeDeclaration.adult) declaration = null;
+    await prefs.remove(declarationKey);
+    await prefs.remove(askedKey);
+    await prefs.remove(ownerKey);
+  }
+
+  /// Hesap silindiğinde: silinen hesabın yetişkin beyanı cihazda kalmaz
+  /// (sahip anahtarı o hesaba aitse beyan, "soruldu" işareti ve sahip silinir;
+  /// bellek de sıfırlanır). Başka hesabın beyanına ve çocuk beyanına dokunmaz.
+  static Future<void> forgetUser(String userId) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (prefs.getString(ownerKey) != userId.trim()) return;
+      if (prefs.getString(declarationKey) == 'minor') {
+        await prefs.remove(ownerKey);
+        return;
+      }
+      await _invalidateAdult(prefs);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'age_gate_forget');
       if (declaration == AgeDeclaration.adult) declaration = null;
     }
   }
@@ -112,7 +140,10 @@ class AgeGate {
       if (owner == null) {
         await prefs.remove(ownerKey);
       } else {
-        await prefs.setString(ownerKey, owner);
+        final ok = await prefs.setString(ownerKey, owner);
+        // Sahip yazılamadıysa yetişkin beyanı başka hesaba miras kalabilir:
+        // geçersiz kıl (çocuk beyanı kısıtlayıcıdır, korunur).
+        if (!ok && value == AgeDeclaration.adult) await _invalidateAdult(prefs);
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'age_gate_save');

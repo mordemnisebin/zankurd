@@ -220,8 +220,16 @@ class LocalProgressScope {
       'zankurd.quiz_result_progress_receipt.$uid:',
       'chat_muted_v1_$uid',
       'zankurd.profileName.completed.$uid',
+      // Bozuk günlük girdilerinin karantinası: ad alanı kapsamlı anahtardır
+      // (`zankurd.scope.<uid>....`), karantina onu öne ekler.
+      'zankurd.quarantine.$_scopePrefix$uid.',
     ];
   }
+
+  /// Sahip kimliği SONA eklenen kalıcı kayıtlar: bekleyen işlem niyetleri
+  /// (`zankurd.pendingOp.<tür>.<uid>`; çark, düello, seri onarımı...).
+  static bool _isOwnerSuffixedKey(String key, String uid) =>
+      key.startsWith('zankurd.pendingOp.') && key.endsWith('.$uid');
 
   /// Yalnız [userId]'ye ait kayıtları siler (başka hesaplara dokunmaz) ve her
   /// silmenin kalıcı olduğunu doğrular; olmazsa fırlatır.
@@ -234,7 +242,11 @@ class LocalProgressScope {
     final prefixes = userOwnedKeyPrefixes(userId);
     final keys = preferences
         .getKeys()
-        .where((key) => prefixes.any(key.startsWith))
+        .where(
+          (key) =>
+              prefixes.any(key.startsWith) ||
+              _isOwnerSuffixedKey(key, userId.trim()),
+        )
         .toList(growable: false);
     try {
       for (final key in keys) {

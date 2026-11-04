@@ -58,6 +58,10 @@ enum StreakRepairOutcome {
   alreadyRepaired,
   insufficient,
   monthlyLimit,
+
+  /// Sunucu 24 saatlik onarım penceresinin kapandığını / gün geçersiz olduğunu
+  /// söyledi: kesin sonuç (yeniden denemek anlamsız).
+  windowClosed,
   failed,
 }
 
