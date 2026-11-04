@@ -113,9 +113,28 @@ class SavedWord {
 /// kullanıcının listesi yeni kullanıcıya sızmaz ve oturum katmanının
 /// (auth_provider) ayrıca sıfırlama çağırması gerekmez.
 class WordListStore extends ChangeNotifier {
-  WordListStore._(this._storage, this._key, this._words);
+  WordListStore._(
+    this._storage,
+    this._key,
+    this._words, [
+    Map<String, int>? removed,
+    String? removedKey,
+  ]) : _removed = removed ?? <String, int>{},
+       _removedKey =
+           removedKey ?? LocalProgressScope.physical(removedLogicalKey);
 
   static const logicalKey = 'zankurd.wordList.v1';
+
+  /// Silinen kelimeler: kimlik -> silinme anı (ms). Bulut birleşiminde silmenin
+  /// eski cihazın kopyasıyla geri gelmemesi için (bkz. `ProgressSnapshot`).
+  static const removedLogicalKey = 'zankurd.wordList.removed.v1';
+
+  /// İşaretler bu süreden sonra atılır; o kadar uzun süre çevrimdışı kalan
+  /// cihaz silinmiş kelimeyi geri getirebilir (kabul edilmiş, sınırsız büyümesin).
+  static const removedRetention = Duration(days: 180);
+
+  /// Tutulan en çok işaret (en yeniler).
+  static const removedCap = 500;
 
   /// Bir tekrar oturumundaki en çok kelime.
   static const int sessionCap = 10;
@@ -189,7 +208,22 @@ class WordListStore extends ChangeNotifier {
         ErrorReporter.record(error, stack, reason: 'word_list_decode');
       }
     }
-    return WordListStore._(effective, key, words);
+    final removed = <String, int>{};
+    final removedKey = LocalProgressScope.physical(removedLogicalKey);
+    final rawRemoved = effective?.getString(removedKey);
+    if (rawRemoved != null) {
+      try {
+        final decoded = jsonDecode(rawRemoved);
+        if (decoded is Map) {
+          decoded.forEach((id, at) {
+            if (id is String && at is num && at > 0) removed[id] = at.toInt();
+          });
+        }
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'word_list_removed_decode');
+      }
+    }
+    return WordListStore._(effective, key, words, removed, removedKey);
   }
 
   /// Sunucudan birleşen kelimeler diske yazıldıktan sonra bellekteki örneği
@@ -203,6 +237,8 @@ class WordListStore extends ChangeNotifier {
   final LocalDataStorage? _storage;
   final String _key;
   final Map<String, SavedWord> _words;
+  final Map<String, int> _removed;
+  final String _removedKey;
 
   /// Bu örneğin yazdığı fiziksel anahtar (kullanıcı kapsamını gösterir).
   String get physicalKey => _key;
@@ -249,6 +285,7 @@ class WordListStore extends ChangeNotifier {
     if (_words.containsKey(entryId)) return true;
     if (LearnerLexicon.byId(entryId) == null) return false;
     final at = (now ?? DateTime.now()).millisecondsSinceEpoch;
+    final tombstone = _removed.remove(entryId);
     _words[entryId] = SavedWord(
       entryId: entryId,
       box: 1,
@@ -258,6 +295,7 @@ class WordListStore extends ChangeNotifier {
     notifyListeners();
     final saved = await _persist();
     if (!saved) {
+      if (tombstone != null) _removed.putIfAbsent(entryId, () => tombstone);
       // Kalıcı yazım reddedildi: bellekte "kaydedildi" görünüp yeniden
       // açılışta geri gelmesin (2026-11-04 denetimi). Aynı kelimeyi başka
       // bir işlem değiştirmediyse geri al.
@@ -272,10 +310,25 @@ class WordListStore extends ChangeNotifier {
   Future<bool> remove(String entryId) async {
     final removed = _words.remove(entryId);
     if (removed == null) return true;
+    // Silme işareti: bulut birleşiminde eski cihazın kopyası kelimeyi geri
+    // getirmesin. Zaman, kelimenin son etkinliğinden (tekrar/eklenme) sonra
+    // olmak zorunda; saat geriye alınmışsa son etkinliğin bir ms sonrası.
+    final nowMs = DateTime.now().millisecondsSinceEpoch;
+    final activity = removed.reviewedAtMs > removed.addedAtMs
+        ? removed.reviewedAtMs
+        : removed.addedAtMs;
+    final previousMark = _removed[entryId];
+    _removed[entryId] = nowMs > activity ? nowMs : activity + 1;
+    _pruneRemoved(nowMs);
     notifyListeners();
     final saved = await _persist();
     if (!saved) {
       _words.putIfAbsent(entryId, () => removed);
+      if (previousMark == null) {
+        _removed.remove(entryId);
+      } else {
+        _removed[entryId] = previousMark;
+      }
       notifyListeners();
       return false;
     }
@@ -322,7 +375,21 @@ class WordListStore extends ChangeNotifier {
     return saved;
   }
 
+  /// Süresi dolan ve sayı sınırını aşan silme işaretlerini atar.
+  void _pruneRemoved(int nowMs) {
+    final cutoff = nowMs - removedRetention.inMilliseconds;
+    _removed.removeWhere((_, at) => at < cutoff);
+    if (_removed.length > removedCap) {
+      final newest = _removed.entries.toList()
+        ..sort((a, b) => b.value.compareTo(a.value));
+      for (final entry in newest.skip(removedCap)) {
+        _removed.remove(entry.key);
+      }
+    }
+  }
+
   Future<bool> clear() async {
+    _removed.clear();
     _words.clear();
     notifyListeners();
     return _persist();
@@ -348,6 +415,20 @@ class WordListStore extends ChangeNotifier {
     final storage = _storage;
     if (storage == null) return false;
     try {
+      // Önce silme işaretleri, sonra kelimeler: yarıda kalırsa işaret var,
+      // kelime de var olur ve birleşim işareti kazandırır (silme geri
+      // gelmez); ters sırada silinen kelime bir sonraki eşitlemede dirilirdi.
+      final markersSaved = _removed.isEmpty
+          ? await storage.remove(_removedKey)
+          : await storage.setString(_removedKey, jsonEncode(_removed));
+      if (!markersSaved) {
+        ErrorReporter.record(
+          StateError('Local progress key was not persisted: $_removedKey'),
+          StackTrace.current,
+          reason: 'word_list_persist',
+        );
+        return false;
+      }
       final saved = await storage.setString(
         _key,
         jsonEncode({

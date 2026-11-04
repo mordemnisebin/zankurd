@@ -36,8 +36,10 @@ class LocalProgressScope {
     'zankurd.badges.unlocked',
     'zankurd.level.played',
     'zankurd.learning_goal.v1',
+    'zankurd.learning_goal.at',
     'zankurd.storyMeta.v1',
     'zankurd.wordList.v1',
+    'zankurd.wordList.removed.v1',
     ..._secondGenerationKeys,
   };
 

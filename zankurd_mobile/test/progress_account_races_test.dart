@@ -284,6 +284,15 @@ void main() {
           );
         }
         sentOwners.add(request.headers['authorization']!);
+        // v3 (2026-11-10) henüz yok sayılır: v2 geri düşüşü yarışı sınanır.
+        if (request.url.path.endsWith('/save_my_progress_v3')) {
+          return http.Response(
+            jsonEncode({'code': 'PGRST202', 'message': 'function missing'}),
+            404,
+            request: request,
+            headers: {'content-type': 'application/json'},
+          );
+        }
         if (request.url.path.endsWith('/save_my_progress_v2')) {
           await client.auth.signInAnonymously();
           // Local scope deliberately lags auth: remote adapter must check auth too.
@@ -314,7 +323,8 @@ void main() {
         throwsStateError,
       );
       expect(client.auth.currentUser?.id, 'b');
-      expect(sentOwners, ['Bearer ${tokens['a']}']);
+      // v3 isteği (yok) + v2 isteği (yok) A ile gitti; legacy B ile gitmedi.
+      expect(sentOwners, ['Bearer ${tokens['a']}', 'Bearer ${tokens['a']}']);
     },
   );
 

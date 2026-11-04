@@ -26,8 +26,11 @@ import '../services/placement_scoring.dart';
 /// * Rozetler, başarılar, oynanan seviye düğümleri, oynanan kategoriler:
 ///   **birleşim**.
 /// * Seri: **son oynama günü yeni olan kayıt** (`current`, `lastDay`);
-///   `best` iki tarafın en yükseği; dondurma jetonu **en yüksek** (jeton
-///   coin'le satın alınır, birleştirmede kaybolması kullanıcıya haksızlıktır).
+///   `best` iki tarafın en yükseği. Dondurma jetonu bir **cihaz defteridir**
+///   (`freezeLedger`: cihaz -> kazanılan/harcanan sayaçları, yalnız artar;
+///   birleşim cihaz başına en büyük). Bakiye = taban + kazanılan − harcanan
+///   (0..2). Eskiden bakiye son zaman damgalı MUTLAK sayıydı: iki cihaz aynı
+///   sıfırdan birer jeton satın alınca ikisi de `1` yazıyor, biri kayboluyordu.
 /// * Tekrar kuyruğu: soru kimliği **birleşimi**; aynı kimlikte **daha erken
 ///   vade** (`nextReview`) kazanır; günlük performans günü gün **en yüksek**.
 /// * Seviye sınavı: iki tarafta da yazım zamanı (`placementAt`) varsa **en son
@@ -37,7 +40,15 @@ import '../services/placement_scoring.dart';
 /// * Hikâye düğümü: hikâye başına, iki tarafta da zaman (`storyAt`) varsa
 ///   **en son yazan** (yeniden başlatma geri alınmasın); aksi hâlde yerelde
 ///   varsa yerel, yoksa uzak. "Bitirildi" kümesi (`storyDone`): **birleşim**.
-/// * Öğrenme hedefi: yerelde varsa yerel, yoksa uzak.
+/// * Öğrenme hedefi: iki tarafta da değişiklik zamanı (`goalAt`) varsa **en
+///   son seçen**; yalnız birinde varsa damgalı olan; ikisinde de yoksa (eski
+///   veri) yerel. Eskiden yerel HER ZAMAN kazanıyordu: eski hedefi taşıyan
+///   cihaz, öbür cihazda yeni seçilen hedefi geri alıyordu.
+/// * Kelimelerim: kelime birleşimi + **silme işaretleri** (`wordsGone`: kimlik
+///   -> silinme anı). Silme anı, kelimenin son tekrarından/eklenişinden yeni
+///   ya da eşitse kelime silinir; kelime sonradan yeniden eklendi/tekrar
+///   edildiyse işaret düşer. Eskiden birleşim hiçbir kelimeyi silmiyordu:
+///   bir cihazda silinen kelime eski cihazın kopyasıyla geri geliyordu.
 class ProgressSnapshot {
   const ProgressSnapshot({
     this.xp = 0,
@@ -54,12 +65,24 @@ class ProgressSnapshot {
     this.storyUpdatedAt = const {},
     this.storyDone = const {},
     this.learningGoal,
+    this.learningGoalAt,
     this.words = const {},
+    this.wordsRemoved = const {},
   });
 
   /// Biçim sürümü. Daha YENİ bir sürüm okunursa istemci ne birleştirir ne
   /// yazar (eski istemci yeni alanları silmesin).
-  static const currentVersion = 1;
+  ///
+  /// * 1: ilk biçim. `words` (Kelimelerim) sürüm artmadan eklendi; alanı
+  ///   bilmeyen v1 istemci bütün görüntüyü yeniden yazıp kelime yedeğini
+  ///   siliyordu (2026-11-04 denetimi).
+  /// * 2 (2.1.2): seri dondurma defteri (`freezeBase`/`freezeLedger`), öğrenme
+  ///   hedefi zamanı (`goalAt`), kelime silme işaretleri (`wordsGone`).
+  ///   Bu alanları bilmeyen istemci onları silerdi; bu yüzden v1 istemci v2
+  ///   kaydı okuyunca ne birleştirir ne yazar (yerel kullanım sürer, yalnız
+  ///   bulut yedeği güncellemeye kadar durur) ve sunucu eski sürümün yeniyi
+  ///   ezmesini reddeder (`save_my_progress_v3` + `player_progress` tetikleyicisi).
+  static const currentVersion = 2;
 
   /// Sunucu sınırı 256 KB; JSON bunun altında kalmalı.
   static const maxEncodedBytes = 240 * 1024;
@@ -117,14 +140,17 @@ class ProgressSnapshot {
   final Set<String> storyDone;
   final String? learningGoal;
 
+  /// Hedefin son seçildiği an (ms); eski veride null.
+  final int? learningGoalAt;
+
   /// "Kelimelerim" (Leitner) durumu: sözlük kimliği -> kutu/vade/zaman damgası.
   ///
   /// Eskiden yalnız cihazdaydı; telefon değişince ya da yeniden kurulumda
   /// kullanıcının elle topladığı liste ve tekrar ilerlemesi sessizce giderdi.
-  /// Biçim sürümü ARTIRILMADI: eski istemci `words` anahtarını yok sayar,
-  /// okuyup yazmaya devam eder (yeni cihazın yerel kopyası bir sonraki
-  /// eşitlemede alanı yeniden yükler).
   final Map<String, SnapshotWord> words;
+
+  /// Silinen kelimeler: sözlük kimliği -> silinme anı (ms). Bkz. sınıf belgesi.
+  final Map<String, int> wordsRemoved;
 
   bool get isEmpty =>
       xp == 0 &&
@@ -139,6 +165,7 @@ class ProgressSnapshot {
       story.isEmpty &&
       storyDone.isEmpty &&
       words.isEmpty &&
+      wordsRemoved.isEmpty &&
       learningGoal == null;
 
   Map<String, dynamic> toJson() => {
@@ -167,6 +194,12 @@ class ProgressSnapshot {
     if (storyDone.isNotEmpty) 'storyDone': _sorted(storyDone),
     // ignore: use_null_aware_elements
     if (learningGoal != null) 'goal': learningGoal,
+    // ignore: use_null_aware_elements
+    if (learningGoalAt != null) 'goalAt': learningGoalAt,
+    if (wordsRemoved.isNotEmpty)
+      'wordsGone': {
+        for (final key in _sorted(wordsRemoved.keys)) key: wordsRemoved[key],
+      },
     if (words.isNotEmpty)
       'words': {
         for (final key in _sorted(words.keys)) key: words[key]!.toJson(),
@@ -208,7 +241,11 @@ class ProgressSnapshot {
             raw['goal'] is String && (raw['goal'] as String).isNotEmpty
             ? raw['goal'] as String
             : null,
+        learningGoalAt: raw['goalAt'] is num && (raw['goalAt'] as num) > 0
+            ? (raw['goalAt'] as num).toInt()
+            : null,
         words: SnapshotWord.mapFrom(raw['words']),
+        wordsRemoved: _intMap(raw['wordsGone']),
       );
     } catch (_) {
       return null;
@@ -223,6 +260,13 @@ class ProgressSnapshot {
     final masteryKeys = {...local.mastery.keys, ...remote.mastery.keys};
     final placement = _mergePlacement(local, remote);
     final story = _mergeStory(local, remote);
+    final goal = _mergeGoal(local, remote);
+    final (words, wordsRemoved) = SnapshotWord.mergeWithTombstones(
+      local.words,
+      local.wordsRemoved,
+      remote.words,
+      remote.wordsRemoved,
+    );
     return ProgressSnapshot(
       xp: local.xp > remote.xp ? local.xp : remote.xp,
       streak: SnapshotStreak.merge(local.streak, remote.streak),
@@ -246,9 +290,27 @@ class ProgressSnapshot {
       story: story.$1,
       storyUpdatedAt: story.$2,
       storyDone: {...local.storyDone, ...remote.storyDone},
-      learningGoal: local.learningGoal ?? remote.learningGoal,
-      words: SnapshotWord.mergeAll(local.words, remote.words),
+      learningGoal: goal.$1,
+      learningGoalAt: goal.$2,
+      words: words,
+      wordsRemoved: wordsRemoved,
     );
+  }
+
+  /// Öğrenme hedefi: iki tarafta da zaman varsa SON SEÇEN (eşitlikte yerel);
+  /// yalnız birinde varsa damgalı olan; ikisinde de yoksa yerel, o da yoksa uzak.
+  static (String?, int?) _mergeGoal(ProgressSnapshot a, ProgressSnapshot b) {
+    final ga = a.learningGoal;
+    final gb = b.learningGoal;
+    if (ga == null) return (gb, b.learningGoalAt);
+    if (gb == null) return (ga, a.learningGoalAt);
+    final ta = a.learningGoalAt;
+    final tb = b.learningGoalAt;
+    if (ta != null && tb != null) {
+      return tb > ta ? (gb, tb) : (ga, ta);
+    }
+    if (tb != null) return (gb, tb);
+    return (ga, ta);
   }
 
   static (String?, bool, int?) _mergePlacement(
@@ -398,6 +460,75 @@ class SnapshotWord {
             : (b[id] == null ? a[id]! : merge(a[id]!, b[id]!)),
     };
   }
+
+  /// Kelime birleşimi + silme işaretleri. Silme işaretleri kimlik başına en
+  /// yenisiyle birleşir; sonra kelimeyle yarıştırılır: işaret kelimenin son
+  /// etkinliğinden (tekrar ya da eklenme) yeni ya da eşitse kelime silinir,
+  /// değilse (silindikten SONRA yeniden eklendi/tekrar edildi) işaret düşer.
+  static (Map<String, SnapshotWord>, Map<String, int>) mergeWithTombstones(
+    Map<String, SnapshotWord> aWords,
+    Map<String, int> aGone,
+    Map<String, SnapshotWord> bWords,
+    Map<String, int> bGone,
+  ) {
+    final words = Map<String, SnapshotWord>.of(mergeAll(aWords, bWords));
+    final gone = <String, int>{};
+    for (final id in {...aGone.keys, ...bGone.keys}) {
+      final at = [
+        aGone[id] ?? 0,
+        bGone[id] ?? 0,
+      ].reduce((x, y) => x > y ? x : y);
+      final word = words[id];
+      if (word == null) {
+        gone[id] = at;
+        continue;
+      }
+      final activity = word.effectiveReviewedAt > word.added
+          ? word.effectiveReviewedAt
+          : word.added;
+      if (at >= activity) {
+        words.remove(id);
+        gone[id] = at;
+      }
+    }
+    return (words, gone);
+  }
+}
+
+/// Bir cihazın dondurma jetonu sayaçları (yalnız artar).
+class SnapshotFreezeEntry {
+  const SnapshotFreezeEntry({this.gained = 0, this.spent = 0});
+
+  /// Bu cihazın satın aldığı jeton sayısı.
+  final int gained;
+
+  /// Bu cihazın harcadığı jeton sayısı.
+  final int spent;
+
+  /// Cihaz satırı sayısı bu sınırı aşan (bozuk ya da saldırgan) kayıtta
+  /// fazlası okunmaz; gerçek kullanımda bir kişinin birkaç cihazı olur.
+  static const maxDevices = 64;
+
+  static Map<String, SnapshotFreezeEntry> mapFrom(Object? raw) {
+    if (raw is! Map) return const {};
+    final out = <String, SnapshotFreezeEntry>{};
+    final keys = raw.keys.whereType<String>().toList()..sort();
+    for (final id in keys) {
+      if (out.length >= maxDevices) break;
+      final value = raw[id];
+      if (id.isEmpty || id.length > 40 || value is! List || value.length < 2) {
+        continue;
+      }
+      final g = value[0];
+      final s = value[1];
+      if (g is! num || s is! num) continue;
+      out[id] = SnapshotFreezeEntry(
+        gained: g.toInt() < 0 ? 0 : g.toInt(),
+        spent: s.toInt() < 0 ? 0 : s.toInt(),
+      );
+    }
+    return Map.unmodifiable(out);
+  }
 }
 
 /// Seri kaydı. `lastDay` yerel takvim günü (`yyyy-MM-dd`).
@@ -408,6 +539,8 @@ class SnapshotStreak {
     this.lastDay,
     this.freeze = 0,
     this.freezeAt,
+    this.freezeBase,
+    this.freezeLedger = const {},
     this.playedDays = const {},
     this.frozenDays = const {},
     this.repairMonth,
@@ -416,6 +549,14 @@ class SnapshotStreak {
 
   /// Takvimde tutulan en fazla gün sayısı (`StreakStore.maxHistoryDays`).
   static const maxHistoryDays = 400;
+
+  /// Aynı anda tutulabilecek en fazla jeton (`StreakStore.maxFreeze`; bir
+  /// test ikisinin eşitliğini bekler).
+  static const maxFreeze = 2;
+
+  /// Defterde cihaz kimliği olmayan düzeltme satırı: birleşimde bakiye 0..2
+  /// dışına taşarsa fazlalığı burada eritilir (bkz. [merge]).
+  static const absorberId = '~';
 
   static final RegExp _dayKeyPattern = RegExp(r'^\d{4}-\d{2}-\d{2}$');
   static final RegExp _monthKeyPattern = RegExp(r'^\d{4}-\d{2}$');
@@ -483,11 +624,40 @@ class SnapshotStreak {
   final int current;
   final int best;
   final String? lastDay;
+
+  /// Etkin jeton bakiyesi. [freezeBase] doluysa her zaman defterden türetilir
+  /// ([balanceOf]); doluysa bu alan yalnız okunabilirlik içindir.
   final int freeze;
 
-  /// Jeton sayısının son değiştiği an (epoch ms). Birleştirmede en yeni
-  /// değişiklik kazanır; eski kayıtlarda yoktur (o zaman büyük olan alınır).
+  /// Jeton sayısının son değiştiği an (epoch ms). Bilgi amaçlı; defter modunda
+  /// iki tarafın en büyüğü. Eski (defter öncesi) kayıtlarda birleştirmeyi o
+  /// belirler: en yeni değişiklik kazanır, damga yoksa büyük olan.
   final int? freezeAt;
+
+  /// Defter öncesi MUTLAK bakiye (taban). null = bu kayıt defter modunda
+  /// DEĞİL (eski istemci ya da henüz hiç jeton işlemi yok). İki cihaz aynı
+  /// eşitlenmiş tabanı taşır; birleşimde büyük olan alınır (tek yönlü eski
+  /// kayıt harcanmışı geri getirebilir ama satın alınanı asla kaybettirmez).
+  final int? freezeBase;
+
+  /// Cihaz kimliği -> kazanılan/harcanan sayaçları. Her cihaz YALNIZ kendi
+  /// satırını ve yalnız ARTIRARAK yazar; birleşim satır başına en büyük
+  /// sayaçtır, bu yüzden eşzamanlı alımlar toplanır, hiçbiri kaybolmaz.
+  final Map<String, SnapshotFreezeEntry> freezeLedger;
+
+  /// Defter modunda bakiye: taban + kazanılan - harcanan, 0..[maxFreeze].
+  static int balanceOf(int base, Map<String, SnapshotFreezeEntry> ledger) {
+    var raw = base;
+    for (final e in ledger.values) {
+      raw += e.gained - e.spent;
+    }
+    return raw < 0
+        ? 0
+        : raw > maxFreeze
+        ? maxFreeze
+        : raw;
+  }
+
   final Set<String> playedDays;
   final Set<String> frozenDays;
   final String? repairMonth;
@@ -499,6 +669,8 @@ class SnapshotStreak {
       lastDay == null &&
       freeze == 0 &&
       freezeAt == null &&
+      (freezeBase ?? 0) == 0 &&
+      freezeLedger.isEmpty &&
       playedDays.isEmpty &&
       frozenDays.isEmpty &&
       repairMonth == null &&
@@ -512,6 +684,13 @@ class SnapshotStreak {
     'freeze': freeze,
     // ignore: use_null_aware_elements
     if (freezeAt != null) 'freezeAt': freezeAt,
+    // ignore: use_null_aware_elements
+    if (freezeBase != null) 'freezeBase': freezeBase,
+    if (freezeLedger.isNotEmpty)
+      'freezeLedger': {
+        for (final key in _sorted(freezeLedger.keys))
+          key: [freezeLedger[key]!.gained, freezeLedger[key]!.spent],
+      },
     if (playedDays.isNotEmpty) 'playedDays': _sorted(playedDays),
     if (frozenDays.isNotEmpty) 'frozenDays': _sorted(frozenDays),
     // ignore: use_null_aware_elements
@@ -529,11 +708,20 @@ class SnapshotStreak {
     );
     final rawRepairMonth = raw['repairMonth'];
     final rawFirstSeen = raw['firstSeen'];
+    final rawBase = raw['freezeBase'];
+    final freezeBase = rawBase is num && rawBase >= 0
+        ? rawBase.toInt().clamp(0, maxFreeze)
+        : null;
+    final ledger = SnapshotFreezeEntry.mapFrom(raw['freezeLedger']);
     return SnapshotStreak(
       current: _int(raw['current']),
       best: _int(raw['best']),
       lastDay: day is String && day.isNotEmpty ? day : null,
-      freeze: _int(raw['freeze']),
+      freezeBase: freezeBase,
+      freezeLedger: ledger,
+      freeze: freezeBase != null
+          ? balanceOf(freezeBase, ledger)
+          : _int(raw['freeze']),
       freezeAt: raw['freezeAt'] is num && (raw['freezeAt'] as num) > 0
           ? (raw['freezeAt'] as num).toInt()
           : null,
@@ -582,21 +770,9 @@ class SnapshotStreak {
       ...played,
       ...frozen,
     ];
-    // Jeton: max() harcanan jetonu geri getiriyor, satın alınanı da
-    // kaybettirebiliyordu (2026-10-26). Zaman damgası olan en yeni
-    // değişiklik kazanır; ikisinde de yoksa (eski kayıt) büyük olan.
-    final int freeze;
-    final int? freezeAt;
-    if (a.freezeAt != null || b.freezeAt != null) {
-      final aAt = a.freezeAt ?? -1;
-      final bAt = b.freezeAt ?? -1;
-      final newer = aAt >= bAt ? a : b;
-      freeze = newer.freeze;
-      freezeAt = newer.freezeAt;
-    } else {
-      freeze = a.freeze > b.freeze ? a.freeze : b.freeze;
-      freezeAt = null;
-    }
+    final fz = _mergeFreeze(a, b);
+    final freeze = fz.freeze;
+    final freezeAt = fz.freezeAt;
     String? firstSeen;
     if (fsCandidates.isNotEmpty) {
       fsCandidates.sort();
@@ -608,10 +784,91 @@ class SnapshotStreak {
       lastDay: winner.lastDay,
       freeze: freeze,
       freezeAt: freezeAt,
+      freezeBase: fz.base,
+      freezeLedger: fz.ledger,
       playedDays: played,
       frozenDays: frozen,
       repairMonth: repairMonth,
       firstSeen: firstSeen,
+    );
+  }
+
+  /// Jeton birleşimi.
+  ///
+  /// * Taraflardan hiçbiri defter modunda değilse (eski kayıtlar): en yeni
+  ///   değişiklik kazanır (`freezeAt`), damga yoksa büyük olan (v1 davranışı).
+  /// * Aksi hâlde DEFTER: taban = iki tabanın büyüğü (defter öncesi taraf
+  ///   tabanını mutlak bakiyesinden alır), satırlar cihaz başına en büyük
+  ///   sayaç. Bakiye 0..2 dışına taşarsa (iki cihaz eşzamanlı satın aldı ve
+  ///   toplam üst sınırı aştı ya da iki cihaz aynı jetonu harcadı) fazlalık
+  ///   [absorberId] satırında ERİTİLİR; böylece sonraki işlem bakiyeye
+  ///   yansır (yalnız kıstırma yapılsaydı taşan bir jetonun harcanması
+  ///   görünmez kalırdı).
+  static ({
+    int freeze,
+    int? freezeAt,
+    int? base,
+    Map<String, SnapshotFreezeEntry> ledger,
+  })
+  _mergeFreeze(SnapshotStreak a, SnapshotStreak b) {
+    final at = a.freezeAt == null && b.freezeAt == null
+        ? null
+        : [a.freezeAt ?? 0, b.freezeAt ?? 0].reduce((x, y) => x > y ? x : y);
+    final ledgerMode =
+        a.freezeBase != null ||
+        b.freezeBase != null ||
+        a.freezeLedger.isNotEmpty ||
+        b.freezeLedger.isNotEmpty;
+    if (!ledgerMode) {
+      if (a.freezeAt != null || b.freezeAt != null) {
+        final newer = (a.freezeAt ?? -1) >= (b.freezeAt ?? -1) ? a : b;
+        return (
+          freeze: newer.freeze,
+          freezeAt: newer.freezeAt,
+          base: null,
+          ledger: const {},
+        );
+      }
+      return (
+        freeze: a.freeze > b.freeze ? a.freeze : b.freeze,
+        freezeAt: null,
+        base: null,
+        ledger: const {},
+      );
+    }
+    int baseOf(SnapshotStreak s) =>
+        s.freezeBase ?? (s.freezeLedger.isEmpty ? s.freeze : 0);
+    final base = baseOf(a) > baseOf(b) ? baseOf(a) : baseOf(b);
+    final ledger = <String, SnapshotFreezeEntry>{};
+    for (final id in {...a.freezeLedger.keys, ...b.freezeLedger.keys}) {
+      final ea = a.freezeLedger[id] ?? const SnapshotFreezeEntry();
+      final eb = b.freezeLedger[id] ?? const SnapshotFreezeEntry();
+      ledger[id] = SnapshotFreezeEntry(
+        gained: ea.gained > eb.gained ? ea.gained : eb.gained,
+        spent: ea.spent > eb.spent ? ea.spent : eb.spent,
+      );
+    }
+    var raw = base;
+    for (final e in ledger.values) {
+      raw += e.gained - e.spent;
+    }
+    if (raw < 0 || raw > maxFreeze) {
+      final current = ledger[absorberId] ?? const SnapshotFreezeEntry();
+      ledger[absorberId] = raw < 0
+          ? SnapshotFreezeEntry(
+              gained: current.gained - raw,
+              spent: current.spent,
+            )
+          : SnapshotFreezeEntry(
+              gained: current.gained,
+              spent: current.spent + (raw - maxFreeze),
+            );
+    }
+    return (
+      freeze: balanceOf(base, ledger),
+      freezeAt: at,
+      base: base,
+      ledger: Map.unmodifiable(ledger),
     );
   }
 

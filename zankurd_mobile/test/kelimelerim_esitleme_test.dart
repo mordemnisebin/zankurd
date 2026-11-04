@@ -119,7 +119,8 @@ void main() {
     test('eski istemcinin anlık görüntüsü (words yok) sorunsuz okunur', () {
       final legacy = ProgressSnapshot.tryParse({'v': 1, 'xp': 5})!;
       expect(legacy.words, isEmpty);
-      expect(ProgressSnapshot.currentVersion, 1);
+      // words, v2 şemasıyla gelen alanların biri (v1 istemci onu siliyordu).
+      expect(ProgressSnapshot.currentVersion, greaterThanOrEqualTo(2));
     });
   });
 

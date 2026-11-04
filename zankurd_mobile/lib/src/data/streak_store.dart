@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
 import 'local_progress_write_lock.dart';
+import 'freeze_ledger.dart';
 import 'paid_freeze_intent.dart';
 import 'progress_sync.dart';
 
@@ -127,7 +128,12 @@ class StreakStore {
       preferences?.getInt(_currentKey) ?? 0,
       preferences?.getInt(_bestKey) ?? 0,
       preferences?.getString(_lastDayKey),
-      preferences?.getInt(_freezeKey) ?? 0,
+      preferences == null
+          ? 0
+          : FreezeLedger.effective(
+              preferences,
+              fallback: preferences.getInt(_freezeKey) ?? 0,
+            ),
       preferences?.getStringList(_playedDaysKey)?.toSet() ?? <String>{},
       preferences?.getStringList(_frozenDaysKey)?.toSet() ?? <String>{},
       preferences?.getString(_repairMonthKey),
@@ -258,7 +264,16 @@ class StreakStore {
   Future<int> addFreeze() => _mutate(() async {
     await _completePendingPaidFreeze();
     if (_freeze >= maxFreeze) return _freeze;
-    _freeze += 1;
+    // Bakiye MUTLAK sayı olarak değil, bu cihazın defter satırına +1 olarak
+    // yazılır (bkz. FreezeLedger): iki cihazın eşzamanlı alımı toplanır.
+    final preferences = _preferences;
+    _freeze = preferences == null
+        ? _freeze + 1
+        : await FreezeLedger.record(
+            preferences,
+            gained: true,
+            current: _freeze,
+          );
     await _stampFreeze();
     await _persist();
     return _freeze;
@@ -273,7 +288,14 @@ class StreakStore {
     if (!canFreeze(now: today)) {
       return recordPlay(now: today);
     }
-    _freeze -= 1;
+    final preferences = _preferences;
+    _freeze = preferences == null
+        ? _freeze - 1
+        : await FreezeLedger.record(
+            preferences,
+            gained: false,
+            current: _freeze,
+          );
     await _stampFreeze();
     _current += 1;
     if (_current > _best) _best = _current;
@@ -353,7 +375,10 @@ class StreakStore {
   void _readPaidFreezeState(SharedPreferences preferences) {
     _current = preferences.getInt(_currentKey) ?? _current;
     _best = preferences.getInt(_bestKey) ?? _best;
-    _freeze = preferences.getInt(_freezeKey) ?? _freeze;
+    _freeze = FreezeLedger.effective(
+      preferences,
+      fallback: preferences.getInt(_freezeKey) ?? _freeze,
+    );
     _lastDay = preferences.getString(_lastDayKey);
     _playedDays
       ..clear()
@@ -802,6 +827,8 @@ class StreakStore {
       _lastDayKey,
       _freezeKey,
       _freezeAtKey,
+      FreezeLedger.baseKey,
+      FreezeLedger.ledgerKey,
       _playedDaysKey,
       _frozenDaysKey,
       _repairMonthKey,

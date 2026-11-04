@@ -11,6 +11,11 @@ class LearningGoalStore {
 
   static String get _key =>
       LocalProgressScope.physical('zankurd.learning_goal.v1');
+
+  /// Hedefin son seçilme anı (ms). Bulut birleşiminde "hangi cihazın seçimi
+  /// yeni" sorusunun ölçüsü (bkz. `ProgressSnapshot.merge`, öğrenme hedefi).
+  static String get _atKey =>
+      LocalProgressScope.physical(LocalProgressSnapshot.goalAtLogicalKey);
   static LearningGoalStore? _instance;
   static Future<LearningGoalStore>? _loading;
   static int _loadGeneration = 0;
@@ -62,7 +67,7 @@ class LearningGoalStore {
 
   /// Kayıtlı hedefi siler; hesap değişiminde yabancının hedefi devralınmaz.
   Future<void> clear() async {
-    await removePersistedPreferenceKeys(_preferences, [_key]);
+    await removePersistedPreferenceKeys(_preferences, [_key, _atKey]);
     _goal = null;
   }
 
@@ -70,6 +75,14 @@ class LearningGoalStore {
     final preferences = _preferences;
     if (preferences == null) return false;
     try {
+      // Zaman damgası hedeften ÖNCE yazılır: damga yazılamazsa eski damga
+      // yeni seçimi "eski" gösterip öbür cihazın hedefine yenik düşürürdü;
+      // bu durumda damga kaldırılır (damgasız = eski veri kuralı).
+      final stamped = await preferences.setInt(
+        _atKey,
+        DateTime.now().millisecondsSinceEpoch,
+      );
+      if (!stamped) await preferences.remove(_atKey);
       final saved = await preferences.setString(_key, goal.storageKey);
       if (!saved) {
         await preferences.reload();

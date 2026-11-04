@@ -11,6 +11,7 @@ import '../services/placement_scoring.dart';
 import '../utils/error_reporter.dart';
 import 'local_progress_scope.dart';
 import 'local_progress_write_lock.dart';
+import 'freeze_ledger.dart';
 import 'streak_store.dart';
 import 'progress_snapshot.dart';
 import 'placement_persistence.dart';
@@ -52,6 +53,14 @@ class LocalProgressSnapshot {
   static const _storyMeta = 'zankurd.storyMeta.v1';
   static const _goal = 'zankurd.learning_goal.v1';
   static const _wordList = 'zankurd.wordList.v1';
+
+  /// Öğrenme hedefinin son seçilme anı (ms); `LearningGoalStore` yazar.
+  static const goalAtLogicalKey = 'zankurd.learning_goal.at';
+  static const _goalAt = goalAtLogicalKey;
+
+  /// Silinen kelimeler (kimlik -> silinme anı, JSON); `WordListStore` yazar.
+  static const wordsRemovedLogicalKey = 'zankurd.wordList.removed.v1';
+  static const _wordsRemoved = wordsRemovedLogicalKey;
 
   static String _k(String logical) => LocalProgressWriteLock.physical(logical);
 
@@ -122,8 +131,13 @@ class LocalProgressSnapshot {
         current: prefs.getInt(_k(_streakCurrent)) ?? 0,
         best: prefs.getInt(_k(_streakBest)) ?? 0,
         lastDay: prefs.getString(_k(_streakLastDay)),
-        freeze: prefs.getInt(_k(_streakFreeze)) ?? 0,
+        freeze: FreezeLedger.effective(
+          prefs,
+          fallback: prefs.getInt(_k(_streakFreeze)) ?? 0,
+        ),
         freezeAt: prefs.getInt(_k(_streakFreezeAt)),
+        freezeBase: FreezeLedger.readBase(prefs),
+        freezeLedger: FreezeLedger.readLedger(prefs),
         playedDays: playedDays,
         frozenDays: frozenDays,
         repairMonth: SnapshotStreak.isValidMonthKey(rawRepairMonth)
@@ -158,7 +172,9 @@ class LocalProgressSnapshot {
       storyUpdatedAt: storyAt,
       storyDone: storyDone,
       learningGoal: prefs.getString(_k(_goal)),
+      learningGoalAt: prefs.getInt(_k(_goalAt)),
       words: _decodeWords(prefs.getString(_k(_wordList))),
+      wordsRemoved: _decodeWordsRemoved(prefs.getString(_k(_wordsRemoved))),
     );
   }
 
@@ -167,6 +183,22 @@ class LocalProgressSnapshot {
     if (raw == null) return const {};
     try {
       return SnapshotWord.mapFrom(jsonDecode(raw));
+    } catch (_) {
+      return const {};
+    }
+  }
+
+  /// `WordListStore`un silme işaretleri (kimlik -> ms).
+  static Map<String, int> _decodeWordsRemoved(String? raw) {
+    if (raw == null) return const {};
+    try {
+      final decoded = jsonDecode(raw);
+      if (decoded is! Map) return const {};
+      return {
+        for (final e in decoded.entries)
+          if (e.key is String && e.value is num && (e.value as num) > 0)
+            e.key as String: (e.value as num).toInt(),
+      };
     } catch (_) {
       return const {};
     }
@@ -224,6 +256,19 @@ class LocalProgressSnapshot {
     await setInt(_xp, snapshot.xp);
     await setInt(_streakCurrent, streak.current);
     await setInt(_streakBest, streak.best);
+    // Jeton defteri (taban + cihaz sayaçları) AYNA sayıdan önce yazılır:
+    // gerçek bakiye defterdendir, ayna yalnız eski kodun okuduğu yerdir.
+    final freezeBase = streak.freezeBase;
+    if (freezeBase != null) {
+      if (prefs.get(FreezeLedger.baseKey) != freezeBase) {
+        ok = await prefs.setInt(FreezeLedger.baseKey, freezeBase) && ok;
+      }
+      final ledgerJson = FreezeLedger.encodeLedger(streak.freezeLedger);
+      if (streak.freezeLedger.isNotEmpty &&
+          prefs.getString(FreezeLedger.ledgerKey) != ledgerJson) {
+        ok = await prefs.setString(FreezeLedger.ledgerKey, ledgerJson) && ok;
+      }
+    }
     await setInt(_streakFreeze, streak.freeze);
     final freezeAt = streak.freezeAt;
     if (freezeAt != null) await setInt(_streakFreezeAt, freezeAt);
@@ -359,6 +404,8 @@ class LocalProgressSnapshot {
           ok;
     }
     await setString(_goal, snapshot.learningGoal);
+    final goalAt = snapshot.learningGoalAt;
+    if (goalAt != null) await setInt(_goalAt, goalAt);
     // Kelimelerim: `snapshot` yukarıda yerelle birleşti (birleşim, hiçbir
     // kelime silinmez); değiştiyse mağazanın kendi biçiminde geri yaz.
     if (!_sameJson(
@@ -371,6 +418,15 @@ class LocalProgressSnapshot {
             jsonEncode({
               for (final e in snapshot.words.entries) e.key: e.value.toJson(),
             }),
+          ) &&
+          ok;
+    }
+    // Silme işaretleri (kelime birleşiminde kelimeyle yarıştırılmış hâliyle).
+    if (!_sameJson(current.wordsRemoved, snapshot.wordsRemoved)) {
+      ok =
+          await prefs.setString(
+            _k(_wordsRemoved),
+            jsonEncode(snapshot.wordsRemoved),
           ) &&
           ok;
     }
@@ -449,6 +505,19 @@ class ProgressRemoteMissing implements Exception {
   const ProgressRemoteMissing();
 }
 
+/// Sunucu görüntüyü boyut sınırı nedeniyle REDDETTİ (sunucu ölçüsü istemci
+/// ölçüsünden büyük çıktı). Bu bir hata değil "böl ve yeniden gönder"
+/// durumudur: [ProgressSyncService] bir kez daha, daha küçük parçayla dener.
+class ProgressTooLarge implements Exception {
+  const ProgressTooLarge([this.bytes]);
+
+  /// Sunucunun ölçtüğü bayt (biliniyorsa).
+  final int? bytes;
+
+  @override
+  String toString() => 'ProgressTooLarge(${bytes ?? '?'})';
+}
+
 class SupabaseProgressRemote implements ProgressRemote {
   SupabaseProgressRemote(this._client, {String? expectedUserId})
     : _expectedUserId = expectedUserId ?? _client.auth.currentUser?.id,
@@ -499,11 +568,44 @@ class SupabaseProgressRemote implements ProgressRemote {
   /// boyunca eski koşulsuz `save_my_progress`'e düşülür.
   bool _v2Missing = false;
 
+  /// `save_my_progress_v3` (şema sürümü ve boyut için YAPISAL ret, 2026-11-10)
+  /// yoksa oturum boyunca v2'ye düşülür.
+  bool _v3Missing = false;
+
   @override
   Future<bool> save(
     Map<String, dynamic> snapshot, {
     DateTime? expectedUpdatedAt,
   }) async {
+    if (!_v3Missing) {
+      try {
+        final response = await _client
+            .rpc<dynamic>(
+              'save_my_progress_v3',
+              params: {
+                'p_snapshot': snapshot,
+                'p_expected_updated_at': expectedUpdatedAt
+                    ?.toUtc()
+                    .toIso8601String(),
+              },
+            )
+            .setHeader('Authorization', _authorization());
+        if (response is Map) {
+          if (response['too_large'] == true) {
+            throw ProgressTooLarge((response['bytes'] as num?)?.toInt());
+          }
+          // Sunucudaki kayıt bu istemciden YENİ şemada: yazılmaz (eski şema
+          // yeniyi ezemez). Çakışma gibi davranır; yeniden okuma yeni şemayı
+          // ayrıştıramazsa eşitleme durur ve çip "eşitlenmedi" gösterir.
+          if (response['stale_schema'] == true) return false;
+          return response['conflict'] != true;
+        }
+        return true;
+      } on PostgrestException catch (error) {
+        if (!_isMissing(error)) rethrow;
+        _v3Missing = true;
+      }
+    }
     if (!_v2Missing) {
       try {
         final response = await _client
@@ -519,7 +621,13 @@ class SupabaseProgressRemote implements ProgressRemote {
             .setHeader('Authorization', _authorization());
         return !(response is Map && response['conflict'] == true);
       } on PostgrestException catch (error) {
-        if (!_isMissing(error)) rethrow;
+        if (!_isMissing(error)) {
+          // Eski sunucu boyutu İSTİSNA ile reddeder; aynı "böl" durumu.
+          if (error.message.contains('Snapshot too large')) {
+            throw const ProgressTooLarge();
+          }
+          rethrow;
+        }
         _v2Missing = true;
       }
     }
@@ -736,12 +844,24 @@ class ProgressSyncService with WidgetsBindingObserver {
           confirmed = true;
           return;
         }
-        final json = _compact(merged);
+        final json = _compact(merged, remoteSnapshot: remoteSnapshot);
         if (json == null) return;
-        final saved = await remote.save(
-          json,
-          expectedUpdatedAt: row?.updatedAt,
-        );
+        bool saved;
+        try {
+          saved = await remote.save(json, expectedUpdatedAt: row?.updatedAt);
+        } on ProgressTooLarge {
+          // Sunucu ölçüsü istemcininkinden büyük çıktı: "böl ve yeniden
+          // gönder". Yalnız çekirdek (seri, rozet, kelime...) gönderilir;
+          // yanlış defteri sunucudaki hâliyle kalır.
+          final core = _compact(
+            merged,
+            remoteSnapshot: remoteSnapshot,
+            coreOnly: true,
+          );
+          if (core == null) return;
+          saved = await remote.save(core, expectedUpdatedAt: row?.updatedAt);
+          oversized = true;
+        }
         if (saved) {
           confirmed = true;
           return;
@@ -767,13 +887,35 @@ class ProgressSyncService with WidgetsBindingObserver {
   /// Ölçü UTF-8 bayttır ve jsonb'nin boşluklu metin gösterimini sayar;
   /// `jsonEncode(...).length` çok baytlı TR/KU karakterlerde ve jsonb
   /// boşluklarında sunucudan KÜÇÜK ölçüyordu (2026-11-04 denetimi).
-  static Map<String, dynamic>? _compact(ProgressSnapshot snapshot) {
+  ///
+  /// Son basamak ("böl"): yanlış defteri hâlâ sığmıyorsa (ya da sunucu bunu
+  /// reddettiyse, [coreOnly]) defter SUNUCUDAKİ hâliyle bırakılır ve gerisi
+  /// (XP, seri, rozet, kelime, hedef...) yine gönderilir. Eskiden tek bir
+  /// büyük defter bütün yedeği durduruyordu. [oversized] yine işaretlidir:
+  /// defterin yeni hâli buluta GİTMEDİ (görünür, yeniden denenebilir).
+  static Map<String, dynamic>? _compact(
+    ProgressSnapshot snapshot, {
+    ProgressSnapshot? remoteSnapshot,
+    bool coreOnly = false,
+  }) {
     var json = snapshot.toJson();
     bool fits(Map<String, dynamic> j) =>
         ProgressSnapshot.serverBytes(j) <= ProgressSnapshot.maxEncodedBytes;
-    if (fits(json)) {
+    if (!coreOnly && fits(json)) {
       oversized = false;
       return json;
+    }
+    if (coreOnly) {
+      json = Map<String, dynamic>.from(json);
+      json['mistakes'] = (remoteSnapshot?.mistakes ?? const SnapshotMistakes())
+          .toJson();
+      if (fits(json)) return json;
+      ErrorReporter.record(
+        StateError('Progress core exceeds server size limit.'),
+        StackTrace.current,
+        reason: 'progress_sync_oversized',
+      );
+      return null;
     }
     json = Map<String, dynamic>.from(json);
     final mistakes = Map<String, dynamic>.from(json['mistakes'] as Map);
@@ -790,13 +932,19 @@ class ProgressSyncService with WidgetsBindingObserver {
       oversized = false;
       return json;
     }
+    // Böl: yanlış defteri sunucudakiyle değiştir, çekirdeği gönder.
+    final core = _compact(
+      snapshot,
+      remoteSnapshot: remoteSnapshot,
+      coreOnly: true,
+    );
     oversized = true;
     ErrorReporter.record(
       StateError('Progress snapshot exceeds server size limit.'),
       StackTrace.current,
       reason: 'progress_sync_oversized',
     );
-    return null;
+    return core;
   }
 
   /// Son yükleme boyut nedeniyle gönderilemedi (görünür durum; bir sonraki
