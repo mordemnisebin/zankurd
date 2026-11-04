@@ -143,6 +143,7 @@ class DozaSloganLine extends StatelessWidget {
           child: Semantics(
             button: true,
             label: slogan,
+            onTap: () => openDozaMe(context),
             excludeSemantics: true,
             child: InkWell(
               key: const ValueKey('doza-slogan-line'),

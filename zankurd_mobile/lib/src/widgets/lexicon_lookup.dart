@@ -247,8 +247,12 @@ class LexiconText extends StatelessWidget {
     return WidgetSpan(
       alignment: PlaceholderAlignment.middle,
       child: Semantics(
-        button: true,
+        // Düz metin içi sözcük: `link` (WCAG 2.5.8 satır içi bağlantıyı
+        // hedef boyutundan muaf tutar; 28 pt'lik sözcüğü şişirmek satır
+        // aralığını bozar). `onTap` olmadan okuyucu sözcüğü açamıyordu.
+        link: true,
         label: '$word. ${context.t(K.lexiconWordHint)}',
+        onTap: () => showLexiconEntrySheet(context, entry),
         child: ExcludeSemantics(
           child: GestureDetector(
             key: ValueKey('lexicon-word-${LearnerLexicon.foldForSearch(word)}'),
@@ -329,9 +333,12 @@ Future<void> showLexiconEntrySheet(
   return showModalBottomSheet<void>(
     context: context,
     useSafeArea: true,
+    // Varsayılan sınır (ekranın 9/16'sı) 320 pt + 2× yazıda maddeyi ve
+    // düğmeyi kesiyordu; tam yükseklikte ve kaydırılabilir.
+    isScrollControlled: true,
     backgroundColor: t.s1,
     shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
-    builder: (sheetContext) => Padding(
+    builder: (sheetContext) => SingleChildScrollView(
       key: const ValueKey('lexicon-entry-sheet'),
       padding: const EdgeInsets.fromLTRB(
         SahneSpace.page,

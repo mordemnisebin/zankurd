@@ -731,6 +731,7 @@ class _WordChip extends StatelessWidget {
     return Semantics(
       button: e != null,
       label: context.isKu ? pair.ku : '${pair.ku}. ${pair.tr}',
+      onTap: e == null ? null : () => showLexiconEntrySheet(context, e),
       excludeSemantics: true,
       child: Material(
         color: t.s1,

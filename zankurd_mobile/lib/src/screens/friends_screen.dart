@@ -1218,7 +1218,9 @@ class _ChallengePill extends StatelessWidget {
       excludeSemantics: true,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
-          minHeight: SahneIconButton.visualSize,
+          // 44 görsel yüksekliği gerçek dokunma alanını 48'in altına
+          // çekiyordu; düğme 48'e tamamlandı.
+          minHeight: sahneTapTarget,
           maxWidth: 176,
         ),
         child: SahneTappable(
@@ -1746,6 +1748,8 @@ class _ReferralDialogState extends State<_ReferralDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      // Klavye açılınca daralan alanda alan ve eylemler kaydırılabilir kalır.
+      scrollable: true,
       // 2026-09-25: zemin ve yarıçap `AppTheme._dialogTheme`ten
       // geliyor. Buradaki `AppRadius.card` (14) temanın `md` (16)
       // değerinden farklıydı; uygulamada 14/16/20 karışık yarıçaplı

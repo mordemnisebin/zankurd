@@ -287,15 +287,29 @@ class _BracketMatchCard extends StatelessWidget {
     final p1Won = isCompleted && match.winnerId == match.playerOneId;
     final p2Won = isCompleted && match.winnerId == match.playerTwoId;
 
+    // Oluşmamış turun oyuncusu görselde yerelleştirilmiş "1. maçın kazananı"
+    // iken etiket ham `TBD:1` okuyordu (çocuklar dışlandığı için ekran
+    // okuyucu görseldeki adı hiç alamıyordu). Aynı çözümleme burada da.
+    String semName(String name) {
+      if (name.startsWith('TBD:')) {
+        return Tr.forKu(
+          K.bracketWinnerOf,
+          ku,
+        ).replaceAll('{n}', name.substring(4));
+      }
+      if (name == 'TBD' || name.isEmpty) return Tr.forKu(K.unknownPlayer, ku);
+      return name;
+    }
+
     final semanticsLabel = Tr.forKu(K.matchSemantics, ku, {
       'one': [
-        match.playerOneName,
+        semName(match.playerOneName),
         if (match.playerOneId == userId) Tr.forKu(K.you, ku),
         ?oneLabel,
         if (p1Won) Tr.forKu(K.bracketRoundWon, ku),
       ].join(', '),
       'two': [
-        match.playerTwoName,
+        semName(match.playerTwoName),
         if (match.playerTwoId == userId) Tr.forKu(K.you, ku),
         ?twoLabel,
         if (p2Won) Tr.forKu(K.bracketRoundWon, ku),

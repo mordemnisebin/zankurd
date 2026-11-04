@@ -379,7 +379,19 @@ class _ProfileHeroCard extends StatelessWidget {
         key: const ValueKey('profile-title-tag'),
         behavior: HitTestBehavior.opaque,
         onTap: () => _copyPlayerTag(context, label, ku),
-        child: title,
+        // Kopyalama hedefi yalnız ~28 pt'lik metindi (FittedBox daha da
+        // küçültür); en az 48×48, dolgu dâhil tamamı dokunmayı yakalar.
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minHeight: sahneTapTarget,
+            minWidth: sahneTapTarget,
+          ),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            widthFactor: 1,
+            child: title,
+          ),
+        ),
       ),
     );
   }
@@ -1345,40 +1357,53 @@ class _PedagogicalAnalyticsSectionState
               ),
               const SizedBox(height: SahneSpace.x2),
               for (final bar in categoryBars) ...[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 80,
-                        child: Text(
-                          CategoryNames.localized(bar.category, isKu),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: SahneType.caption.copyWith(color: t.tx),
-                        ),
-                      ),
-                      const SizedBox(width: SahneSpace.x2),
-                      Expanded(
-                        child: CategoryOutcomeBar(
-                          key: ValueKey('profile-category-bar-${bar.category}'),
-                          correct: bar.correct,
-                          mistakes: bar.mistakes,
-                        ),
-                      ),
-                      const SizedBox(width: SahneSpace.x2),
-                      SizedBox(
-                        width: 40,
-                        child: Text(
-                          groupThousands(bar.correct),
-                          textAlign: TextAlign.right,
-                          style: SahneType.captionStrong.copyWith(
-                            color: t.okTx,
-                            fontFeatures: const [FontFeature.tabularFigures()],
+                Semantics(
+                  // Satır yalnız renkli çubuk + doğru sayısıydı; yanlış sayısı
+                  // ekran okuyucuya hiç gitmiyordu.
+                  label:
+                      '${CategoryNames.localized(bar.category, isKu)}: '
+                      '${Tr.forKu(K.correct, isKu)} ${groupThousands(bar.correct)}, '
+                      '${Tr.forKu(K.wrong, isKu)} ${groupThousands(bar.mistakes)}',
+                  excludeSemantics: true,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 80,
+                          child: Text(
+                            CategoryNames.localized(bar.category, isKu),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: SahneType.caption.copyWith(color: t.tx),
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: SahneSpace.x2),
+                        Expanded(
+                          child: CategoryOutcomeBar(
+                            key: ValueKey(
+                              'profile-category-bar-${bar.category}',
+                            ),
+                            correct: bar.correct,
+                            mistakes: bar.mistakes,
+                          ),
+                        ),
+                        const SizedBox(width: SahneSpace.x2),
+                        SizedBox(
+                          width: 40,
+                          child: Text(
+                            groupThousands(bar.correct),
+                            textAlign: TextAlign.right,
+                            style: SahneType.captionStrong.copyWith(
+                              color: t.okTx,
+                              fontFeatures: const [
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

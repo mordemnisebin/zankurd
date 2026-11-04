@@ -201,12 +201,18 @@ class SahneButton extends StatelessWidget {
 
     final lead = leading ?? (icon == null ? null : Icon(icon, size: iconSize));
     final Widget content = loading
-        ? SizedBox.square(
-            dimension: 20,
-            child: Builder(
-              builder: (context) => CircularProgressIndicator(
-                strokeWidth: 2.5,
-                color: IconTheme.of(context).color,
+        // Yüklenirken etiket görselden kalkar; ekran okuyucu işlemin adını
+        // yitirmesin diye düğmenin düğümüne etiket verilir (göstergeyle
+        // birleşir).
+        ? Semantics(
+            label: semanticLabel ?? label,
+            child: SizedBox.square(
+              dimension: 20,
+              child: Builder(
+                builder: (context) => CircularProgressIndicator(
+                  strokeWidth: 2.5,
+                  color: IconTheme.of(context).color,
+                ),
               ),
             ),
           )

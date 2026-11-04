@@ -5,6 +5,7 @@ import '../providers/reduced_motion_provider.dart';
 import '../theme/sahne.dart';
 import 'sahne/sahne_foundation.dart';
 import '../utils/error_reporter.dart';
+import '../utils/number_format.dart';
 
 /// Y ekseni adımı: 1, 2, 5, 10, 20, 50… dizisinden, [maxVal]'i en çok beş
 /// aralıkta örten en küçük tamsayı adım. Etiketler hep tam sayıdır ve
@@ -92,6 +93,22 @@ class WeeklyPerformanceChart extends StatelessWidget {
             builder: (context, progress, child) => chart(progress),
           );
 
+    // Günlük değerler yalnız tuvale çiziliyordu; ekran okuyucu grafiği hiç
+    // göremiyordu. Gün adıyla doğru/yanlış sayıları tek metinde okunur.
+    final summary = history.entries
+        .map((e) {
+          var weekday = 1;
+          try {
+            weekday = DateTime.parse(e.key).weekday;
+          } catch (_) {}
+          final right = groupThousands(e.value['correct'] ?? 0);
+          final misses = groupThousands(e.value['wrong'] ?? 0);
+          return '${_weekdayAbbreviation(weekday, isKu)}: '
+              '${Tr.forKu(K.correct, isKu)} $right, '
+              '${Tr.forKu(K.wrong, isKu)} $misses';
+        })
+        .join('; ');
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -113,7 +130,13 @@ class WeeklyPerformanceChart extends StatelessWidget {
           ],
         ),
         const SizedBox(height: SahneSpace.x4),
-        chartArea,
+        Semantics(
+          key: const ValueKey('weekly-chart-semantics'),
+          label: summary,
+          image: true,
+          excludeSemantics: true,
+          child: chartArea,
+        ),
       ],
     );
   }
@@ -287,7 +310,7 @@ class _ChartPainter extends CustomPainter {
         ErrorReporter.record(error, stack, reason: 'weekly_performance_chart');
       }
 
-      final weekdayLabel = _getWeekdayAbbreviation(weekday, isKu);
+      final weekdayLabel = _weekdayAbbreviation(weekday, isKu);
       textPainter.text = TextSpan(
         text: weekdayLabel,
         // Boyayıcı temayı görmez; aile yazılmazsa eksen etiketleri sistem
@@ -307,37 +330,37 @@ class _ChartPainter extends CustomPainter {
     }
   }
 
-  String _getWeekdayAbbreviation(int weekday, bool isKu) {
-    if (isKu) {
-      return switch (weekday) {
-        1 => 'Du',
-        2 => 'Sê',
-        3 => 'Ça',
-        4 => 'Pê',
-        5 => 'În',
-        6 => 'Şe',
-        7 => 'Ye',
-        _ => '',
-      };
-    } else {
-      return switch (weekday) {
-        1 => 'Pt',
-        2 => 'Sa',
-        3 => 'Ça',
-        4 => 'Pe',
-        5 => 'Cu',
-        6 => 'Ct',
-        7 => 'Pz',
-        _ => '',
-      };
-    }
-  }
-
   @override
   bool shouldRepaint(covariant _ChartPainter oldDelegate) {
     return oldDelegate.progress != progress ||
         oldDelegate.history != history ||
         oldDelegate.maxVal != maxVal ||
         oldDelegate.isKu != isKu;
+  }
+}
+
+String _weekdayAbbreviation(int weekday, bool isKu) {
+  if (isKu) {
+    return switch (weekday) {
+      1 => 'Du',
+      2 => 'Sê',
+      3 => 'Ça',
+      4 => 'Pê',
+      5 => 'În',
+      6 => 'Şe',
+      7 => 'Ye',
+      _ => '',
+    };
+  } else {
+    return switch (weekday) {
+      1 => 'Pt',
+      2 => 'Sa',
+      3 => 'Ça',
+      4 => 'Pe',
+      5 => 'Cu',
+      6 => 'Ct',
+      7 => 'Pz',
+      _ => '',
+    };
   }
 }

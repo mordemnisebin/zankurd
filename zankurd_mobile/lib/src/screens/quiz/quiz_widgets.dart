@@ -1521,14 +1521,17 @@ class _DuelScoreHeader extends StatelessWidget {
               ),
             ),
             // Seri sıfırken de aynı alan ayrılır; 0→5 geçişi soruyu kaydırmaz.
-            SizedBox(
-              height: scaler.scale(20),
-              child: Row(
-                mainAxisAlignment: end
-                    ? MainAxisAlignment.end
-                    : MainAxisAlignment.start,
+            // Wrap: 320 pt + 2× yazıda "Sen + alev + ×10" oyuncu tarafının
+            // ~110 pt'ine sığmayıp taşıyordu; sığmayan öğe alt satıra iner
+            // (yazı küçültülmez). Normal ölçüde tek satır, yükseklik aynı.
+            ConstrainedBox(
+              constraints: BoxConstraints(minHeight: scaler.scale(20)),
+              child: Wrap(
+                spacing: 4,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                alignment: end ? WrapAlignment.end : WrapAlignment.start,
                 children: [
-                  if (end) ...[
+                  if (end)
                     SizedBox.square(
                       key: const ValueKey('duel-opponent-answered-slot'),
                       dimension: 16,
@@ -1544,8 +1547,6 @@ class _DuelScoreHeader extends StatelessWidget {
                             )
                           : null,
                     ),
-                    const SizedBox(width: 4),
-                  ],
                   if (!end)
                     Text(
                       context.t(K.you),
@@ -1559,7 +1560,6 @@ class _DuelScoreHeader extends StatelessWidget {
                       style: SahneType.captionStrong.copyWith(color: t.tx2),
                     ),
                   if (p.streak > 0) ...[
-                    const SizedBox(width: 4),
                     const SahneGlyph(SahneGlyphKind.flame, size: 14),
                     Text(
                       '×${groupThousands(p.streak)}',

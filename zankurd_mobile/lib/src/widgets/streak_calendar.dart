@@ -182,12 +182,18 @@ class _DayCell extends StatelessWidget {
     Widget body = Center(
       child: icon == null
           ? number
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(icon, size: 10, color: fg),
-                number,
-              ],
+          // Donmuş gün: 10 pt kalkan + tarih alt alta, 2× yazıda ≥ 50 pt;
+          // kare hücreye (320/375 pt'de ~36) sığmayıp taşıyordu. Bütün öbek
+          // hücreye göre küçülür (anlam semantik etiketten gelir).
+          : FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(icon, size: 10, color: fg),
+                  number,
+                ],
+              ),
             ),
     );
 

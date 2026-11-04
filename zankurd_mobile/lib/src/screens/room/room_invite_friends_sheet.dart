@@ -155,7 +155,9 @@ class _RoomInviteFriendsSheetState extends State<RoomInviteFriendsSheet> {
               style: SahneType.caption.copyWith(color: t.tx2),
             ),
             const SizedBox(height: SahneSpace.x4),
-            _body(context, t),
+            // Klavye açılınca kalan yüksekliği liste paylaşır (375×667'de
+            // başlık+arama+liste+düğme kaydırmasız dış sütuna sığmıyordu).
+            Flexible(child: _body(context, t)),
           ],
         ),
       ),
@@ -165,6 +167,7 @@ class _RoomInviteFriendsSheetState extends State<RoomInviteFriendsSheet> {
   Widget _body(BuildContext context, SahneTokens t) {
     if (_failed) {
       return Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
@@ -211,6 +214,7 @@ class _RoomInviteFriendsSheetState extends State<RoomInviteFriendsSheet> {
     ];
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (friends.length > roomInviteSearchThreshold) ...[
@@ -232,16 +236,18 @@ class _RoomInviteFriendsSheetState extends State<RoomInviteFriendsSheet> {
             ),
           )
         else
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.sizeOf(context).height * 0.4,
-            ),
-            child: SingleChildScrollView(
-              child: SahneListGroup(
-                children: [
-                  for (final friend in visible)
-                    _row(context, t, friend, inRoom),
-                ],
+          Flexible(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.sizeOf(context).height * 0.4,
+              ),
+              child: SingleChildScrollView(
+                child: SahneListGroup(
+                  children: [
+                    for (final friend in visible)
+                      _row(context, t, friend, inRoom),
+                  ],
+                ),
               ),
             ),
           ),

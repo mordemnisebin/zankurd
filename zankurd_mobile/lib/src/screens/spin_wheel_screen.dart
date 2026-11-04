@@ -777,9 +777,13 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
 
   Widget _countdownUnit(String value, String label, BuildContext context) {
     final t = SahneTokens.of(context);
-    return SizedBox(
-      width: 72,
+    // Birim genişliği içeriğe göre: 72 pt sabitken 2× yazıda "Dakika" /
+    // "Deqîqe" (~90 pt) kesiliyordu; dıştaki FittedBox iç kırpmayı
+    // düzeltmez. En az 72, gerekirse etiketin genişliği.
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minWidth: 72),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           DecoratedBox(
             decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
