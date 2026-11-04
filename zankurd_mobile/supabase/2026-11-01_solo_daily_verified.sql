@@ -69,6 +69,11 @@ create table if not exists public.verified_solo_selections (
   used_by_round uuid
 );
 
+-- (2026-11-06) Hazırlama kotası (kullanıcı, zaman) ile sayılır: indeks yoksa tüm
+-- oyuncuların geçmişi taranırdı.
+create index if not exists verified_solo_selections_user_created_idx
+  on public.verified_solo_selections(user_id, created_at desc);
+
 create table if not exists public.verified_quiz_sessions (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users(id) on delete cascade,
@@ -96,7 +101,8 @@ create table if not exists public.verified_quiz_answers (
   session_id uuid not null references public.verified_quiz_sessions(id) on delete cascade,
   question_index integer not null,
   question_id uuid not null,
-  choice text not null,
+  -- (2026-11-06) Şık yalnız boş (zaman aşımı) ya da A-D: büyük metin kalıcı yazılamaz.
+  choice text not null check (choice in ('', 'A', 'B', 'C', 'D')),
   is_correct boolean not null,
   answered_at timestamptz not null default clock_timestamp(),
   primary key(session_id, question_index),
@@ -173,13 +179,19 @@ create or replace function public.prepare_verified_solo_questions(p_category tex
 returns jsonb language plpgsql security definer set search_path = public, pg_temp
 as $function$
 declare v_ids uuid[]; v_id uuid; v_uid uuid := auth.uid();
+  -- (2026-11-06) Eşik bir kez sabitlenir: sorgu içindeki clock_timestamp() her satırda
+  -- yeniden hesaplanır ve indeks kullanımını engeller.
+  v_since timestamptz := clock_timestamp() - interval '1 day';
 begin
   if v_uid is null then raise exception 'Authenticated user required'; end if;
   if p_limit is null or p_limit not between 1 and 50 then raise exception 'Invalid question count'; end if;
   perform 1 from public.profiles where id = v_uid for update;
   if not found then raise exception 'Profile missing'; end if;
+  -- Eski biletler (3 günden eski) kullanıcı başına burada temizlenir.
+  delete from public.verified_solo_selections
+    where user_id = v_uid and created_at < v_since - interval '2 days';
   if (select count(*) from public.verified_solo_selections
-      where user_id = v_uid and created_at > clock_timestamp() - interval '1 day') >= 100 then
+      where user_id = v_uid and created_at > v_since) >= 100 then
     raise exception 'Daily selection limit';
   end if;
   select array_agg(id order by seed) into v_ids from (
@@ -290,6 +302,10 @@ declare
   v_correct boolean; v_streak integer; v_next integer;
 begin
   if auth.uid() is null then raise exception 'Authenticated user required'; end if;
+  -- (2026-11-06) NULL/boş = zaman aşımı (yanlış sayılır); öteki değerler yalnız A-D.
+  if p_choice is not null and p_choice not in ('', 'A', 'B', 'C', 'D') then
+    raise exception 'Invalid choice';
+  end if;
   select * into v_session from public.verified_quiz_sessions
     where user_id = auth.uid() and client_round_id = p_client_round_id for update;
   if not found then raise exception 'Verified session missing'; end if;
@@ -417,6 +433,24 @@ begin
 end;
 $board$;
 alter function public.get_verified_daily_event_board() set search_path = public, pg_temp;
+-- (2026-11-06) get_my_records().best_contest_correct canlıda daily_event_results'ı okur
+-- (2026-11-06_guvenlik_tur7); sonuçlar artık verified_daily_event_results'a yazıldığından o
+-- da okunur. Beklenen kaynak yoksa sessizce atlanmaz: dur.
+do $rekor$
+declare v_def text;
+begin
+  v_def := pg_get_functiondef(to_regprocedure('public.get_my_records()'));
+  if position('public.daily_event_results der' in v_def) = 0 then
+    raise exception 'G9 get_my_records source drift: guvenlik_tur7 uygulanmamis ya da govde degismis; elle incele';
+  end if;
+  if position('public.verified_daily_event_results' in v_def) = 0 then
+    execute replace(v_def,
+      E'        select der.correct_count from public.daily_event_results der\n        where der.user_id = v_uid',
+      E'        select der.correct_count from public.daily_event_results der\n        where der.user_id = v_uid\n        union all\n        select vr.correct_count from public.verified_daily_event_results vr\n        where vr.user_id = v_uid');
+  end if;
+end;
+$rekor$;
+
 create or replace function public.get_daily_event_board()
 returns jsonb language sql stable security definer set search_path = public, pg_temp
 as $function$ select public.get_verified_daily_event_board(); $function$;
