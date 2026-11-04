@@ -1,5 +1,5 @@
 -- İdempotency / dayanıklı yazım turu (GPT-6 Pro ALAN 2 + ALAN 5 bulgularından
--- "sunucuda işlem kimliği gerekir" diye atlananlar). UYGULANMADI (applied.md ⏳).
+-- "sunucuda işlem kimliği gerekir" diye atlananlar). Canlıda (2026-11-04, applied.md ✅).
 -- Geri alma: geri_al/2026-11-07_idempotency_tur9_geri.sql
 --
 -- Bu göç YALNIZ YENİ nesne yaratır (1 tablo, 3 işlev); mevcut hiçbir işlevin
