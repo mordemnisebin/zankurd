@@ -777,7 +777,16 @@ class _SettingsScreenState extends State<SettingsScreen>
                             ? null
                             : (v) => _setPref(
                                 v,
-                                apply: (service) => service.setContestOn(v),
+                                apply: (service) async {
+                                  await service.setContestOn(v);
+                                  // Açılınca hatırlatma HEMEN kurulur
+                                  // (bugünün yarışması depodan sorulur).
+                                  if (v) {
+                                    await NotificationSync.run(
+                                      widget.repository,
+                                    );
+                                  }
+                                },
                                 assign: () => _contestOn = v,
                               ),
                       ),
@@ -1064,7 +1073,19 @@ class _SettingsScreenState extends State<SettingsScreen>
     final service = _notificationService;
     if (service == null) return;
     setState(assign);
-    await apply(service);
+    try {
+      await apply(service);
+    } catch (error, stack) {
+      // Kalıcı yazım düştü: arayüz diskteki gerçek değere döner (eskiden
+      // anahtar yeni konumda kalıyor, yeniden açılış eskisini getiriyordu).
+      ErrorReporter.record(error, stack, reason: 'settings_notification_pref');
+      if (!mounted) return;
+      setState(() => _applyServicePrefs(service));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
+      return;
+    }
     if (syncServer) {
       await PushPrefsSync.push(service, widget.repository);
       if (mounted) setState(() {});
@@ -1143,7 +1164,19 @@ class _SettingsScreenState extends State<SettingsScreen>
       initialTime: TimeOfDay(hour: service.hour, minute: service.minute),
     );
     if (picked != null && mounted) {
-      await service.setTime(picked.hour, picked.minute);
+      try {
+        await service.setTime(picked.hour, picked.minute);
+      } catch (error, stack) {
+        ErrorReporter.record(
+          error,
+          stack,
+          reason: 'settings_notification_time',
+        );
+        if (!mounted) return;
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
+      }
       if (!mounted) return;
       setState(() {
         _notificationTime = service.timeDisplay;

@@ -27,7 +27,10 @@ import '../data/quiz_result_progress_receipt_store.dart';
 import '../data/story_progress_store.dart';
 import '../data/sync_manager.dart';
 import '../models/async_duel.dart' show isMissingRpcError;
+import '../services/notification_service.dart';
 import '../services/push_tap_router.dart';
+import '../services/firebase_push_token_source.dart'
+    show revokeFirebaseDeviceToken;
 import '../services/push_token_sync.dart';
 import '../services/premium_service.dart';
 import '../services/apple_revocation.dart';
@@ -363,6 +366,11 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
     LevelProgressStore.resetInstance();
     LearningGoalStore.resetInstance();
     WordListStore.resetInstance();
+    // Kurulu seri alarmı bellekteki seriye bağlıydı: hesap değişince önceki
+    // hesabın "bugün oynamadın" uyarısı yeni hesapta kalıyor, başka cihazdan
+    // gelen "bugün oynandı" bilgisi de mevcut alarmı susturmuyordu (GPT-6 Pro
+    // ALAN 4). Yeni kapsamın serisiyle yeniden hesaplanır (nesil denetimli).
+    unawaited(NotificationService.syncStreakWarning());
   }
 
   @visibleForTesting
@@ -1123,14 +1131,44 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
     // `auth.uid()` ister); en iyi çabadır — ağ yoksa ya da göç uygulanmamışsa
     // (PGRST202) çıkış yine sürer.
     if (client.auth.currentUser != null) {
+      var cleared = false;
+      final deviceToken = PushTokenSync.lastRegisteredToken;
       try {
-        await client
-            .rpc<void>('clear_my_fcm_token')
-            .timeout(const Duration(seconds: 3));
+        // Çıkan cihazın jetonu verilirse yalnız o silinir: aynı hesabın ikinci
+        // cihazı çıkış yapmadığı halde bildirim almaz olmazdı (GPT-6 Pro
+        // ALAN 4). Jeton bilinmiyorsa ya da sunucu henüz tek parametreli
+        // sürümü taşımıyorsa (PGRST202) eski, koşulsuz temizliğe düşülür.
+        if (deviceToken != null) {
+          try {
+            await client
+                .rpc<void>(
+                  'clear_my_fcm_token',
+                  params: {'p_token': deviceToken},
+                )
+                .timeout(const Duration(seconds: 3));
+          } catch (error) {
+            if (!isMissingRpcError(error)) rethrow;
+            await client
+                .rpc<void>('clear_my_fcm_token')
+                .timeout(const Duration(seconds: 3));
+          }
+        } else {
+          await client
+              .rpc<void>('clear_my_fcm_token')
+              .timeout(const Duration(seconds: 3));
+        }
+        cleared = true;
       } catch (error, stack) {
         if (!isMissingRpcError(error)) {
           ErrorReporter.record(error, stack, reason: 'clear fcm token failed');
         }
+      }
+      PushTokenSync.lastRegisteredToken = null;
+      // Sunucu temizliği düştüyse (ağ yok / 3 sn aştı) jeton Firebase
+      // tarafında geçersiz kılınır: çıkmış hesabın bildirimleri bu cihaza
+      // gelmeye devam etmez; sonraki girişte yeni jeton üretilir.
+      if (!cleared) {
+        await revokeFirebaseDeviceToken();
       }
     }
     try {

@@ -30,26 +30,55 @@ const String kAppleRevokeFunction = 'apple-revoke';
 /// Ağ beklemesi sınırı: silme düğmesi Apple yavaş diye uzun donmasın.
 const Duration kAppleRevokeTimeout = Duration(seconds: 10);
 
-/// Girişten hemen sonra çağrılır; yanıt beklenmez/hata yutulur.
-Future<void> registerAppleAuthorization(
+/// Kayıt başarısızsa yeniden deneme aralıkları. Apple'ın kodu ~5 dakika
+/// geçerli: toplam bekleme bunun çok altında kalır (GPT-6 Pro ALAN 4: tek
+/// atışlık kayıt hatayı yalnız logluyor, sunucuda iptal jetonu hiç
+/// oluşmayabiliyordu).
+const List<Duration> kAppleRegisterRetryDelays = <Duration>[
+  Duration(seconds: 3),
+  Duration(seconds: 10),
+  Duration(seconds: 30),
+];
+
+/// Yeniden denemeye değer mi? Ağ/zaman aşımı ve 5xx evet; 4xx (kimlik yok,
+/// geçersiz istek, Apple kimliği yok) kalıcıdır.
+bool _isRetryableRegisterError(Object error) {
+  if (error is FunctionException) return error.status >= 500;
+  return true;
+}
+
+/// Girişten hemen sonra çağrılır; yanıt beklenmez/hata yutulur. Geçici
+/// hatada kod geçerliyken sınırlı sayıda yeniden denenir; `true` yalnız
+/// sunucunun kaydı onayladığını söyler.
+Future<bool> registerAppleAuthorization(
   SupabaseClient client,
-  String authorizationCode,
-) async {
+  String authorizationCode, {
+  List<Duration> retryDelays = kAppleRegisterRetryDelays,
+}) async {
   final code = authorizationCode.trim();
-  if (code.isEmpty) return;
-  try {
-    await client.functions
-        .invoke(
-          kAppleRevokeFunction,
-          body: {'action': 'register', 'authorization_code': code},
-        )
-        .timeout(kAppleRevokeTimeout);
-  } catch (error, stack) {
-    ErrorReporter.record(
-      error,
-      stack,
-      reason: 'apple-revoke register failed (sign-in continues)',
-    );
+  if (code.isEmpty) return false;
+  for (var attempt = 0; ; attempt++) {
+    try {
+      await client.functions
+          .invoke(
+            kAppleRevokeFunction,
+            body: {'action': 'register', 'authorization_code': code},
+          )
+          .timeout(kAppleRevokeTimeout);
+      return true;
+    } catch (error, stack) {
+      final retry =
+          attempt < retryDelays.length && _isRetryableRegisterError(error);
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: retry
+            ? 'apple-revoke register failed (retrying)'
+            : 'apple-revoke register failed (sign-in continues)',
+      );
+      if (!retry) return false;
+      await Future<void>.delayed(retryDelays[attempt]);
+    }
   }
 }
 

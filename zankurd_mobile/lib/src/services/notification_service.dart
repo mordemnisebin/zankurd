@@ -140,6 +140,15 @@ class NotificationService {
   static const _enabledKey = 'zankurd.notifications.enabled';
   static const _hourKey = 'zankurd.notifications.hour';
   static const _minuteKey = 'zankurd.notifications.minute';
+
+  /// Saat ve dakika TEK kayıt ("HH:MM"): iki ayrı yazımın arasında yarım
+  /// kalan kayıt eski saati yeni dakikayla geri getirirdi. Eski iki anahtar
+  /// yalnız geriye uyumlu OKUMA içindir (build 43 ve öncesi).
+  static const _timeKey = 'zankurd.notifications.time';
+
+  /// Ana anahtar kapatılırken native `cancelAll()` düşerse işaret kalır;
+  /// açılış/öne gelişte yeniden denenir (GPT-6 Pro ALAN 4).
+  static const _cancelPendingKey = 'zankurd.notifications.cancelAllPending';
   static const _nextFireKey = 'zankurd.notifications.nextFireAt';
   static const _streakNextFireKey = 'zankurd.notifications.streakNextFireAt';
   static const _contestNextFireKey = 'zankurd.notifications.contestNextFireAt';
@@ -202,19 +211,31 @@ class NotificationService {
       ErrorReporter.record(error, stack, reason: 'notification_init');
       preferences = null;
     }
+    final storedTime = _parseTime(preferences?.getString(_timeKey));
     final service = NotificationService._(
       preferences,
       preferences?.getBool(_enabledKey) ?? false,
-      preferences?.getInt(_hourKey) ?? 19,
-      preferences?.getInt(_minuteKey) ?? 0,
+      storedTime?.$1 ?? preferences?.getInt(_hourKey) ?? 19,
+      storedTime?.$2 ?? preferences?.getInt(_minuteKey) ?? 0,
       timeZoneResolver,
       gateway,
     );
     await service._initNotifications();
+    await service.reconcilePendingCancel();
     if (service.enabled && service.dailyOn) {
       await service._scheduleDaily();
     }
     return service;
+  }
+
+  static (int, int)? _parseTime(String? raw) {
+    if (raw == null) return null;
+    final match = RegExp(r'^(\d{1,2}):(\d{1,2})$').firstMatch(raw);
+    if (match == null) return null;
+    final hour = int.parse(match.group(1)!);
+    final minute = int.parse(match.group(2)!);
+    if (hour > 23 || minute > 59) return null;
+    return (hour, minute);
   }
 
   /// Testlerde tekil örneği sıfırlamak için.
@@ -235,11 +256,43 @@ class NotificationService {
   /// diye bellekteki değer önceliklidir.
   bool? _languageIsKu;
 
+  /// Kayıtlı dil yokken arayüzün varsayılanı Türkçedir
+  /// (`LanguageProvider.load`); bildirim servisi aynı varsayılanı kullanır
+  /// (eskiden Kurmancî: dil anahtarı yazılmamış yeni kurulumda yerel
+  /// bildirim metinleri ve kanallar arayüzden farklı dilde oluşuyordu).
+  static const _defaultLanguageCode = 'tr';
+
   bool get _isKu =>
       _languageIsKu ??
-      (_preferences?.getString('zankurd.language') ?? 'ku') != 'tr';
+      (_preferences?.getString('zankurd.language') ?? _defaultLanguageCode) !=
+          'tr';
 
   bool get enabled => _enabled;
+
+  /// Ana anahtar ya da tür tercihi değiştiğinde artar; görünür bir ön plan
+  /// bandı bunu dinleyip artık izinli olmayan türü kaldırır.
+  static final ValueNotifier<int> prefsRevision = ValueNotifier<int>(0);
+
+  /// Ön planda gelen bir push'un uygulama içinde GÖSTERİLİP gösterilmeyeceği.
+  ///
+  /// Sunucu süzgeci tercihler eşitlenmeden önce gönderilmiş ya da eşitleme
+  /// başarısız olmuş bir iletiyi geçirebilir (GPT-6 Pro ALAN 4); gösterim anında
+  /// yerel anahtar da denetlenir: ana anahtar kapalıysa hiçbiri; düello
+  /// (`async_duel*`) ve sosyal (`friend_request`, `friend_accept`,
+  /// `room_invite`) türleri kendi tercihine bağlıdır. Servis kurulu değilse
+  /// (henüz yüklenmedi / test) ileti engellenmez.
+  static bool allowsForegroundPush(String? kind) {
+    final service = _instance;
+    if (service == null) return true;
+    if (!service.enabled) return false;
+    if (kind != null && kind.startsWith('async_duel')) return service.duelOn;
+    if (kind == 'friend_request' ||
+        kind == 'friend_accept' ||
+        kind == 'room_invite') {
+      return service.socialOn;
+    }
+    return true;
+  }
 
   bool _pref(String key) => _preferences?.getBool(key) ?? true;
 
@@ -323,6 +376,19 @@ class NotificationService {
       } catch (error, stack) {
         ErrorReporter.record(error, stack, reason: 'notification_launch');
       }
+      await _ensurePushChannel();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService init');
+    }
+  }
+
+  /// Uzak push'ların düştüğü Android kanalını oluşturur; kanal kimliği aynı
+  /// kaldığı için tekrar çağrı adı/açıklamayı GÜNCELLER ve kullanıcının kanal
+  /// tercihlerini (ses, önem) korur. Dil değişince de çağrılır (hatırlatmalar
+  /// kapalı olsa bile): sistem ayarlarında kanal adı eski dilde kalmasın.
+  Future<void> _ensurePushChannel() async {
+    if (kIsWeb) return;
+    try {
       await _localNotificationsPlugin
           .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin
@@ -338,7 +404,7 @@ class NotificationService {
             ),
           );
     } catch (e, s) {
-      ErrorReporter.record(e, s, reason: 'NotificationService init');
+      ErrorReporter.record(e, s, reason: 'NotificationService push channel');
     }
   }
 
@@ -434,6 +500,7 @@ class NotificationService {
           throw StateError('Notification preference was not persisted.');
         }
         _enabled = value;
+        prefsRevision.value++;
       } catch (_) {
         // SharedPreferences platform yazısından önce önbelleğini günceller.
         try {
@@ -443,6 +510,8 @@ class NotificationService {
       }
     });
     if (value) {
+      // Açılırken bekleyen eski iptal işareti yeni kurulumu silmesin.
+      await _preferences?.remove(_cancelPendingKey);
       await _requestPermissions();
       if (dailyOn) await _scheduleDaily();
     } else {
@@ -452,10 +521,30 @@ class NotificationService {
 
   // ── Tercihler ───────────────────────────────────────────────────────
 
+  /// Boolean tercihi KALICI yazar; `false` dönen (başarısız) yazımda eski
+  /// değer diskten yeniden yüklenir ve hata fırlatılır — arayüz kendini geri
+  /// alır, alarm değişmez (GPT-6 Pro ALAN 4: eskiden sonuç denetlenmiyor,
+  /// yeniden açılış eski tercihi geri getiriyordu).
+  Future<void> _writePref(String key, bool value) async {
+    final preferences = _preferences;
+    if (preferences == null) return;
+    var saved = false;
+    try {
+      saved = await preferences.setBool(key, value);
+    } catch (_) {
+      saved = false;
+    }
+    if (saved) return;
+    try {
+      await preferences.reload();
+    } catch (_) {}
+    throw StateError('Notification preference was not persisted.');
+  }
+
   /// Günlük hatırlatmayı açar/kapatır; öteki bildirimlere dokunmaz. Ana
   /// anahtar [enabled] kapalıysa yalnız tercih saklanır.
   Future<void> setDailyOn(bool value) async {
-    await _preferences?.setBool(_prefDailyKey, value);
+    await _writePref(_prefDailyKey, value);
     if (!_enabled) return;
     if (value) {
       await _scheduleDaily();
@@ -466,7 +555,7 @@ class NotificationService {
 
   /// Seri uyarısını açar/kapatır; kapatınca kurulu uyarı hemen iptal edilir.
   Future<void> setStreakOn(bool value) async {
-    await _preferences?.setBool(_prefStreakKey, value);
+    await _writePref(_prefStreakKey, value);
     if (!_enabled) return;
     if (value) {
       await syncStreakWarning();
@@ -477,12 +566,16 @@ class NotificationService {
   }
 
   /// Günün yarışması hatırlatmasını açar/kapatır.
+  ///
+  /// Açılınca hatırlatma bu çağrıyla KURULMAZ: yarışmanın bugün var olup
+  /// olmadığı depodan öğrenilir, burada bilinmez. Çağıran (ayarlar)
+  /// ardından `NotificationSync.run` çalıştırır; yoksa kurulum bir sonraki
+  /// açılış/öne gelişe kalırdı (kullanıcı 19.00'dan önce açıp arka plana
+  /// atarsa hatırlatma hiç gelmezdi).
   Future<void> setContestOn(bool value) async {
-    await _preferences?.setBool(_prefContestKey, value);
+    await _writePref(_prefContestKey, value);
     if (!_enabled) return;
     if (!value) await _cancelContestReminder();
-    // Açılınca bir sonraki eşitleme (açılış / öne gelme) kurar: yarışmanın
-    // bugün var olup olmadığı depodan öğrenilir, burada bilinmez.
   }
 
   // Tek JSON kaydı, tercih ve revizyonun diskte yarım ayrılmasını önler.
@@ -583,6 +676,7 @@ class NotificationService {
           dirty: true,
         ),
       );
+      prefsRevision.value++;
     });
   }
 
@@ -641,11 +735,28 @@ class NotificationService {
     );
   });
 
+  /// Saat/dakikayı TEK kayıt olarak yazar; başarısızsa eski saat korunur,
+  /// alarm değişmez ve hata fırlatılır.
   Future<void> setTime(int hour, int minute) async {
+    final preferences = _preferences;
+    if (preferences != null) {
+      final text =
+          '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+      var saved = false;
+      try {
+        saved = await preferences.setString(_timeKey, text);
+      } catch (_) {
+        saved = false;
+      }
+      if (!saved) {
+        try {
+          await preferences.reload();
+        } catch (_) {}
+        throw StateError('Notification time was not persisted.');
+      }
+    }
     _hour = hour;
     _minute = minute;
-    await _preferences?.setInt(_hourKey, hour);
-    await _preferences?.setInt(_minuteKey, minute);
     if (_enabled && dailyOn) {
       await _scheduleDaily();
     }
@@ -672,9 +783,13 @@ class NotificationService {
       // Yeniden kurma yarıda kalırsa dilim "aynı" görünse de bir sonraki
       // öne gelişte tekrar denenir (Codex incelemesi 2026-10-25).
       if (_dailyTimeZoneRefreshPending) {
-        if (_enabled && dailyOn) await _scheduleDaily();
-        _dailyTimeZoneRefreshPending = false;
+        // İşaret yalnız native kurulum ONAYLANINCA kalkar; başarısızsa sonraki
+        // resume yeniden dener (eskiden yutulan hata başarı sayılıyordu).
+        if (!_enabled || !dailyOn || await _scheduleDaily()) {
+          _dailyTimeZoneRefreshPending = false;
+        }
       }
+      await reconcilePendingCancel();
       return changed;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'notification_timezone');
@@ -682,19 +797,19 @@ class NotificationService {
     }
   }
 
-  /// Günlük hatırlatıcının bir sonraki anını hesaplayıp zamanlar.
-  Future<void> _scheduleDaily() async {
+  /// Günlük hatırlatıcının bir sonraki anını hesaplayıp zamanlar. Native
+  /// kurulum onaylandıysa (ya da web'de) `true`, düştüyse `false` döner.
+  Future<bool> _scheduleDaily() async {
     final next = nextFireTime();
     await _preferences?.setString(_nextFireKey, next.toIso8601String());
 
-    if (kIsWeb) return;
+    if (kIsWeb) return true;
     try {
       await _gateway.cancel(0);
 
       // Kanal adı Android sistem ayarlarında görünür; gövdeyle aynı dilde
       // olmalı (bkz. test/notification_channel_language_test.dart).
-      final channelIsKu =
-          (_preferences?.getString('zankurd.language') ?? 'ku') != 'tr';
+      final channelIsKu = _isKu;
       final AndroidNotificationDetails androidDetails =
           AndroidNotificationDetails(
             'zankurd_daily_reminder',
@@ -725,8 +840,10 @@ class NotificationService {
         details: details,
         payload: LocalNotificationPayload.dailyReminder,
       );
+      return true;
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService schedule');
+      return false;
     }
   }
 
@@ -740,16 +857,42 @@ class NotificationService {
     }
   }
 
+  /// Bütün zamanlanmış bildirimleri iptal eder. Önce KALICI "iptal bekliyor"
+  /// işareti yazılır; native iptal onaylanmadan yerel alarm işaretleri
+  /// silinmez ve işaret kalkmaz. Başarısızsa [reconcilePendingCancel]
+  /// açılışta/öne gelişte yeniden dener (eskiden hata yutuluyor, işaretler
+  /// siliniyordu: arayüz kapalı görünürken eski tekrarlı alarm çalmaya devam
+  /// ediyor ve anahtar kapalı olduğundan bir daha denenmiyordu).
   Future<void> _cancelAll() async {
+    await _preferences?.setBool(_cancelPendingKey, true);
+    await _runPendingCancel();
+  }
+
+  Future<void> _runPendingCancel() async {
+    if (!kIsWeb) {
+      try {
+        await _gateway.cancelAll();
+      } catch (e, s) {
+        ErrorReporter.record(e, s, reason: 'NotificationService cancel');
+        return;
+      }
+    }
     await _preferences?.remove(_nextFireKey);
     await _preferences?.remove(_streakNextFireKey);
     await _preferences?.remove(_contestNextFireKey);
-    if (kIsWeb) return;
-    try {
-      await _gateway.cancelAll();
-    } catch (e, s) {
-      ErrorReporter.record(e, s, reason: 'NotificationService cancel');
+    await _preferences?.remove(_cancelPendingKey);
+  }
+
+  /// Bekleyen bir iptal varsa (ve bildirimler hâlâ kapalıysa) yeniden dener.
+  /// Bildirimler bu arada açıldıysa işaret yalnız temizlenir: yeni kurulumu
+  /// silmemeli.
+  Future<void> reconcilePendingCancel() async {
+    if (_preferences?.getBool(_cancelPendingKey) != true) return;
+    if (_enabled) {
+      await _preferences?.remove(_cancelPendingKey);
+      return;
     }
+    await _runPendingCancel();
   }
 
   /// Arkadaşlık isteği geldiğinde anlık bildirim gönderir.
@@ -876,7 +1019,10 @@ class NotificationService {
     try {
       final service = _instance;
       if (service == null) return;
+      final generation = LocalProgressScope.generation;
       final store = await StreakStore.load();
+      // Okuma sürerken hesap/kapsam değiştiyse bu sonuç eski hesaba aittir.
+      if (generation != LocalProgressScope.generation) return;
       await service.armStreakWarning(
         hasLiveStreak: store.effectiveStreak(now: now) > 0,
         playedToday: store.playedToday(now: now),
@@ -945,7 +1091,10 @@ class NotificationService {
   Future<void> applyLanguage({required bool isKu}) async {
     if (_languageIsKu == isKu) return;
     _languageIsKu = isKu;
-    if (kIsWeb || !_enabled) return;
+    if (kIsWeb) return;
+    // Uzak push kanalı hatırlatma tercihlerinden bağımsızdır.
+    await _ensurePushChannel();
+    if (!_enabled) return;
     if (dailyOn) await _scheduleDaily();
     await _rearmContestReminderForLanguage();
     final raw = _preferences?.getString(_streakNextFireKey);

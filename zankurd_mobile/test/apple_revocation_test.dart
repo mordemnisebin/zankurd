@@ -119,9 +119,14 @@ void main() {
     await registerAppleAuthorization(_client(http), '   ');
     expect(http.requests, isEmpty);
 
-    // 500 → yutulur, çağıran akış (giriş) kırılmaz.
-    await registerAppleAuthorization(_client(http), 'code');
-    expect(http.requests, hasLength(1));
+    // 500 → yutulur, çağıran akış (giriş) kırılmaz; geçici hata sınırlı
+    // yeniden denenir (apple_register_retry_test.dart).
+    await registerAppleAuthorization(
+      _client(http),
+      'code',
+      retryDelays: const [Duration(milliseconds: 1)],
+    );
+    expect(http.requests, hasLength(2));
   });
 
   test('NativeAuthCredential.apple yetkilendirme kodunu taşır', () {

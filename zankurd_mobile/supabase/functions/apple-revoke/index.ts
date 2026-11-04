@@ -33,6 +33,7 @@
 // Hata ayıklama günlüğüne jeton, kod ya da anahtar ASLA yazılmaz.
 
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { hasAppleIdentity, registerRecentlyDone } from "./lib.ts";
 
 const APPLE_TOKEN_URL = "https://appleid.apple.com/auth/token";
 const APPLE_REVOKE_URL = "https://appleid.apple.com/auth/revoke";
@@ -185,6 +186,30 @@ Deno.serve(async (request: Request): Promise<Response> => {
     if (body.action === "register") {
       const code = body.authorization_code?.trim();
       if (!code) return json({ error: "authorization_code_required" }, 400);
+      // GPT-6 Pro ALAN 4: Apple kimliği olmayan (misafir / e-posta) oturum
+      // özel anahtarla JWT imzalatıp Apple token takasını başlatamaz.
+      if (!hasAppleIdentity(user)) {
+        return json({ registered: false, error: "apple_identity_required" }, 403);
+      }
+      // Aynı kullanıcının kısa aralıkla tekrarlanan kaydı aynı işte birleşir
+      // (istemci yeniden denemesi, çift dokunuş, saldırı): Apple'a gitmeden
+      // saklı jeton "kayıtlı" sayılır. Eski (build 43) istemciler yalnız
+      // `registered` alanına bakar; yanıt biçimi aynıdır.
+      const { data: recent, error: recentError } = await admin
+        .from("apple_auth_tokens")
+        .select("updated_at")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      if (recentError) {
+        console.error("apple_auth_tokens recent read failed", recentError.code);
+        return json({ registered: false, error: "store_failed" }, 500);
+      }
+      if (registerRecentlyDone(
+          (recent as { updated_at?: string } | null)?.updated_at,
+          Date.now(),
+        )) {
+        return json({ registered: true, coalesced: true });
+      }
       const refreshToken = await exchangeCode(code);
       if (!refreshToken) return json({ registered: false, error: "exchange_failed" }, 502);
       const { error } = await admin.from("apple_auth_tokens").upsert({
@@ -200,11 +225,19 @@ Deno.serve(async (request: Request): Promise<Response> => {
     }
 
     if (body.action === "revoke") {
-      const { data: row } = await admin
+      const { data: row, error: readError } = await admin
         .from("apple_auth_tokens")
         .select("refresh_token")
         .eq("user_id", user.id)
         .maybeSingle();
+      // Okuma hatası "jeton yok" değildir: yanlışlıkla 200 `no_token` dönmek
+      // istemciyi hesabı silmeye ve (ON DELETE CASCADE) jetonu yok etmeye iter.
+      // 5xx dönülür; istemci yine kullanıcının silme hakkını bloklamaz ama
+      // sonucu doğru (başarısız) görür ve kaydeder.
+      if (readError) {
+        console.error("apple_auth_tokens read failed", readError.code);
+        return json({ revoked: false, error: "token_read_failed" }, 500);
+      }
 
       let refreshToken: string | null = row?.refresh_token ?? null;
       if (!refreshToken && body.authorization_code?.trim()) {
@@ -226,7 +259,13 @@ Deno.serve(async (request: Request): Promise<Response> => {
         console.error("apple /auth/revoke failed", result.status, result.body.error);
         return json({ revoked: false, error: "revoke_failed" }, 502);
       }
-      await admin.from("apple_auth_tokens").delete().eq("user_id", user.id);
+      const { error: deleteError } = await admin
+        .from("apple_auth_tokens")
+        .delete()
+        .eq("user_id", user.id);
+      if (deleteError) {
+        console.error("apple_auth_tokens delete failed", deleteError.code);
+      }
       return json({ revoked: true });
     }
 

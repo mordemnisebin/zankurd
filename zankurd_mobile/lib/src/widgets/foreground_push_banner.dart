@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/foreground_push_center.dart';
+import '../services/notification_service.dart';
 import '../services/push_messaging_gateway.dart';
 import '../services/push_tap_router.dart';
 
@@ -44,10 +45,21 @@ class _ForegroundPushBannerState extends State<ForegroundPushBanner> {
     _subscription = (widget.events ?? ForegroundPushCenter.events).listen(
       _onPush,
     );
+    NotificationService.prefsRevision.addListener(_onPrefsChanged);
+  }
+
+  // Tür tercihi / ana anahtar kapanınca görünür bant da kalkar.
+  void _onPrefsChanged() {
+    final current = _current;
+    if (current != null &&
+        !NotificationService.allowsForegroundPush(current.kind)) {
+      _dismiss();
+    }
   }
 
   @override
   void dispose() {
+    NotificationService.prefsRevision.removeListener(_onPrefsChanged);
     _timer?.cancel();
     unawaited(_subscription?.cancel());
     super.dispose();
@@ -59,6 +71,8 @@ class _ForegroundPushBannerState extends State<ForegroundPushBanner> {
         (push.body?.trim().isNotEmpty ?? false);
     // Yalnız veri taşıyan ileti (görünür metni yok) bant açmaz.
     if (!hasText || !mounted) return;
+    // Sunucu süzgecine ek olarak GÖSTERİM anında yerel anahtar/tercih.
+    if (!NotificationService.allowsForegroundPush(push.kind)) return;
     _timer?.cancel();
     setState(() => _current = push);
     _timer = Timer(widget.visibleFor, _dismiss);
