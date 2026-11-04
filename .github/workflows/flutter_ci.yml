@@ -84,6 +84,17 @@ jobs:
     - name: Check static tap targets
       run: python3 tool/a11y/tap_target_taramasi.py
 
+    # SQL'i gerçekten çalıştıran sekiz PGlite aracı (sürüm betikte KİLİTLİ)
+    # ve beş dosyadaki Python unit testleri. Eskiden hiçbir kapıdan
+    # çağrılmıyordu: taramalar koşuyor ama kendi testleri koşmuyordu.
+    - name: Set up Node (PGlite tools)
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: Run SQL (PGlite) tools and Python unit tests
+      run: tool/sql_ve_python_testleri.sh
+
     - name: Run unit and widget tests with coverage
       run: flutter test --coverage
 

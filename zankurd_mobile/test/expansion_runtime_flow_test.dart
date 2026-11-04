@@ -154,15 +154,43 @@ void main() {
       // `QuizScreen` soruları karıştırır, dolayısıyla listedeki i'ninci
       // soru ekrandaki i'ninci soru DEĞİLDİR. Akış ekranda ne varsa onun
       // üzerinden yürütülür; sıraya bel bağlamak testi kırılgan yapar.
-      var answered = 0;
+      // Sayaç YALNIZ ekrandaki soru gerçekten değiştiğinde artar: eskiden
+      // her dokunuş sayıyı artırıyordu; ilk soruda takılıp etkisiz şıkka
+      // üç kez dokunmak da "tur tamamlandı" sayılabilirdi.
+      final seen = <String>{};
+      String? shownPrompt() {
+        for (final q in questions) {
+          final text = q.localized(isKu: isKu).promptText;
+          if (find.text(text).evaluate().isNotEmpty) return text;
+        }
+        return null;
+      }
+
       for (var step = 0; step < questions.length; step++) {
         final tiles = find.byType(QuizOptionTile);
-        if (tiles.evaluate().isEmpty) break;
+        expect(
+          tiles,
+          findsWidgets,
+          reason:
+              '$lang turda ${step + 1}. soruda şık yok; akış ortada duruyor.',
+        );
+        final prompt = shownPrompt();
+        expect(
+          prompt,
+          isNotNull,
+          reason: '$lang ${step + 1}. soru ekranda yok',
+        );
+        expect(
+          seen.add(prompt!),
+          isTrue,
+          reason:
+              '$lang ${step + 1}. adımda aynı soru tekrar gösterildi '
+              '(ilerleme yok): $prompt',
+        );
         await tester.ensureVisible(tiles.first);
         await tester.tap(tiles.first);
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 1200));
-        answered++;
         final next = find.byKey(const ValueKey('quiz-next-button'));
         if (next.evaluate().isNotEmpty) {
           await tester.tap(next);
@@ -171,11 +199,17 @@ void main() {
         }
       }
       expect(
-        answered,
+        seen.length,
         questions.length,
         reason:
-            '$lang turda ${questions.length} sorunun yalnız $answered tanesi '
-            'cevaplanabildi; akış ortada duruyor.',
+            '$lang turda yalnız ${seen.length}/${questions.length} soru '
+            'görülüp cevaplandı.',
+      );
+      // Tur bitti: soru şıkları artık ekranda olmamalı (sonuç ekranına geçildi).
+      expect(
+        find.byType(QuizOptionTile),
+        findsNothing,
+        reason: '$lang tur tamamlandı ama hâlâ soru ekranında.',
       );
       expect(tester.takeException(), isNull);
     });

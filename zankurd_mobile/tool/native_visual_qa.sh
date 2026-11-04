@@ -13,10 +13,14 @@ if [[ -z "$DEVICE" ]]; then
   exit 1
 fi
 
-OUT_DIR="${ZANKURD_NATIVE_VISUAL_OUT_DIR:-.tmp/design_qa/native}"
-mkdir -p "$OUT_DIR"
+FINAL_DIR="${ZANKURD_NATIVE_VISUAL_OUT_DIR:-.tmp/design_qa/native}"
+# Her koşu BOŞ, benzersiz bir klasöre yakalar; önceki koşunun PNG'leri dururken
+# yeni koşu hiç ekran görüntüsü üretmese de PASS veriliyordu. Sonuç ancak
+# bütün kanıtlar BU koşuda üretildiyse kalıcı klasöre taşınır.
+OUT_DIR="$(mktemp -d "${TMPDIR:-/tmp}/zk_native_visual.XXXXXX")"
+trap 'rm -rf "$OUT_DIR"' EXIT
 
-echo "[Native Visual QA] device=$DEVICE out=$OUT_DIR"
+echo "[Native Visual QA] device=$DEVICE out=$FINAL_DIR"
 flutter test integration_test/native_visual_qa_test.dart -d "$DEVICE" 2>&1 |
   while IFS= read -r line; do
     echo "$line"
@@ -35,4 +39,7 @@ for required in native_leaderboard native_spin_wheel native_learning native_word
   fi
 done
 
+rm -rf "$FINAL_DIR"
+mkdir -p "$FINAL_DIR"
+cp "$OUT_DIR"/*.png "$FINAL_DIR"/
 echo "[Native Visual QA] PASS"

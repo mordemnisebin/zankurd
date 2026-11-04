@@ -95,8 +95,10 @@ class PremiumService extends ChangeNotifier {
     Future<CustomerInfo> Function()? logOut,
     Future<Offerings> Function()? getOfferings,
     Future<CustomerInfo> Function()? getCustomerInfo,
+    Future<LogInResult> Function(String)? logIn,
     void Function(Object, StackTrace, {String? reason})? recordError,
-  }) : _isAnonymous = isAnonymous ?? (() => Purchases.isAnonymous),
+  }) : _logIn = logIn ?? Purchases.logIn,
+       _isAnonymous = isAnonymous ?? (() => Purchases.isAnonymous),
        _logOut = logOut ?? Purchases.logOut,
        _getOfferings = getOfferings ?? Purchases.getOfferings,
        _getCustomerInfo = getCustomerInfo ?? Purchases.getCustomerInfo,
@@ -123,6 +125,7 @@ class PremiumService extends ChangeNotifier {
   String? _infoMessage;
   String? _linkedUserId;
   final PremiumIdentityQueue _identityQueue = PremiumIdentityQueue();
+  final Future<LogInResult> Function(String) _logIn;
   final Future<bool> Function() _isAnonymous;
   final Future<CustomerInfo> Function() _logOut;
   final Future<Offerings> Function() _getOfferings;
@@ -201,6 +204,7 @@ class PremiumService extends ChangeNotifier {
     required Future<CustomerInfo> Function() logOut,
     Future<Offerings> Function()? fetchOfferings,
     Future<CustomerInfo> Function()? fetchCustomerInfo,
+    Future<LogInResult> Function(String)? logIn,
     void Function(Object, StackTrace, {String? reason})? recordError,
     bool configured = true,
     bool configurationFailed = false,
@@ -210,6 +214,7 @@ class PremiumService extends ChangeNotifier {
       logOut: logOut,
       getOfferings: fetchOfferings,
       getCustomerInfo: fetchCustomerInfo,
+      logIn: logIn,
       recordError: recordError,
     );
     service
@@ -333,7 +338,7 @@ class PremiumService extends ChangeNotifier {
     if (!_configured || userId.isEmpty) return;
     if (_linkedUserId == userId) return;
     try {
-      final result = await Purchases.logIn(userId);
+      final result = await _logIn(userId);
       _linkedUserId = userId;
       _applyEntitlement(_hasEntitlement(result.customerInfo.entitlements.all));
     } catch (error, stack) {

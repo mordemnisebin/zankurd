@@ -27,9 +27,10 @@ GENERATOR = ROOT / "tool/content_authoring/generate_batch.py"
 
 
 def run_category(category: str, spec: dict, out_dir: pathlib.Path,
-                 count: int, retries: int) -> tuple[str, int, int]:
+                 count: int, retries: int) -> tuple[str, int, int, list[str]]:
     out = out_dir / f"{category}.csv"
     done = failed = 0
+    failed_subtopics: list[str] = []
     for subtopic in spec["subtopics"]:
         for attempt in range(retries + 1):
             result = subprocess.run(
@@ -51,8 +52,9 @@ def run_category(category: str, spec: dict, out_dir: pathlib.Path,
                 time.sleep(5)
                 continue
             failed += 1
+            failed_subtopics.append(subtopic)
             print(f"  ✗ {category} · {subtopic[:44]} → {tail}", flush=True)
-    return category, done, failed
+    return category, done, failed, failed_subtopics
 
 
 def main() -> int:
@@ -83,9 +85,28 @@ def main() -> int:
         ))
 
     print(f"\n{'kategori':<12} {'parti':>6} {'düşen':>6}")
-    for category, done, failed in sorted(results):
+    for category, done, failed, _ in sorted(results):
         print(f"{category:<12} {done:>6} {failed:>6}")
     print(f"\nsüre: {(time.time() - started) / 60:.1f} dk")
+
+    # Sonuç manifesti: başarılı çıktılar korunur; yalnız düşen partiler
+    # yeniden çalıştırılabilsin. Ana komut eskiden her durumda 0 dönüyordu
+    # (bütün partiler düşse bile başarılı sayılıyordu).
+    toplam_biten = sum(r[1] for r in results)
+    toplam_dusen = sum(r[2] for r in results)
+    manifest = {
+        "kategoriler": {c: {"biten": d, "dusen": f, "dusen_altkonular": fs}
+                        for c, d, f, fs in results},
+        "toplam_biten": toplam_biten,
+        "toplam_dusen": toplam_dusen,
+    }
+    (out_dir / "run_plan_sonuc.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8")
+    if toplam_dusen > 0 or toplam_biten == 0:
+        print(f"HATA: {toplam_dusen} parti düştü, {toplam_biten} parti bitti; "
+              "düşenler için run_plan_sonuc.json'a bak.", file=sys.stderr)
+        return 1
     return 0
 
 

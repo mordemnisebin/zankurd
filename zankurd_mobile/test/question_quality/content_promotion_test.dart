@@ -147,7 +147,11 @@ void main() {
   test(
     'candidate CSV loader preserves quoted Kurmanci fields and missing difficulty',
     () {
-      final file = File('${Directory.systemTemp.path}/promotion-candidate.csv')
+      final dir = Directory.systemTemp.createTempSync('promotion_csv_');
+      addTearDown(() {
+        if (dir.existsSync()) dir.deleteSync(recursive: true);
+      });
+      final file = File('${dir.path}/promotion-candidate.csv')
         ..writeAsStringSync(
           'review_id,category_key,language_code,corrected_prompt,corrected_option_a,corrected_option_b,corrected_option_c,corrected_option_d,corrected_correct_option,corrected_explanation,confidence_0_to_1,source_verified,better_source_url,issue_type,publication_status\n'
           'wave_1,Ziman,ku-kmr,"Pirsê, bi navê",A,B,C,D,A,"Ravekirin, bi agahiyê",0.95,Doğrulandı,https://example.org,,REVIEWED\n',
@@ -160,7 +164,6 @@ void main() {
       expect(candidates.single.explanation, 'Ravekirin, bi agahiyê');
       expect(candidates.single.difficulty, isNull);
       expect(candidates.single.sourceUrl, 'https://example.org');
-      file.deleteSync();
     },
   );
 
@@ -229,5 +232,92 @@ void main() {
       File('${directory.path}/expanded_questions.json').existsSync(),
       isFalse,
     );
+  });
+
+  test('ardışık koşu: kabul sonra ret, eski expanded bank silinir', () {
+    final directory = Directory.systemTemp.createTempSync('content-seq-');
+    addTearDown(() => directory.deleteSync(recursive: true));
+    final bank = File('${directory.path}/expanded_questions.json');
+
+    writePromotionArtifacts(
+      promoteCandidates(
+        candidates: [candidate()],
+        active: const [],
+        targetCount: 15000,
+      ),
+      directory,
+    );
+    expect(
+      bank.existsSync(),
+      isTrue,
+      reason: 'önkoşul: ilk koşu bankayı yazar',
+    );
+
+    writePromotionArtifacts(
+      promoteCandidates(
+        candidates: [candidate(status: 'QUARANTINED')],
+        active: const [],
+        targetCount: 15000,
+      ),
+      directory,
+    );
+    expect(bank.existsSync(), isFalse, reason: 'eski onaylı banka kaldı');
+  });
+
+  group('kapı sınırları', () {
+    Set<String> reasons(PromotionCandidate c) => promoteCandidates(
+      candidates: [c],
+      active: const [],
+      targetCount: 15000,
+    ).rejectedByReason.keys.toSet();
+
+    test('doğru şık yalnız tek harf A-D; boş ve AB/BC reddedilir', () {
+      for (final bad in ['', 'AB', 'BC', 'ABCD', 'E', ' ']) {
+        expect(
+          reasons(candidate(correct: bad)),
+          contains('invalid_correct_answer'),
+          reason: '"$bad"',
+        );
+      }
+      for (final ok in ['A', 'd', ' B ']) {
+        expect(
+          reasons(candidate(correct: ok)),
+          isNot(contains('invalid_correct_answer')),
+          reason: '"$ok"',
+        );
+      }
+    });
+
+    test('zorluk 1 ve 5 kabul, 0 ve 6 ret', () {
+      for (final d in [1, 5]) {
+        expect(
+          reasons(candidate(difficulty: d)),
+          isNot(contains('invalid_difficulty')),
+        );
+      }
+      for (final d in [0, 6]) {
+        expect(
+          reasons(candidate(difficulty: d)),
+          contains('invalid_difficulty'),
+        );
+      }
+    });
+
+    test('güven NaN, sonsuz ve 1 üstü reddedilir; 0.9 ve 1.0 kabul', () {
+      for (final c in [double.nan, double.infinity, 1.5, 0.89]) {
+        expect(
+          reasons(candidate(confidence: c)),
+          contains('low_confidence'),
+          reason: '$c',
+        );
+      }
+      for (final c in [0.9, 1.0]) {
+        expect(
+          reasons(candidate(confidence: c)),
+          isNot(contains('low_confidence')),
+          reason: '$c',
+        );
+      }
+    });
   });
 }

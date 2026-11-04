@@ -351,7 +351,7 @@ void main() {
       var covered = 0;
       final missing = <String, int>{};
       for (final q in playable) {
-        if (q.category != 'Ziman' && q.difficulty > 2) continue;
+        if (q.category != 'Ziman' || q.difficulty > 2) continue;
         final lower = q.prompt.toLowerCase();
         if (q.type == QuestionType.wordOrdering ||
             RegExp(r'bi kurmanc|kurmancîsi|kurmancisi').hasMatch(lower)) {

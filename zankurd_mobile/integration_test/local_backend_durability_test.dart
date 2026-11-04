@@ -23,6 +23,8 @@ import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 
+import 'support/local_backend_guard.dart';
+
 const _role = String.fromEnvironment('ZK_ROLE', defaultValue: 'host');
 const _joinCode = String.fromEnvironment('ZK_ROOM_CODE');
 
@@ -35,6 +37,7 @@ void main() {
   late GameRoom room;
 
   setUpAll(() async {
+    requireLocalBackend();
     await Supabase.initialize(
       url: AppConfig.supabaseUrl,
       // ignore: deprecated_member_use
@@ -269,22 +272,33 @@ void main() {
         reason: 'tam oynanan mac completed bitmeli',
       );
 
-      // Tekrarli odul: uc kez cagirilir, tek odeme olmali.
-      for (var i = 0; i < 3; i++) {
+      // Tekrarli odul: ilk cagri hata verirse test KIRILIR (sifir odeme sessiz
+      // gecmesin); tekrar cagrilar sunucuda reddedilebilir ama bakiyeyi
+      // ILK cagriden sonraki degerden degistirmemeli.
+      Future<void> award() => repo.awardQuizCoins(
+        room: room,
+        score: 100,
+        correctCount: 1,
+        bestStreak: 1,
+        totalQuestions: total,
+      );
+      await award();
+      final balanceAfterFirst = await repo.loadCoinBalance();
+      for (var i = 0; i < 2; i++) {
         try {
-          await repo.awardQuizCoins(
-            room: room,
-            score: 100,
-            correctCount: 1,
-            bestStreak: 1,
-            totalQuestions: total,
-          );
+          await award();
         } catch (_) {
           // Idempotent sunucu tekrari reddedebilir; bakiye belirleyici.
         }
       }
+      final balanceAfterRepeats = await repo.loadCoinBalance();
       // ignore: avoid_print
-      print('ZK_BALANCE=${await repo.loadCoinBalance()}');
+      print('ZK_BALANCE=$balanceAfterRepeats');
+      expect(
+        balanceAfterRepeats,
+        balanceAfterFirst,
+        reason: 'tekrarli odul ikinci kez odeme yapti',
+      );
 
       // Freeze: AYNI anahtarla iki kez; ikinci coin cekilmemeli.
       final key = 'durability:${room.id}:${repo.currentUserId}';
@@ -292,13 +306,20 @@ void main() {
       final second = await repo.spendStreakFreeze(idempotencyKey: key);
       // ignore: avoid_print
       print('ZK_FREEZE=${first.outcome.name}/${second.outcome.name}');
-      if (first.succeeded) {
-        expect(
-          second.outcome.name,
-          'alreadyCharged',
-          reason: 'ayni anahtar ikinci kez cekmemeli',
-        );
-      }
+      // Ilk cagri basarisizsa (yetersiz bakiye/hata) idempotency olculemez:
+      // iki basarisiz cagri sessizce gecmesin.
+      expect(
+        first.succeeded,
+        isTrue,
+        reason:
+            'ilk dondurma cekimi basarisiz (${first.outcome.name}); '
+            'test kullanicisina yeterli coin ver',
+      );
+      expect(
+        second.outcome.name,
+        'alreadyCharged',
+        reason: 'ayni anahtar ikinci kez cekmemeli',
+      );
 
       // Onay: iki kez cagirilabilir, tek makbuz.
       await repo.acknowledgeRoomResult(room);

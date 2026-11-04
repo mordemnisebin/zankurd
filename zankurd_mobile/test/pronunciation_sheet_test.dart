@@ -96,6 +96,17 @@ class _FakePlayback implements PronunciationPlayback {
 }
 
 void main() {
+  // Her test kendi yalıtılmış geçici klasörünü kullanır: sistem tmp'si
+  // ortak olduğundan eşzamanlı bir koşu (ya da başka bir ajan) süpürmeyle
+  // birbirinin dosyasını silebilirdi.
+  late Directory tmp;
+  setUp(() {
+    tmp = Directory.systemTemp.createTempSync('zk_telaffuz_test_');
+    addTearDown(() {
+      if (tmp.existsSync()) tmp.deleteSync(recursive: true);
+    });
+  });
+
   Future<void> pumpSheet(
     WidgetTester tester, {
     required _FakeRecorder recorder,
@@ -112,6 +123,7 @@ void main() {
               speaker: speaker ?? _FakeSpeaker(),
               recorder: recorder,
               playback: playback,
+              tempDir: tmp,
             ),
           ),
         ),
@@ -162,9 +174,8 @@ void main() {
   // Uygulama kayıt sırasında kapatılırsa dispose çalışmaz; sonraki açılışta
   // eski kayıt süpürülür.
   testWidgets('önceki oturumdan kalan kayıt açılışta silinir', (tester) async {
-    final stale = File(
-      '${Directory.systemTemp.path}/zankurd_telaffuz_eski_test.m4a',
-    )..writeAsStringSync('eski');
+    final stale = File('${tmp.path}/zankurd_telaffuz_eski_test.m4a')
+      ..writeAsStringSync('eski');
     await pumpSheet(
       tester,
       recorder: _FakeRecorder(),

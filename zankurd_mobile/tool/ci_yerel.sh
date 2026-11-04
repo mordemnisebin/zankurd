@@ -9,11 +9,14 @@
 #
 # Kullanım (zankurd_mobile/ içinden):
 #   tool/ci_yerel.sh          # hızlı kapılar (format, analiz, içerik, a11y)
-#   tool/ci_yerel.sh --tam    # + tam test ve cihazsız akışlar
+#   tool/ci_yerel.sh --tam    # + SQL/Python testleri, tam test, cihazsız akışlar
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
 adim() { printf '\n== %s\n' "$1"; }
+
+adim "sabitlenmiş yayın araç zinciri"
+dart run tool/validate_release_toolchain.dart
 
 adim "dart format"
 dart format --output=none --set-exit-if-changed \
@@ -48,6 +51,12 @@ if [[ "${1:-}" == "--tam" ]]; then
   # CI'nin "Render screen tour" adımı: yalnız flutter test'e bakılıp push
   # edilince bu adım CI'yı kırdı (2026-10-12, 96. kare yol değişince son
   # slayda varmıyordu). Kareler geçici klasöre basılır, repoyu kirletmez.
+  # CI'nin "Run SQL (PGlite) tools and Python unit tests" adımı: sekiz PGlite
+  # SQL aracı + beş dosyadaki Python unit testleri (PGlite sürümü betikte
+  # kilitli; ilk koşuda ağ gerekir, sonra ~/.cache/zankurd'dan okunur).
+  adim "SQL araçları ve Python testleri"
+  tool/sql_ve_python_testleri.sh
+
   adim "ekran turu"
   ZANKURD_SCREEN_TOUR_OUT_DIR="$(mktemp -d)" \
     flutter test --no-pub -r failures-only tool/screenshots/screen_tour_test.dart

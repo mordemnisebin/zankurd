@@ -30,9 +30,16 @@ void main() {
     final questions = QuestionBankLoader.instance.allQuestions;
 
     expect(
+      QuestionBankLoader.instance.failedAssets,
+      isEmpty,
+      reason: 'Paketlenmemiş/çözülemeyen banka asset\'i var.',
+    );
+    expect(
       questions.length,
-      // 2026-09-02: DeepSeek runtime karantinası 3042 → 1932.
-      1932,
+      // 2026-11-04: masaüstü `flutter test` ile ölçülen güncel toplam
+      // (23 JSON banka + küratörlü banka). Eski 1932 (2026-09-02) bütün
+      // paketler doğru yüklense de cihaz testini yanlışlıkla kırıyordu.
+      3871,
       reason:
           'Cihazda yüklenen kayıt sayısı beklenenden farklı. Bir asset '
           'pubspec üzerinden paketlenmemişse `_loadJson` hatayı yutar ve '

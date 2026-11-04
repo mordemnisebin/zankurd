@@ -18,6 +18,7 @@ onaylardı — kendi çıktısını savunma eğilimi ölçümü değersizleştir
 Kullanım:
   python3 tool/content_authoring/cross_check.py banka.json rapor.json
 """
+import hashlib
 import json
 import pathlib
 import sys
@@ -38,6 +39,22 @@ Bicim: [{"id":"...","cevap":"A"}]
 
 Sorular:
 """
+
+
+DOGRULAMA_SURUMU = "1"
+
+
+def parmak_izi(q: dict) -> str:
+    """Hükmün bağlı olduğu içeriğin parmak izi: soru kökü, şıklar (SIRASIZ:
+    hüküm şık METNİ saklar, yeniden sıralama geçersiz kılmamalı), dil ve
+    doğrulama sürümü. Eskiden hüküm yalnız soru kimliğiyle önbelleğe
+    alınıyordu; kök ya da çeldiriciler değişip kimlik aynı kalınca yeniden
+    sorulmuyor ve eski hüküm "uzlaşmış" sayılıyordu. Cevap anahtarı
+    bilerek KATILMAZ (modele gösterilmez)."""
+    ham = json.dumps([DOGRULAMA_SURUMU, q.get("prompt"),
+                      sorted(map(str, q.get("answers", []))), "ku"],
+                     ensure_ascii=False)
+    return hashlib.sha256(ham.encode("utf-8")).hexdigest()
 
 
 def api_key() -> str:
@@ -75,6 +92,26 @@ def main(bank_path: str, out_path: str) -> int:
     if out.exists():
         verdicts = json.loads(out.read_text(encoding="utf-8"))
         print(str(len(verdicts)) + " soru zaten sorulmuş, kalanı sürüyor")
+
+    # Parmak izi yan dosyası (`<rapor>.parmak`): hüküm dosyasının biçimi
+    # (kimlik -> şık metni) testlerce okunduğu için değişmez. Yan dosyası
+    # olmayan eski hükümler ilk koşuda mevcut içerik için GÜVENİLİR sayılıp
+    # kaydedilir; sonraki içerik değişimleri hükmü geçersiz kılar.
+    parmak_yolu = out.with_name(out.name + ".parmak")
+    parmaklar = {}
+    if parmak_yolu.exists():
+        parmaklar = json.loads(parmak_yolu.read_text(encoding="utf-8"))
+    gecersiz = 0
+    for q in questions:
+        simdi = parmak_izi(q)
+        if q["id"] in verdicts:
+            if q["id"] not in parmaklar:
+                parmaklar[q["id"]] = simdi
+            elif parmaklar[q["id"]] != simdi:
+                del verdicts[q["id"]]
+                gecersiz += 1
+    if gecersiz:
+        print(str(gecersiz) + " sorunun içeriği değişmiş: eski hüküm geçersiz, yeniden sorulacak")
 
     pending = [q for q in questions if q["id"] not in verdicts]
     for index in range(0, len(pending), CHUNK):
@@ -128,6 +165,9 @@ def main(bank_path: str, out_path: str) -> int:
         # alınamamış olmak zaten "?"nin tanımıdır.
         for question in chunk:
             verdicts.setdefault(question["id"], "?")
+            parmaklar[question["id"]] = parmak_izi(question)
+        parmak_yolu.write_text(json.dumps(parmaklar, ensure_ascii=False, indent=1),
+                               encoding="utf-8")
         out.write_text(json.dumps(verdicts, ensure_ascii=False, indent=1),
                        encoding="utf-8")
         if index % (CHUNK * 10) == 0:

@@ -112,7 +112,15 @@ assert.equal((await db.query('select count(*)::int c from matchmaking_queue wher
 const r4 = await join(4); assert.equal(r4.status, 'matched', 'dördüncü üçüncüyle eşleşir');
 assert.equal((await db.query('select count(*)::int c from rooms')).rows[0].c, 2);
 assert.equal((await db.query('select count(distinct player_id)::int c from room_players')).rows[0].c, 4, 'kimse iki odada değil');
-assert.equal((await join(1)).room_id, r2.room_id === undefined ? undefined : (await join(1)).room_id, 'tekrar çağrı aynı snapshot');
+// Tekrar çağrı, ÖZGÜN r2.room_id ile karşılaştırılır (başka bir tekrarla
+// değil): aynı yanlış odayı iki kez döndüren gövde eskiden geçerdi.
+const roomsOnce = (await db.query('select count(*)::int c from rooms')).rows[0].c;
+const membersOnce = (await db.query('select count(*)::int c from room_players')).rows[0].c;
+const tekrar = await join(1);
+assert(r2.room_id, 'ikinci çağrının oda kimliği var');
+assert.equal(tekrar.room_id, r2.room_id, 'tekrar çağrı özgün odayı döndürür');
+assert.equal((await db.query('select count(*)::int c from rooms')).rows[0].c, roomsOnce, 'tekrar oda üretmedi');
+assert.equal((await db.query('select count(*)::int c from room_players')).rows[0].c, membersOnce, 'tekrar üyelik üretmedi');
 console.log('esleme dogrulugu: iki kisi tam bir kez eslesti, ucuncu bekledi');
 
 // (c) Geri alma.

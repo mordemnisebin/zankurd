@@ -24,6 +24,8 @@ import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 
+import 'support/local_backend_guard.dart';
+
 const _role = String.fromEnvironment('ZK_ROLE', defaultValue: 'host');
 const _joinCode = String.fromEnvironment('ZK_ROOM_CODE');
 
@@ -33,6 +35,7 @@ void main() {
   late SupabaseZanKurdRepository repository;
 
   setUpAll(() async {
+    requireLocalBackend();
     await Supabase.initialize(
       url: AppConfig.supabaseUrl,
       // ignore: deprecated_member_use

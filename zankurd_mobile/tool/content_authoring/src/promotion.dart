@@ -69,10 +69,24 @@ class PromotionCandidate {
   };
 
   String _correctText() {
-    final letter = 'ABCD'.indexOf(correctOption.trim().toUpperCase());
+    final letter = answerLetterIndex(correctOption);
     if (letter >= 0 && letter < options.length) return options[letter].trim();
     return correctOption.trim();
   }
+}
+
+/// İçerik şemasındaki zorluk aralığı (uygulama ve `validate_batch.py` 1–5
+/// kullanır; kapı eskiden 1–3'tü ve 4–5'i yanlışlıkla reddediyordu).
+const minDifficulty = 1;
+const maxDifficulty = 5;
+
+/// Doğru şık harfini (A–D) 0–3 olarak çözer; harf değilse -1. Eskiden
+/// `'ABCD'.indexOf(metin)` kullanılıyordu: boş metin ve `AB`/`BC` gibi alt
+/// dizeler geçerli anahtar sayılıp sessizce A/B cevabıyla onaylanıyordu.
+int answerLetterIndex(String raw) {
+  final v = raw.trim().toUpperCase();
+  if (v.length != 1) return -1;
+  return 'ABCD'.indexOf(v);
 }
 
 class PromotionResult {
@@ -245,12 +259,17 @@ List<String> _rejectionReasons(
   }
   if (candidate.difficulty == null) {
     reasons.add('missing_difficulty');
-  } else if (candidate.difficulty! < 1 || candidate.difficulty! > 3) {
+  } else if (candidate.difficulty! < minDifficulty ||
+      candidate.difficulty! > maxDifficulty) {
     reasons.add('invalid_difficulty');
   }
   if (candidate.confidence == null) {
     reasons.add('missing_confidence');
-  } else if (candidate.confidence! < 0.9) {
+  } else if (!candidate.confidence!.isFinite ||
+      candidate.confidence! < 0.9 ||
+      candidate.confidence! > 1.0) {
+    // NaN/Infinity ve 1'den büyük değerler CSV'den çözülebilir; eskiden
+    // yalnız `< 0.9` bakıldığı için bunlar düşük güven kapısından geçerdi.
     reasons.add('low_confidence');
   }
   // Kaynak künyesi giriş şartı değil. Varsa saklanır; yoksa aday elenmez.
@@ -278,7 +297,7 @@ List<String> _rejectionReasons(
 
 bool _correctResolves(PromotionCandidate candidate, List<String> options) {
   final raw = candidate.correctOption.trim();
-  final letter = 'ABCD'.indexOf(raw.toUpperCase());
+  final letter = answerLetterIndex(raw);
   if (letter >= 0) return letter < options.length;
   final normalized = normalizeOption(raw);
   return normalized.isNotEmpty &&
@@ -299,7 +318,7 @@ bool _explanationRepeatsAnswer(
 }
 
 String _correctText(PromotionCandidate candidate) {
-  final index = 'ABCD'.indexOf(candidate.correctOption.trim().toUpperCase());
+  final index = answerLetterIndex(candidate.correctOption);
   if (index >= 0 && index < candidate.options.length) {
     return candidate.options[index];
   }

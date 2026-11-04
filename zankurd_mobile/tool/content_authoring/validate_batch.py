@@ -131,8 +131,10 @@ class Gate:
         ku_a, tr_a = list(q["answers"]), list(q["answersTr"])
         if len(ku_a) != len(tr_a):
             errs.append("answers-length-mismatch")
-        if len(ku_a) < 4:
-            errs.append("too-few-options")
+        # Çoktan seçmeli bankada TAM dört şık (eski `< 4` beş/altı şıkkı
+        # kabul ediyordu; uygulama dört şık varsayar).
+        if len(ku_a) != 4:
+            errs.append("bad-option-count")
         for arr, tag in ((ku_a, "ku"), (tr_a, "tr")):
             if any(not str(x).strip() for x in arr):
                 errs.append(f"empty-option-{tag}")
@@ -206,7 +208,9 @@ class Gate:
             errs.append("explanation-restates-answer")
 
         d = q.get("difficulty")
-        if not isinstance(d, int) or not 1 <= d <= 5:
+        # `bool`, `int` alt türüdür: `difficulty: true` eskiden geçerdi ve
+        # Dart modelinde bankanın yüklenmesini bozabilirdi.
+        if type(d) is not int or not 1 <= d <= 5:
             errs.append("bad-difficulty")
 
         # exact duplicate prompt (batch içi + mevcut banka)
@@ -329,8 +333,16 @@ def main():
     a = ap.parse_args()
 
     rows = json.load(open(a.batch, encoding="utf-8"))
+    # Kök şema: liste ya da {"questions": [...]}. Eskiden `[]` ve `questions`
+    # alanı olmayan nesne sıfır kabul/sıfır ret ile PASS (çıkış 0) veriyordu.
     if isinstance(rows, dict):
-        rows = rows.get("questions", [])
+        if not isinstance(rows.get("questions"), list):
+            print("RESULT: FAIL (kök nesnede `questions` listesi yok)")
+            return 1
+        rows = rows["questions"]
+    if not isinstance(rows, list) or not rows:
+        print("RESULT: FAIL (giriş boş ya da liste değil)")
+        return 1
     prompts, ids = load_index(a.existing_index)
     g = Gate(prompts, ids).run(rows)
     rep = g.distribution()
@@ -362,7 +374,7 @@ def main():
         json.dump(rep, open(a.json_report, "w", encoding="utf-8"),
                   ensure_ascii=False, indent=1)
 
-    ok = (not g.hard) and all(gates.values())
+    ok = (not g.hard) and all(gates.values()) and rep["accepted"] > 0
     print("RESULT:", "PASS" if ok else "FAIL")
     return 0 if ok else 1
 

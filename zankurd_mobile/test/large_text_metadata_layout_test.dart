@@ -146,6 +146,7 @@ void main() {
               tester.platformDispatcher.clearTextScaleFactorTestValue,
             );
             addTearDown(tester.view.reset);
+            final semantics = tester.ensureSemantics();
 
             await tester.pumpWidget(
               testShell(
@@ -157,47 +158,55 @@ void main() {
             );
             await tester.pumpAndSettle();
 
+            // "Oda" kafesi → oda sayfası → "Oda kur". Hedefler zorunludur:
+            // bulunamazsa test kırılır (eskiden sessizce dönüyor, ücret
+            // yerleşimi hiç ölçülmüyordu).
+            await openRoomSheet(tester);
             final createRoom = find.byKey(
               const ValueKey('play-hub-create-room'),
             );
-            if (createRoom.evaluate().isEmpty) {
-              debugPrint(
-                'NOT_AVAILABLE custom room entry: '
-                '$locale ${viewport.name} @${scale.name}',
-              );
-              return;
-            }
+            expect(createRoom, findsOneWidget);
             await tester.ensureVisible(createRoom);
             await tester.pumpAndSettle();
             await tester.tap(createRoom);
             await tester.pumpAndSettle();
-            await tester.ensureVisible(
-              find.byKey(const ValueKey('custom-room-settings-row')),
+            // Satırı ekranın üst-orta bölgesine getir: büyük yazıda altta
+            // sabit duran "Odayı aç" düğmesinin altında kalıp dokunulamaz
+            // oluyordu (ensureVisible kenara hizalar).
+            final settingsRow = find.byKey(
+              const ValueKey('custom-room-settings-row'),
+            );
+            await Scrollable.ensureVisible(
+              tester.element(settingsRow),
+              alignment: 0.3,
             );
             await tester.pumpAndSettle();
-            await tester.tap(
-              find.byKey(const ValueKey('custom-room-settings-row')),
+            // Büyük yazıda sayfa içeriği alt sayfanın içinde taşar ve satırın
+            // koordinatına işaretçiyle isabet edilemez; ekran okuyucunun
+            // yaptığı gibi anlam eylemiyle aç.
+            tester.binding.performSemanticsAction(
+              ui.SemanticsActionEvent(
+                type: ui.SemanticsAction.tap,
+                viewId: tester.view.viewId,
+                nodeId: tester.getSemantics(settingsRow).id,
+              ),
             );
             await tester.pumpAndSettle();
 
-            final feeLabels = <String>[
-              locale == 'ku' ? 'Bêpere (0)' : 'Ücretsiz (0)',
-              for (final fee in [25, 50, 100])
-                '$fee ${locale == 'ku' ? 'Zêr' : 'jeton'}',
-            ];
-            for (final label in feeLabels) {
-              expect(
-                find.text(label),
-                findsOneWidget,
-                reason: '$label missing',
-              );
-            }
             for (final fee in GameRoom.allowedEntryFees) {
               final chip = find.byKey(ValueKey('custom-room-fee-$fee'));
               expect(chip, findsOneWidget, reason: '$fee chip missing');
               await tester.ensureVisible(chip);
               await tester.pumpAndSettle();
               await tester.pump();
+              final label = fee == 0
+                  ? (locale == 'ku' ? 'Bêpere' : 'Ücretsiz')
+                  : '$fee ${locale == 'ku' ? 'Zêr' : 'jeton'}';
+              expect(
+                find.descendant(of: chip, matching: find.text(label)),
+                findsOneWidget,
+                reason: '$label missing',
+              );
               final chipRect = tester.getRect(chip);
               expect(chipRect.left, greaterThanOrEqualTo(0));
               expect(chipRect.right, lessThanOrEqualTo(viewport.size.width));
@@ -212,6 +221,7 @@ void main() {
                   'custom room fee chip must not produce RenderFlex overflow: '
                   '$locale ${viewport.name} @${scale.name}',
             );
+            semantics.dispose();
           },
         );
       }

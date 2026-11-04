@@ -30,6 +30,13 @@ void writePromotionArtifacts(
   File(
     '${output.path}/promotion_rejections.csv',
   ).writeAsStringSync(rejectedRows);
+  // Aynı çıktı klasöründe önceki koşudan kalan onaylı banka, bu koşuda hiç
+  // aday kabul edilmediyse SİLİNMELİ: yoksa yeni manifest "expanded bank
+  // yok" derken eski çıktı yerinde kalıp yanlış paketlenirdi.
+  final expanded = File('${output.path}/expanded_questions.json');
+  if (!result.shouldWriteExpandedBank && expanded.existsSync()) {
+    expanded.deleteSync();
+  }
   if (result.shouldWriteExpandedBank) {
     File('${output.path}/expanded_questions.json').writeAsStringSync(
       '${const JsonEncoder.withIndent('  ').convert(result.accepted.map((item) => item.toRuntimeJson()).toList())}\n',
