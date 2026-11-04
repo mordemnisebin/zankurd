@@ -1,5 +1,5 @@
 -- Güvenlik/tutarlılık 7. tur (GPT-6 Pro alan 2 + alan 3 denetimlerinin SQL bulguları;
--- her bulgu kodda doğrulandı). Canlıya UYGULANMADI (applied.md ⏳).
+-- her bulgu kodda doğrulandı). Canlıda (2026-11-04, applied.md ✅).
 -- Geri alma: geri_al/2026-11-06_guvenlik_tur7_geri.sql
 --
 -- Taban (canlı ✅): her işlevin canlı gövdesi, applied.md ✅ satırlarının sırasıyla
@@ -614,6 +614,9 @@ where d.imza = 'public.mark_room_client_ready(uuid)' and d.gerekli;
 
 -- ---------------------------------------------------------------------------
 -- B. room_heartbeat (taban: 2026-11-03_rovans_oda_sahibi.sql)
+-- Bilinen kalıntı (Copilot): ön okuma ile devir denetimi arasında koşul değişirse eski
+-- sıra nadiren kalır; Postgres kilitlenmeyi sezip bir tarafı iptal eder, nabız 10 sn sonra
+-- yeniden gelir. Her nabızda oda kilidi 50 kişilik lobiyi tek sıraya dizeceği için seçilmedi.
 -- ---------------------------------------------------------------------------
 select pg_temp.tur7_yama(
   'public.room_heartbeat(uuid)',

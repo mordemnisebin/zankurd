@@ -7,7 +7,7 @@
 --   async_duel_answers ve tournament_match_answers'ı oyuncu + zaman ile süzer; PK'ler
 --   duel_id/match_id ile başlar -> oyuncuya özel sorgu genel geçmişi tarardı.
 -- * expire_async_duels kapanış sorgusu (status open/matched, expires_at <= now()).
--- Geri alma: drop index concurrently if exists <ad>;
+-- Geri alma: geri_al/2026-11-06_guvenlik_tur7_indeks_geri.sql
 create index concurrently if not exists async_duel_answers_player_answered_idx
   on public.async_duel_answers (player_id, answered_at) include (choice, is_correct);
 create index concurrently if not exists tournament_match_answers_player_answered_idx

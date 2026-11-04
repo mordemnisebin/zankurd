@@ -66,17 +66,17 @@ void main() {
   final code = strip(raw);
   final geri = strip(geriRaw);
 
-  test('tek işlem, küçük harfli begin/commit; geri alma da; applied ⏳', () {
+  test('tek işlem, küçük harfli begin/commit; geri alma da; applied ✅ (canlı)', () {
     expect(code.trimLeft(), startsWith('begin;'));
     expect(code.trimRight(), endsWith('commit;'));
     expect(geri.trimLeft(), startsWith('begin;'));
     expect(geri.trimRight(), endsWith('commit;'));
     expect(raw, isNot(contains('COMMIT')));
     expect(geriRaw, isNot(contains('COMMIT')));
-    expect(applied, contains('2026-11-06_guvenlik_tur7.sql | ⏳'));
+    expect(applied, contains('2026-11-06_guvenlik_tur7.sql | ✅'));
     expect(
       applied,
-      contains('2026-11-06_guvenlik_tur7_indeks_concurrently.sql | ⏳'),
+      contains('2026-11-06_guvenlik_tur7_indeks_concurrently.sql | ✅'),
     );
     expect(code, isNot(contains('lock table')));
     // Göç yeni nesne yaratmaz: tablo/işlev/cron/indeks yok.
