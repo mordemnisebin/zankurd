@@ -337,14 +337,15 @@ void main() {
     }
   });
 
-  test('applied.md satırı ⏳ ve göçü anlatır', () {
+  test('applied.md satırı durum işaretli (⏳ ya da ✅) ve göçü anlatır', () {
     final applied = File('supabase/applied.md').readAsStringSync();
     final row = applied
         .split('\n')
         .firstWhere(
           (l) => l.startsWith('| 2026-10-15_ilerleme_esitleme.sql |'),
         );
-    expect(row, contains('⏳'));
+    // Göç canlıya uygulanınca satır ✅ olur; ikisi de geçerli durumdur.
+    expect(row.contains('⏳') || row.contains('✅'), isTrue);
     expect(row, contains('player_progress'));
     expect(row, contains('claim_solo_reward'));
     expect(row, contains('app_today'));

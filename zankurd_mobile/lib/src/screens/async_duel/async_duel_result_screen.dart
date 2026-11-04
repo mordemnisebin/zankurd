@@ -4,6 +4,7 @@ import 'package:zankurd_mobile/src/utils/number_format.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../utils/test_environment.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -509,19 +510,33 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
     if (view.isForfeitLoss) return;
     if (view.kind == AsyncDuelResultKind.completed ||
         view.kind == AsyncDuelResultKind.expired) {
-      try {
-        final total = await widget.repository.claimAsyncDuelXp(view.duelId);
-        if (!mounted) return;
-        if (widget.repository.xpAwardIsServerTotal) {
-          final store = await XPStore.load();
-          await store.applyServerTotal(total);
+      // Talep sunucuya ulaşmadan düşerse (geçici ağ) bir kez daha değil üç
+      // kez, artan beklemeyle denenir: görüldü işareti zaten yazıldığı için
+      // başka bir yerden tekrar tetiklenmez ve XP sessizce kalırdı. Talep
+      // düello kimliğine bağlıdır (sunucuda tekil), tekrar güvenlidir.
+      // Testlerde bekleme yok (bekleyen Timer testi bozar).
+      final waits = isFlutterTestEnvironment
+          ? const <Duration>[]
+          : const [Duration(seconds: 3), Duration(seconds: 8)];
+      for (var attempt = 0; attempt <= waits.length; attempt++) {
+        try {
+          final total = await widget.repository.claimAsyncDuelXp(view.duelId);
+          if (!mounted) return;
+          if (widget.repository.xpAwardIsServerTotal) {
+            final store = await XPStore.load();
+            await store.applyServerTotal(total);
+          }
+          return;
+        } catch (error, stack) {
+          ErrorReporter.record(
+            error,
+            stack,
+            reason: 'async duel claim xp failed',
+          );
+          if (attempt == waits.length) return;
+          await Future<void>.delayed(waits[attempt]);
+          if (!mounted) return;
         }
-      } catch (error, stack) {
-        ErrorReporter.record(
-          error,
-          stack,
-          reason: 'async duel claim xp failed',
-        );
       }
     }
   }

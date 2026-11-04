@@ -1354,16 +1354,47 @@ class SupabaseZanKurdRepository
 
   @override
   Future<GameRoom> loadRoomSnapshot(String roomId) async {
-    final row = await client
-        .from('rooms')
-        .select(
-          'id, code, host_id, question_count, seconds_per_question, entry_fee, status, '
-          'max_players, is_custom, categories(name)',
-        )
-        .eq('id', roomId)
-        .single();
+    const baseColumns =
+        'id, code, host_id, question_count, seconds_per_question, entry_fee, status, '
+        'max_players, is_custom, categories(name)';
+    // Çok kategorili oda yalnız `category_ids` taşır; tek kategori ilişkisi
+    // boştur ve oda 'Tevlihev' (karışık) kurulup devam edilince ayar
+    // güncellemesi gerçek listeyi sunucuda siliyordu. Sütun eski şemada yoksa
+    // (42703) eski sorguya düşülür.
+    Map<String, dynamic> row;
+    try {
+      row = await client
+          .from('rooms')
+          .select('$baseColumns, category_ids')
+          .eq('id', roomId)
+          .single();
+    } on PostgrestException catch (error, stack) {
+      if (error.code != '42703') {
+        _recordError(error, stack, reason: 'loadRoomSnapshot failed');
+        rethrow;
+      }
+      row = await client
+          .from('rooms')
+          .select(baseColumns)
+          .eq('id', roomId)
+          .single();
+    }
     final players = await _loadRoomPlayersById(roomId);
     final category = row['categories'] as Map<String, dynamic>?;
+    final categoryIds = (row['category_ids'] as List?)
+        ?.whereType<String>()
+        .toList();
+    String? multiCategoryLabel;
+    if (categoryIds != null && categoryIds.isNotEmpty) {
+      final named = await client
+          .from('categories')
+          .select('name')
+          .inFilter('id', categoryIds);
+      final names =
+          named.map((r) => r['name'] as String?).whereType<String>().toList()
+            ..sort();
+      if (names.isNotEmpty) multiCategoryLabel = names.join(', ');
+    }
     final rowMaxPlayers = (row['max_players'] as num?)?.toInt() ?? 2;
     final rowIsCustom = row['is_custom'] as bool? ?? false;
 
@@ -1372,7 +1403,8 @@ class SupabaseZanKurdRepository
       name: _roomDisplayName(rowMaxPlayers, rowIsCustom),
       code: row['code'] as String? ?? '',
       // Kategorisiz oda karışıktır (bkz. joinOnlineRoom).
-      category: category?['name'] as String? ?? 'Tevlihev',
+      category:
+          multiCategoryLabel ?? category?['name'] as String? ?? 'Tevlihev',
       players: players,
       status: _roomStatusFromValue(row['status']),
       questionCount: (row['question_count'] as num?)?.toInt() ?? 10,

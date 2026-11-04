@@ -630,23 +630,24 @@ class SnapshotAchievements {
     );
   }
 
-  /// Günlük sınav sayacı en yeni güne ait kayıttan; aynı günde büyük olan.
+  /// Günlük sınav sayacı KÜMÜLATİFTİR (tamamlanan gün sayısı): iki cihazdan
+  /// büyüğü alınır, son gün ise en yenisidir. Eskiden sayaç "tarihi yeni olan
+  /// cihazdan bütünüyle" seçiliyordu; beş tamamlamalı cihaz, tek ama daha yeni
+  /// tamamlamalı cihazla birleşince sayaç 5'ten 1'e düşüyor, günlük başarı
+  /// geriliyordu (2026-11 denetimi).
   static SnapshotAchievements merge(
     SnapshotAchievements a,
     SnapshotAchievements b,
   ) {
     final cmp = SnapshotStreak._compareDays(a.dailyQuizDay, b.dailyQuizDay);
-    final dq = cmp > 0
-        ? a
-        : cmp < 0
-        ? b
-        : (a.dailyQuiz >= b.dailyQuiz ? a : b);
+    final newestDay = cmp >= 0 ? a.dailyQuizDay : b.dailyQuizDay;
+    final dq = a.dailyQuiz >= b.dailyQuiz ? a.dailyQuiz : b.dailyQuiz;
     return SnapshotAchievements(
       unlocked: {...a.unlocked, ...b.unlocked},
       answered: a.answered > b.answered ? a.answered : b.answered,
       categories: {...a.categories, ...b.categories},
-      dailyQuiz: dq.dailyQuiz,
-      dailyQuizDay: dq.dailyQuizDay,
+      dailyQuiz: dq,
+      dailyQuizDay: newestDay,
     );
   }
 }

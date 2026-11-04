@@ -1176,6 +1176,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       );
     }
 
+    // Mağazadan alınmış koruma stoğu varsa ÖNCE o harcanır (Premium olmayan
+    // kullanıcıda stok hiç tüketilmiyor, yeniden 50 jetonluk teklif çıkıyordu;
+    // bakiye yetmiyorsa eldeki korumaya rağmen seri kırılıyordu). Yeniden
+    // açılışta `freezeApplying` ileri çözülür, stok ikinci kez düşmez.
+    if (streakStore.canFreeze()) {
+      await recordStage?.call(QuizResultReceiptStage.freezeApplying);
+      final streak = await streakStore.freezeAndRecordPlay();
+      await recordStage?.call(QuizResultReceiptStage.freezeApplied);
+      return _StreakOutcome(streak: streak, isNewDay: isNewDay);
+    }
+
     // Karar bekleniyor. Bu aşamada hiçbir yan etki yoktur, bu yüzden
     // kesinti olursa soruyu yeniden sormak güvenlidir.
     await recordStage?.call(QuizResultReceiptStage.pendingUserDecision);
@@ -1505,11 +1516,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     );
     // Beceri rozetleri yalnız gerçek turlara: alıştırma, çok kısa tur ve
     // süre aşımı olan tur sayılmaz (bkz. [BadgeService.isSkillRound]).
-    final skillRound = BadgeService.isSkillRound(
-      practice: practice,
-      totalQuestions: totalQuestions,
-      unanswered: answerRecords.where((r) => r.isUnanswered).length,
-    );
+    // Kayıt sayısı soru sayısını tutmalı: kalabalık odada herkes ayrılınca tur
+    // boş cevap listesiyle `completed` olabiliyor; cevapsız sayısı 0, toplam
+    // süre 0 görünüp `speed_demon` bedavaya açılıyordu.
+    final skillRound =
+        answerRecords.length >= totalQuestions &&
+        BadgeService.isSkillRound(
+          practice: practice,
+          totalQuestions: totalQuestions,
+          unanswered: answerRecords.where((r) => r.isUnanswered).length,
+        );
     if (skillRound) {
       await step(
         () => badgeService.evaluatePerfectGame(correctCount, totalQuestions),

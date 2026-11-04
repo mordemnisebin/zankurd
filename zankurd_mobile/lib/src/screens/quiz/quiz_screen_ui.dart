@@ -751,6 +751,10 @@ extension _QuizScreenUI on _QuizScreenState {
     final jokerCapable =
         !_isLearningExperience &&
         !_usesServerHiddenAnswers &&
+        // Günlük yarışma tek ortak tabloda sıralanır: "Soru değiştir" resmî
+        // soruyu yerel havuzdan rastgele biriyle değiştirip sayacı sıfırlıyor,
+        // 50/50 ve çift cevap avantaj veriyordu. Joker satırı yok.
+        !widget.dailyQuiz &&
         widget.versusBannerText == null;
     final showJokers = jokerCapable && !answered;
 
@@ -1350,6 +1354,8 @@ extension _QuizScreenUI on _QuizScreenState {
   /// `free_wildcard_store_test`, `free_wildcard_quiz_test`).
   bool _canPayWildcard(WildcardType type) =>
       !_wildcardsLocked &&
+      // Resmî günlük yarışta joker işlem girişinde de kapalı (satır gizlidir).
+      !widget.dailyQuiz &&
       (_freeWildcardAvailable ||
           _jokerStock > 0 ||
           _coinBalance >= type.coinCost);
@@ -1417,6 +1423,9 @@ extension _QuizScreenUI on _QuizScreenState {
     // yeniden denemeler ve kuyruk aynı anahtarı kullanır.
     final idempotencyKey =
         'wildcard:$_analyticsRoundId:${question.id}:${type.name}';
+    // Harcamayı BAŞLATAN hesap: istek sürerken hesap değişirse geciken hata
+    // yolu borcu yeni hesabın kuyruğuna yazmasın (sync_manager sahip denetimi).
+    final startOwner = widget.repository.currentUserId;
     bool charged;
     try {
       final result = await widget.repository.spendCoinsDurable(
@@ -1429,6 +1438,7 @@ extension _QuizScreenUI on _QuizScreenState {
           amount: type.coinCost,
           reason: type.spendReason,
           idempotencyKey: idempotencyKey,
+          expectedOwner: startOwner,
         );
       }
       charged = result.success || result.retryable;
@@ -1443,6 +1453,7 @@ extension _QuizScreenUI on _QuizScreenState {
         amount: type.coinCost,
         reason: type.spendReason,
         idempotencyKey: idempotencyKey,
+        expectedOwner: startOwner,
       );
       charged = true;
     } catch (error, stack) {

@@ -284,11 +284,12 @@ void main() {
       },
     );
 
-    test('günlük sınav sayacı en yeni güne ait kayıttan gelir', () {
+    test('günlük sınav sayacı kümülatiftir: büyüğü alınır, gün en yenidir', () {
       const a = SnapshotAchievements(dailyQuiz: 9, dailyQuizDay: '2026-10-01');
       const b = SnapshotAchievements(dailyQuiz: 2, dailyQuizDay: '2026-10-14');
-      expect(SnapshotAchievements.merge(a, b).dailyQuiz, 2);
-      expect(SnapshotAchievements.merge(b, a).dailyQuiz, 2);
+      expect(SnapshotAchievements.merge(a, b).dailyQuiz, 9);
+      expect(SnapshotAchievements.merge(b, a).dailyQuiz, 9);
+      expect(SnapshotAchievements.merge(a, b).dailyQuizDay, '2026-10-14');
     });
   });
 

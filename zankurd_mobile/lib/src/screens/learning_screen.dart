@@ -1588,7 +1588,9 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
   }
 
   Future<void> _startMiniQuiz() async {
-    if (_miniQuizLoading) return;
+    // Ders tamamlama sürerken Mini Quiz açılmaz: dönen istek altta kalan ders
+    // ekranının `pop`unu üstteki teste uygulayıp testi kapatıyordu.
+    if (_miniQuizLoading || _completing) return;
     setState(() {
       _miniQuizLoading = true;
       _miniQuizEmpty = false;
@@ -1803,6 +1805,9 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     if (_completing) return;
     setState(() => _completing = true);
     final lessonId = widget.lesson.id;
+    // İsteği BAŞLATAN hesap: bekleme sırasında hesap değişirse geciken hata
+    // yolu dersi yeni hesap adına kuyruğa almasın.
+    final startOwner = widget.repository.currentUserId;
     var success = false;
     // Sunucu onaylamadıysa dersi yine de bitmiş say: önce yerele yazılır,
     // sonra eşitleme kuyruğuna girer; bağlantı gelince kendiliğinden gider.
@@ -1810,7 +1815,9 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     var savedOffline = false;
     try {
       success = await widget.repository.markLessonCompleted(lessonId);
-      if (!success) savedOffline = await _queueLessonCompletion(lessonId);
+      if (!success) {
+        savedOffline = await _queueLessonCompletion(lessonId, startOwner);
+      }
       if (success || savedOffline) unawaited(StreakStore.recordActivity());
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'mark_lesson_completed');
@@ -1841,7 +1848,13 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
           ),
         );
       }
-      Navigator.pop(context);
+      // Üstte başka rota (ör. Mini Quiz) varsa onu kapatma: yalnız bu ders
+      // ekranı geri alınır.
+      if (ModalRoute.of(context)?.isCurrent ?? true) {
+        Navigator.pop(context);
+      } else {
+        setState(() => _completing = false);
+      }
     } else if (mounted) {
       // Ne sunucuya ne yerele yazılabildi: "tamamlandı" demeden, ekranı
       // kapatmadan kullanıcının tekrar deneyebilmesi için son slaytta bırak.
@@ -1856,16 +1869,25 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
   /// Kuyruk sahibi yoksa (oturum açık değil / kuyruk kurulmadı) yine de
   /// bekleyen kümeye yazılır; ilk gerçek girişte `queueScopedOfflineLessons`
   /// onu sunucuya taşır.
-  Future<bool> _queueLessonCompletion(String lessonId) async {
+  Future<bool> _queueLessonCompletion(
+    String lessonId,
+    String? startOwner,
+  ) async {
     try {
       final manager = SyncManager.maybeInstance;
       if (manager != null) {
-        await manager.queueLessonCompletion(lessonId);
+        await manager.queueLessonCompletion(
+          lessonId,
+          expectedOwner: startOwner,
+        );
         return true;
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'lesson completion queue');
     }
+    // Hesap değiştiyse yerel yedek de yeni hesabın alanına yazardı.
+    final now = widget.repository.currentUserId?.trim();
+    if (startOwner != null && now != startOwner.trim()) return false;
     try {
       return await LessonCompletionStore.addPending(lessonId);
     } catch (error, stack) {
@@ -2070,7 +2092,9 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                     onNext: isLast
                         ? (_completing ? null : _markCompleted)
                         : () => _goToSlide(_currentSlideIndex + 1),
-                    onMiniQuiz: _miniQuizLoading ? null : _startMiniQuiz,
+                    onMiniQuiz: (_miniQuizLoading || _completing)
+                        ? null
+                        : _startMiniQuiz,
                   ),
                 ),
               ],

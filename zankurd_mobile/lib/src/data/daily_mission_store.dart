@@ -346,6 +346,22 @@ class DailyMissionStore {
     Future<void> Function() grant,
   ) async {
     await _recoverPending();
+    // Eşitleme `DailyMissionStore` örneğini yenilerken ekran eski görev
+    // nesnesini tutabilir: alındı bayrağı eski nesnede değişir, `_persist`
+    // yeni deponun hâlâ alınmamış görevini yazar ve aynı ödül yeniden
+    // alınabilirdi. Karar GÜNCEL deponun kendi görevine göre verilir.
+    final live = _missions
+        .where(
+          (m) =>
+              m.type == mission.type &&
+              m.category == mission.category &&
+              m.target == mission.target,
+        )
+        .firstOrNull;
+    if (live != null && !identical(live, mission)) {
+      if (live.claimed) mission.claimed = true;
+      mission = live;
+    }
     if (!mission.completed || mission.claimed) return false;
     final flightKey =
         '${mission.type.name}|${mission.category}|'

@@ -848,18 +848,26 @@ class _ShopScreenState extends State<ShopScreen> {
         idempotencyKey: key,
       );
       if (!charge.succeeded) {
-        _pendingFreezeKey = null;
+        // Yalnız KESİN ret (bakiye yetmiyor) anahtarı bırakır. `failed`
+        // taşıma hatasıdır: sunucu 50 jetonu çekmiş, yanıt kaybolmuş olabilir;
+        // anahtar silinirse yeniden deneme ikinci kez tahsil ederdi (RPC
+        // aynı anahtarda `already_charged` döner, tekrar güvenlidir).
+        if (charge.outcome != StreakFreezeChargeOutcome.failed) {
+          _pendingFreezeKey = null;
+        }
         if (!mounted) return;
         AppHaptics.vibrate();
         setState(() => _purchaseErrorMessage = context.t(K.purchaseFailed));
         return;
       }
-      _pendingFreezeKey = null;
-      _retryPurchaseItem = null;
       // Hak, ekrandan bağımsız teslim edilir: tahsilat beklenirken ekrandan
-      // çıkılırsa jeton gidip dondurma gelmemesin.
+      // çıkılırsa jeton gidip dondurma gelmemesin. Anahtar teslimden SONRA
+      // bırakılır: teslim hata verirse aynı anahtarla yeniden deneme yeniden
+      // tahsil etmez, yalnız hakkı teslim eder.
       final store = await StreakStore.load();
       final count = await store.addFreeze();
+      _pendingFreezeKey = null;
+      _retryPurchaseItem = null;
       if (!mounted) return;
       setState(() => _freezeCount = count);
       AppHaptics.light();
