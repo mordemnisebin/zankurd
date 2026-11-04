@@ -1,5 +1,5 @@
 -- Hesap silme tur 10 (GPT-6 Pro alan 9 denetimi; engelleyici 1 + önemli 2, kodda doğrulandı).
--- UYGULANMADI (applied.md ⏳). Geri alma: geri_al/2026-11-08_hesap_silme_yasal_geri.sql
+-- Canlıda (2026-11-04, applied.md ✅). Geri alma: geri_al/2026-11-08_hesap_silme_yasal_geri.sql
 --
 -- Taban (canlı ✅): delete_my_account'un canlı gövdesi, applied.md ✅ satırlarının sırasıyla
 -- bulunan SON tanımdır: 2026-10-16_kalabalik_oda.sql gövdesi + 2026-11-04_olcek_sertlestirme.sql

@@ -140,7 +140,7 @@ void main() {
     expect(back, contains('drop function if exists'));
     expect(
       File('supabase/applied.md').readAsStringSync(),
-      contains('2026-11-08_hesap_silme_yasal.sql | ⏳'),
+      contains('2026-11-08_hesap_silme_yasal.sql | ✅'),
     );
     // Yerel kanıt betiği (PGlite) var.
     expect(
