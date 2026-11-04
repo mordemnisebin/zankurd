@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../config/app_config.dart';
+import '../config/feature_flags.dart';
 import '../l10n/strings.dart';
 import '../utils/error_reporter.dart';
 
@@ -243,16 +244,28 @@ class PremiumService extends ChangeNotifier {
   ///
   /// Yine de `configure` bloklayan yolda kalmalı: `AuthProvider` kurulur
   /// kurulmaz `logInUser` çağırıyor ve o `_configured` ister.
-  static Future<PremiumService> load() async {
+  static Future<PremiumService> load({bool proEnabled = kProEnabled}) async {
     if (_instance != null) return _instance!;
     final service = PremiumService._();
-    await service._configure();
+    await service._configure(proEnabled: proEnabled);
     return _instance = service;
   }
 
-  Future<void> _configure() async {
+  Future<void> _configure({bool proEnabled = kProEnabled}) async {
     if (_initialized) return;
     _initialized = true;
+
+    // Pro kapalıyken (kProEnabled=false) RevenueCat HİÇ başlatılmaz: SDK
+    // yapılandırılırsa `logInUser` her ücretsiz/misafir kullanıcının hesap
+    // kimliğini RevenueCat'e gönderir ve orada müşteri kaydı açar
+    // (GPT-6 Pro alan 9). `_configured` false kaldığından `logInUser`,
+    // `warmUp`, `refresh*` ve satın alma yolları da sessizce devre dışıdır.
+    if (!proEnabled) {
+      _isPremium = false;
+      _configurationFailed = false;
+      notifyListeners();
+      return;
+    }
 
     final apiKey = AppConfig.revenuecatApiKey;
     if (apiKey.isEmpty) {

@@ -38,6 +38,7 @@ import '../services/display_name_policy.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/legal_links.dart';
+import '../widgets/startup_prompts.dart';
 import '../widgets/branded_loader.dart';
 import '../widgets/language_toggle.dart';
 import '../widgets/roj_mascot.dart';
@@ -261,7 +262,17 @@ class _SettingsScreenState extends State<SettingsScreen>
       ..showSnackBar(SnackBar(content: Text(copiedText)));
   }
 
+  /// Ölçümü AÇMADAN önce yaş beyanı: cevapsızsa önce sorulur; açık 13+
+  /// gelmezse (X ile kapatma dahil) anahtar açılmaz.
+  Future<bool> _ageAllowsAnalytics(bool enabled) async {
+    if (!enabled || AgeGate.isAdult) return true;
+    if (AgeGate.isMinor) return false;
+    return StartupPrompts.ensureAgeCleared(context);
+  }
+
   Future<void> _setCrashReportsConsent(bool enabled) async {
+    if (!await _ageAllowsAnalytics(enabled)) return;
+    if (!mounted) return;
     final saved = await context
         .read<AnalyticsConsentProvider>()
         .setCrashReportsEnabled(enabled);
@@ -282,6 +293,8 @@ class _SettingsScreenState extends State<SettingsScreen>
   }
 
   Future<void> _setAnalyticsConsent(bool enabled) async {
+    if (!await _ageAllowsAnalytics(enabled)) return;
+    if (!mounted) return;
     final saved = await context.read<AnalyticsConsentProvider>().setEnabled(
       enabled,
     );

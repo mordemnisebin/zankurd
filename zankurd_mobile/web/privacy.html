@@ -51,7 +51,7 @@
 <div class="wrap">
   <div class="badge">ZK</div>
   <h1>Gizlilik Politikası · Polîtîkaya Nepeniyê</h1>
-  <p class="updated">Son güncelleme / Nûvekirina dawî: 29 Çiriya Pêşîn / Ekim 2026</p>
+  <p class="updated">Son güncelleme / Nûvekirina dawî: 4 Çiriya Paşîn / Kasım 2026</p>
 
   <span class="lang-tag">TÜRKÇE</span>
 
@@ -66,9 +66,10 @@
     <li><strong>Çökme kayıtları:</strong> Yalnızca Ayarlar › Hesap ve gizlilik › Hata raporları açıksa, uygulama çöktüğünde teknik hata kaydı (cihaz modeli, işletim sistemi sürümü, hata izi) Firebase Crashlytics aracılığıyla gönderilir. Bu ayar başlangıçta kapalıdır; istediğin zaman açıp kapatabilirsin.</li>
     <li><strong>Mikrofon:</strong> Telaffuz çalışmasında sesini kaydetmek için mikrofon izni istenir. Kayıt yalnız cihazında kalır, sunucuya ya da başka bir yere gönderilmez ve sayfa kapanınca silinir.</li>
     <li><strong>Kullanım olayları:</strong> Yalnızca Ayarlar › Hesap ve gizlilik › Kullanım analizi açıksa, hangi ekranın açıldığı, turun başlaması ve bitmesi gibi olaylar Firebase Analytics aracılığıyla gönderilir; bu olaylar hesabınla ilişkilendirilebilir. Bu veri reklam amacıyla kullanılmaz ve reklam ağlarıyla paylaşılmaz. Bu ayar başlangıçta kapalıdır; istediğin zaman açıp kapatabilirsin.</li>
+    <li><strong>Yaklaşık konum (IP adresinden):</strong> Kullanım analizi açıksa Firebase Analytics, olayların geldiği IP adresinden yaklaşık bir coğrafi konum (ülke, bölge ve şehir düzeyinde) türetir. Bunun için cihazının konum iznini ya da GPS'ini kullanmayız; uygulama bu izni istemez. Bu işleme yalnızca kullanım analizi açıkken yapılır ve ürünün nerelerde, nasıl kullanıldığını anlamak amacıyla kullanılır; reklam için kullanılmaz.</li>
     <li><strong>Uygulama kurulum tanımlayıcısı:</strong> Kullanım analizi açıksa Firebase Analytics, kullanım olaylarını aynı uygulama kurulumunda ilişkilendirmek için reklam kimliği olmayan bir kurulum tanımlayıcısı kullanır.</li>
     <li><strong>Bildirim jetonu:</strong> Bildirim izni verirsen cihazının push bildirim jetonu (Firebase Cloud Messaging) hesabınla ilişkilendirilerek saklanır; arkadaşlık isteği ve düello sonucu bildirimlerini göndermek için kullanılır. Bildirimleri sistem ayarlarından kapatabilirsin; hesabını silince jeton da silinir.</li>
-    <li><strong>Satın alma durumu:</strong> Premium aboneliğin varsa abonelik durumun RevenueCat aracılığıyla tutulur. Kart bilgilerin bize hiç ulaşmaz; ödeme App Store/Google Play üzerinden yapılır.</li>
+    <li><strong>Satın alma durumu:</strong> Premium aboneliğin varsa abonelik durumun RevenueCat aracılığıyla tutulur. Kart bilgilerin bize hiç ulaşmaz; ödeme App Store/Google Play üzerinden yapılır. Premium/Pro abonelik şu anda sunulmuyor: abonelik sunulmadığı sürece uygulama RevenueCat'i başlatmaz ve hesap kimliğini (misafir hesabı dahil) RevenueCat'e göndermez. Abonelik sunulduğunda, abonelik haklarını hesabınla eşleştirmek için hesap kimliğin RevenueCat'e iletilir. Önceki sürümler hesap kimliğini RevenueCat'e göndermiş olabilir; hesabını sildiğinde bu kayıt için RevenueCat'e de silme talebi iletilir.</li>
     <li><strong>Profil fotoğrafı:</strong> Avatar olarak fotoğraf yüklersen o görsel hesabınla birlikte saklanır.</li>
   </ul>
 
@@ -81,11 +82,11 @@
 
   <h2>4. Verilerini nasıl silebilirsin?</h2>
   <p><strong>Uygulamanın içinden:</strong> Ayarlar &rarr; Hesap işlemleri &rarr; <em>Hesabımı sil</em>. Onayladığında profilin, jetonların, kaydettiğin sorular ve oyun verilerin kalıcı olarak silinir; ayrıca bir işlem gerekmez.</p>
-  <p>Uygulamaya erişemiyorsan doğrudan <a href="delete-account.html">ZanKurd hesap silme sayfasından</a> talep gönderebilirsin; talep en geç 30 gün içinde yerine getirilir.</p>
+  <p>Uygulamaya erişemiyorsan doğrudan <a href="delete-account.html">ZanKurd hesap silme sayfasından</a> talep gönderebilirsin; talep, hesabın sana ait olduğu doğrulandıktan sonra en geç 30 gün içinde yerine getirilir. E-postası olmayan misafir hesaplarında web üzerinden sahiplik doğrulanamaz; misafirler için birincil yol uygulama içinden silmedir (ayrıntılar silme sayfasında).</p>
   <p>Yalnızca oturumu kapatmak istiyorsan Profil ekranından çıkış yapabilirsin. Bu işlem çevrimiçi hesap verilerini (sıralama puanı dahil) silmez. Kayıtlı hesapta ilerlemen cihazında ve hesabında kalır, tekrar giriş yapınca geri gelir; misafir hesabında cihazdaki seviye çubuğu ve yerel öğrenme ilerlemesi temizlenir.</p>
 
   <h2>5. Verilerin ne kadar süre saklanıyor?</h2>
-  <p>Hesap ve oyun verilerin, hesabını silene kadar saklanır. Hesabını sildiğinde sunucudaki profilin, jetonların, kaydettiğin sorular, oyun cevapların, bildirim jetonun ve giriş kaydın kalıcı olarak silinir. Çökme kayıtları ve kullanım olayları Google Firebase'in kendi saklama sürelerine tabidir (Crashlytics çökme kayıtları yaklaşık 90 gün, Analytics olayları en çok 14 ay) ve hesap silme işlemiyle anında silinmez; süre dolunca Firebase tarafından silinir. Satın alma kayıtların, yasal yükümlülükler çerçevesinde App Store/Google Play ve RevenueCat tarafında tutulmaya devam edebilir.</p>
+  <p>Hesap ve oyun verilerin, hesabını silene kadar saklanır. Hesabını sildiğinde sunucudaki profilin, jetonların, kaydettiğin sorular, oyun cevapların, bildirim jetonun ve giriş kaydın kalıcı olarak silinir. Çökme kayıtları ve kullanım olayları Google Firebase'in kendi saklama sürelerine tabidir (Crashlytics çökme kayıtları yaklaşık 90 gün, Analytics olayları en çok 14 ay) ve hesap silme işlemiyle anında silinmez; süre dolunca Firebase tarafından silinir. Satın alma kayıtların, yasal yükümlülükler çerçevesinde App Store/Google Play ve RevenueCat tarafında tutulmaya devam edebilir. Hesap kimliğin RevenueCat'e iletilmişse silme talebin RevenueCat'e de iletilir.</p>
 
   <h2>6. Çocukların gizliliği</h2>
   <p>ZanKurd genel kitleye yönelik bir bilgi yarışması uygulamasıdır ve çocuklardan bilerek kişisel veri toplamaz. Hizmet 13 yaş ve üzerindeki kullanıcılar içindir; 13 yaşından küçükler yalnızca ebeveyninin ya da yasal vasisinin onayıyla kullanabilir.</p>
@@ -110,9 +111,10 @@
       <li><strong>Tomarên hilweşînê:</strong> Tenê heke Mîheng › Hesab û nepenî › Ragihandinên çewtiyan vekirî be, dema sepan têk diçe tomara teknîkî ya çewtiyê (modela amûrê, guhertoya pergalê, şopa çewtiyê) bi rêya Firebase Crashlytics tê şandin. Ev mîheng di destpêkê de girtî ye; tu dikarî kengî bixwazî wê vekî an bigirî.</li>
       <li><strong>Mîkrofon:</strong> Di xebata bilêvkirinê de ji bo tomarkirina dengê te destûra mîkrofonê tê xwestin. Tomara te tenê li ser vê amûrê dimîne, ji serverê an cihekî din re nayê şandin û gava rûpel bê girtin tê jêbirin.</li>
       <li><strong>Bûyerên bikaranînê:</strong> Tenê heke Mîheng › Hesab û nepenî › Analîza bikaranînê vekirî be, bûyerên wekî vekirina ekranan, destpêk û dawiya turan bi rêya Firebase Analytics tên şandin; dibe ku ev bûyer bi hesabê te ve werin girêdan. Ev dane ji bo reklaman nayên bikaranîn û bi tora reklaman re nayên parvekirin. Ev mîheng di destpêkê de girtî ye; tu dikarî kengî bixwazî wê vekî an bigirî.</li>
+      <li><strong>Cihê nêzîk (ji navnîşana IP):</strong> Heke Analîza bikaranînê vekirî be, Firebase Analytics ji navnîşana IP ya ku bûyer jê tên cihekî erdnîgarî yê nêzîk (di asta welat, herêm û bajêr de) derdixe. Ji bo vê destûra cihê amûrê an GPS nayê bikaranîn; sepan vê destûrê naxwaze. Ev pêvajo tenê gava Analîza bikaranînê vekirî be tê kirin û ji bo famkirina ku sepan li ku û çawa tê bikaranîn tê bikaranîn; ji bo reklamê nayê bikaranîn.</li>
       <li><strong>Nasnameya sazkirina sepanê:</strong> Heke Analîza bikaranînê vekirî be, Firebase Analytics ji bo girêdana bûyerên bikaranînê di heman sazkirinê de nasnameyeke sazkirinê ya ne-reklamî bi kar tîne.</li>
       <li><strong>Nîşana agahdariyan:</strong> Heke destûra agahdariyan bidî, nîşana agahdariyên push ya amûra te (Firebase Cloud Messaging) bi hesabê te re tê girêdan û tê tomarkirin; ji bo şandina agahdariyên daxwaza hevaltiyê û encama pêşbirkê tê bikaranîn. Tu dikarî agahdariyan ji mîhengên pergalê vemirînî; gava hesabê xwe jê bibî, nîşan jî tê jêbirin.</li>
-      <li><strong>Rewşa kirînê:</strong> Heke aboneyê Premium bî, rewşa aboneyê bi rêya RevenueCat tê girtin. Agahiyên qerta te qet nagihîje me; drav bi rêya App Store/Google Play tê dayîn.</li>
+      <li><strong>Rewşa kirînê:</strong> Heke aboneyê Premium bî, rewşa aboneyê bi rêya RevenueCat tê girtin. Agahiyên qerta te qet nagihîje me; drav bi rêya App Store/Google Play tê dayîn. Abonetiya Premium/Pro niha nayê pêşkêşkirin: heya ku abonetî neyê pêşkêşkirin sepan RevenueCat nade destpêkirin û nasnameya hesabê (hesabê mêvan jî tê de) ji RevenueCat re naşîne. Gava abonetî were pêşkêşkirin, ji bo hevberkirina mafên abonetiyê bi hesabê te re, nasnameya hesabê te ji RevenueCat re tê şandin. Dibe ku guhertoyên berê nasnameya hesabê ji RevenueCat re şandibe; gava tu hesabê xwe jê bibî, ji bo vê tomarê daxwaza jêbirinê ji RevenueCat re jî tê şandin.</li>
       <li><strong>Wêneyê profîlê:</strong> Heke tu wêneyekê wek avatar bar bikî, ew wêne bi hesabê te re tê tomarkirin.</li>
     </ul>
 
@@ -125,11 +127,11 @@
 
     <h2>4. Tu çawa dikarî daneyên xwe jê bibî?</h2>
     <p><strong>Ji nav sepanê:</strong> Mîheng &rarr; Karên hesabê &rarr; <em>Hesabê min jê bibe</em>. Gava tu piştrast bikî, profîl, zêr, pirsên tomarkirî û daneyên lîstikê bi domdarî tên jêbirin; hewcedarî bi tiştekî din tune.</p>
-    <p>Heke tu nikaribî bigihîjî sepanê, ji <a href="delete-account.html">rûpela jêbirina hesabê ZanKurd</a> daxwazê bişîne; daxwaz herî dereng di 30 rojan de tê bicihanîn.</p>
+    <p>Heke tu nikaribî bigihîjî sepanê, ji <a href="delete-account.html">rûpela jêbirina hesabê ZanKurd</a> daxwazê bişîne; piştî ku piştrast bibe ku hesab yê te ye, daxwaz herî dereng di 30 rojan de tê bicihanîn. Di hesabên mêvan de (bê e-peyam) xwedîtî bi rêya webê nayê piştrastkirin; ji bo mêvanan rêya sereke jêbirina di nav sepanê de ye (hûrgulî di rûpela jêbirinê de ne).</p>
     <p>Heke tu tenê dixwazî ji hesabê derkevî, ji ekrana profîlê derkeve. Ev daneyên serhêl ên hesabê te (tevlî xala rêzkirinê) jê nabin; di hesabê tomarkirî de ast û pêşketina hînbûnê ya li ser amûrê dimîne, di hesabê mêvan de tê paqijkirin.</p>
 
     <h2>5. Daneyên te çiqas dem tên parastin?</h2>
-    <p>Daneyên hesabê û lîstikê heta tu hesabê xwe jê nebî tên parastin. Gava tu hesabê xwe jê bibî, profîla te ya li ser serverê, zêrên te, pirsên te yên tomarkirî, bersivên te yên lîstikê, nîşana agahdariyan û tomara têketina te bi domdarî tên jêbirin. Tomarên hilweşînê û bûyerên bikaranînê girêdayî demên parastinê yên Google Firebase in (tomarên hilweşînê yên Crashlytics nêzîkî 90 roj, bûyerên Analytics herî zêde 14 meh) û bi jêbirina hesabê re yekser nayên jêbirin; dema wan biqede Firebase wan jê dibe. Tomarên kirînê li gorî erkên qanûnî li App Store/Google Play û RevenueCat dikarin bimînin.</p>
+    <p>Daneyên hesabê û lîstikê heta tu hesabê xwe jê nebî tên parastin. Gava tu hesabê xwe jê bibî, profîla te ya li ser serverê, zêrên te, pirsên te yên tomarkirî, bersivên te yên lîstikê, nîşana agahdariyan û tomara têketina te bi domdarî tên jêbirin. Tomarên hilweşînê û bûyerên bikaranînê girêdayî demên parastinê yên Google Firebase in (tomarên hilweşînê yên Crashlytics nêzîkî 90 roj, bûyerên Analytics herî zêde 14 meh) û bi jêbirina hesabê re yekser nayên jêbirin; dema wan biqede Firebase wan jê dibe. Tomarên kirînê li gorî erkên qanûnî li App Store/Google Play û RevenueCat dikarin bimînin. Heke nasnameya hesabê te ji RevenueCat re hatibe şandin, daxwaza te ya jêbirinê ji RevenueCat re jî tê şandin.</p>
 
     <h2>6. Nepeniya zarokan</h2>
     <p>ZanKurd sepaneke pêşbirka zanînê ya ji bo girseya giştî ye û bi zanebûn daneyên kesane ji zarokan berhev nake. Xizmet ji bo bikarhênerên 13 salî û mezintir e; yên ji 13 salî biçûktir tenê bi razîbûna dê û bavê xwe an jî serperiştê xwe yê qanûnî dikarin wê bi kar bînin.</p>

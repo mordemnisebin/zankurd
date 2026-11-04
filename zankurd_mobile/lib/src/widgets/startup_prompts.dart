@@ -47,9 +47,14 @@ class StartupPrompts {
         await AgeGate.markAsked();
         if (!context.mounted) return;
         await showAgeGateSheet(context);
+        // X ile cevapsız kapatıldıysa soru BİR SONRAKİ açılışta yeniden
+        // sorulur (işaret geri alınır); o zamana dek yaş "bilinmiyor"dur.
+        if (AgeGate.declaration == null) await AgeGate.clearAsked();
         if (!context.mounted) return;
       }
-      if (AgeGate.isMinor || !await shouldShowConsent()) return;
+      // Yaş bilinmiyorsa (cevapsız) rıza sorulmaz: isteğe bağlı ölçüm yalnız
+      // açık 13+ beyanıyla açılabilir. Rıza yaş cevaplanınca sorulur.
+      if (!AgeGate.isAdult || !await shouldShowConsent()) return;
       if (!context.mounted) return;
       await showConsentSheet(context);
     } catch (error, stack) {

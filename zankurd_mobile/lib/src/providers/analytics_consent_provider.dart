@@ -71,10 +71,13 @@ class AnalyticsConsentProvider extends ChangeNotifier {
 
   static Future<AnalyticsConsentProvider> load() async {
     try {
-      // 13 yaş altı beyanı: kişiselleştirilmiş ölçüm hiç açılmaz (bkz.
-      // `AgeGate`). Beyan, önceki bir "evet" seçiminden de önce gelir.
+      // Açık "13 yaşından büyüğüm" beyanı yoksa (13 yaş altı YA DA hiç
+      // cevap verilmemiş/pencere X ile kapatılmış) isteğe bağlı ölçüm hiç
+      // açılmaz (bkz. `AgeGate`). Beyan, önceki bir "evet" seçiminden de
+      // önce gelir: cevapsız yaş + saklı açık tercih de kapalı kalır
+      // (GPT-6 Pro alan 9; tercih diskte durur, yaş cevaplanınca geçerli).
       await AgeGate.load();
-      if (AgeGate.isMinor) return AnalyticsConsentProvider();
+      if (!AgeGate.isAdult) return AnalyticsConsentProvider();
       final prefs = await SharedPreferences.getInstance();
       final analytics = prefs.getBool(_storageKey);
       var crashReports = prefs.getBool(_crashStorageKey);
@@ -110,8 +113,8 @@ class AnalyticsConsentProvider extends ChangeNotifier {
 
   /// Kullanım analizi anahtarı.
   Future<bool> setEnabled(bool value) {
-    // 13 yaş altı: kullanım analizi AÇILAMAZ (kapatmak serbest).
-    if (value && AgeGate.isMinor) return Future<bool>.value(false);
+    // Açık 13+ beyanı yoksa kullanım analizi AÇILAMAZ (kapatmak serbest).
+    if (value && !AgeGate.isAdult) return Future<bool>.value(false);
     return _setEnabled(value);
   }
 
@@ -122,7 +125,7 @@ class AnalyticsConsentProvider extends ChangeNotifier {
 
   /// Hata raporları anahtarı.
   Future<bool> setCrashReportsEnabled(bool value) {
-    if (value && AgeGate.isMinor) return Future<bool>.value(false);
+    if (value && !AgeGate.isAdult) return Future<bool>.value(false);
     return _setCrashReportsEnabled(value);
   }
 
