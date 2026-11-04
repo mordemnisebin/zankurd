@@ -66,24 +66,27 @@ void main() {
   final code = strip(raw);
   final geri = strip(geriRaw);
 
-  test('tek işlem, küçük harfli begin/commit; geri alma da; applied ✅ (canlı)', () {
-    expect(code.trimLeft(), startsWith('begin;'));
-    expect(code.trimRight(), endsWith('commit;'));
-    expect(geri.trimLeft(), startsWith('begin;'));
-    expect(geri.trimRight(), endsWith('commit;'));
-    expect(raw, isNot(contains('COMMIT')));
-    expect(geriRaw, isNot(contains('COMMIT')));
-    expect(applied, contains('2026-11-06_guvenlik_tur7.sql | ✅'));
-    expect(
-      applied,
-      contains('2026-11-06_guvenlik_tur7_indeks_concurrently.sql | ✅'),
-    );
-    expect(code, isNot(contains('lock table')));
-    // Göç yeni nesne yaratmaz: tablo/işlev/cron/indeks yok.
-    expect(code, isNot(contains('create table if not exists')));
-    expect(code, isNot(contains('cron.schedule')));
-    expect(code, isNot(contains('create index')));
-  });
+  test(
+    'tek işlem, küçük harfli begin/commit; geri alma da; applied ✅ (canlı)',
+    () {
+      expect(code.trimLeft(), startsWith('begin;'));
+      expect(code.trimRight(), endsWith('commit;'));
+      expect(geri.trimLeft(), startsWith('begin;'));
+      expect(geri.trimRight(), endsWith('commit;'));
+      expect(raw, isNot(contains('COMMIT')));
+      expect(geriRaw, isNot(contains('COMMIT')));
+      expect(applied, contains('2026-11-06_guvenlik_tur7.sql | ✅'));
+      expect(
+        applied,
+        contains('2026-11-06_guvenlik_tur7_indeks_concurrently.sql | ✅'),
+      );
+      expect(code, isNot(contains('lock table')));
+      // Göç yeni nesne yaratmaz: tablo/işlev/cron/indeks yok.
+      expect(code, isNot(contains('create table if not exists')));
+      expect(code, isNot(contains('cron.schedule')));
+      expect(code, isNot(contains('create index')));
+    },
+  );
 
   test('tam gövde md5 ön koşulu, yedek + yama zinciri, son güvenlik', () {
     expect(
