@@ -156,7 +156,15 @@ class AgeGate {
           await prefs.remove(declarationKey);
           await prefs.remove(askedKey);
           await prefs.remove(ownerKey);
-        } catch (_) {}
+        } catch (cleanupError, cleanupStack) {
+          // Diskte kalan sahipsiz beyan, sonraki bindUser'da sahip
+          // tutmadığı için geçersiz sayılır; yine de sessiz kalmasın.
+          ErrorReporter.record(
+            cleanupError,
+            cleanupStack,
+            reason: 'age_gate_save_cleanup',
+          );
+        }
       }
     }
   }
