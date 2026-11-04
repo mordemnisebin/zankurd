@@ -89,7 +89,8 @@ void main() {
       // 3734 -> 3759 (+25): 2026-10-13 derse bağlı 25 çoktan seçmeli (dersler3 +21, dersler2 +4).
       // 3759 -> 3795 (+36): 2026-10-19 `kolay_2026_10_19`.
       // 3795 -> 3871 (+76): 2026-10-25 `dersler4_2026_10_25`.
-      3871,
+      // 3871 -> 4060 (+189): 2026-11-07 `yeni_2026_11_07` (yeni sorular).
+      4060,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -204,7 +205,8 @@ void main() {
       // okunaksız, soru görsele bağlı) emekli.
       // 3375 -> 3374 (-1): 2026-10-29 `hat_0094` (Mitanni başkenti, hat_0084
       // ile aynı olgu) emekli.
-      3374,
+      // 3374 -> 3563 (+189): 2026-11-07 `yeni_2026_11_07` (oynanabilir).
+      3563,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '

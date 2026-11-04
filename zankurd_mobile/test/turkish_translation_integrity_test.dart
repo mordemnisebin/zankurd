@@ -92,7 +92,8 @@ void main() {
       // 3734 -> 3759 (+25): 2026-10-13 ders çoktan seçmelileri; hepsi iki dilli.
       // 3759 -> 3795 (+36): 2026-10-19 `kolay_2026_10_19`, kolay havuz takviyesi; hepsi iki dilli.
       // 3795 -> 3871 (+76): 2026-10-25 `dersler4_2026_10_25`; hepsi iki dilli.
-      3871,
+      // 3871 -> 4060 (+189): 2026-11-07 `yeni_2026_11_07` (yeni sorular).
+      4060,
       reason:
           'Türkçe metin taşıyan soru sayısı değişti (yükleyicinin verdiği sayı). Yeni parti geldiyse bu '
           'sayı bilerek güncellenmeli; kendiliğinden düştüyse bir bankanın '

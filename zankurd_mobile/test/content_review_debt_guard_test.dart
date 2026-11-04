@@ -19,7 +19,12 @@ void main() {
     // (zorluk-1 genel bilgi: Sînema, Edebiyat, Siyaset, Dîrok) tek bir web
     // sayfasına bağlanamayan temel bilgilerdir; iki bağımsız jüri (Gemini 3.1
     // Pro + Grok/ChatGPT) ikisi de KABUL dedi. Kaynak borcu bilinçli artırıldı.
-    const maximumMissingSourceReferences = 1235;
+    //
+    // 1235 -> 1424 (+189): 2026-11-07 `yeni_2026_11_07`. Yeni genel bilgi
+    // soruları (Sînema, Paradigma, Siyaset, Muzîk, Edebiyat) tek bir web
+    // sayfasına bağlanamayan temel bilgilerdir; yazar olmayan bir web modeli ve
+    // bir komut satırı modeli ONAY dedi. Kaynak borcu bilinçli artırıldı.
+    const maximumMissingSourceReferences = 1424;
     var missing = 0;
 
     for (final asset in questionBankAssets) {

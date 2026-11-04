@@ -96,6 +96,8 @@ void main() {
       'kolay': fromJson('assets/data/kolay_2026_10_19_questions.json'),
       // 2026-10-25: dil bilgisi derinliği (76 derse etiketli soru).
       'dersler4': fromJson('assets/data/dersler4_2026_10_25_questions.json'),
+      // 2026-11-07: yeni sorular (Sînema/Paradigma/Siyaset/Muzîk/Edebiyat).
+      'yeni': fromJson('assets/data/yeni_2026_11_07_questions.json'),
       'curated (Dart)': curatedQuestionBank,
     };
     optionBanks = {
@@ -167,6 +169,8 @@ void main() {
         ...fromJson('assets/data/kolay_2026_10_19_questions.json'),
         // 2026-10-25: dil bilgisi derinliği (76).
         ...fromJson('assets/data/dersler4_2026_10_25_questions.json'),
+        // 2026-11-07: yeni sorular.
+        ...fromJson('assets/data/yeni_2026_11_07_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;
