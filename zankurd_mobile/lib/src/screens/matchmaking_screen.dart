@@ -228,6 +228,14 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   /// 6 sn yavaşlatma, arka plandan dönen oyuncu bir periyot beklemesin).
   Future<void> Function()? _touchTick;
   bool _touchInFlight = false;
+  // Uygulama arka plana alınınca yoklama zamanlayıcısı durdurulur (6 sn'lik
+  // touch_matchmaking arka planda boşuna sunucuyu yorardı); ön plana dönüşte
+  // hemen bir yoklama yapılır ve periyot yeniden kurulur.
+  bool _touchPaused = false;
+  // 20 sn'lik otomatik iptal başladı: yoklama artık YENİ join göndermez. Aksi
+  // hâlde iptal tamamlandıktan sonra geç gelen join, ekrandan çıkan oyuncu için
+  // hayalet kuyruk satırı/oda üretirdi.
+  bool _rejoinBlocked = false;
   bool _touchErrorReported = false;
 
   /// Sunucuda üyesi olduğum ama henüz quiz'e geçmediğim oda.
@@ -460,13 +468,35 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     _touchTimer?.cancel();
     _touchTimer = null;
     _touchTick = null;
+    _touchPaused = false;
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && _touchTimer != null) {
-      final tick = _touchTick;
-      if (tick != null) unawaited(tick());
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.hidden:
+        // Yoklama yalnız ön plandayken: arka plandaki cihaz 6 sn'de bir
+        // sunucuya gitmesin. Satır 12 sn'de bayatlar; dönüşteki yoklama
+        // `none` görürse istemci yeniden girer (bkz. _startTouchPolling).
+        if (_touchTimer != null) {
+          _touchTimer!.cancel();
+          _touchTimer = null;
+          _touchPaused = true;
+        }
+      case AppLifecycleState.resumed:
+        final tick = _touchTick;
+        if (_touchPaused && tick != null) {
+          _touchPaused = false;
+          _touchTimer = Timer.periodic(
+            PollCadence.matchmakingTouch,
+            (_) => tick(),
+          );
+          unawaited(tick());
+        }
+      case AppLifecycleState.detached:
+        break;
     }
   }
 
@@ -756,8 +786,35 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             timer.cancel();
             _touchTimer?.cancel();
             _touchTimer = null;
+            _touchPaused = false;
             _matchmakingSub?.cancel();
             _matchmakingSub = null;
+            // Önce yeni join'leri engelle, sonra yoldaki join'i sonuçlandır;
+            // iptal ancak ondan sonra gider. Süre aşılırsa geç sonuç
+            // `_cleanupLateJoin` ile (kuyruk iptali / oda terki) temizlenir.
+            _rejoinBlocked = true;
+            final pendingJoin = _joinRequest;
+            if (pendingJoin != null) {
+              try {
+                await pendingJoin.timeout(_joinSettleTimeout);
+              } on TimeoutException catch (error, stack) {
+                ErrorReporter.record(
+                  error,
+                  stack,
+                  reason: 'matchmaking_timeout_join_settle',
+                );
+                unawaited(
+                  _cleanupLateJoin(pendingJoin, widget.repository, attempt),
+                );
+              } catch (error, stack) {
+                ErrorReporter.record(
+                  error,
+                  stack,
+                  reason: 'matchmaking_timeout_join_failed',
+                );
+              }
+              if (!_isAttemptActive(attempt)) return;
+            }
             Map<String, dynamic> cancellation;
             try {
               cancellation = await widget.repository.cancelMatchmaking();
@@ -1052,7 +1109,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               attempt,
             ),
           );
-        } else if (result.status == MatchmakingTouchStatus.none) {
+        } else if (result.status == MatchmakingTouchStatus.none &&
+            !_rejoinBlocked) {
           // Uygulama 12 sn'den uzun arka planda kaldıysa satır bayat diye
           // silinmiştir; yeniden girmezse oyuncu boş kuyrukta bekler.
           // İstek `_joinRequest` ile izlenir: bu sırada iptal/dispose olursa
@@ -1094,6 +1152,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       }
     }
 
+    _touchPaused = false;
+    _rejoinBlocked = false;
     _touchTimer?.cancel();
     _touchTick = tick;
     unawaited(tick());

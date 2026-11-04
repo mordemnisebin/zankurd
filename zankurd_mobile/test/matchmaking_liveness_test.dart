@@ -146,6 +146,26 @@ class _LiveRepository extends MockZanKurdRepository {
   }
 }
 
+/// Yeniden-katılım (ikinci join) çağrısını elle çözülen bir Completer'a bağlar.
+class _GatedJoinRepository extends _LiveRepository {
+  final gate = Completer<Map<String, dynamic>>();
+  final events = <String>[];
+
+  @override
+  Future<Map<String, dynamic>> joinMatchmaking(String categoryName) {
+    if (joinCalls == 0) return super.joinMatchmaking(categoryName);
+    joinCalls++;
+    events.add('join');
+    return gate.future;
+  }
+
+  @override
+  Future<Map<String, dynamic>> cancelMatchmaking() {
+    events.add('cancel');
+    return super.cancelMatchmaking();
+  }
+}
+
 Widget _shell(Widget child) => MultiProvider(
   providers: [
     ChangeNotifierProvider<LanguageProvider>(
@@ -276,6 +296,109 @@ void main() {
     await tester.pumpWidget(const SizedBox.shrink());
     await repository.queue.close();
   });
+
+  testWidgets(
+    'arka planda (paused/inactive/hidden) yoklama durur; dönüşte hemen ve '
+    'periyot yeniden kurulur',
+    (tester) async {
+      final repository = _LiveRepository();
+      await _startSearch(tester, repository);
+      final start = repository.touchCalls;
+      for (final state in [
+        AppLifecycleState.inactive,
+        AppLifecycleState.hidden,
+        AppLifecycleState.paused,
+      ]) {
+        tester.binding.handleAppLifecycleStateChanged(state);
+      }
+      // Arka planda 12 sn: hiç yoklama yok (eskiden 2 yoklama giderdi).
+      await tester.pump(PollCadence.matchmakingTouch);
+      await tester.pump(PollCadence.matchmakingTouch);
+      expect(repository.touchCalls, start, reason: 'arka planda yoklama yok');
+
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pump();
+      expect(repository.touchCalls, start + 1, reason: 'dönüşte hemen');
+      // Çift resumed (inactive -> resumed sonrası) ikinci yoklama/zamanlayıcı
+      // üretmez.
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pump();
+      expect(repository.touchCalls, start + 1);
+      await tester.pump(PollCadence.matchmakingTouch);
+      expect(repository.touchCalls, start + 2, reason: 'periyot sürer');
+      await tester.pumpWidget(const SizedBox.shrink());
+      await repository.queue.close();
+    },
+  );
+
+  testWidgets(
+    '20 sn iptali yoldaki yeniden join sonuçlanmadan iptal göndermez ve yeni '
+    'join başlatmaz',
+    (tester) async {
+      final repository = _GatedJoinRepository();
+      await _startSearch(tester, repository);
+      repository.touchResult = const MatchmakingTouch.none();
+      await tester.pump(PollCadence.matchmakingTouch); // 2. join yolda
+      expect(repository.joinCalls, 2);
+      await tester.pump(const Duration(seconds: 15)); // 20 sn doldu
+      expect(repository.events, ['join'], reason: 'join bitmeden iptal yok');
+      expect(repository.joinCalls, 2, reason: 'engelli: yeni join yok');
+
+      repository.gate.complete({'status': 'waiting'});
+      await tester.pump();
+      await tester.pump();
+      expect(repository.events, [
+        'join',
+        'cancel',
+      ], reason: 'önce join, sonra iptal');
+      expect(repository.joinCalls, 2);
+      await tester.pumpWidget(const SizedBox.shrink());
+      await repository.queue.close();
+    },
+  );
+
+  testWidgets(
+    '20 sn sonrası geç gelen join eşleşirse oda terk edilir (hayalet oda yok)',
+    (tester) async {
+      final repository = _GatedJoinRepository();
+      await _startSearch(tester, repository);
+      repository.touchResult = const MatchmakingTouch.none();
+      await tester.pump(PollCadence.matchmakingTouch);
+      await tester.pump(const Duration(seconds: 15));
+      // Join 10 sn içinde dönmedi: iptal gider, geç sonuç temizlenir.
+      await tester.pump(const Duration(seconds: 11));
+      await tester.pump();
+      expect(repository.events, ['join', 'cancel']);
+      expect(repository.leaveCalls, 0);
+
+      repository.gate.complete({'status': 'matched', 'room_id': _roomId});
+      await tester.pump();
+      await tester.pump();
+      expect(repository.leaveCalls, 1, reason: 'geç oda terk edildi');
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump(const Duration(seconds: 15));
+      await repository.queue.close();
+    },
+  );
+
+  testWidgets(
+    '20 sn sonrası geç gelen join waiting dönerse kuyruk yeniden iptal edilir',
+    (tester) async {
+      final repository = _GatedJoinRepository();
+      await _startSearch(tester, repository);
+      repository.touchResult = const MatchmakingTouch.none();
+      await tester.pump(PollCadence.matchmakingTouch);
+      await tester.pump(const Duration(seconds: 26));
+      await tester.pump();
+      expect(repository.events, ['join', 'cancel']);
+      repository.gate.complete({'status': 'waiting'});
+      await tester.pump();
+      await tester.pump();
+      expect(repository.events, ['join', 'cancel', 'cancel']);
+      await tester.pumpWidget(const SizedBox.shrink());
+      await repository.queue.close();
+    },
+  );
 
   testWidgets('akış hatası eşleşmeyi engellemez, yoklama devralır', (
     tester,
