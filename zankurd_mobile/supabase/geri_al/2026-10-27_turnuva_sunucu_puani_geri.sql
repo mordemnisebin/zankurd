@@ -7,6 +7,27 @@
 -- 2026-07-31_tournament_score_authority.sql sonrası tanım (aşağıda).
 begin;
 
+-- (2026-11-06) Bağımlılık denetimi: bu dosya maç soru/cevap tablolarını düşürür; onları
+-- sorgulayan SONRAKİ göçlerin gövdeleri (claim_tournament_reward, get_my_online_answer_stats,
+-- get_my_online_answer_history ...) kalırsa "tablo yok" hatası verir. Bu yüzden bağımlı
+-- işlev varken geri alma durur: önce o işlevleri uyumlu gövdelerine döndür.
+do $turnuva_bagimlilik$
+declare
+  v_kalan text;
+begin
+  select string_agg(p.oid::regprocedure::text, ', ' order by p.proname) into v_kalan
+  from pg_proc p
+  join pg_namespace n on n.oid = p.pronamespace
+  where n.nspname = 'public'
+    and p.proname not in ('answer_tournament_question', 'present_tournament_question',
+                          'start_tournament_match')
+    and p.prosrc ~* 'tournament_match_(answers|questions|question_starts)';
+  if v_kalan is not null then
+    raise exception 'turnuva_sunucu_puani geri: bu işlevler düşürülecek tablolara bağlı, önce uyumlu gövdelerine döndür: %', v_kalan;
+  end if;
+end;
+$turnuva_bagimlilik$;
+
 drop function if exists public.answer_tournament_question(uuid, integer, text);
 drop function if exists public.present_tournament_question(uuid, integer);
 drop function if exists public.start_tournament_match(uuid);

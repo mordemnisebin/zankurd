@@ -12,6 +12,18 @@ begin;
 
 set local lock_timeout = '10s';
 
+-- (2026-11-06) Ters göç sırası: olcek_tur3_yedek ortak yedek tablosudur; tur4/5/6/7
+-- göçleri kendi geri alma gövdelerini 'turN:<imza>' satırlarında burada tutar. Bu dosya
+-- tabloyu düşürürse o geri almalar imkânsızlaşır: sonraki göçler önce geri alınmalı.
+do $tur3_sira$
+begin
+  if to_regclass('public.olcek_tur3_yedek') is not null
+     and exists (select 1 from public.olcek_tur3_yedek where ad ~ '^tur[0-9]+:') then
+    raise exception 'tur3 geri: olcek_tur3_yedek''te sonraki göçlerin (tur4+) yedek satırları var; önce onları ters sırayla geri al (tur7, tur6, tur5, tur4), sonra bunu çalıştır';
+  end if;
+end;
+$tur3_sira$;
+
 create or replace function pg_temp.tur3_geri(p_imza text, p_yamali text, p_asil text)
 returns void language plpgsql as $geri$
 declare
@@ -211,7 +223,17 @@ drop function if exists public.rate_limit_events_sweep(integer);
 drop function if exists public.touch_presence_v2();
 drop table if exists public.score_reconcile_log;
 drop table if exists public.score_reconcile_failures;
-drop table if exists public.olcek_tur3_yedek;
+-- Yedek tablosu yalnız tur3'ün kendi satırları silinince ve başka satır kalmamışsa düşer.
+do $tur3_yedek_temizle$
+begin
+  if to_regclass('public.olcek_tur3_yedek') is not null then
+    delete from public.olcek_tur3_yedek where ad !~ '^tur[0-9]+:';
+    if not exists (select 1 from public.olcek_tur3_yedek) then
+      drop table public.olcek_tur3_yedek;
+    end if;
+  end if;
+end;
+$tur3_yedek_temizle$;
 drop index if exists public.matchmaking_queue_waiting_idx;
 
 commit;
