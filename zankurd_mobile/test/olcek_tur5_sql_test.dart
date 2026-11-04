@@ -32,16 +32,19 @@ void main() {
   final code = strip(raw);
   final geri = strip(geriRaw);
 
-  test('tek işlem, küçük harfli begin/commit; geri alma da; applied ⏳', () {
-    expect(code.trimLeft(), startsWith('begin;'));
-    expect(code.trimRight(), endsWith('commit;'));
-    expect(geri.trimLeft(), startsWith('begin;'));
-    expect(geri.trimRight(), endsWith('commit;'));
-    expect(raw, isNot(contains('COMMIT')));
-    expect(geriRaw, isNot(contains('COMMIT')));
-    expect(applied, contains('2026-11-05_olcek_tur5.sql | ⏳'));
-    expect(code, isNot(contains('lock table')));
-  });
+  test(
+    'tek işlem, küçük harfli begin/commit; geri alma da; applied ✅ (canlı)',
+    () {
+      expect(code.trimLeft(), startsWith('begin;'));
+      expect(code.trimRight(), endsWith('commit;'));
+      expect(geri.trimLeft(), startsWith('begin;'));
+      expect(geri.trimRight(), endsWith('commit;'));
+      expect(raw, isNot(contains('COMMIT')));
+      expect(geriRaw, isNot(contains('COMMIT')));
+      expect(applied, contains('2026-11-05_olcek_tur5.sql | ✅'));
+      expect(code, isNot(contains('lock table')));
+    },
+  );
 
   test('yama muhafızı: tam bir kez, yedek + md5, geri alma md5 doğrular', () {
     expect(code, contains('v_eski_n <> 1'));

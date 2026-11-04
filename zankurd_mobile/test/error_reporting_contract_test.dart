@@ -214,13 +214,15 @@ void main() {
         'matchmaking_leave_stranded',
         'matchmaking_touch',
         'matchmaking_timeout_cancel',
+        'matchmaking_timeout_join_settle',
+        'matchmaking_timeout_join_failed',
         'matchmaking_timeout_matched_room',
         'matchmaking_start',
         'matchmaking_load_room_questions',
         'matchmaking_load_questions',
       }),
     );
-    expect(matchmakingCatches, hasLength(18));
+    expect(matchmakingCatches, hasLength(20));
 
     expect(
       missionCatches.expand((block) => block.reasons).toSet(),
