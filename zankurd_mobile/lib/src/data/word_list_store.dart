@@ -414,10 +414,27 @@ class WordListStore extends ChangeNotifier {
   Future<bool> _write() async {
     final storage = _storage;
     if (storage == null) return false;
+    // Silme işaretleri ile kelime listesi iki ayrı anahtar. Kelime yazımı
+    // başarısız olursa işaret YENİ değeriyle diskte kalmasın (sonraki
+    // eşitlemede kelime silinirdi); önceki disk değeri geri yazılır. Ters
+    // yönde de (kelime yazıldı, işaret yazılamadı) kelime listesi değil işaret
+    // önce yazıldığından diskte kelime silinmeden işaret kalmaz.
+    final previousMarkers = storage.getString(_removedKey);
+    var markersWritten = false;
+    Future<void> restoreMarkers() async {
+      if (!markersWritten) return;
+      try {
+        if (previousMarkers == null) {
+          await storage.remove(_removedKey);
+        } else {
+          await storage.setString(_removedKey, previousMarkers);
+        }
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'word_list_restore');
+      }
+    }
+
     try {
-      // Önce silme işaretleri, sonra kelimeler: yarıda kalırsa işaret var,
-      // kelime de var olur ve birleşim işareti kazandırır (silme geri
-      // gelmez); ters sırada silinen kelime bir sonraki eşitlemede dirilirdi.
       final markersSaved = _removed.isEmpty
           ? await storage.remove(_removedKey)
           : await storage.setString(_removedKey, jsonEncode(_removed));
@@ -429,6 +446,7 @@ class WordListStore extends ChangeNotifier {
         );
         return false;
       }
+      markersWritten = true;
       final saved = await storage.setString(
         _key,
         jsonEncode({
@@ -441,10 +459,12 @@ class WordListStore extends ChangeNotifier {
           StackTrace.current,
           reason: 'word_list_persist',
         );
+        await restoreMarkers();
       }
       return saved;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'word_list_persist');
+      await restoreMarkers();
       return false;
     }
   }

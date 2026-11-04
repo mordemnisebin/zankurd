@@ -128,10 +128,39 @@ class FreezeLedger {
     // değişmemiş kalır ve aynı işlem güvenle yeniden denenir. (Ters sırada
     // defter satırı taban olmadan kalır; yeniden deneme satırı ikinci kez
     // artırıp tek işlemi iki sayardı.)
-    if (preferences.get(baseKey) != base) {
-      await preferences.setInt(baseKey, base);
+    // İki yazımın SONUCU denetlenir; başarısızlık başarı sayılmaz (çağıran
+    // jeton verilmedi bilir, ödeme anahtarıyla yeniden dener) ve taban yazımı
+    // diskte geri alınır: yarım yazım bir sonraki okumada jetonu yutmasın.
+    final previousBase = preferences.get(baseKey);
+    var baseChanged = false;
+    Future<void> rollbackBase() async {
+      try {
+        if (!baseChanged) return;
+        if (previousBase is int) {
+          await preferences.setInt(baseKey, previousBase);
+        } else {
+          await preferences.remove(baseKey);
+        }
+      } catch (_) {}
+      try {
+        await preferences.reload();
+      } catch (_) {}
     }
-    await preferences.setString(ledgerKey, encodeLedger(ledger));
+
+    try {
+      if (previousBase != base) {
+        if (!await preferences.setInt(baseKey, base)) {
+          throw StateError('Freeze ledger base was not persisted.');
+        }
+        baseChanged = true;
+      }
+      if (!await preferences.setString(ledgerKey, encodeLedger(ledger))) {
+        throw StateError('Freeze ledger was not persisted.');
+      }
+    } catch (_) {
+      await rollbackBase();
+      rethrow;
+    }
     return SnapshotStreak.balanceOf(base, ledger);
   }
 }
