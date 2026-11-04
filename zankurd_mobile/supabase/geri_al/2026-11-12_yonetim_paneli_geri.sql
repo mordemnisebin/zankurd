@@ -4,6 +4,9 @@
 --   admin_audit_log, admin_reward_grants, admin_contributor_rewards,
 --   user_moderation. Verilmiş jeton/rozetler geri alınmaz (profiles.coins ve
 --   coin_transactions'a dokunulmaz).
+-- SIRA: önce 2026-11-13_yonetim_otomatik_odul_cron_geri.sql, sonra
+-- 2026-11-13_yonetim_moderasyon_geri.sql, en son bu dosya (moderasyon
+-- tetikleyicileri `user_is_restricted` işlevini çağırır).
 begin;
 
 drop trigger if exists trg_admin_push_suggestion on public.suggested_questions;
@@ -11,6 +14,14 @@ drop trigger if exists trg_admin_push_question_report on public.question_reports
 drop trigger if exists trg_admin_push_profile_report on public.profile_reports;
 
 drop function if exists public.admin_enqueue_push();
+drop function if exists public.admin_run_auto_rewards();
+drop function if exists public._admin_auto_grant(text, text);
+drop function if exists public.admin_add_question(text, text, text[], integer, text, text, integer);
+drop function if exists public._admin_reward_top3(text, text);
+drop function if exists public._admin_reward_coins(text);
+drop function if exists public._admin_reward_key(text, text);
+drop function if exists public.record_activity(boolean);
+drop function if exists public.user_is_restricted(uuid);
 drop function if exists public.admin_set_notify_pref(text, boolean);
 drop function if exists public.admin_get_notify_prefs();
 drop function if exists public.admin_moderate_user(uuid, text, integer, text);
@@ -34,6 +45,8 @@ drop function if exists public.admin_is_admin();
 drop function if exists public.admin_log(text, text, text, jsonb);
 drop function if exists public.admin_assert();
 
+drop table if exists public.usage_mode_counter;
+drop table if exists public.usage_daily_active;
 drop table if exists public.admin_notify_prefs;
 drop table if exists public.admin_settings;
 drop table if exists public.user_moderation;
