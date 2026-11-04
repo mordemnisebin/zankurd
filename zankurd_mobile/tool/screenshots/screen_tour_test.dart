@@ -91,6 +91,15 @@ import 'package:zankurd_mobile/src/screens/suggest_question_screen.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
+import 'package:zankurd_mobile/src/data/admin_repository.dart';
+import 'package:zankurd_mobile/src/data/mock_admin_repository.dart';
+import 'package:zankurd_mobile/src/models/admin.dart';
+import 'package:zankurd_mobile/src/screens/admin/admin_home_screen.dart';
+import 'package:zankurd_mobile/src/screens/admin/admin_notify_screen.dart';
+import 'package:zankurd_mobile/src/screens/admin/admin_content_screen.dart';
+import 'package:zankurd_mobile/src/screens/admin/admin_rewards_screen.dart';
+import 'package:zankurd_mobile/src/screens/admin/admin_users_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../../test/support/paywall_fixtures.dart';
 import '../../test/support/widget_test_helpers.dart';
@@ -3458,6 +3467,144 @@ void main() {
     await t.pumpAndSettle();
     await _shoot(t, '232_lexicon_search_forms');
   }, tags: ['preview']);
+
+  // ── Yönetim bölümü (2.2 maketi) ──
+  //
+  // Yalnız sahip hesabında görünen ekranlar; veri MockAdminRepository'den.
+  // Her ekran TR/KU x gündüz/gece basılır. Yalnız bunları koşturmak için:
+  //   flutter test tool/screenshots/screen_tour_test.dart --plain-name yönetim
+  final adminSpecs =
+      <
+        ({
+          String name,
+          double height,
+          Widget Function() build,
+          Future<void> Function(WidgetTester)? after,
+        })
+      >[
+        (
+          name: 'pano',
+          height: 1500,
+          build: () => AdminHomeScreen(repository: MockAdminRepository()),
+          after: null,
+        ),
+        (
+          name: 'pano_bos',
+          height: 1300,
+          build: () =>
+              AdminHomeScreen(repository: MockAdminRepository(empty: true)),
+          after: null,
+        ),
+        (
+          name: 'sorular_onerilen',
+          height: 1250,
+          build: () => AdminQuestionsScreen(repository: MockAdminRepository()),
+          after: null,
+        ),
+        (
+          name: 'sorular_bildirilen',
+          height: 1000,
+          build: () => AdminQuestionsScreen(repository: MockAdminRepository()),
+          after: (t) async {
+            await t.tap(find.byKey(const ValueKey('admin-tab-reported')));
+            await t.pumpAndSettle();
+          },
+        ),
+        (
+          name: 'sorular_katkicilar',
+          height: 844,
+          build: () => AdminQuestionsScreen(repository: MockAdminRepository()),
+          after: (t) async {
+            await t.tap(find.byKey(const ValueKey('admin-tab-people')));
+            await t.pumpAndSettle();
+          },
+        ),
+        (
+          name: 'sorular_bos',
+          height: 600,
+          build: () => AdminQuestionsScreen(
+            repository: MockAdminRepository(empty: true),
+          ),
+          after: null,
+        ),
+        (
+          name: 'soru_duzelt',
+          height: 844,
+          build: () => const AdminQuestionEditScreen(
+            item: AdminQuestionItem(
+              id: 'r1',
+              kind: AdminQuestionKind.reported,
+              category: 'Cografya',
+              prompt: 'Çiyayê herî bilind ê Kurdistanê kîjan e?',
+              options: [
+                'Çiyayê Agirî',
+                'Çiyayê Cûdî',
+                'Çiyayê Sîpan',
+                'Çiyayê Qendîl',
+              ],
+              correctIndex: 1,
+              reportCount: 4,
+            ),
+          ),
+          after: null,
+        ),
+        (
+          name: 'oduller_gunluk',
+          height: 1000,
+          build: () => AdminRewardsScreen(repository: MockAdminRepository()),
+          after: null,
+        ),
+        (
+          name: 'oduller_haftalik',
+          height: 1000,
+          build: () => AdminRewardsScreen(repository: MockAdminRepository()),
+          after: (t) async {
+            await t.tap(find.byKey(const ValueKey('admin-period-weekly')));
+            await t.pumpAndSettle();
+          },
+        ),
+        (
+          name: 'kullanicilar',
+          height: 844,
+          build: () => AdminUsersScreen(repository: MockAdminRepository()),
+          after: null,
+        ),
+        (
+          name: 'bildirimler',
+          height: 600,
+          build: () => AdminNotifyScreen(repository: MockAdminRepository()),
+          after: null,
+        ),
+        (
+          name: 'ayarlar_giris',
+          height: 1500,
+          build: () => Provider<AdminRepository>.value(
+            value: MockAdminRepository(),
+            child: SettingsScreen(repository: MockZanKurdRepository()),
+          ),
+          after: null,
+        ),
+      ];
+  for (var i = 0; i < adminSpecs.length; i++) {
+    final spec = adminSpecs[i];
+    final number = (i + 1).toString().padLeft(2, '0');
+    for (final ku in [false, true]) {
+      for (final dark in [false, true]) {
+        final variant = '${ku ? 'ku' : 'tr'}_${dark ? 'dark' : 'light'}';
+        testWidgets('yönetim $number ${spec.name} $variant', (t) async {
+          await _pump(
+            t,
+            spec.build(),
+            ku: ku,
+            dark: dark,
+            size: Size(_size.width, spec.height),
+          );
+          await spec.after?.call(t);
+          await _shoot(t, 'yonetim_${number}_${spec.name}_$variant');
+        }, tags: ['preview']);
+      }
+    }
+  }
 
   // ── Kalabalık oda (2026-10-16): kur sayfası, lobi, oyun içi, sonuç ──────
   //

@@ -1,0 +1,330 @@
+// Yönetim bölümü (2.2) — maket aşaması bekçisi.
+//
+// Korunan sözleşme:
+//  * Giriş YALNIZ yönetici deposu kayıtlıysa VE `isAdmin()` true ise görünür.
+//    Yönetici olmayan hesapta ya da depo hiç yokken (üretim) hiçbir iz
+//    çizilmez. Bu vitrin kapısıdır; asıl yetki sunucudadır
+//    (supabase/2026-11-12_yonetim_paneli.sql, tool/test_yonetim_paneli_local.mjs).
+//  * Her bölüm hem dolu hem boş durumda çizilir ve işlemler depoya gider.
+//  * Hem Türkçe hem Kurmancî çizilir (anahtar eksikse Tr.of atar).
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
+import 'package:zankurd_mobile/src/data/admin_repository.dart';
+import 'package:zankurd_mobile/src/data/mock_admin_repository.dart';
+import 'package:zankurd_mobile/src/l10n/strings.dart';
+import 'package:zankurd_mobile/src/models/admin.dart';
+import 'package:zankurd_mobile/src/screens/admin/admin_home_screen.dart';
+import 'package:zankurd_mobile/src/screens/admin/admin_notify_screen.dart';
+import 'package:zankurd_mobile/src/screens/admin/admin_content_screen.dart';
+import 'package:zankurd_mobile/src/screens/admin/admin_rewards_screen.dart';
+import 'package:zankurd_mobile/src/screens/admin/admin_users_screen.dart';
+import 'package:zankurd_mobile/src/screens/settings_screen.dart';
+import 'package:zankurd_mobile/src/l10n/lang.dart';
+
+import 'support/widget_test_helpers.dart';
+
+Future<void> _pump(
+  WidgetTester tester,
+  Widget child, {
+  bool ku = false,
+  double height = 1800,
+}) async {
+  await tester.binding.setSurfaceSize(Size(390, height));
+  addTearDown(() => tester.binding.setSurfaceSize(null));
+  await tester.pumpWidget(
+    testShell(child: child, languageProvider: ku ? kurmanciLang() : null),
+  );
+  await tester.pumpAndSettle();
+}
+
+String _t(String key, [Map<String, String>? params]) =>
+    Tr.of(key, AppLanguage.tr, params);
+
+Widget _settings(AdminRepository? admin) {
+  final settings = SettingsScreen(repository: freshMockRepository());
+  if (admin == null) return settings;
+  return Provider<AdminRepository>.value(value: admin, child: settings);
+}
+
+void main() {
+  group('giriş görünürlüğü', () {
+    testWidgets('yönetici deposu yoksa Ayarlar\'da Yönetim yok', (t) async {
+      await _pump(t, _settings(null));
+      expect(find.byKey(const ValueKey('settings-admin-entry')), findsNothing);
+      expect(find.text(_t(K.adminEntry)), findsNothing);
+    });
+
+    testWidgets('admin değilse (isAdmin=false) giriş görünmez', (t) async {
+      await _pump(t, _settings(MockAdminRepository(admin: false)));
+      expect(find.byKey(const ValueKey('settings-admin-entry')), findsNothing);
+      expect(find.text(_t(K.adminEntry)), findsNothing);
+    });
+
+    testWidgets('isAdmin hata verirse giriş görünmez', (t) async {
+      await _pump(t, _settings(_ThrowingAdminRepository()));
+      expect(find.byKey(const ValueKey('settings-admin-entry')), findsNothing);
+    });
+
+    testWidgets('admin ise giriş görünür ve panoyu açar', (t) async {
+      await _pump(t, _settings(MockAdminRepository()));
+      final entry = find.byKey(const ValueKey('settings-admin-entry'));
+      expect(entry, findsOneWidget);
+      await t.tap(entry);
+      await t.pumpAndSettle();
+      expect(find.text(_t(K.adminOverviewTitle)), findsOneWidget);
+      expect(find.text('1284'), findsOneWidget);
+    });
+  });
+
+  group('pano', () {
+    testWidgets('dolu: toplam sayılar, bölüm girişleri, son işlemler', (
+      t,
+    ) async {
+      await _pump(t, AdminHomeScreen(repository: MockAdminRepository()));
+      for (final value in ['1284', '96', '412', '7', '63', '0']) {
+        expect(find.text(value), findsWidgets, reason: value);
+      }
+      expect(
+        find.byKey(const ValueKey('admin-open-questions')),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('admin-open-rewards')), findsOneWidget);
+      expect(find.byKey(const ValueKey('admin-open-users')), findsOneWidget);
+      expect(find.byKey(const ValueKey('admin-open-notify')), findsOneWidget);
+      expect(find.text(_t(K.adminActApprove)), findsOneWidget);
+    });
+
+    testWidgets('boş: sıfırlar ve "henüz işlem yok"', (t) async {
+      await _pump(
+        t,
+        AdminHomeScreen(repository: MockAdminRepository(empty: true)),
+      );
+      expect(find.text('1284'), findsNothing);
+      expect(find.text(_t(K.adminNoActions)), findsOneWidget);
+    });
+
+    testWidgets('Kurmancî çizilir', (t) async {
+      await _pump(
+        t,
+        AdminHomeScreen(repository: MockAdminRepository()),
+        ku: true,
+      );
+      expect(
+        find.text(Tr.of(K.adminOverviewTitle, AppLanguage.ku)),
+        findsOneWidget,
+      );
+    });
+  });
+
+  group('soru yönetimi', () {
+    testWidgets('önerilen: onayla öneriyi kuyruktan düşürür', (t) async {
+      final repo = MockAdminRepository();
+      await _pump(t, AdminQuestionsScreen(repository: repo));
+      expect(find.text('Şerefname kê nivîsandiye?'), findsOneWidget);
+      await t.tap(find.byKey(const ValueKey('admin-approve-s1')));
+      await t.pumpAndSettle();
+      expect(find.text('Şerefname kê nivîsandiye?'), findsNothing);
+      expect(repo.auditCount, 4);
+    });
+
+    testWidgets('önerilen: reddet onay ister, vazgeçince kalır', (t) async {
+      final repo = MockAdminRepository();
+      await _pump(t, AdminQuestionsScreen(repository: repo));
+      await t.tap(find.byKey(const ValueKey('admin-reject-s2')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-confirm-cancel')));
+      await t.pumpAndSettle();
+      expect(find.byKey(const ValueKey('admin-reject-s2')), findsOneWidget);
+      await t.tap(find.byKey(const ValueKey('admin-reject-s2')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-confirm-ok')));
+      await t.pumpAndSettle();
+      expect(find.byKey(const ValueKey('admin-reject-s2')), findsNothing);
+    });
+
+    testWidgets('önerilen: düzelt ekranı kaydedince öneri onaylanır', (
+      t,
+    ) async {
+      final repo = MockAdminRepository();
+      await _pump(t, AdminQuestionsScreen(repository: repo));
+      await t.tap(find.byKey(const ValueKey('admin-fix-s3')));
+      await t.pumpAndSettle();
+      await t.enterText(
+        find.descendant(
+          of: find.byKey(const ValueKey('admin-edit-prompt')),
+          matching: find.byType(EditableText),
+        ),
+        'Newroz kîjan roj tê pîrozkirin?',
+      );
+      await t.tap(find.byKey(const ValueKey('admin-edit-correct-1')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-edit-save')));
+      await t.pumpAndSettle();
+      expect(find.byKey(const ValueKey('admin-fix-s3')), findsNothing);
+    });
+
+    testWidgets('bildirilen: emekli et ve bildirimi kapat', (t) async {
+      final repo = MockAdminRepository();
+      await _pump(t, AdminQuestionsScreen(repository: repo));
+      await t.tap(find.byKey(const ValueKey('admin-tab-reported')));
+      await t.pumpAndSettle();
+      expect(
+        find.text('Çiyayê herî bilind ê Kurdistanê kîjan e?'),
+        findsOneWidget,
+      );
+      await t.tap(find.byKey(const ValueKey('admin-retire-r1')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-confirm-ok')));
+      await t.pumpAndSettle();
+      expect(find.byKey(const ValueKey('admin-retire-r1')), findsNothing);
+      await t.tap(find.byKey(const ValueKey('admin-dismiss-r2')));
+      await t.pumpAndSettle();
+      expect(find.text(_t(K.adminEmptyReported)), findsOneWidget);
+    });
+
+    testWidgets('boş: üç sekme de boş durumu çizer', (t) async {
+      final repo = MockAdminRepository(empty: true);
+      await _pump(t, AdminQuestionsScreen(repository: repo));
+      expect(find.text(_t(K.adminEmptySuggested)), findsOneWidget);
+      await t.tap(find.byKey(const ValueKey('admin-tab-reported')));
+      await t.pumpAndSettle();
+      expect(find.text(_t(K.adminEmptyReported)), findsOneWidget);
+      await t.tap(find.byKey(const ValueKey('admin-tab-people')));
+      await t.pumpAndSettle();
+      expect(find.text(_t(K.adminEmptyPeople)), findsOneWidget);
+    });
+
+    testWidgets('katkıcı ödüllendirme onaydan sonra jeton yazar', (t) async {
+      final repo = MockAdminRepository();
+      await _pump(t, AdminQuestionsScreen(repository: repo));
+      await t.tap(find.byKey(const ValueKey('admin-tab-people')));
+      await t.pumpAndSettle();
+      expect(find.text('Baran'), findsOneWidget);
+      await t.tap(find.byKey(const ValueKey('admin-reward-u-baran')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-confirm-ok')));
+      await t.pumpAndSettle();
+      final people = await repo.loadContributors();
+      expect(people.firstWhere((p) => p.name == 'Baran').rewardedCoins, 100);
+    });
+  });
+
+  group('ödüller', () {
+    testWidgets('günlük: ilk 3 görünür, jeton ver onaydan sonra "Verildi"', (
+      t,
+    ) async {
+      final repo = MockAdminRepository();
+      await _pump(t, AdminRewardsScreen(repository: repo));
+      expect(find.text('Berfin'), findsOneWidget);
+      await t.tap(find.byKey(const ValueKey('admin-grant-coins-u-berfin')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-confirm-ok')));
+      await t.pumpAndSettle();
+      expect(find.text(_t(K.adminRewardGiven)), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('admin-grant-coins-u-berfin')),
+        findsNothing,
+      );
+    });
+
+    testWidgets('haftalık sekme ve otomatik ödül anahtarı', (t) async {
+      final repo = MockAdminRepository();
+      await _pump(t, AdminRewardsScreen(repository: repo));
+      await t.tap(find.byKey(const ValueKey('admin-period-weekly')));
+      await t.pumpAndSettle();
+      expect(find.text('Rojda'), findsOneWidget);
+      expect(find.text('2026-11-09'), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('admin-grant-badge-u-rojda')),
+        findsNothing,
+      );
+      await t.tap(find.byKey(const ValueKey('admin-auto-reward-switch')));
+      await t.pumpAndSettle();
+      expect(await repo.loadAutoReward(), isFalse);
+    });
+
+    testWidgets('boş: katılan yok', (t) async {
+      await _pump(
+        t,
+        AdminRewardsScreen(repository: MockAdminRepository(empty: true)),
+      );
+      expect(find.text(_t(K.adminEmptyRewards)), findsOneWidget);
+    });
+  });
+
+  group('kullanıcılar ve şikâyetler', () {
+    testWidgets('uyar → durum rozeti değişir, kısıtı kaldır geri alır', (
+      t,
+    ) async {
+      final repo = MockAdminRepository();
+      await _pump(t, AdminUsersScreen(repository: repo));
+      expect(find.text('Oyuncu4821'), findsOneWidget);
+      await t.tap(find.byKey(const ValueKey('admin-user-warn-u-x1')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-confirm-ok')));
+      await t.pumpAndSettle();
+      expect(
+        find.byKey(const ValueKey('admin-user-lift-u-x1')),
+        findsOneWidget,
+      );
+      await t.tap(find.byKey(const ValueKey('admin-user-lift-u-x1')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-confirm-ok')));
+      await t.pumpAndSettle();
+      expect(
+        find.byKey(const ValueKey('admin-user-warn-u-x1')),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('askıya al süreyi rozete yazar', (t) async {
+      final repo = MockAdminRepository();
+      await _pump(t, AdminUsersScreen(repository: repo));
+      await t.tap(find.byKey(const ValueKey('admin-user-suspend-u-x1')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-confirm-ok')));
+      await t.pumpAndSettle();
+      expect(
+        find.text(_t(K.adminStateSuspended, {'days': '7'})),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('boş: açık şikâyet yok', (t) async {
+      await _pump(
+        t,
+        AdminUsersScreen(repository: MockAdminRepository(empty: true)),
+      );
+      expect(find.text(_t(K.adminEmptyUsers)), findsOneWidget);
+    });
+  });
+
+  group('anlık bildirimler', () {
+    testWidgets('anahtar tercihi depoya yazar', (t) async {
+      final repo = MockAdminRepository();
+      await _pump(t, AdminNotifyScreen(repository: repo));
+      await t.tap(find.byKey(const ValueKey('admin-notify-suggestion')));
+      await t.pumpAndSettle();
+      final prefs = await repo.loadNotifyPrefs();
+      expect(prefs[AdminNotifyKind.suggestion], isFalse);
+      expect(prefs[AdminNotifyKind.report], isTrue);
+    });
+  });
+
+  group('hata dayanıklılığı', () {
+    testWidgets('yükleme hatasında "yüklenemedi" + yeniden dene', (t) async {
+      await _pump(t, AdminHomeScreen(repository: _ThrowingAdminRepository()));
+      expect(find.text(_t(K.adminLoadFailed)), findsOneWidget);
+      expect(find.text(_t(K.retry)), findsOneWidget);
+    });
+  });
+}
+
+class _ThrowingAdminRepository extends MockAdminRepository {
+  @override
+  Future<bool> isAdmin() async => throw StateError('ağ yok');
+
+  @override
+  Future<AdminStats> loadStats() async => throw StateError('ağ yok');
+}

@@ -46,6 +46,7 @@ import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
 import '../widgets/learning_goal_chooser.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'admin/admin_entry_row.dart';
 import 'image_credits_screen.dart';
 import 'paywall_screen.dart';
 import '../widgets/dialog_action_pair.dart';
@@ -528,6 +529,9 @@ class _SettingsScreenState extends State<SettingsScreen>
                   ),
                 ],
               ),
+
+              // Yalnız sahip hesabında görünür (2.2); bkz. AdminEntryRow.
+              const AdminEntryRow(),
 
               // ============ GÜVENLİK / SAFETY ============
               //

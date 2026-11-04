@@ -4838,6 +4838,224 @@ class Tr {
       'ku': 'Rêzbendî niha nehat barkirin.',
       'tr': 'Sıralama şu an yüklenemedi.',
     },
+    // ── Yönetim bölümü (2.2, yalnız sahip hesabı) ────────────────────
+    K.adminEntry: {'ku': 'Rêveberî', 'tr': 'Yönetim'},
+    K.adminEntrySub: {
+      'ku': 'Panel, pirs, xelat, gilî',
+      'tr': 'Pano, sorular, ödüller, şikâyetler',
+    },
+    K.adminOwnerNote: {
+      'ku': 'Ev beş tenê di hesabê xwedî de xuya dibe.',
+      'tr': 'Bu bölüm yalnız sahip hesabında görünür.',
+    },
+    K.adminMockNote: {
+      'ku': 'Daneyên mînakê ne: guhertin naçin pêşkêşkerê.',
+      'tr': 'Maket verisi: değişiklikler sunucuya gitmez.',
+    },
+    K.adminOverviewTitle: {'ku': 'Panel', 'tr': 'Pano'},
+    K.adminTotalsNote: {
+      'ku': 'Tenê hejmarên giştî; daneyên kesane tune.',
+      'tr': 'Yalnız toplam sayılar; kişisel veri yok.',
+    },
+    K.adminStatUsers: {'ku': 'Lîstikvanên tomarkirî', 'tr': 'Kayıtlı oyuncu'},
+    K.adminStatActiveToday: {'ku': 'Çalakên îro', 'tr': 'Bugün aktif'},
+    K.adminStatActiveWeek: {'ku': 'Çalakên vê hefteyê', 'tr': 'Bu hafta aktif'},
+    K.adminStatNewToday: {'ku': 'Tomarên nû yên îro', 'tr': 'Bugün yeni kayıt'},
+    K.adminStatNewWeek: {
+      'ku': 'Tomarên nû yên vê hefteyê',
+      'tr': 'Bu hafta yeni kayıt',
+    },
+    K.adminStatCrashes: {'ku': 'Têkçûn (7 roj)', 'tr': 'Çökme (7 gün)'},
+    K.adminModeUsage: {
+      'ku': 'Bikaranîna modan (vê hefteyê)',
+      'tr': 'Mod kullanımı (bu hafta)',
+    },
+    K.adminModeSolo: {'ku': 'Bi tenê', 'tr': 'Tek başına'},
+    K.adminModeRoom: {'ku': 'Ode', 'tr': 'Oda'},
+    K.adminWaiting: {'ku': 'Yên li bendê', 'tr': 'Bekleyenler'},
+    K.adminPendingSuggestions: {
+      'ku': 'Pêşniyarên li bendê',
+      'tr': 'Bekleyen öneri',
+    },
+    K.adminOpenReports: {'ku': 'Giliyên vekirî', 'tr': 'Açık bildirim'},
+    K.adminRecentActions: {'ku': 'Çalakiyên dawî', 'tr': 'Son işlemler'},
+    K.adminNoActions: {'ku': 'Hê çalakî tune.', 'tr': 'Henüz işlem yok.'},
+    K.adminSecQuestionsSub: {
+      'ku': 'Pirsên pêşniyarkirî û gilîkirî',
+      'tr': 'Önerilen ve bildirilen sorular',
+    },
+    K.adminSecRewardsSub: {
+      'ku': 'Pêşbirka rojê û 3 yên pêşîn ên hefteyê',
+      'tr': 'Günün yarışması ve haftalık ilk 3',
+    },
+    K.adminSecUsersSub: {
+      'ku': 'Lîstikvanên gilîkirî',
+      'tr': 'Bildirilen oyuncular',
+    },
+    K.adminSecNotifySub: {
+      'ku': 'Di pêşniyar û giliyan de tavilê agahdar bike',
+      'tr': 'Öneri ve şikâyette anında haber ver',
+    },
+    K.adminSecNotify: {'ku': 'Agahdariyên tavilê', 'tr': 'Anlık bildirimler'},
+    K.adminQuestionsTitle: {'ku': 'Rêveberiya pirsan', 'tr': 'Soru yönetimi'},
+    K.adminTabSuggested: {'ku': 'Pêşniyarkirî', 'tr': 'Önerilen'},
+    K.adminTabReported: {'ku': 'Gilîkirî', 'tr': 'Bildirilen'},
+    K.adminTabPeople: {'ku': 'Beşdar', 'tr': 'Katkıcılar'},
+    K.adminEmptySuggested: {
+      'ku': 'Pêşniyareke li bendê tune.',
+      'tr': 'Bekleyen öneri yok.',
+    },
+    K.adminEmptyReported: {
+      'ku': 'Giliyeke vekirî tune.',
+      'tr': 'Açık bildirim yok.',
+    },
+    K.adminEmptyPeople: {'ku': 'Hê beşdarî tune.', 'tr': 'Henüz katkı yok.'},
+    K.adminSuggestedBy: {'ku': 'Pêşniyarker: {name}', 'tr': 'Öneren: {name}'},
+    K.adminReportCount: {'ku': '{n} gilî', 'tr': '{n} bildirim'},
+    K.adminReportReason: {'ku': 'Sedem: {reason}', 'tr': 'Neden: {reason}'},
+    K.adminCorrectAnswer: {
+      'ku': 'Bersiva rast: {answer}',
+      'tr': 'Doğru cevap: {answer}',
+    },
+    K.adminApprove: {'ku': 'Bipejirîne', 'tr': 'Onayla'},
+    K.adminReject: {'ku': 'Red bike', 'tr': 'Reddet'},
+    K.adminFix: {'ku': 'Sererast bike', 'tr': 'Düzelt'},
+    K.adminRetire: {'ku': 'Ji lîstikê rake', 'tr': 'Emekli et'},
+    K.adminDismissReport: {'ku': 'Giliyê bigire', 'tr': 'Bildirimi kapat'},
+    K.adminNoteLabel: {'ku': 'Nîşe (vebijarkî)', 'tr': 'Not (isteğe bağlı)'},
+    K.adminPromptLabel: {'ku': 'Nivîsa pirsê', 'tr': 'Soru metni'},
+    K.adminOptionLabel: {'ku': 'Vebijark {letter}', 'tr': 'Seçenek {letter}'},
+    K.adminCorrectOption: {'ku': 'Vebijarka rast', 'tr': 'Doğru seçenek'},
+    K.adminSaveFix: {
+      'ku': 'Sererastkirinê tomar bike',
+      'tr': 'Düzeltmeyi kaydet',
+    },
+    K.adminConfirmTitle: {'ku': 'Tu piştrast î?', 'tr': 'Emin misin?'},
+    K.adminConfirmApply: {'ku': 'Erê, pêk bîne', 'tr': 'Evet, uygula'},
+    K.adminConfirmReject: {
+      'ku': 'Pêşniyar dê were red kirin.',
+      'tr': 'Öneri reddedilecek.',
+    },
+    K.adminConfirmRetire: {
+      'ku': 'Pirs ji lîstikê tê rakirin; paşê dikare were vegerandin.',
+      'tr': 'Soru oyundan kalkar; sonradan geri alınabilir.',
+    },
+    K.adminDone: {'ku': 'Hat tomarkirin.', 'tr': 'Kaydedildi.'},
+    K.adminFailed: {
+      'ku': 'Çalakî pêk nehat. Dîsa biceribîne.',
+      'tr': 'İşlem yapılamadı. Tekrar dene.',
+    },
+    K.adminLoadFailed: {'ku': 'Nehat barkirin.', 'tr': 'Yüklenemedi.'},
+    K.adminContribSummary: {
+      'ku': '{n} pêşniyar · {m} pejirandî',
+      'tr': '{n} öneri · {m} onaylı',
+    },
+    K.adminContribRewarded: {
+      'ku': '{coins} zêr hat dayîn',
+      'tr': '{coins} jeton verildi',
+    },
+    K.adminRewardPerson: {'ku': 'Xelat bide', 'tr': 'Ödüllendir'},
+    K.adminGiveCoins: {'ku': '{coins} zêr bide', 'tr': '{coins} jeton ver'},
+    K.adminGiveBadge: {'ku': 'Rozetê bide', 'tr': 'Rozet ver'},
+    K.adminRewardsTitle: {'ku': 'Xelat', 'tr': 'Ödüller'},
+    K.adminRewardDaily: {'ku': 'Pêşbirka rojê', 'tr': 'Günün yarışması'},
+    K.adminRewardWeekly: {
+      'ku': 'Rêzbendiya hefteyê',
+      'tr': 'Haftalık sıralama',
+    },
+    K.adminTop3: {'ku': '3 yên pêşîn', 'tr': 'İlk 3'},
+    K.adminScorePts: {'ku': '{n} xal', 'tr': '{n} puan'},
+    K.adminRewardGiven: {'ku': 'Hat dayîn', 'tr': 'Verildi'},
+    K.adminEmptyRewards: {
+      'ku': 'Di vê demê de tu beşdar tune.',
+      'tr': 'Bu dönemde katılan yok.',
+    },
+    K.adminAutoReward: {'ku': 'Xelata xweber', 'tr': 'Otomatik ödül'},
+    K.adminAutoRewardSub: {
+      'ku':
+          'Gava vekirî be, di dawiya demê de ji 3 yên pêşîn re xweber tê dayîn; tu dikarî bi destê xwe jî bidî.',
+      'tr':
+          'Açıkken dönem sonunda ilk 3’e kendiliğinden verilir; elle de verebilirsin.',
+    },
+    K.adminConfirmGrant: {
+      'ku': '{coins} zêr ji {name} re bê dayîn?',
+      'tr': '{name} için {coins} jeton verilsin mi?',
+    },
+    K.adminConfirmBadge: {
+      'ku': 'Rozet ji {name} re bê dayîn?',
+      'tr': '{name} için rozet verilsin mi?',
+    },
+    K.adminUsersTitle: {
+      'ku': 'Bikarhêner û gilî',
+      'tr': 'Kullanıcılar ve şikâyetler',
+    },
+    K.adminEmptyUsers: {
+      'ku': 'Giliyeke vekirî tune.',
+      'tr': 'Açık şikâyet yok.',
+    },
+    K.adminReportsAbout: {'ku': '{n} gilî', 'tr': '{n} şikâyet'},
+    K.adminWarn: {'ku': 'Hişyar bike', 'tr': 'Uyar'},
+    K.adminBlock: {'ku': 'Asteng bike', 'tr': 'Engelle'},
+    K.adminSuspend: {'ku': 'Demkî rawestîne', 'tr': 'Askıya al'},
+    K.adminLiftRestriction: {'ku': 'Astengiyê rake', 'tr': 'Kısıtı kaldır'},
+    K.adminStateOk: {'ku': 'Normal', 'tr': 'Normal'},
+    K.adminStateWarned: {'ku': 'Hat hişyarkirin', 'tr': 'Uyarıldı'},
+    K.adminStateBlocked: {'ku': 'Astengkirî', 'tr': 'Engelli'},
+    K.adminStateSuspended: {
+      'ku': 'Rawestandî · {days} roj',
+      'tr': 'Askıda · {days} gün',
+    },
+    K.adminConfirmUserAction: {
+      'ku': '“{action}” li ser {name} bê sepandin?',
+      'tr': '{name} için “{action}” uygulansın mı?',
+    },
+    K.adminNotifyTitle: {'ku': 'Agahdariyên tavilê', 'tr': 'Anlık bildirimler'},
+    K.adminNotifyLead: {
+      'ku': 'Agahdarî tavilê bigihîje têlefona te:',
+      'tr': 'Telefonuna hemen bildirim gelsin:',
+    },
+    K.adminNotifySuggestion: {
+      'ku': 'Pêşniyara pirsê ya nû',
+      'tr': 'Yeni soru önerisi',
+    },
+    K.adminNotifyReport: {
+      'ku': 'Gilî an gilîkirina pirsê ya nû',
+      'tr': 'Yeni şikâyet veya soru bildirimi',
+    },
+    K.adminNotifySupportInfo: {
+      'ku':
+          'E-nameyên piştgiriyê di sepana Mail a têlefona te de tên; li vir nayên cîkirin.',
+      'tr':
+          'Destek e-postaları telefonundaki Mail uygulamasına gelir; buraya gömülmez.',
+    },
+    K.adminActApprove: {
+      'ku': 'Pêşniyar hat pejirandin',
+      'tr': 'Öneri onaylandı',
+    },
+    K.adminActReject: {
+      'ku': 'Pêşniyar hat red kirin',
+      'tr': 'Öneri reddedildi',
+    },
+    K.adminActFix: {'ku': 'Pirs hat sererastkirin', 'tr': 'Soru düzeltildi'},
+    K.adminActRetire: {
+      'ku': 'Pirs ji lîstikê hat rakirin',
+      'tr': 'Soru emekli edildi',
+    },
+    K.adminActDismiss: {'ku': 'Gilî hat girtin', 'tr': 'Bildirim kapatıldı'},
+    K.adminActReward: {'ku': 'Xelat hat dayîn', 'tr': 'Ödül verildi'},
+    K.adminActWarn: {
+      'ku': 'Lîstikvan hat hişyarkirin',
+      'tr': 'Oyuncu uyarıldı',
+    },
+    K.adminActBlock: {
+      'ku': 'Lîstikvan hat astengkirin',
+      'tr': 'Oyuncu engellendi',
+    },
+    K.adminActSuspend: {
+      'ku': 'Lîstikvan hat rawestandin',
+      'tr': 'Oyuncu askıya alındı',
+    },
+    K.adminActLift: {'ku': 'Astengî hat rakirin', 'tr': 'Kısıt kaldırıldı'},
   };
 
   /// [key] için [language] karşılığı; yoksa Kurmancî'ye düşer.
@@ -6716,4 +6934,101 @@ class K {
   static const ageGateTitle = 'ageGate.title';
   static const ageGateBody = 'ageGate.body';
   static const ageGateMinorOff = 'ageGate.minorOff';
+  // Yönetim bölümü (2.2, yalnız sahip hesabı).
+  static const adminEntry = 'admin.Entry';
+  static const adminEntrySub = 'admin.EntrySub';
+  static const adminOwnerNote = 'admin.OwnerNote';
+  static const adminMockNote = 'admin.MockNote';
+  static const adminOverviewTitle = 'admin.OverviewTitle';
+  static const adminTotalsNote = 'admin.TotalsNote';
+  static const adminStatUsers = 'admin.StatUsers';
+  static const adminStatActiveToday = 'admin.StatActiveToday';
+  static const adminStatActiveWeek = 'admin.StatActiveWeek';
+  static const adminStatNewToday = 'admin.StatNewToday';
+  static const adminStatNewWeek = 'admin.StatNewWeek';
+  static const adminStatCrashes = 'admin.StatCrashes';
+  static const adminModeUsage = 'admin.ModeUsage';
+  static const adminModeSolo = 'admin.ModeSolo';
+  static const adminModeRoom = 'admin.ModeRoom';
+  static const adminWaiting = 'admin.Waiting';
+  static const adminPendingSuggestions = 'admin.PendingSuggestions';
+  static const adminOpenReports = 'admin.OpenReports';
+  static const adminRecentActions = 'admin.RecentActions';
+  static const adminNoActions = 'admin.NoActions';
+  static const adminSecQuestionsSub = 'admin.SecQuestionsSub';
+  static const adminSecRewardsSub = 'admin.SecRewardsSub';
+  static const adminSecUsersSub = 'admin.SecUsersSub';
+  static const adminSecNotifySub = 'admin.SecNotifySub';
+  static const adminSecNotify = 'admin.SecNotify';
+  static const adminQuestionsTitle = 'admin.QuestionsTitle';
+  static const adminTabSuggested = 'admin.TabSuggested';
+  static const adminTabReported = 'admin.TabReported';
+  static const adminTabPeople = 'admin.TabPeople';
+  static const adminEmptySuggested = 'admin.EmptySuggested';
+  static const adminEmptyReported = 'admin.EmptyReported';
+  static const adminEmptyPeople = 'admin.EmptyPeople';
+  static const adminSuggestedBy = 'admin.SuggestedBy';
+  static const adminReportCount = 'admin.ReportCount';
+  static const adminReportReason = 'admin.ReportReason';
+  static const adminCorrectAnswer = 'admin.CorrectAnswer';
+  static const adminApprove = 'admin.Approve';
+  static const adminReject = 'admin.Reject';
+  static const adminFix = 'admin.Fix';
+  static const adminRetire = 'admin.Retire';
+  static const adminDismissReport = 'admin.DismissReport';
+  static const adminNoteLabel = 'admin.NoteLabel';
+  static const adminPromptLabel = 'admin.PromptLabel';
+  static const adminOptionLabel = 'admin.OptionLabel';
+  static const adminCorrectOption = 'admin.CorrectOption';
+  static const adminSaveFix = 'admin.SaveFix';
+  static const adminConfirmTitle = 'admin.ConfirmTitle';
+  static const adminConfirmApply = 'admin.ConfirmApply';
+  static const adminConfirmReject = 'admin.ConfirmReject';
+  static const adminConfirmRetire = 'admin.ConfirmRetire';
+  static const adminDone = 'admin.Done';
+  static const adminFailed = 'admin.Failed';
+  static const adminLoadFailed = 'admin.LoadFailed';
+  static const adminContribSummary = 'admin.ContribSummary';
+  static const adminContribRewarded = 'admin.ContribRewarded';
+  static const adminRewardPerson = 'admin.RewardPerson';
+  static const adminGiveCoins = 'admin.GiveCoins';
+  static const adminGiveBadge = 'admin.GiveBadge';
+  static const adminRewardsTitle = 'admin.RewardsTitle';
+  static const adminRewardDaily = 'admin.RewardDaily';
+  static const adminRewardWeekly = 'admin.RewardWeekly';
+  static const adminTop3 = 'admin.Top3';
+  static const adminScorePts = 'admin.ScorePts';
+  static const adminRewardGiven = 'admin.RewardGiven';
+  static const adminEmptyRewards = 'admin.EmptyRewards';
+  static const adminAutoReward = 'admin.AutoReward';
+  static const adminAutoRewardSub = 'admin.AutoRewardSub';
+  static const adminConfirmGrant = 'admin.ConfirmGrant';
+  static const adminConfirmBadge = 'admin.ConfirmBadge';
+  static const adminUsersTitle = 'admin.UsersTitle';
+  static const adminEmptyUsers = 'admin.EmptyUsers';
+  static const adminReportsAbout = 'admin.ReportsAbout';
+  static const adminWarn = 'admin.Warn';
+  static const adminBlock = 'admin.Block';
+  static const adminSuspend = 'admin.Suspend';
+  static const adminLiftRestriction = 'admin.LiftRestriction';
+  static const adminStateOk = 'admin.StateOk';
+  static const adminStateWarned = 'admin.StateWarned';
+  static const adminStateBlocked = 'admin.StateBlocked';
+  static const adminStateSuspended = 'admin.StateSuspended';
+  static const adminConfirmUserAction = 'admin.ConfirmUserAction';
+  static const adminNotifyTitle = 'admin.NotifyTitle';
+  static const adminNotifyLead = 'admin.NotifyLead';
+  static const adminNotifySuggestion = 'admin.NotifySuggestion';
+  static const adminNotifyReport = 'admin.NotifyReport';
+  static const adminNotifySupportInfo = 'admin.NotifySupportInfo';
+  static const adminActApprove = 'admin.ActApprove';
+  static const adminActReject = 'admin.ActReject';
+  static const adminActFix = 'admin.ActFix';
+  static const adminActRetire = 'admin.ActRetire';
+  static const adminActDismiss = 'admin.ActDismiss';
+  static const adminActReward = 'admin.ActReward';
+  static const adminActWarn = 'admin.ActWarn';
+  static const adminActBlock = 'admin.ActBlock';
+  static const adminActSuspend = 'admin.ActSuspend';
+  static const adminActLift = 'admin.ActLift';
 }
