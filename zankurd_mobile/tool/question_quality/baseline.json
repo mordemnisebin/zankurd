@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "createdDate": "2026-11-01",
+  "createdDate": "2026-11-04",
   "manifestVersion": 1,
   "sourceFingerprints": {
     "assets/data/altkonu_2026_10_01_questions.json": "91d2f1a42fc9444c9f557ca68c817d8403be562d0d89667e19dbdd0767be2076",
@@ -26,7 +26,7 @@
     "assets/data/sentence_building_questions.json": "5e770157578541426a3d75b433ef985ada70be8209453a193de594e2c7ba247a",
     "assets/data/source_first_2026_08_questions.json": "8954e5b13703de77e997c06f0bc72148e791cc073509e045136449ad0a35cc48",
     "assets/data/visual_2026_08_07_questions.json": "defbbd00df69f68865b16d232a6530cbc9e374f7ef191f02a3253d8d2689c5c9",
-    "lib/src/data/curated_question_bank.dart": "2907a24c75985ee4a5f42978ce4e0aed9eef1a4e42eb190212856831fc0a85ee"
+    "lib/src/data/curated_question_bank.dart": "0cf87a3148e2b759cdd5faec0a141cd3f541c5368c90804476740c24d051232f"
   },
   "blockerCount": 0,
   "criticalCount": 0,

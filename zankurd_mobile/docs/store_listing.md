@@ -65,7 +65,7 @@ Nûbûnên ZanKurd 2.1.1:
 • Peyvên min: Qutiyên peyvan bi dubarekirina bi navber û ferhengeke dualî.
 • Pêşbirka bi dorê: Dema 24 saetan, bîrxistina hevrik, berawirdkirina pirs bi pirs û pêşbirka vegerê.
 • Ode: Sohbet û bertek li jor in, "Dîsa bilîze" û hilbijartina hejmara lîstikvanan.
-• Firotgeh: Pakêta jokeran, parastina rêzeyê û çarçoveyên nû.
+• Dukan: Pakêta alîkariyan, parastina zincîra rojane û çarçoveyên nû.
 • Li rûpela sereke panela yekane ya "Îro" û "Gera rojê".
 • Bi dehan sererastkirin û çêtirkirin.
 ```
@@ -213,7 +213,7 @@ değiştirirsin; sorular, açıklamalar ve dersler iki dilde de yazılıdır.
 Tek kişilik soruların tamamı cihazda. İnternet olmadan da oynarsın.
 Seviye çubuğun ve öğrenme ilerlemen cihazda saklanır; hesabınla girdiysen
 hesabına da eşitlenir, telefon değişse de kaybolmaz.
-Sıralama puanın hesabına yazılır; çevrimiçi yarışlar, coin işlemleri ve
+Sıralama puanın hesabına yazılır; çevrimiçi yarışlar, jeton işlemleri ve
 hesap özellikleri internet gerektirir.
 
 ERİŞİLEBİLİRLİK
@@ -326,7 +326,7 @@ değiştirirsin; sorular, açıklamalar ve dersler iki dilde de yazılıdır.
 Tek kişilik soruların tamamı cihazda. İnternet olmadan da oynarsın.
 Seviye çubuğun ve öğrenme ilerlemen cihazda saklanır; hesabınla girdiysen
 hesabına da eşitlenir, telefon değişse de kaybolmaz.
-Sıralama puanın hesabına yazılır; çevrimiçi yarışlar, coin işlemleri ve
+Sıralama puanın hesabına yazılır; çevrimiçi yarışlar, jeton işlemleri ve
 hesap özellikleri internet gerektirir.
 
 Erişilebilirlik
@@ -415,13 +415,13 @@ Teknolojî û Zanist û Raman zanîna giştî ne û ji kategoriyên kurdî cuda 
 PÊŞBIRK
 
 • Pêşbirka zindî: bi hevrikekî rasthatî re 1v1 rasterast.
-• Pêşbirka bi dorê: ne pêwist e hevrikê te di heman demê de serhêl be.
+• Pêşbirka bi dorê: ne pêwîst e hevrikê te di heman demê de serhêl be.
   Tu niha dilîzî, ew paşê; encam di "Pêşbirkên min" de xuya dibe.
 • Ode ava bike: girêdana vexwendinê parve bike, bila hevalên te bi yek
   tikandinê tevlî bibin.
 • Kûpa: kûpaya palawtinê ya çar kesî bi lîstikvanên rastîn. Pûanên
   pêşbirkan li ser pêşkêşkar tên hesabkirin; şampiyon 200 zêr qezenc dike.
-• Tabloya pêşderiyan: roj, hefte, meh û di nav hevalan de.
+• Rêzbendî: roj, hefte, meh û di nav hevalan de.
 
 HÎN BIBE
 
@@ -445,7 +445,7 @@ BÊ ÎNTERNET
 Hemû pirsên ji bo lîstina bi tenê li ser amûrê ne. Bêyî înternetê jî tu
 dikarî bilîzî. Ast û pêşketina hînbûnê li ser amûrê tên parastin.
 Xala rêzkirinê li ser hesabê tê nivîsandin; pêşbirkên serhêl, karên
-coinan û taybetmendiyên hesabê înternetê dixwazin.
+zêran û taybetmendiyên hesabê înternetê dixwazin.
 
 ZanKurd belaş e û reklam tê de tune. Hemû ders, pêşbirk û rahênan belaş
 in; zêr di nava lîstikê de tên qezenckirin.

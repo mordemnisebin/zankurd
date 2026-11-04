@@ -176,8 +176,8 @@ class Tr {
     K.consentSheetAccept: {'ku': 'Qebûl dikim', 'tr': 'Kabul ediyorum'},
     K.consentSheetDecline: {'ku': 'Niha na', 'tr': 'Şimdi değil'},
     K.ageGateTitle: {
-      'ku': 'Tu ji 13 salî mezintir î?',
-      'tr': '13 yaşından büyük müsün?',
+      'ku': 'Tu 13 salî an jê mezintir î?',
+      'tr': '13 yaşında veya daha büyük müsün?',
     },
     K.ageGateBody: {
       'ku':
@@ -514,7 +514,11 @@ class Tr {
     K.secondsShortUnit: {'ku': 'çirke', 'tr': 'sn'},
     // Sayaç elmasının ekran okuyucu sözü ("17 saniye kaldı"); kısaltma
     // ("17 sn") sesli okumada anlamsızdı.
-    K.timerSecondsLeft: {'ku': '{n} çirke mane', 'tr': '{n} saniye kaldı'},
+    K.timerSecondsLeft: {
+      'ku': '{n} çirke mane',
+      'ku1': '{n} çirke maye',
+      'tr': '{n} saniye kaldı',
+    },
     K.openRoom: {'ku': 'Odeyê veke', 'tr': 'Odayı aç'},
     K.joinRoomTitle: {'ku': 'Tevlî odeyê bibe', 'tr': 'Odaya katıl'},
     K.roomCode: {'ku': 'Koda odeyê', 'tr': 'Oda kodu'},
@@ -669,6 +673,7 @@ class Tr {
     },
     K.wordsSavedCount: {
       'ku': '{count} peyvên tomarkirî',
+      'ku1': 'Peyveke tomarkirî',
       'tr': 'Kayıtlı {count} kelime',
     },
     K.wordsPracticeAll: {'ku': 'Hemû peyvên min', 'tr': 'Tüm kelimelerim'},
@@ -1476,6 +1481,7 @@ class Tr {
     // olarak durur ki kod çevrilmiş metni "·" işaretinden bölmesin.
     K.dailyGoalRemainingCorrect: {
       'ku': '{n} bersivên rast ên din · nêzîkî {m} deqe',
+      'ku1': 'Bersiveke rast a din · nêzîkî {m} deqe',
       'tr': '{n} doğru cevap daha · yaklaşık {m} dakika',
     },
     K.devamEt: {'ku': 'Bidomîne', 'tr': 'Devam et'},
@@ -1555,6 +1561,7 @@ class Tr {
     K.pPSeviye: {'ku': '{p0}/{p1} ast', 'tr': '{p0}/{p1} seviye'},
     K.progressLevelsCompleted: {
       'ku': '{completed} ji {total} astan temam bûn',
+      'ku1': '{completed} ji {total} astan temam bû',
       'tr': '{total} seviyeden {completed} tanesi tamamlandı',
     },
     K.levelNotPassed: {
@@ -1584,8 +1591,8 @@ class Tr {
     },
     K.kategoriUstaligi: {'ku': 'Serweriya mijarê', 'tr': 'Konu ustalığı'},
     K.masteryEvidenceLabel: {
-      'ku': 'Rast: {correct}/{answered} · %{accuracy}',
-      'tr': 'Doğru: {correct}/{answered} · %{accuracy}',
+      'ku': 'Rast: {correct}/{answered} · {accuracy}',
+      'tr': 'Doğru: {correct}/{answered} · {accuracy}',
     },
     K.masteryEvidencePending: {
       'ku': '{correct} rast · serdestî hêj nehatiye piştrastkirin',
@@ -1607,13 +1614,18 @@ class Tr {
       'ku': 'Mijara te ya herî bihêz:',
       'tr': 'En güçlü olduğun konu:',
     },
-    K.pDogruCevap: {'ku': '{p0} bersivên rast', 'tr': '{p0} doğru cevap'},
+    K.pDogruCevap: {
+      'ku': '{p0} bersivên rast',
+      'ku1': 'Bersiveke rast',
+      'tr': '{p0} doğru cevap',
+    },
     K.gelistirilmesiGerekenAlan: {
       'ku': 'Mijara ku divê tu pêş bixî:',
       'tr': 'Geliştirilmesi gereken alan:',
     },
     K.pAktifYanlisSoru: {
       'ku': '{p0} pirsên şaş ên çalak',
+      'ku1': 'Pirseke şaş a çalak',
       'tr': 'Tekrar bekleyen {p0} yanlış soru',
     },
     K.senkronizeEdiliyor: {'ku': 'Tê tomarkirin…', 'tr': 'Kaydediliyor…'},
@@ -1625,6 +1637,7 @@ class Tr {
     },
     K.pSenkronizeEdilemedi: {
       'ku': '{p0} tomar hîn nehatin şandin',
+      'ku1': '{p0} tomar hîn nehat şandin',
       'tr': '{p0} kayıt henüz gönderilmedi',
     },
     // Sunucuya HİÇ ulaşılamıyorken (kilitli/çevrimdışı misafir) "Bulutla
@@ -1639,7 +1652,8 @@ class Tr {
     // Gönderilmeyi bekleyen (henüz başarısız olmamış) kayıtlar. "kayd"
     // bankada başka hiçbir yerde geçmiyor; yerleşik sözcük "tomar"dır.
     K.pendingOnDeviceP: {
-      'ku': '{p0} tomar li amûrê ye',
+      'ku': '{p0} tomar li amûrê ne',
+      'ku1': '{p0} tomar li amûrê ye',
       'tr': '{p0} kayıt cihazda bekliyor',
     },
     // Konunun alt konusu yokken tek yedek satır (bkz. `subcategory_screen`).
@@ -1674,6 +1688,7 @@ class Tr {
     K.crowdAllTied: {'ku': 'Wekhev', 'tr': 'Eşit'},
     K.crowdWaitingCount: {
       'ku': 'Li benda {n} lîstikvanan…',
+      'ku1': 'Li benda lîstikvanekî…',
       'tr': '{n} oyuncu bekleniyor…',
     },
     K.rakipBekleniyor: {'ku': 'Hevrik tê payîn…', 'tr': 'Rakip bekleniyor…'},
@@ -1962,9 +1977,9 @@ class Tr {
     K.faqCoinsQ: {'ku': 'Zêr ji bo çi ye?', 'tr': 'Jeton ne işe yarar?'},
     K.faqCoinsA: {
       'ku':
-          'Bi zêran:\n• di dema pirsê de alîkariyê bi kar tînî (her roj yek belaş e),\n• ji Dukanê çarçove, rozeta VIP û mafê zêde yê gerandina çerxê dikirî,\n• zincîra xwe diparêzî.\n\nZêr ji bersivên rast, peywiran û çerxa rojê tên bidestxistin.\n\nGera dubarekirina şaşiyan zêr nade; ji gerên ku bi tenê tên lîstin rojê herî zêde 45 zêr tên qezenckirin.',
+          'Bi zêran:\n• di dema pirsê de alîkariyê bi kar tînî (her roj yek belaş e),\n• ji Dukanê çarçove, rozeta VIP û mafê zêde yê gerandina çerxê dikirî,\n• zincîra xwe diparêzî.\n\nZêr ji bersivên rast û çerxa rojê tên bidestxistin; erkên rojane XP didin.\n\nGera dubarekirina şaşiyan zêr nade; ji gerên ku bi tenê tên lîstin rojê herî zêde 45 zêr tên qezenckirin.',
       'tr':
-          'Jetonla:\n• soru sırasında joker kullanırsın (her gün biri bedava),\n• Mağaza\'dan çerçeve, VIP rozeti ve ek çark hakkı alırsın,\n• serini korursun.\n\nJeton doğru cevaplardan, görevlerden ve günün çarkından gelir.\n\nYanlış tekrarı turu jeton vermez; tek başına oynanan turlardan günde en çok 45 jeton kazanılır.',
+          'Jetonla:\n• soru sırasında joker kullanırsın (her gün biri bedava),\n• Mağaza\'dan çerçeve, VIP rozeti ve ek çark hakkı alırsın,\n• serini korursun.\n\nJeton doğru cevaplardan ve günün çarkından gelir; günlük görevler XP verir.\n\nYanlış tekrarı turu jeton vermez; tek başına oynanan turlardan günde en çok 45 jeton kazanılır.',
     },
     K.faqReportQ: {
       'ku': 'Min di pirsekê de çewtiyek dît, çi bikim?',
@@ -2185,6 +2200,7 @@ class Tr {
     },
     K.wheelExtraSpins: {
       'ku': '+ {n} zivirandinên zêde',
+      'ku1': '+ zivirandineke zêde',
       'tr': '+ {n} ek çevirme',
     },
     K.wheelWonAmount: {
@@ -2332,6 +2348,7 @@ class Tr {
     K.roomInviteAlreadyInvited: {'ku': 'Hat vexwendin', 'tr': 'Davet edildi'},
     K.roomInviteSent: {
       'ku': 'Vexwendin ji {n} hevalan re çû',
+      'ku1': 'Vexwendin ji hevalekî re çû',
       'tr': '{n} arkadaşa davet gitti',
     },
     K.roomInviteNoneSent: {
@@ -2398,6 +2415,7 @@ class Tr {
     // düğmenin altında yazılır. KU taslak (jüri gerekli).
     K.roomPlayersNotReady: {
       'ku': 'Divê {n} lîstikvanên din jî amade bibin.',
+      'ku1': 'Divê lîstikvanekî din jî amade bibe.',
       'tr': '{n} oyuncu daha hazır olmalı.',
     },
     K.preparingShort: {'ku': 'Tê amadekirin', 'tr': 'Hazırlanıyor'},
@@ -3896,9 +3914,9 @@ class Tr {
     },
     K.privacyBody: {
       'ku':
-          'ZanKurd van daneyan li ser pêşkêşkarê, bi hesabê te ve girêdayî tomar dike: navê lîstikvan û wêneyê profîlê, navnîşana e-nameyê (heke tu xwe tomar bikî), XP, hejmara zêran û kirîn, pûan û statîstîkên lîstikê, pûana rêzbendiyê, dersên qedandî, pirsên tomarkirî, peyamên odeyê, pêşniyarên pirsan û bikarhênerên ku te asteng kirine. Salnameya zincîrê, rozet, ast, serdestiya mijaran, pirsên şaş ên li benda dubarekirinê û pêşketina çîrokan li ser vê amûrê tên parastin; heke te hesabê xwe tomar kiribe, kopiyeke wan jî li ser pêşkêşkarê tê hilanîn û li ser amûreke din vedigere. Di hesabê mêvan de ev tenê li ser vê amûrê ne. Lîsteya peyvan û mîheng tenê li ser vê amûrê tên parastin. Dema tu derkevî, pêşketina li ser amûrê tê paqijkirin. Bûyerên bikaranînê yên ku dikarin bi hesabê te ve werin girêdan tenê dema Mîheng > Hesab û nepenî > Analîza bikaranînê vekirî be, tomarên têkçûnê jî tenê dema Mîheng > Hesab û nepenî > Ragihandinên çewtiyan vekirî be tên şandin. Her du mîheng di destpêkê de girtî ne; tu dikarî kengî bixwazî wan vekî an bigirî.\n\nDaneyên te nayên firotin û bi armanca bazargeriyê bi aliyên sêyemîn re nayên parvekirin. Navê te di rêzbendiyê, lêgerîna hevalan û daxwazên hevaltiyê de, her wiha di odeyên serhêl de xuya dibe. Heke tu mîhenga nîşandana rewşa xwe ya serhêl vekî, dema ku tu cara dawî hatî dîtin li ser pêşkêşkarê tê tomarkirin û ji hevalên te re tê nîşandan. Ev vebijêrk bi hesabê te ve girêdayî ye û di destpêkê de girtî ye; gava tu wê bigirî, ev dem ji hevalên te re nayê nîşandan.\n\nJi bo jêbirina hesabê xwe û hemû daneyên xwe yên serhêl bi awayekî mayînde: Mîheng > Karên hesabê > Hesabê min jê bibe.',
+          'ZanKurd van daneyan li ser pêşkêşkarê, bi hesabê te ve girêdayî tomar dike: navê lîstikvan û wêneyê profîlê, navnîşana e-nameyê (heke tu xwe tomar bikî), XP, hejmara zêran û kirîn, pûan û statîstîkên lîstikê, pûana rêzbendiyê, dersên qedandî, pirsên tomarkirî, peyamên odeyê, pêşniyarên pirsan û bikarhênerên ku te asteng kirine. Salnameya zincîrê, rozet, ast, serdestiya mijaran, pirsên şaş ên li benda dubarekirinê û pêşketina çîrokan li ser vê amûrê tên parastin; heke te hesabê xwe tomar kiribe, kopiyeke wan jî li ser pêşkêşkarê tê hilanîn û li ser amûreke din vedigere. Di hesabê mêvan de ev tenê li ser vê amûrê ne. Di hesabê tomarkirî de lîsteya peyvan û armanca hînbûnê jî li ser pêşkêşkarê tên parastin; mîhengên din tenê li ser vê amûrê ne. Dema tu ji hesabê tomarkirî derkevî, pêşketina te li ser vê amûrê tê parastin; di hesabê mêvan de ev tê paqijkirin. Bûyerên bikaranînê yên ku dikarin bi hesabê te ve werin girêdan tenê dema Mîheng > Hesab û nepenî > Analîza bikaranînê vekirî be, tomarên têkçûnê jî tenê dema Mîheng > Hesab û nepenî > Ragihandinên çewtiyan vekirî be tên şandin. Her du mîheng di destpêkê de girtî ne; tu dikarî kengî bixwazî wan vekî an bigirî.\n\nDaneyên te nayên firotin û bi armanca bazargeriyê bi aliyên sêyemîn re nayên parvekirin. Navê te di rêzbendiyê, lêgerîna hevalan û daxwazên hevaltiyê de, her wiha di odeyên serhêl de xuya dibe. Heke tu mîhenga nîşandana rewşa xwe ya serhêl vekî, dema ku tu cara dawî hatî dîtin li ser pêşkêşkarê tê tomarkirin û ji hevalên te re tê nîşandan. Ev vebijêrk bi hesabê te ve girêdayî ye û di destpêkê de girtî ye; gava tu wê bigirî, ev dem ji hevalên te re nayê nîşandan.\n\nJi bo jêbirina hesabê xwe û daneyên lîstikê yên bi hesabê xwe ve girêdayî: Mîheng > Karên hesabê > Hesabê min jê bibe. Tomarên analîzê, çewtiyan û kirînê dikarin li gorî siyaseta parastinê ya pêşkêşkarên têkildar bimînin.',
       'tr':
-          'ZanKurd şu verileri sunucuda, hesabına bağlı olarak saklar: oyuncu adı ve profil fotoğrafı, e-posta adresi (kayıt olursan), XP, jeton sayısı ve satın almalar, oyun puanları ve istatistikleri, sıralama puanı, tamamlanan dersler, kaydedilen sorular, oda mesajları, soru önerileri ve engellediğin kullanıcılar. Seri takvimi, rozetler, seviye, konu ustalığı, tekrar bekleyen yanlış sorular ve hikâye ilerlemesi bu cihazda tutulur; hesabını kaydettiysen bunların bir yedeği de sunucuya alınır ve başka cihazda geri gelir. Misafir hesapta bunlar yalnız bu cihazdadır. Kelime listesi ve ayarlar yalnız bu cihazda tutulur. Çıkış yaptığında cihazdaki ilerleme temizlenir. Hesabınla ilişkilendirilebilen kullanım olayları yalnız Ayarlar > Hesap ve gizlilik > Kullanım analizi açıkken, çökme kayıtları yalnız Ayarlar > Hesap ve gizlilik > Hata raporları açıkken gönderilir. İki ayar da başlangıçta kapalıdır; istediğin zaman açıp kapatabilirsin.\n\nVerilerin satılmaz ve üçüncü taraflarla pazarlama amaçlı paylaşılmaz. Adın sıralamada, arkadaş araması ve isteklerinde, ayrıca çevrimiçi odalarda görünür. Çevrimiçi durumumu göster ayarını açarsan son görülme zamanın sunucuda saklanır ve arkadaşlarına gösterilir. Bu tercih hesabına bağlıdır, başlangıçta kapalıdır; kapattığında bu zaman arkadaşlarına gösterilmez.\n\nHesabını ve tüm çevrimiçi verilerini kalıcı olarak silmek için: Ayarlar > Hesap işlemleri > Hesabımı sil.',
+          'ZanKurd şu verileri sunucuda, hesabına bağlı olarak saklar: oyuncu adı ve profil fotoğrafı, e-posta adresi (kayıt olursan), XP, jeton sayısı ve satın almalar, oyun puanları ve istatistikleri, sıralama puanı, tamamlanan dersler, kaydedilen sorular, oda mesajları, soru önerileri ve engellediğin kullanıcılar. Seri takvimi, rozetler, seviye, konu ustalığı, tekrar bekleyen yanlış sorular ve hikâye ilerlemesi bu cihazda tutulur; hesabını kaydettiysen bunların bir yedeği de sunucuya alınır ve başka cihazda geri gelir. Misafir hesapta bunlar yalnız bu cihazdadır. Hesabını kaydettiysen kelime listen ve öğrenme hedefin de sunucuya yedeklenir; diğer ayarlar yalnız bu cihazda tutulur. Kayıtlı hesaptan çıktığında ilerlemen bu cihazda korunur; misafir hesaptan çıkınca temizlenir. Hesabınla ilişkilendirilebilen kullanım olayları yalnız Ayarlar > Hesap ve gizlilik > Kullanım analizi açıkken, çökme kayıtları yalnız Ayarlar > Hesap ve gizlilik > Hata raporları açıkken gönderilir. İki ayar da başlangıçta kapalıdır; istediğin zaman açıp kapatabilirsin.\n\nVerilerin satılmaz ve üçüncü taraflarla pazarlama amaçlı paylaşılmaz. Adın sıralamada, arkadaş araması ve isteklerinde, ayrıca çevrimiçi odalarda görünür. Çevrimiçi durumumu göster ayarını açarsan son görülme zamanın sunucuda saklanır ve arkadaşlarına gösterilir. Bu tercih hesabına bağlıdır, başlangıçta kapalıdır; kapattığında bu zaman arkadaşlarına gösterilmez.\n\nHesabını ve hesabına bağlı oyun verilerini kalıcı olarak silmek için: Ayarlar > Hesap işlemleri > Hesabımı sil. Analiz, hata raporu ve satın alma kayıtları, ilgili sağlayıcıların saklama politikalarına göre kalabilir.',
     },
     K.aboutBody: {
       'ku':
@@ -4840,7 +4858,15 @@ class Tr {
       // gösterir. Testler debug'da assert ile kırılır.
       throw StateError('Bilinmeyen metin anahtarı: $key');
     }
-    final text = entry[language.code] ?? entry['ku'] ?? key;
+    var text = entry[language.code] ?? entry['ku'] ?? key;
+    // Kurmancî tekil biçimi: sayıyla çekilen yüklem/izafe tekilde değişir
+    // ("1 peyvên tomarkirî" yanlış, "Peyveke tomarkirî" doğru). Giriş `ku1`
+    // alanı taşıyorsa ve sayaç parametresi tam "1" ise o kullanılır; `ku1`
+    // yoksa davranış değişmez. Karar ham sayıya göre verilir.
+    if (language == AppLanguage.ku && params != null) {
+      final one = entry['ku1'];
+      if (one != null && _countParam(params) == '1') text = one;
+    }
     if (params == null || params.isEmpty) return text;
 
     var result = text;
@@ -4852,6 +4878,16 @@ class Tr {
       'Doldurulmamış yer tutucu kaldı: $key -> $result',
     );
     return result;
+  }
+
+  /// Tekil/çoğul seçiminde sayaç sayılan parametre ( `n`, `count`,
+  /// `completed`, `p0` sırasıyla ilk bulunan).
+  static String? _countParam(Map<String, String> params) {
+    for (final name in const ['n', 'count', 'completed', 'p0']) {
+      final value = params[name];
+      if (value != null) return value;
+    }
+    return null;
   }
 
   /// Dili `BuildContext` yerine `bool isKu` olarak taşıyan çağrı yerleri için

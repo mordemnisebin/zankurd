@@ -680,7 +680,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     setState(() {
       _searchingStarted = true;
       _categoryName = chosenCategory;
-      _statusTextKu = 'Lîstikvanek tê gerîn...';
+      _statusTextKu = 'Em li hevrikekî digerin…';
       _statusTextTr = 'Rakip aranıyor...';
       _found = false;
       _matchmakingErrorMessage = null;
@@ -923,7 +923,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               // iki çelişik durum görünüyordu (2026-07-25 canlı denetimi).
               // Durum metni yalnız gerçekten değişen şeyi söyler.
               if (_secondsElapsed < 12) {
-                _statusTextKu = 'Lîstikvanek tê gerîn...';
+                _statusTextKu = 'Em li hevrikekî digerin…';
                 _statusTextTr = 'Rakip aranıyor...';
               } else {
                 _statusTextKu = 'Hîn lîstikvan nehat dîtin...';

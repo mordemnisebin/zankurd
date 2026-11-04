@@ -247,6 +247,9 @@ void main() {
         correctAnswer: 'Rast',
         selectedAnswer: 'Şaş',
         explanation: 'Ravekirina testê.',
+        // Hafıza kartı artık liste görünümüyle aynı çözümleyiciyi kullanır:
+        // ham `explanation` değil, Kurmancî alan gösterilir.
+        explanationKu: 'Ravekirina testê.',
       ),
     ];
     final semantics = tester.ensureSemantics();

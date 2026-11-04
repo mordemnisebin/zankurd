@@ -118,7 +118,7 @@ final Story cayxaneStory = Story(
     const StoryNode(
       id: 'wait',
       textKu: 'Xizmetkar dibişire: "Baş e, kengî bixwazî bang bike."',
-      textTr: 'Garson gülümsüyor: "Tamam, ne istersen seslen."',
+      textTr: 'Garson gülümsüyor: "Tamam, ne zaman istersen seslen."',
       choices: [
         StoryChoice(
           labelKu: 'Naha çayekê bîne.',

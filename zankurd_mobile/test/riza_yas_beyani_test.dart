@@ -136,7 +136,7 @@ void main() {
       await tester.pumpWidget(host());
       final consent = consentOf();
       await run(tester);
-      expect(find.text('13 yaşından büyük müsün?'), findsOneWidget);
+      expect(find.text('13 yaşında veya daha büyük müsün?'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('age-gate-yes')));
       await settle(tester);
       expect(AgeGate.declaration, AgeDeclaration.adult);
@@ -150,7 +150,7 @@ void main() {
 
       // Aynı kullanıcı yeniden açınca ikisi de çıkmaz.
       await run(tester);
-      expect(find.text('13 yaşından büyük müsün?'), findsNothing);
+      expect(find.text('13 yaşında veya daha büyük müsün?'), findsNothing);
       expect(find.text('Uygulamayı birlikte geliştirelim'), findsNothing);
     });
 
@@ -164,7 +164,7 @@ void main() {
           StartupPrompts.ensureAgeCleared(ctx).then((v) => cleared = v),
         );
         await settle(tester);
-        expect(find.text('13 yaşından büyük müsün?'), findsOneWidget);
+        expect(find.text('13 yaşında veya daha büyük müsün?'), findsOneWidget);
         await tester.tap(find.byKey(const ValueKey('sahne-sheet-close')));
         await settle(tester);
         expect(cleared, isFalse, reason: 'soruyu kapatmak izin değildir');
@@ -214,7 +214,7 @@ void main() {
       AgeGate.debugSet(AgeDeclaration.minor);
       expect(await StartupPrompts.ensureAgeCleared(ctx), isFalse);
       await tester.pump();
-      expect(find.text('13 yaşından büyük müsün?'), findsNothing);
+      expect(find.text('13 yaşında veya daha büyük müsün?'), findsNothing);
     });
 
     testWidgets('"Şimdi değil": ölçüm kapalı kalır ve bir daha sorulmaz', (

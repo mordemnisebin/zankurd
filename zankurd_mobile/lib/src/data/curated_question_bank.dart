@@ -101,7 +101,7 @@ const curatedQuestionBank = <QuizQuestion>[
     prompt: 'Peyva Kurmancî "azadî" bi Tirkî çi tê gotin?',
     answers: ['özgürlük', 'takas', 'tarih', 'yol'],
     correctAnswer: 'özgürlük',
-    promptTr: 'Kurmancî "azadî" sözcüğü Türkçede ne denir?',
+    promptTr: 'Kurmancî "azadî" sözcüğü Türkçede ne anlama gelir?',
     answersTr: ['özgürlük', 'takas', 'tarih', 'yol'],
     correctAnswerTr: 'özgürlük',
     explanation:
@@ -335,7 +335,7 @@ const curatedQuestionBank = <QuizQuestion>[
     prompt: 'Peyva Kurmancî "rêxistin" bi Tirkî çi tê gotin?',
     answers: ['örgüt', 'su', 'kitap', 'yağmur'],
     correctAnswer: 'örgüt',
-    promptTr: 'Kurmancî "rêxistin" sözcüğü Türkçede ne denir?',
+    promptTr: 'Kurmancî "rêxistin" sözcüğü Türkçede ne anlama gelir?',
     answersTr: ['örgüt', 'su', 'kitap', 'yağmur'],
     correctAnswerTr: 'örgüt',
     explanation: '"Rêxistin" wateya rêkxistin û rêxistina kesan an koman dide.',
@@ -952,7 +952,7 @@ const curatedQuestionBank = <QuizQuestion>[
         'Sembol nîşana parastina jinê ye û azadî û cihgirtina wê ya civakî '
         'destnîşan dike.',
     explanationTr:
-        'Simge, kadın savunmasının işaretidir ve kadının özgürlüğünü ile '
+        'Simge, kadın savunmasının işaretidir ve kadının özgürlüğünü ve '
         'toplumsal yerini gösterir.',
   ),
   // ── Siyaset ─────────────────────────────────────────────────────────────

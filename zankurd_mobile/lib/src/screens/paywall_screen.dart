@@ -38,9 +38,20 @@ String? monthlyEquivalentPrice(String priceString, double annualPrice) {
   final last = priceString.lastIndexOf(RegExp(r'\d'));
   if (first < 0 || last < first) return null;
 
-  final separator = priceString.substring(first, last + 1).contains(',')
-      ? ','
-      : '.';
+  // Ondalık ayırıcı: sayının son ayırıcısı, ardında 1–2 hane varsa o. Yalnız
+  // `contains(',')` bakmak binlik ayıracı ondalık sanıyordu ($1,200.00 ->
+  // $100,00). Ardında 3 hane (ya da hiç) varsa ayırıcı binliktir; ondalık
+  // ayırıcı öbürüdür.
+  final numeric = priceString.substring(first, last + 1);
+  final lastSep = numeric.lastIndexOf(RegExp(r'[.,]'));
+  final String separator;
+  if (lastSep < 0) {
+    separator = '.';
+  } else {
+    final decimals = numeric.length - lastSep - 1;
+    final char = numeric[lastSep];
+    separator = decimals <= 2 ? char : (char == ',' ? '.' : ',');
+  }
   final monthly = (annualPrice / 12)
       .toStringAsFixed(2)
       .replaceFirst('.', separator);
