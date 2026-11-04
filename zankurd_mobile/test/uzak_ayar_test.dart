@@ -288,7 +288,8 @@ void main() {
           'lib/src/screens/home_screen.dart',
           'lib/src/screens/room_screen.dart',
           'lib/src/screens/quiz_result_screen.dart',
-          'lib/src/screens/app_shell.dart',
+          // Jeton eşitleme kapıyı PushTokenSync içinde (tüm yollar için) denetler.
+          'lib/src/services/push_token_sync.dart',
         ]) {
           final text = File(path).readAsStringSync();
           expect(text, contains('FeatureGate.'), reason: path);

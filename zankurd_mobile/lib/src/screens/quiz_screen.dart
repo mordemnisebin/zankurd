@@ -29,6 +29,7 @@ import '../game/speed_score.dart';
 import '../game/reveal_timing.dart';
 import '../models/answer_record.dart';
 import '../models/player.dart';
+import '../utils/room_broadcast_trust.dart';
 import '../models/quiz_question.dart';
 import '../utils/free_text_answer_matcher.dart';
 import '../models/room.dart';
@@ -853,7 +854,16 @@ class _QuizScreenState extends State<QuizScreen>
                 _handleOpponentReady();
                 return;
               }
-              if (senderName != null && !isSelf) {
+              // Yayın yalnız ipucudur: oda üyesi olmayan gönderici yok sayılır
+              // (bkz. [RoomBroadcastTrust]); listeye yayınla oyuncu eklenmez.
+              final trustedSender = isSelf
+                  ? null
+                  : RoomBroadcastTrust.member(
+                      livePlayers,
+                      senderId: senderId,
+                      senderName: senderName,
+                    );
+              if (senderName != null && !isSelf && trustedSender != null) {
                 final senderKey = playerIdentityKey(
                   id: senderId,
                   legacyName: senderName,
@@ -876,40 +886,27 @@ class _QuizScreenState extends State<QuizScreen>
                     _answeredPlayerKeys.remove(senderKey);
                   }
 
-                  final incomingPlayer = Player(
-                    id: senderId,
-                    name: senderName,
-                    score: 0,
-                    state: '',
-                  );
                   final opponentIdx = livePlayers.indexWhere(
-                    (player) => playersShareIdentity(player, incomingPlayer),
+                    (player) => playersShareIdentity(player, trustedSender),
                   );
                   // Yayın yalnız ad/skor taşır; fotoğraf, simge, renk, çerçeve
                   // ve oyuncu kodu odadaki kayıttan (`room_players` + herkese
-                  // açık profil) gelir. Eskiden bu satır sıfırdan bir Player
-                  // kurup hepsini düşürüyordu: rakibin fotoğrafı ilk yayında
-                  // kayboluyor, sunucudan gelen gerçek ad da yayındaki
-                  // yer tutucu adla ("Oyuncu") eziliyordu.
-                  final existing = opponentIdx != -1
-                      ? livePlayers[opponentIdx]
-                      : null;
-                  final keepName =
-                      existing != null &&
-                      !PlayerIdentity.isPlaceholderDisplayName(existing.name);
-                  final updatedOpponent = (existing ?? incomingPlayer).copyWith(
-                    id: senderId ?? existing?.id,
-                    name: keepName ? existing.name : senderName,
-                    score: (payload['score'] as num?)?.toInt() ?? 0,
-                    streak: (payload['streak'] as num?)?.toInt() ?? 0,
-                    state: payload['answered'] == true
-                        ? Tr.forKu(K.answeredState, _isKu)
-                        : Tr.forKu(K.waitingAnswerState, _isKu),
-                  );
+                  // açık profil) gelir. Skor/seri yalnız ipucudur ve yetkili
+                  // satır geldiğinde ezilir ([RoomBroadcastTrust]).
                   if (opponentIdx != -1) {
-                    livePlayers[opponentIdx] = updatedOpponent;
-                  } else {
-                    livePlayers.add(updatedOpponent);
+                    final progress = RoomBroadcastTrust.hintedProgress(
+                      trustedSender,
+                      hintScore: (payload['score'] as num?)?.toInt(),
+                      hintStreak: (payload['streak'] as num?)?.toInt(),
+                      serverAuthoritative: _usesServerHiddenAnswers,
+                    );
+                    livePlayers[opponentIdx] = trustedSender.copyWith(
+                      score: progress.score,
+                      streak: progress.streak,
+                      state: payload['answered'] == true
+                          ? Tr.forKu(K.answeredState, _isKu)
+                          : Tr.forKu(K.waitingAnswerState, _isKu),
+                    );
                   }
                   livePlayers.sort((a, b) => b.score.compareTo(a.score));
 
@@ -921,9 +918,9 @@ class _QuizScreenState extends State<QuizScreen>
                     // "Oyuncu ZK-XXXX" (kod odadaki kayıttan).
                     _opponentSelectedAnswers[senderKey] = _OpponentAnswer(
                       name: PlayerIdentity.resolveNameWithTag(
-                        updatedOpponent.name,
+                        trustedSender.name,
                         isKu: _isKu,
-                        tag: updatedOpponent.tag,
+                        tag: trustedSender.tag,
                       ),
                       answer: oppAnswer,
                     );

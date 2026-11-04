@@ -70,6 +70,37 @@ class StartupPrompts {
     }
   }
 
+  /// Rıza seçimini uygular. Firebase toplaması YALNIZ analiz tercihi diske
+  /// yazıldıktan sonra açılır: yazım başarısızsa (disk dolu, SharedPreferences
+  /// hatası) toplama kapalı kalır ve sorunun bir sonraki açılışta yeniden
+  /// çıkması için "gösterildi" işareti silinir. Aksi halde kullanıcı kaydı
+  /// tutulmayan bir "evet" ile izlenir, sonraki açılışta da sorulmazdı.
+  /// Başarıyı döner.
+  @visibleForTesting
+  static Future<bool> applyConsentChoice(
+    AnalyticsConsentProvider consent,
+    bool accept, {
+    Future<void> Function()? initializeAnalytics,
+  }) async {
+    // Seçim önce yazılır; ikisi de AYRI anahtar.
+    final analyticsSaved = await consent.setEnabled(accept);
+    await consent.setCrashReportsEnabled(accept);
+    if (!analyticsSaved) {
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.remove(consentShownKey);
+      } catch (_) {}
+      return false;
+    }
+    if (accept) {
+      final init =
+          initializeAnalytics ??
+          () => AnalyticsService.instance.initialize(enabled: true);
+      unawaited(init());
+    }
+    return true;
+  }
+
   static Future<void> showConsentSheet(BuildContext context) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -110,12 +141,7 @@ class _ConsentBody extends StatelessWidget {
   Future<void> _choose(BuildContext context, bool accept) async {
     final consent = context.read<AnalyticsConsentProvider>();
     final navigator = Navigator.of(context);
-    // Seçim önce yazılır, sonra sayfa kapanır; ikisi de AYRI anahtar.
-    await consent.setEnabled(accept);
-    await consent.setCrashReportsEnabled(accept);
-    if (accept) {
-      unawaited(AnalyticsService.instance.initialize(enabled: true));
-    }
+    await StartupPrompts.applyConsentChoice(consent, accept);
     if (navigator.mounted) navigator.pop();
   }
 

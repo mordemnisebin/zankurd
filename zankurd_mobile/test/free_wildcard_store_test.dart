@@ -31,7 +31,8 @@ void main() {
   });
   tearDown(LocalProgressScope.debugReset);
 
-  final noon = DateTime(2026, 10, 24, 12);
+  // UTC anı: Europe/Istanbul 2026-10-24 12:00. Cihaz saat diliminden bağımsız.
+  final noon = DateTime.utc(2026, 10, 24, 9);
 
   test('günün ilk kullanımı bedava: hak var, tüketince biter', () async {
     expect(await FreeWildcardStore.isAvailable(now: noon), isTrue);
@@ -43,18 +44,20 @@ void main() {
     expect(await FreeWildcardStore.consume(now: noon), isTrue);
     expect(await FreeWildcardStore.consume(now: noon), isFalse);
     // Aynı günün akşamı da aynı gündür.
-    final evening = DateTime(2026, 10, 24, 23, 59);
+    final evening = DateTime.utc(2026, 10, 24, 20, 59);
     expect(await FreeWildcardStore.isAvailable(now: evening), isFalse);
   });
 
-  test('yeni gün hakkı yeniler (gece yarısı yerel saate göre)', () async {
-    await FreeWildcardStore.consume(now: DateTime(2026, 10, 24, 23, 59));
+  test('yeni gün hakkı yeniler (İstanbul gece yarısı = 21:00 UTC)', () async {
+    await FreeWildcardStore.consume(now: DateTime.utc(2026, 10, 24, 20, 59));
     expect(
-      await FreeWildcardStore.isAvailable(now: DateTime(2026, 10, 25, 0, 1)),
+      await FreeWildcardStore.isAvailable(
+        now: DateTime.utc(2026, 10, 24, 21, 1),
+      ),
       isTrue,
     );
     expect(
-      await FreeWildcardStore.consume(now: DateTime(2026, 10, 25, 0, 1)),
+      await FreeWildcardStore.consume(now: DateTime.utc(2026, 10, 24, 21, 1)),
       isTrue,
     );
   });

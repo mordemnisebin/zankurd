@@ -30,7 +30,6 @@ import 'learn_home_screen.dart';
 import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
 import 'first_run_choice_screen.dart';
-import '../config/feature_flags.dart';
 import '../data/age_gate_store.dart';
 import '../widgets/startup_prompts.dart';
 import 'onboarding_screen.dart';
@@ -196,6 +195,7 @@ class _AppShellState extends State<AppShell>
       _refreshForForegroundPush,
     );
     SocialPushPrompt.tokenSync = widget.pushTokenSync;
+    SocialPushPrompt.prefsSync = () => NotificationSync.run(_repository);
     _pushTokenRefreshSub = widget.pushTokenSync?.watchTokenRefresh();
     _homeScrollController = ScrollController();
     _profileScrollController = ScrollController();
@@ -241,8 +241,8 @@ class _AppShellState extends State<AppShell>
           !context.read<AuthProvider>().isAuthenticated) {
         return;
       }
-      // Uzak anahtar (push_v2_enabled) kapalıysa jeton eşitlenmez.
-      if (FeatureGate.pushV2) unawaited(widget.pushTokenSync?.sync());
+      // Uzak anahtar (push_v2_enabled) PushTokenSync içinde denetlenir.
+      unawaited(widget.pushTokenSync?.sync());
       unawaited(NotificationSync.run(repository));
     });
   }
@@ -553,6 +553,7 @@ class _AppShellState extends State<AppShell>
     unawaited(_pushTokenRefreshSub?.cancel());
     if (identical(SocialPushPrompt.tokenSync, widget.pushTokenSync)) {
       SocialPushPrompt.tokenSync = null;
+      SocialPushPrompt.prefsSync = null;
     }
     _promptTimer?.cancel();
     _connectivitySub?.cancel();

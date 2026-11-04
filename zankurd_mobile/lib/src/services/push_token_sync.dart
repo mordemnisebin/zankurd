@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../config/feature_flags.dart';
 import '../data/zankurd_repository.dart';
 import '../providers/repository_holder.dart';
 import '../utils/error_reporter.dart';
@@ -32,6 +33,7 @@ class PushTokenSync {
     required this.repository,
     this.repositoryHolder,
     this.debugLog,
+    this.remoteEnabled,
   });
 
   // Bütün kabuk/kaynak örnekleri aynı cihaz token'ını kaydeder. Çıkış
@@ -75,6 +77,14 @@ class PushTokenSync {
 
   final void Function(String message)? debugLog;
 
+  /// Uzak anahtar (push_v2_enabled). Kapalıyken jeton HİÇBİR yolla yazılmaz:
+  /// açılış, yeniden bağlanma, öne gelme, jeton yenileme ve oturum açma
+  /// hepsi [_sync]'ten geçer; anahtar tek bir çağrı yerinde değil burada
+  /// denetlenir. Testler sahte bir kapı verir.
+  final bool Function()? remoteEnabled;
+
+  bool get _gateOpen => (remoteEnabled ?? () => FeatureGate.pushV2)();
+
   ZanKurdRepository get _repository =>
       repositoryHolder?.repository ?? repository;
 
@@ -107,6 +117,10 @@ class PushTokenSync {
   // bağımsız APNs/platform okuması henüz hazır değilse bu kaydı kaybettirir.
   Future<void> _sync({String? refreshedToken}) async {
     if (kIsWeb || _suspended > 0) return;
+    if (!_gateOpen) {
+      _debug('push_v2 disabled remotely; token was not written');
+      return;
+    }
     final epoch = _sessionEpoch;
     final request = ++_nextRequest;
     try {
