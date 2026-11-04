@@ -50,8 +50,11 @@ class StreakRepairService {
       return StreakRepairOutcome.failed;
     }
     final owner = repository.currentUserId;
-    if (owner != null) {
-      await _writeIntent(owner, offer, now ?? DateTime.now());
+    if (owner != null &&
+        !await _writeIntent(owner, offer, now ?? DateTime.now())) {
+      // Niyet kalıcı yazılamadıysa ücretli çağrı BAŞLATILMAZ: yanıt kaybolursa
+      // uzlaştıracak kayıt olmazdı. Mevcut "onarılamadı" yolu gösterilir.
+      return StreakRepairOutcome.failed;
     }
     final result = await repository.spendStreakRepair(
       monthKey: offer.monthKey,
@@ -117,25 +120,26 @@ class StreakRepairService {
   static bool _isDefinite(StreakRepairOutcome outcome) =>
       outcome != StreakRepairOutcome.failed;
 
-  static Future<void> _writeIntent(
+  static Future<bool> _writeIntent(
     String owner,
     StreakRepairOffer offer,
     DateTime at,
   ) async {
     try {
       final preferences = await SharedPreferences.getInstance();
-      await preferences.setString(
-        '$_intentPrefix$owner',
-        jsonEncode({
-          'lostStreak': offer.lostStreak,
-          'breakDay': offer.breakDay,
-          'monthKey': offer.monthKey,
-          'playedToday': offer.playedToday,
-          'offeredAtMs': at.millisecondsSinceEpoch,
-        }),
-      );
+      final key = '$_intentPrefix$owner';
+      final encoded = jsonEncode({
+        'lostStreak': offer.lostStreak,
+        'breakDay': offer.breakDay,
+        'monthKey': offer.monthKey,
+        'playedToday': offer.playedToday,
+        'offeredAtMs': at.millisecondsSinceEpoch,
+      });
+      return await preferences.setString(key, encoded) &&
+          preferences.getString(key) == encoded;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'streak_repair_intent_write');
+      return false;
     }
   }
 

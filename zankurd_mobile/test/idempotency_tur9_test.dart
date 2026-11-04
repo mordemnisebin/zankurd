@@ -27,6 +27,7 @@ library;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences_platform_interface/shared_preferences_platform_interface.dart';
 import 'package:zankurd_mobile/src/data/daily_mission_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/pending_operation_store.dart';
@@ -35,6 +36,22 @@ import 'package:zankurd_mobile/src/data/xp_store.dart';
 import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 import 'package:zankurd_mobile/src/services/streak_repair_service.dart';
 import 'package:zankurd_mobile/src/utils/client_round_id.dart';
+
+/// Her yazımı reddeden depo (disk dolu / bozuk depo taklidi).
+class _FailingStore extends SharedPreferencesStorePlatform {
+  @override
+  Future<Map<String, Object>> getAll() async => {};
+
+  @override
+  Future<bool> clear() async => true;
+
+  @override
+  Future<bool> remove(String key) async => true;
+
+  @override
+  Future<bool> setValue(String valueType, String key, Object value) async =>
+      false;
+}
 
 /// Tahsilat sunucuda işlenir ama yanıt KAYBOLUR (`failed`).
 class _LostResponseRepository extends MockZanKurdRepository {
@@ -143,6 +160,50 @@ void main() {
         isClientRoundId(await PendingOperationStore.idFor('spin', 'u1')),
         isTrue,
       );
+    });
+  });
+
+  group('kalıcılık doğrulaması (yan etkili RPC kimliksiz ÇAĞRILMAZ)', () {
+    tearDown(() {
+      SharedPreferences.resetStatic();
+      SharedPreferences.setMockInitialValues({});
+    });
+
+    test('eşzamanlı ilk çağrılar TEK kimlik üretir', () async {
+      SharedPreferences.resetStatic();
+      SharedPreferences.setMockInitialValues({});
+      final ids = await Future.wait([
+        for (var i = 0; i < 8; i++) PendingOperationStore.idFor('spin', 'u1'),
+      ]);
+      expect(ids.toSet().length, 1);
+      expect(await PendingOperationStore.idFor('spin', 'u1'), ids.first);
+    });
+
+    test('kimlik yazılamazsa StateError fırlar (RPC çağrılamaz)', () async {
+      SharedPreferences.resetStatic();
+      SharedPreferencesStorePlatform.instance = _FailingStore();
+      await expectLater(
+        PendingOperationStore.idFor('spin', 'u1'),
+        throwsStateError,
+      );
+    });
+
+    test('niyet yazılamazsa ücretli onarım RPC\'si BAŞLAMAZ', () async {
+      final store = await _brokenStore();
+      final repo = _LostResponseRepository();
+      await repo.claimMissionReward(missionKey: 'k', fallbackReward: 250);
+      final offer = store.repairOffer(now: today)!;
+      SharedPreferences.resetStatic();
+      SharedPreferencesStorePlatform.instance = _FailingStore();
+      final outcome = await StreakRepairService.repair(
+        repository: repo,
+        store: store,
+        offer: offer,
+        now: today,
+      );
+      expect(outcome, StreakRepairOutcome.failed);
+      expect(repo.calls, 0, reason: 'sunucuya HİÇ gidilmedi');
+      expect(await repo.loadCoinBalance(), 250);
     });
   });
 

@@ -26,21 +26,52 @@ class PendingOperationStore {
 
   static String _key(String kind, String ownerId) => '$_prefix$kind.$ownerId';
 
+  static final Map<String, Future<String>> _inFlight = {};
+
   /// [kind] + [ownerId] için bekleyen kimliği döndürür; yoksa, süresi
   /// dolmuşsa ya da [scope] değişmişse yenisini üretip KALICI yazar.
+  ///
+  /// Aynı (tür, hesap) için eşzamanlı ilk çağrılar TEK kimlik üretir (çağrılar
+  /// sıraya girer; yoksa iki çağrı farklı kimlik yazıp ikisi de sunucuya
+  /// giderdi). Kimlik YAZILAMADIYSA ya da geri okunamadıysa [StateError]
+  /// fırlatır: yan etkili RPC kimliği kalıcı olmadan ÇAĞRILMAZ (çağıran mevcut
+  /// "kaydedilemedi" hata yoluna düşer).
   static Future<String> idFor(
     String kind,
     String ownerId, {
     String scope = '',
     Duration maxAge = const Duration(hours: 24),
     DateTime? now,
-  }) async {
+  }) {
+    final lockKey = _key(kind, ownerId);
+    final previous = _inFlight[lockKey];
+    final Future<String> run;
+    if (previous == null) {
+      run = _resolve(kind, ownerId, scope, maxAge, now);
+    } else {
+      run = previous
+          .then<void>((_) {}, onError: (Object _) {})
+          .then((_) => _resolve(kind, ownerId, scope, maxAge, now));
+    }
+    _inFlight[lockKey] = run;
+    return run.whenComplete(() {
+      if (identical(_inFlight[lockKey], run)) _inFlight.remove(lockKey);
+    });
+  }
+
+  static Future<String> _resolve(
+    String kind,
+    String ownerId,
+    String scope,
+    Duration maxAge,
+    DateTime? now,
+  ) async {
     final at = now ?? DateTime.now();
-    SharedPreferences? preferences;
-    try {
-      preferences = await SharedPreferences.getInstance();
-      final raw = preferences.getString(_key(kind, ownerId));
-      if (raw != null) {
+    final key = _key(kind, ownerId);
+    final preferences = await SharedPreferences.getInstance();
+    final raw = preferences.getString(key);
+    if (raw != null) {
+      try {
         final entry = jsonDecode(raw);
         if (entry is Map &&
             entry['id'] is String &&
@@ -52,20 +83,19 @@ class PendingOperationStore {
             return entry['id'] as String;
           }
         }
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'pending_op_read');
       }
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'pending_op_read');
     }
     final id = newClientRoundId();
-    try {
-      await preferences?.setString(
-        _key(kind, ownerId),
-        jsonEncode({'id': id, 'scope': scope, 'at': at.millisecondsSinceEpoch}),
-      );
-    } catch (error, stack) {
-      // Yazılamadıysa bu çağrı yine de kimlikle gider (bu oturumdaki yeniden
-      // deneme aynı kimliği bulamaz; yalnız uygulama-kapanması örtüsü zayıflar).
-      ErrorReporter.record(error, stack, reason: 'pending_op_write');
+    final encoded = jsonEncode({
+      'id': id,
+      'scope': scope,
+      'at': at.millisecondsSinceEpoch,
+    });
+    final written = await preferences.setString(key, encoded);
+    if (!written || preferences.getString(key) != encoded) {
+      throw StateError('Pending operation id could not be persisted.');
     }
     return id;
   }
