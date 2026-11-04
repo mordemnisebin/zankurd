@@ -335,6 +335,18 @@ class DailyMissionStore {
 
   static final Set<String> _claimsInFlight = <String>{};
 
+  /// Bir görevin XP ödülü için KALICI işlem kimliği (gün + görev).
+  ///
+  /// Kusur: `addXP` kimliksiz çağrılıyordu; XP yazıldıktan ama `claimed`
+  /// bayrağı kalıcılaşmadan uygulama kapanırsa aynı görev yeniden alınıp XP
+  /// ikinci kez veriliyordu. `XPStore.addXP(operationId:)` kimliği kalıcı
+  /// günlüğe yazar; aynı kimlikle ikinci çağrı XP eklemez. Kimlik görevin
+  /// kimliğiyle (tür, kategori, hedef) ve YÜKLÜ gün anahtarıyla aynıdır:
+  /// ertesi günün aynı görevi yeni ödüldür.
+  String claimOperationId(DailyMission mission) =>
+      'mission_xp:$_loadedDateKey:${mission.type.name}:'
+      '${mission.category}:${mission.target}';
+
   /// Ödülü [grant] BAŞARILI olduktan sonra "alındı" diye kalıcı yazar.
   ///
   /// Bayrak ödülden önce yazılınca `addXP` düşerse görev "alındı" kalıyor,
