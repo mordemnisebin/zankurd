@@ -43,7 +43,7 @@ void main() {
     expect(geri.trimRight(), endsWith('commit;'));
     expect(raw, isNot(contains('COMMIT')));
     expect(geriRaw, isNot(contains('COMMIT')));
-    expect(applied, contains('2026-11-05_olcek_tur6.sql | ⏳'));
+    expect(applied, contains('2026-11-05_olcek_tur6.sql | ✅'));
     expect(code, isNot(contains('lock table')));
   });
 

@@ -404,7 +404,7 @@ const sapma = async () => (await one(`select count(*)::int c from (
   // Uygulanmış dalda yedek yoksa ileri göç durur.
   const kopya = (await db.query("select * from olcek_tur3_yedek where ad like 'tur6:%'")).rows;
   await db.exec("delete from olcek_tur3_yedek where ad like 'tur6:%'");
-  await assert.rejects(uygula(), /yedek satırı\/md5 zinciri sağlam değil/); await kapat();
+  await assert.rejects(uygula(), /yedek satırı\/md5 zinciri sağlam değil|yaratılacak nesnelerden biri zaten var/); await kapat();
   for (const y of kopya) await db.query('insert into olcek_tur3_yedek values ($1,$2,$3)', [y.ad, y.tanim, y.alindi]);
   // Beklenmeyen canlı gövde: ileri göç durur, hiçbir şey (yeni tablo dahil) kalmaz.
   await db.exec("create or replace function public.reconcile_player_score_total(p_days integer default 2, p_slice integer default 1000) returns integer language sql security definer set search_path to 'public', 'pg_temp' as $$ select 0 $$");
@@ -436,6 +436,10 @@ const sapma = async () => (await one(`select count(*)::int c from (
   assert.equal((await one("select to_regclass('public.score_reconcile_daily_cursor') t")).t, null);
   assert.equal((await one("select to_regclass('public.tournament_matches_open_deadline_idx') t")).t, null);
   assert.equal((await one("select to_regprocedure('public.reconcile_player_score_daily_full(date,uuid,integer,integer)') t")).t, null);
+  // Uygulanmamışken aynı adlı cron işi zaten varsa ileri göç onu ezmez, durur.
+  await db.exec("select cron.schedule('tournament-expiry', '* * * * *', 'select 1')");
+  await assert.rejects(uygula(), /yaratılacak nesnelerden biri zaten var/); await kapat();
+  await db.exec("select cron.unschedule('tournament-expiry')");
   await uygula(); // yeniden ileri
   assert.equal((await one("select count(*)::int c from olcek_tur3_yedek where ad like 'tur6:%'")).c, 4);
   console.log('yedek/md5 zinciri, ya hep ya hiç, beklenmeyen gövde, geri alma ve yeniden ileri doğru');

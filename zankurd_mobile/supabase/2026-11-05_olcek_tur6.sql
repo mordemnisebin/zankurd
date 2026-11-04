@@ -1,5 +1,5 @@
 -- Ölçek denetimi 6. tur (GPT-6 Pro tam denetimi; her bulgu kodda doğrulandı).
--- CANLIYA UYGULANMADI (applied.md ⏳). Geri alma: geri_al/2026-11-05_olcek_tur6_geri.sql
+-- Canlıda (2026-11-04, applied.md ✅). Geri alma: geri_al/2026-11-05_olcek_tur6_geri.sql
 --
 -- Taban (canlı ✅): create_online_room_impl = 2026-10-31_room_limits.sql gövdesi +
 -- 2026-11-04_olcek_sertlestirme.sql yamaları; reconcile_player_score_total =
@@ -39,6 +39,32 @@
 --    yalnız 'running' ve son turu tamamen bitmiş turnuvaları seçer. Kısmi indeks
 --    (deadline, açık maçlar) güncellemeyi ucuz tutar.
 begin;
+
+-- Önkoşul (Copilot incelemesi): göç henüz uygulanmamışken (tur6 yedek satırı
+-- yok) yaratacağı nesnelerden biri zaten varsa göç durur; böylece geri alma yalnız
+-- bu göçün yarattıklarını kaldırır ve önceden var olan bir nesne/cron işi sessizce
+-- ezilmez. Uygulanmış dalın yeniden çalıştırılması aşağıdaki md5 zinciriyle denetlenir.
+do $tur6_onkosul$
+declare
+  v_uygulanmis boolean := false;
+begin
+  if to_regclass('public.olcek_tur3_yedek') is not null then
+    execute $q$select exists (select 1 from public.olcek_tur3_yedek where ad like 'tur6:%')$q$
+      into v_uygulanmis;
+  end if;
+  if not v_uygulanmis
+  and (to_regclass('public.score_reconcile_daily_cursor') is not null
+     or exists (select 1 from cron.job where jobname in
+       ('reconcile-player-score-daily-sweep', 'tournament-expiry'))
+     or exists (select 1 from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+       where n.nspname = 'public' and p.proname in
+       ('reconcile_player_score_daily_full', 'reconcile_player_score_daily_sweep',
+        'process_tournament_expiry')))
+  then
+    raise exception 'tur6: yaratılacak nesnelerden biri zaten var; göç durdu';
+  end if;
+end
+$tur6_onkosul$;
 
 set local lock_timeout = '10s';
 
