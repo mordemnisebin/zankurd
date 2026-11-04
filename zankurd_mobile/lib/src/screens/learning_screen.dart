@@ -850,8 +850,22 @@ class _LearningScreenState extends State<LearningScreen> {
     if (mounted) await _loadWordList();
   }
 
+  /// Sorular yüklenirken tekrarlı dokunuşlar ayrı yüklemeler başlatıp quiz
+  /// rotalarını üst üste açmasın.
+  bool _openingPractice = false;
+
   Future<void> _openCategoryPractice() async {
+    if (_openingPractice) return;
     if (_lessonsLoading || _currentLessons.isEmpty || !mounted) return;
+    _openingPractice = true;
+    try {
+      await _openCategoryPracticeImpl();
+    } finally {
+      _openingPractice = false;
+    }
+  }
+
+  Future<void> _openCategoryPracticeImpl() async {
     final selectedCategory = _selectedCategory;
     final lessons = List<Lesson>.of(_currentLessons);
     if (lessons.any((lesson) => lesson.category != selectedCategory)) return;
@@ -1945,6 +1959,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                 Expanded(
                   child: LessonScrollEdgeFade(
                     child: SingleChildScrollView(
+                      // Slayt değişince kaydırma başa döner.
+                      key: ValueKey('lesson-slide-scroll-$_currentSlideIndex'),
                       padding: const EdgeInsets.all(SahneSpace.page),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,

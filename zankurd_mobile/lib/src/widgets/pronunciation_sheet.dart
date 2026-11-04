@@ -217,10 +217,18 @@ class _PronunciationSheetState extends State<PronunciationSheet> {
       setState(() {
         _recording = false;
         _path = path;
+        _startFailed = false;
       });
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'pronunciation_stop');
-      if (mounted) setState(() => _recording = false);
+      // Hata görünür olur (kayıt düğmesi yeniden kayıt için açık kalır);
+      // eskiden yalnız log yazılıyor, kullanıcı nedenini göremiyordu.
+      if (mounted) {
+        setState(() {
+          _recording = false;
+          _startFailed = true;
+        });
+      }
     }
   }
 
@@ -228,9 +236,11 @@ class _PronunciationSheetState extends State<PronunciationSheet> {
     final path = _path;
     if (path == null || _recording) return;
     try {
+      if (_startFailed && mounted) setState(() => _startFailed = false);
       await _playback.play(path);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'pronunciation_play');
+      if (mounted) setState(() => _startFailed = true);
     }
   }
 

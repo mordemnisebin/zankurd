@@ -172,14 +172,14 @@ void main() {
     expect(find.byType(QuizResultScreen), findsNothing);
   });
 
-  testWidgets('solo sonuç eylemi Tekrar oyna davranışını korur', (
+  testWidgets('solo sonuç eylemi ana sayfaya döner ve etiketi bunu söyler', (
     tester,
   ) async {
     await _pumpResultOnFinishedRoomStack(tester, language: 'tr', roomId: null);
 
     final action = find.byKey(const ValueKey('result-play-again-button'));
     expect(
-      find.descendant(of: action, matching: find.text('Tekrar oyna')),
+      find.descendant(of: action, matching: find.text('Ana sayfa')),
       findsOneWidget,
     );
 

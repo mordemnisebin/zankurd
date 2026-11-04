@@ -256,10 +256,12 @@ class _TournamentScreenState extends State<TournamentScreen> {
     // tur diğer maç kapanınca kurulur. `_userMatch` boş olduğundan yukarıdaki
     // dal çalışmıyordu ve ekran eski kalıyordu (Codex denetimi 2026-10-29).
     final current = _bracket;
+    // Erken elenen oyuncu da aynı yoklamayı ister: kupa bitince "yeni
+    // turnuvaya katıl" eylemi ekrandan çıkıp girmeden görünmüyordu.
     if (_serverBracket &&
         current != null &&
-        current.status == 'active' &&
-        _userMatch == null) {
+        (current.status == 'eliminated' ||
+            (current.status == 'active' && _userMatch == null))) {
       try {
         final real = await widget.repository.loadRealTournamentBracket();
         if (!mounted || real == null) return;
@@ -281,12 +283,13 @@ class _TournamentScreenState extends State<TournamentScreen> {
       }
       final fill = _fillOf(real);
       final openedAt = _openedAtOf(real);
-      if (fill != _waitingFill || openedAt != _waitingOpenedAt) {
-        setState(() {
-          _waitingFill = fill;
-          _waitingOpenedAt = openedAt;
-        });
-      }
+      // Doluluk değişmese de yeniden çizilir: kalan süre ("5 sa 20 dk",
+      // "süre doldu") yalnız `build`de saatten hesaplanır; yoklama setState
+      // etmezse dakikalar boyunca donuk kalıyordu.
+      setState(() {
+        _waitingFill = fill;
+        _waitingOpenedAt = openedAt;
+      });
     } catch (_) {
       // Bekleme ekranı doğru durumu gösteriyor; sonraki tıkta denenir.
     }

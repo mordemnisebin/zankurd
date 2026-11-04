@@ -832,6 +832,9 @@ class _ShopScreenState extends State<ShopScreen> {
     setState(() {
       _loading = true;
       _purchaseErrorMessage = null;
+      // "Yeniden dene" önceki ürünü değil BU dondurma satın alımını (aynı
+      // işlem anahtarıyla) tekrarlasın.
+      _retryPurchaseItem = item;
     });
     // Anahtar belirsiz bir hatadan sonra AYNEN yeniden kullanılır: yanıtı
     // kaybolan tahsilatın tekrarı yeni bir -50 satırı yazmasın (Codex
@@ -852,6 +855,7 @@ class _ShopScreenState extends State<ShopScreen> {
         return;
       }
       _pendingFreezeKey = null;
+      _retryPurchaseItem = null;
       // Hak, ekrandan bağımsız teslim edilir: tahsilat beklenirken ekrandan
       // çıkılırsa jeton gidip dondurma gelmemesin.
       final store = await StreakStore.load();
@@ -873,6 +877,19 @@ class _ShopScreenState extends State<ShopScreen> {
         _loadBalance();
       }
     }
+  }
+
+  /// Yeniden denenecek işlem kalmadığında (ör. bekleyen satın alma kuyruğa
+  /// alındı) hata ekranından çıkar ve bakiyeyi/kataloğu yeniler. Hata
+  /// durumu temizlenmeden `_loadBalance` çağrılırsa ekran, bağlantı geri
+  /// gelse de hata görünümünde takılı kalırdı.
+  void _reconcileAfterPurchaseError() {
+    if (_loading) return;
+    setState(() {
+      _purchaseErrorMessage = null;
+      _purchaseOffline = false;
+    });
+    _loadBalance();
   }
 
   Future<void> _purchase(ShopItem item) async {
@@ -940,6 +957,9 @@ class _ShopScreenState extends State<ShopScreen> {
           return;
         }
         _retryPurchaseEffectItem = null;
+        // Başarılı satın alma yeniden deneme hedefi bırakmaz: sonraki bir
+        // hata (ör. dondurma) bu ürünü yeni anahtarla ikinci kez almasın.
+        _retryPurchaseItem = null;
         AppHaptics.light();
         try {
           context.read<SoundProvider>().playCorrect();
@@ -1179,7 +1199,7 @@ class _ShopScreenState extends State<ShopScreen> {
                       message: context.t(K.shopOfflineBody),
                       retryLabel: context.t(K.retryShort),
                       onRetry: _retryPurchaseItem == null
-                          ? _loadBalance
+                          ? _reconcileAfterPurchaseError
                           : () => _purchase(_retryPurchaseItem!),
                     )
                   : AppErrorState(
@@ -1192,7 +1212,7 @@ class _ShopScreenState extends State<ShopScreen> {
                           ? () =>
                                 _retryPurchaseEffect(_retryPurchaseEffectItem!)
                           : _retryPurchaseItem == null
-                          ? _loadBalance
+                          ? _reconcileAfterPurchaseError
                           : () => _purchase(_retryPurchaseItem!),
                     )
             : _dynamicItems.isEmpty

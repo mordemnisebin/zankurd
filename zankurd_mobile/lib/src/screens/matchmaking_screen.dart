@@ -1559,26 +1559,31 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   Widget _buildSearchStage(String status, bool ku) {
     final Widget body;
     if (_cancelling) {
-      body = Center(
-        child: Column(
-          key: const ValueKey('matchmaking-cancelling-state'),
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox.square(
-              dimension: 44,
-              child: CircularProgressIndicator(
-                strokeWidth: 3,
-                color: SahneTokens.of(context).raceTx,
+      // Renkler SAHNE temasının altında çözülür: bu metot açık temalı dış
+      // bağlamda çalıştığı için `SahneTokens.of(sceneContext)` koyu sahne zemininde
+      // #0E1433 (≈1,05:1) veriyordu.
+      body = Builder(
+        builder: (sceneContext) => Center(
+          child: Column(
+            key: const ValueKey('matchmaking-cancelling-state'),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox.square(
+                dimension: 44,
+                child: CircularProgressIndicator(
+                  strokeWidth: 3,
+                  color: SahneTokens.of(sceneContext).raceTx,
+                ),
               ),
-            ),
-            const SizedBox(height: SahneSpace.x6),
-            Text(
-              status,
-              style: SahneType.headline.copyWith(
-                color: SahneTokens.of(context).tx,
+              const SizedBox(height: SahneSpace.x6),
+              Text(
+                status,
+                style: SahneType.headline.copyWith(
+                  color: SahneTokens.of(sceneContext).tx,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     } else if (_matchmakingErrorMessage != null) {

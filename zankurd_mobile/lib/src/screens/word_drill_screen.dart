@@ -369,6 +369,9 @@ class _WordDrillScreenState extends State<WordDrillScreen> {
     final total = _questions.length;
     final isLast = _index == total - 1;
     return SingleChildScrollView(
+      // Soru değişince kaydırma başa döner (aynı konum yeni uzun içeriğin
+      // başlangıcını ekran dışında bırakıyordu).
+      key: ValueKey('word-review-scroll-$_index'),
       padding: const EdgeInsets.all(SahneSpace.page),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

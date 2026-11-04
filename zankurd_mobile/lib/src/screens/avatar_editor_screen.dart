@@ -588,7 +588,9 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                     icon: AppIcons.floppyDisk,
                     arrow: false,
                     expand: true,
-                    onPressed: _saving ? null : _save,
+                    // Yükleme sürerken Kaydet kapalı: yoksa eski avatar kaydedilip ekran
+                    // kapanır, gelen fotoğraf sessizce atılırdı.
+                    onPressed: (_saving || _uploadingPhoto) ? null : _save,
                   ),
                 ],
               ),

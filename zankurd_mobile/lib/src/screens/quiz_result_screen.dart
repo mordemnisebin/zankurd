@@ -1785,7 +1785,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           ? K.home
           : canRematch
           ? K.asyncDuelRematch
-          : K.playAgain,
+          // Tek kişilik yarışta bu düğme yeni tur AÇMAZ, ilk rotaya (ana
+          // sayfa) döner (`completeResultAction`); etiket gerçeği söyler.
+          : K.home,
     );
     final nextActionIcon = widget.tournamentMatch
         ? AppIcons.trophy
@@ -1793,7 +1795,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ? AppIcons.magnifyingGlass
         : isOnlineRoom && !canRematch
         ? AppIcons.house
-        : AppIcons.arrowRotateLeft;
+        : canRematch
+        ? AppIcons.arrowRotateLeft
+        : AppIcons.house;
 
     void goHome() {
       Navigator.of(context).popUntil((route) => route.isFirst);
@@ -3346,10 +3350,13 @@ class _RaceStandings extends StatelessWidget {
         .copyWith(name: context.t(K.you), score: userScore, state: 'Player');
     final standings = [user, ...opponents]
       ..sort((a, b) => b.score.compareTo(a.score));
-    final userRank =
-        standings.indexWhere((player) => player.state == 'Player') + 1;
+    // Eşit puan AYNI sırayı alır (1, 1, 3): başlık "Berabere" derken liste
+    // eşit oyunculara 1. ve 2. sırayı veriyordu.
+    int rankOf(Player p) =>
+        1 + standings.where((other) => other.score > p.score).length;
+    final userRank = rankOf(standings.firstWhere((p) => p.state == 'Player'));
     final leader = standings.first;
-    final summary = leader.state == 'Player'
+    final summary = userRank == 1
         ? context.t(K.finishedAtRank, {'rank': groupThousands(userRank)})
         : context.t(K.leaderFinishedFirst, {
             'leader': context.playerDisplayName(leader.name, tag: leader.tag),
@@ -3380,7 +3387,7 @@ class _RaceStandings extends StatelessWidget {
         }
         blocks.add(
           SahneListRow.me(
-            rank: i + 1,
+            rank: rankOf(player),
             title: context.playerDisplayName(player.name, tag: player.tag),
             avatar: userIdentity == null ? null : _avatarOf(userIdentity!),
             subtitle: streakLine,
@@ -3391,7 +3398,7 @@ class _RaceStandings extends StatelessWidget {
         final name = player.name.trim();
         pending.add(
           SahneListRow.rank(
-            rank: i + 1,
+            rank: rankOf(player),
             title: context.playerDisplayName(player.name, tag: player.tag),
             initial: name.isEmpty ? null : context.playerInitial(player.name),
             icon: AppIcons.user,
