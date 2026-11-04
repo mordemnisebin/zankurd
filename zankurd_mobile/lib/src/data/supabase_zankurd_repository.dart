@@ -674,6 +674,38 @@ class SupabaseZanKurdRepository
     await client.storage.from('avatars').remove(paths.toList());
   }
 
+  /// Hesap silmeden önce kullanıcının bütün avatar dosyalarını Storage
+  /// API'siyle kaldırır: sabit `avatar.jpg/png` yolları + profildeki (ve
+  /// geçmişte yüklenmiş) zaman damgalı URL'ler. Hiç fırlatmaz; sonucu
+  /// döndürür (testlerde doğrulanır).
+  @visibleForTesting
+  Future<bool> removeAllOwnAvatarObjects() async {
+    final user = client.auth.currentUser;
+    if (user == null) return false;
+    try {
+      final paths = <String>{'${user.id}/avatar.jpg', '${user.id}/avatar.png'};
+      try {
+        final row = await client
+            .from('profiles')
+            .select('avatar_url')
+            .eq('id', user.id)
+            .maybeSingle();
+        final url = row?['avatar_url'];
+        if (url is String) {
+          final path = avatarObjectPath(url, user.id);
+          if (path != null) paths.add(path);
+        }
+      } catch (error, stack) {
+        _recordError(error, stack, reason: 'avatar url read before delete');
+      }
+      await client.storage.from('avatars').remove(paths.toList());
+      return true;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'avatar storage remove on delete');
+      return false;
+    }
+  }
+
   /// Oturumdaki hesabın Apple kimliği var mı (testlerde geçersiz kılınır).
   @visibleForTesting
   bool get hasAppleIdentity => userHasAppleIdentity(client.auth.currentUser);
@@ -688,6 +720,13 @@ class SupabaseZanKurdRepository
       if (hasAppleIdentity) {
         await revokeAppleAuthorization(client);
       }
+      // Profil fotoğrafı dosyaları RPC'den ÖNCE Storage API'siyle silinir:
+      // `delete_my_account` içindeki doğrudan SQL `DELETE FROM storage.objects`
+      // Supabase'te fiziksel dosyayı silmez (korumalı projede hata verir).
+      // Sahibi kendi klasörünü silebilir (storage politikası). Başarısızlık
+      // silmeyi DURDURMAZ: kullanıcı hesabını silebilmeli; artakalan dosya
+      // sunucu tarafı süpürmesine (docs/HESAP_SILME_VE_VERI.md) kalır.
+      await removeAllOwnAvatarObjects();
       await client.rpc('delete_my_account');
     } catch (error, stack) {
       _recordError(error, stack, reason: 'delete_my_account failed');

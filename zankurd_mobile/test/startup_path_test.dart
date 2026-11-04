@@ -39,7 +39,7 @@ void main() {
     );
 
     final configure = premium.substring(
-      premium.indexOf('Future<void> _configure()'),
+      premium.indexOf('Future<void> _configure('),
       premium.indexOf('Future<void> warmUp()'),
     );
     expect(

@@ -240,11 +240,14 @@ void main() {
       (tester) async {
         await tester.pumpWidget(host());
         final consent = consentOf();
+        // Önceki oturumda 13+ beyanıyla açılmış ölçüm; beyan sonra siliniyor.
+        AgeGate.debugSet(AgeDeclaration.adult);
         await tester.runAsync(() async {
           await consent.setEnabled(true);
           await consent.setCrashReportsEnabled(true);
         });
         expect(consent.enabled, isTrue);
+        AgeGate.debugSet(null);
         await run(tester);
         await tester.tap(find.byKey(const ValueKey('age-gate-no')));
         await settle(tester);
@@ -266,14 +269,53 @@ void main() {
     });
 
     testWidgets(
-      'sayfa kapatılırsa (çarpı) cevap yok sayılır, tekrar sorulmaz',
+      'yaş sorusu çarpıyla kapatılırsa: cevap BİLİNMİYOR, rıza sayfası HİÇ '
+      'çıkmaz, soru bir sonraki açılışta yeniden sorulur',
       (tester) async {
         await tester.pumpWidget(host());
+        final consent = consentOf();
         await run(tester);
         await tester.tap(find.byKey(const ValueKey('sahne-sheet-close')));
         await settle(tester);
-        expect(AgeGate.declaration, isNull, reason: 'kısıtsız');
-        expect(await AgeGate.shouldAsk(), isFalse, reason: 'bir kez sorulur');
+        expect(AgeGate.declaration, isNull);
+        expect(AgeGate.isAdult, isFalse);
+        expect(find.text('Uygulamayı birlikte geliştirelim'), findsNothing);
+        expect(consent.enabled, isFalse);
+        expect(await AgeGate.shouldAsk(), isTrue, reason: 'yeniden sorulur');
+      },
+    );
+
+    testWidgets(
+      'cevapsız yaş: ölçüm ve hata raporu AÇILAMAZ; açık 13+ ile açılır',
+      (tester) async {
+        await tester.pumpWidget(host());
+        final consent = consentOf();
+        await tester.runAsync(() async {
+          expect(await consent.setEnabled(true), isFalse);
+          expect(await consent.setCrashReportsEnabled(true), isFalse);
+        });
+        expect(consent.enabled, isFalse);
+        expect(consent.crashReportsEnabled, isFalse);
+        AgeGate.debugSet(AgeDeclaration.adult);
+        await tester.runAsync(() async {
+          expect(await consent.setEnabled(true), isTrue);
+        });
+        expect(consent.enabled, isTrue);
+      },
+    );
+
+    test(
+      'cevapsız yaş + diskte saklı AÇIK tercih: yüklemede ölçüm kapalı',
+      () async {
+        SharedPreferences.setMockInitialValues({
+          'zankurd.analyticsConsent': true,
+          'zankurd.crashReportsConsent': true,
+        });
+        AgeGate.debugSet(null);
+        final consent = await AnalyticsConsentProvider.load();
+        expect(consent.enabled, isFalse);
+        expect(consent.crashReportsEnabled, isFalse);
+        expect(AnalyticsConsentProvider.isEnabled, isFalse);
       },
     );
   });
@@ -289,6 +331,18 @@ void main() {
     expect(first, contains('AgeGate.declare'));
     final settings = _read('lib/src/screens/settings_screen.dart');
     expect(settings, contains('AgeGate.isMinor'));
+    expect(settings, contains('_ageAllowsAnalytics'));
+    // Bekçi: ölçüm koşulu "açık 13+" (isAdult); yalnız isMinor reddi cevapsızı
+    // sızdırırdı (GPT-6 Pro alan 9).
+    final consentSrc = _read(
+      'lib/src/providers/analytics_consent_provider.dart',
+    );
+    expect(consentSrc, isNot(contains('value && AgeGate.isMinor')));
+    expect(consentSrc, contains('!AgeGate.isAdult'));
+    expect(
+      _read('lib/src/widgets/startup_prompts.dart'),
+      contains('!AgeGate.isAdult || !await shouldShowConsent()'),
+    );
   });
 }
 

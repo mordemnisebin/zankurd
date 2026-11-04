@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:zankurd_mobile/src/data/age_gate_store.dart';
 import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/providers/analytics_consent_provider.dart';
 import 'package:zankurd_mobile/src/utils/error_reporter.dart';
@@ -81,7 +82,7 @@ void main() {
     });
 
     test('setEnabled(false) statik bayrağı da kapatır', () async {
-      SharedPreferences.setMockInitialValues({});
+      SharedPreferences.setMockInitialValues({AgeGate.declarationKey: 'adult'});
       final provider = await AnalyticsConsentProvider.load();
       await provider.setEnabled(true);
       expect(AnalyticsConsentProvider.isEnabled, isTrue);
@@ -95,7 +96,7 @@ void main() {
   // "varsayılan açık" seçimden önce veri gönderiyordu; Ayarlar'dan
   // kapatılabilmesi önceden izin sayılmaz.
   test('seçim yokken ikisi de kapalı; açma kalıcı', () async {
-    SharedPreferences.setMockInitialValues({});
+    SharedPreferences.setMockInitialValues({AgeGate.declarationKey: 'adult'});
 
     final provider = await AnalyticsConsentProvider.load();
     expect(provider.enabled, isFalse);
@@ -111,7 +112,7 @@ void main() {
   });
 
   test('hata raporları ayrı açılır; analiz bayrağına dokunmaz', () async {
-    SharedPreferences.setMockInitialValues({});
+    SharedPreferences.setMockInitialValues({AgeGate.declarationKey: 'adult'});
     addTearDown(() {
       ErrorReporter.resetFatalHandlersForTesting();
       ErrorReporter.crashlyticsEnabled = false;
@@ -130,7 +131,10 @@ void main() {
   test('eski tek anahtardaki AÇIK seçim iki rızaya da taşınır', () async {
     // Eski anahtar ikisini birlikte yönetiyordu; açıkça saklanmış seçim
     // korunur. Anahtar hiç yoksa (seçim yapılmamış) kapalı başlar.
-    SharedPreferences.setMockInitialValues({'zankurd.analyticsConsent': true});
+    SharedPreferences.setMockInitialValues({
+      AgeGate.declarationKey: 'adult',
+      'zankurd.analyticsConsent': true,
+    });
     addTearDown(() => ErrorReporter.crashlyticsEnabled = false);
     final provider = await AnalyticsConsentProvider.load();
     expect(provider.enabled, isTrue);
@@ -138,7 +142,10 @@ void main() {
   });
 
   test('daha önce kapatılmış seçim korunur', () async {
-    SharedPreferences.setMockInitialValues({'zankurd.analyticsConsent': false});
+    SharedPreferences.setMockInitialValues({
+      AgeGate.declarationKey: 'adult',
+      'zankurd.analyticsConsent': false,
+    });
     final provider = await AnalyticsConsentProvider.load();
     expect(provider.enabled, isFalse);
     expect(provider.crashReportsEnabled, isFalse);
@@ -148,7 +155,7 @@ void main() {
     // İlk yüklemede hata raporu anahtarı yazılamadıysa, analizi açan yazım
     // önce onu (kapalı) kaydeder; yoksa sonraki açılışta eski anahtardan
     // devralma analiz seçimini hata raporlarına da taşırdı.
-    SharedPreferences.setMockInitialValues({});
+    SharedPreferences.setMockInitialValues({AgeGate.declarationKey: 'adult'});
     final provider = AnalyticsConsentProvider();
     expect(await provider.setEnabled(true), isTrue);
     final prefs = await SharedPreferences.getInstance();
@@ -164,6 +171,7 @@ void main() {
       // Önbellekte anahtar var ama devralma yazımı başarısızdı: analiz yazımı
       // hata raporu seçimini yeniden yazmadan geçmemeli.
       SharedPreferences.setMockInitialValues({
+        AgeGate.declarationKey: 'adult',
         'zankurd.crashReportsConsent': true,
       });
       final provider = AnalyticsConsentProvider();
@@ -255,7 +263,7 @@ void main() {
   test(
     'consent sonradan açılınca fatal hata yakalayıcıları da bağlanır',
     () async {
-      SharedPreferences.setMockInitialValues({});
+      SharedPreferences.setMockInitialValues({AgeGate.declarationKey: 'adult'});
       final originalFlutterHandler = FlutterError.onError;
       final originalPlatformHandler = PlatformDispatcher.instance.onError;
       void sentinelFlutterHandler(FlutterErrorDetails details) {}
@@ -314,7 +322,7 @@ void main() {
   test(
     'setEnabled tamamlanırken provider dispose edilirse hata fırlatmaz ve true döner',
     () async {
-      SharedPreferences.setMockInitialValues({});
+      SharedPreferences.setMockInitialValues({AgeGate.declarationKey: 'adult'});
       final provider = await AnalyticsConsentProvider.load();
       final future = provider.setEnabled(false);
       provider.dispose();

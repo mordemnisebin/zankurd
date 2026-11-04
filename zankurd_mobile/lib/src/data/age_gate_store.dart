@@ -130,6 +130,16 @@ class AgeGate {
     }
   }
 
+  /// "Soruldu" işaretini geri alır: cevapsız kapatılan soru bir sonraki
+  /// açılışta yeniden sorulsun (yaş bilinmeden ölçüm/sosyal açılmaz).
+  static Future<void> clearAsked() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (prefs.getString(declarationKey) != null) return;
+      await prefs.remove(askedKey);
+    } catch (_) {}
+  }
+
   /// Sorunun gösterildiğini işaretler: kullanıcıya en fazla bir kez sorulur.
   static Future<void> markAsked() async {
     try {

@@ -16,6 +16,7 @@ import 'firebase_options.dart';
 import 'src/utils/join_deep_link.dart';
 import 'src/utils/bundled_font_licenses.dart';
 import 'src/config/app_config.dart';
+import 'src/config/feature_flags.dart';
 import 'src/config/runtime_config.dart';
 import 'src/data/offline_zankurd_repository.dart';
 import 'src/data/question_bank_loader.dart';
@@ -139,7 +140,10 @@ Future<void> main() async {
 
       final releaseConfigurationIssues = AppConfig.validateForRelease(
         isReleaseMode: kReleaseMode,
+        // Pro kapalıyken RevenueCat anahtarı zorunlu değildir (SDK hiç
+        // başlatılmaz; bkz. PremiumService._configure).
         requireRevenueCat:
+            kProEnabled &&
             !kIsWeb &&
             (defaultTargetPlatform == TargetPlatform.android ||
                 defaultTargetPlatform == TargetPlatform.iOS),
