@@ -1,4 +1,4 @@
--- Bildirim denetimi (GPT-6 Pro ALAN 4) sunucu tarafı. UYGULANMADI (⏳).
+-- Bildirim denetimi (GPT-6 Pro ALAN 4) sunucu tarafı. Canlıda (2026-11-04, ✅).
 -- Geri alma: geri_al/2026-11-06_push_tur8_geri.sql
 --
 -- A. clear_my_fcm_token() yalnız kullanıcı kimliğine bakıp jetonu siler: aynı
