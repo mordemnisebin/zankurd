@@ -437,25 +437,64 @@ class SupabaseZanKurdRepository
   static String get _avatarIdentityDirtyKey =>
       LocalProgressScope.physical('zankurd.avatarIdentity.dirtyPending');
 
-  Future<bool> _avatarIdentityDirty() async {
+  Future<bool> _avatarIdentityDirty([String? key]) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_avatarIdentityDirtyKey) ?? false;
+    return prefs.getBool(key ?? _avatarIdentityDirtyKey) ?? false;
   }
 
-  Future<void> _setAvatarIdentityDirty(bool value) async {
+  Future<void> _setAvatarIdentityDirty(bool value, [String? key]) async {
     final prefs = await SharedPreferences.getInstance();
+    final physical = key ?? _avatarIdentityDirtyKey;
     if (value) {
-      await prefs.setBool(_avatarIdentityDirtyKey, true);
+      await prefs.setBool(physical, true);
     } else {
-      await prefs.remove(_avatarIdentityDirtyKey);
+      await prefs.remove(physical);
     }
   }
 
-  /// Sunucuya yazmayı bir kez dener; başarırsa bekleyen bayrağı temizler.
-  Future<bool> _pushAvatarIdentity(AvatarIdentity identity) async {
+  /// Bekleyen bayrağı yalnız GÖNDERİLEN sürüm için temizler. Gönderim sürerken
+  /// kullanıcı avatarı yeniden değiştirdiyse yerel kopya artık gönderilenden
+  /// farklıdır; bayrak açık kalır, yoksa yeni değişiklik sessizce kaybolurdu.
+  Future<void> _clearAvatarDirtyIfSent(
+    AvatarIdentity sent,
+    String dirtyKey,
+  ) async {
+    // Hesap değiştiyse yerel kopya başka hesaba aittir; karşılaştırma
+    // anlamsız. Bayrak (sabitlenmiş anahtarda) açık kalsın.
+    if (dirtyKey != _avatarIdentityDirtyKey) return;
     try {
-      final user = client.auth.currentUser;
-      if (user == null) return false;
+      final current = await _offline.loadAvatarIdentity();
+      if (current.iconId != sent.iconId ||
+          current.colorHex != sent.colorHex ||
+          current.photoUrl != sent.photoUrl ||
+          current.frameId != sent.frameId ||
+          current.showcaseTitle != sent.showcaseTitle) {
+        return;
+      }
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'avatar dirty compare failed');
+      return;
+    }
+    if (dirtyKey != _avatarIdentityDirtyKey) return;
+    await _setAvatarIdentityDirty(false, dirtyKey);
+  }
+
+  /// Sunucuya yazmayı bir kez dener; başarırsa bekleyen bayrağı temizler.
+  ///
+  /// Hesap ve fiziksel bayrak anahtarı İŞLEM BAŞINDA sabitlenir (çağıran
+  /// daha önce sabitlediyse onu verir): istek sürerken hesap değişirse A'nın
+  /// avatarı B'nin profiline gitmez ve geç dönen yanıt B'nin bekleyen
+  /// bayrağını silmez (2026-11-04 denetimi).
+  Future<bool> _pushAvatarIdentity(
+    AvatarIdentity identity, {
+    String? ownerId,
+    String? dirtyKey,
+  }) async {
+    final pinnedKey = dirtyKey ?? _avatarIdentityDirtyKey;
+    final pinnedOwner = ownerId ?? client.auth.currentUser?.id;
+    try {
+      if (pinnedOwner == null) return false;
+      if (client.auth.currentUser?.id != pinnedOwner) return false;
       await client
           .from('profiles')
           .update({
@@ -466,9 +505,9 @@ class SupabaseZanKurdRepository
             'showcase_title': identity.showcaseTitle,
             'updated_at': DateTime.now().toUtc().toIso8601String(),
           })
-          .eq('id', user.id);
-      _profileCache.remove(user.id);
-      await _setAvatarIdentityDirty(false);
+          .eq('id', pinnedOwner);
+      _profileCache.remove(pinnedOwner);
+      await _clearAvatarDirtyIfSent(identity, pinnedKey);
       return true;
     } on PostgrestException catch (error, stack) {
       // Sunucu veriyi REDDETTİ. Bu kalıcı bir rettir, geçici bir ağ
@@ -480,13 +519,13 @@ class SupabaseZanKurdRepository
       // kapanıyordu (2026-08-06 denetimi).
       //
       // Kalıcı ret beklemede bırakılmaz — tekrar denemek de reddedilir.
-      await _setAvatarIdentityDirty(false);
+      await _clearAvatarDirtyIfSent(identity, pinnedKey);
       _recordError(error, stack, reason: 'updateAvatarIdentity rejected');
       rethrow;
     } catch (error, stack) {
       // Ağ/bağlantı kaynaklı geçici hata: beklemede bırak, bir daha
-      // denenebilsin.
-      await _setAvatarIdentityDirty(true);
+      // denenebilsin. Bayrak, isteği başlatan hesabın anahtarına yazılır.
+      await _setAvatarIdentityDirty(true, pinnedKey);
       _recordError(error, stack, reason: 'updateAvatarIdentity failed');
       return false;
     }
@@ -494,18 +533,34 @@ class SupabaseZanKurdRepository
 
   @override
   Future<AvatarIdentity> loadAvatarIdentity() async {
-    if (await _avatarIdentityDirty()) {
+    final pinnedUserId = client.auth.currentUser?.id;
+    final pinnedDirtyKey = _avatarIdentityDirtyKey;
+    if (await _avatarIdentityDirty(pinnedDirtyKey)) {
       // Bekleyen bir yerel değişiklik var. Önce tekrar göndermeyi dene
       // (bağlantı dönmüş olabilir); olmazsa sunucudan OKUMA — bu, az önce
       // "kaydedildi" denen değişikliği kullanıcının yüzüne geri getirirdi
       // (2026-08-14 denetimi, bkz. updateAvatarIdentity).
       final local = await _offline.loadAvatarIdentity();
-      final pushed = await _pushAvatarIdentity(local);
+      // Yerel kopya okunurken hesap değiştiyse `local` başka hesaba ait
+      // olabilir: gönderme, o hesabın bekleyen bayrağına da dokunma.
+      if (client.auth.currentUser?.id != pinnedUserId ||
+          pinnedDirtyKey != _avatarIdentityDirtyKey) {
+        return _offline.loadAvatarIdentity();
+      }
+      final pushed = await _pushAvatarIdentity(
+        local,
+        ownerId: pinnedUserId,
+        dirtyKey: pinnedDirtyKey,
+      );
       if (!pushed) return local;
     }
     try {
       final user = client.auth.currentUser;
       if (user == null) return _offline.loadAvatarIdentity();
+      // Gönderim sırasında hesap değiştiyse eski hesabın kimliğini döndürme.
+      if (pinnedUserId != null && user.id != pinnedUserId) {
+        return _offline.loadAvatarIdentity();
+      }
       final row = await client
           .from('profiles')
           .select(

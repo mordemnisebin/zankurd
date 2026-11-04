@@ -191,9 +191,11 @@ void main() {
         contains('await _pushAvatarIdentity(identity);'),
         reason: 'updateAvatarIdentity artık ortak yardımcıyı çağırmalı',
       );
+      // R10: gönderim, işlem başında sabitlenen hesap + bayrak anahtarıyla
+      // çağrılır (`local, ownerId:, dirtyKey:`).
       expect(
         repo,
-        contains('await _pushAvatarIdentity(local);'),
+        matches(RegExp(r'await _pushAvatarIdentity\(\s*local,')),
         reason:
             'loadAvatarIdentity, bekleyen bir değişikliği okumadan önce '
             'tekrar göndermeyi denemeli — yoksa sunucudaki eski satır '

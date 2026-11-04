@@ -8,6 +8,7 @@ import '../utils/error_reporter.dart';
 import 'learner_lexicon.dart';
 import 'local_data_storage.dart';
 import 'local_progress_scope.dart';
+import 'progress_sync.dart';
 
 /// Leitner kutuları: 5 kutu, aralıklar 1, 2, 4, 8, 16 gün.
 ///
@@ -255,21 +256,41 @@ class WordListStore extends ChangeNotifier {
       addedAtMs: at,
     );
     notifyListeners();
-    return _persist();
+    final saved = await _persist();
+    if (!saved) {
+      // Kalıcı yazım reddedildi: bellekte "kaydedildi" görünüp yeniden
+      // açılışta geri gelmesin (2026-11-04 denetimi). Aynı kelimeyi başka
+      // bir işlem değiştirmediyse geri al.
+      _words.remove(entryId);
+      notifyListeners();
+      return false;
+    }
+    ProgressSyncService.markDirty();
+    return true;
   }
 
   Future<bool> remove(String entryId) async {
-    if (_words.remove(entryId) == null) return true;
+    final removed = _words.remove(entryId);
+    if (removed == null) return true;
     notifyListeners();
-    return _persist();
+    final saved = await _persist();
+    if (!saved) {
+      _words.putIfAbsent(entryId, () => removed);
+      notifyListeners();
+      return false;
+    }
+    ProgressSyncService.markDirty();
+    return true;
   }
 
   /// Listede varsa çıkarır, yoksa ekler. Yeni durumu (`true` = listede)
   /// döndürür.
   Future<bool> toggle(String entryId, {DateTime? now}) async {
+    // Dönen değer GERÇEK (kalıcı) durumdur: yazım reddedilirse bellek
+    // geri alınır ve önceki durum döner; çağıran yeniden deneyebilir.
     if (contains(entryId)) {
       await remove(entryId);
-      return false;
+      return contains(entryId);
     }
     await add(entryId, now: now);
     return contains(entryId);
@@ -296,7 +317,9 @@ class WordListStore extends ChangeNotifier {
       reviewedAtMs: at.millisecondsSinceEpoch,
     );
     notifyListeners();
-    return _persist();
+    final saved = await _persist();
+    if (saved) ProgressSyncService.markDirty();
+    return saved;
   }
 
   Future<bool> clear() async {

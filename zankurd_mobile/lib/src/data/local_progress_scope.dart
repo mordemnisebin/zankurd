@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show ValueNotifier;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'result_progress_journal.dart';
@@ -16,6 +17,13 @@ class LocalProgressScope {
 
   static const ownerKey = 'zankurd.localProgress.deviceOwnerUserId';
   static const migratedKey = 'zankurd.localProgress.legacyMigratedTo';
+
+  /// Genel anahtar göçünün KALICI niyeti: ilk anahtar taşınmadan önce hedef
+  /// hesap yazılır; yeniden denemeler hep aynı hedefe gider. Eskiden hedef
+  /// ancak bütün taşıma bitince kaydediliyordu: bazı anahtarlar A'ya taşınıp
+  /// silindikten sonra uygulama kapanırsa sonraki B girişi kalanları B'ye
+  /// taşıyıp tek misafir ilerlemesini iki hesaba bölüyordu (2026-11-04).
+  static const migratingKey = 'zankurd.localProgress.legacyMigratingTo';
   static const offlineUserId = 'device-offline';
   static const _scopePrefix = 'zankurd.scope.';
 
@@ -30,7 +38,18 @@ class LocalProgressScope {
     'zankurd.learning_goal.v1',
     'zankurd.storyMeta.v1',
     'zankurd.wordList.v1',
+    ..._secondGenerationKeys,
   };
+
+  /// İlk göç listesinde unutulan anahtarlar: bekleyen avatar değişikliği ve
+  /// rozet tarihleri. İlk göçü ZATEN geçmiş kurulumlar için ayrıca bir kez
+  /// (`legacyMigratedV2`) devralana taşınır.
+  static const _secondGenerationKeys = <String>{
+    'zankurd.avatarIdentity',
+    'zankurd.avatarIdentity.dirtyPending',
+    'zankurd.badges.unlockedAt',
+  };
+  static const migratedV2Key = 'zankurd.localProgress.legacyMigratedV2';
 
   static const prefixes = <String>[
     'zankurd.xp.total.resultJournal.',
@@ -46,6 +65,12 @@ class LocalProgressScope {
     'zankurd.offline.',
   ];
 
+  /// Buluttan birleştirme (ya da hesap sınırı) yerel ilerlemeyi DEĞİŞTİRDİ:
+  /// bellek örnekleri atıldı. Açık ekranlar (Kelimelerim, Ana ekran...)
+  /// elindeki eski nesneyi bırakıp diskten yeniden okumak için dinler;
+  /// yoksa uzak ilerleme ekranda eski kalıyordu (2026-11-04 denetimi).
+  static final ValueNotifier<int> revision = ValueNotifier<int>(0);
+
   static String? _activeUserId;
   static int _generation = 0;
   static int get generation => _generation;
@@ -56,11 +81,19 @@ class LocalProgressScope {
 
   static String? get activeUserId => _activeUserId;
 
+  static bool _forceOffline = false;
+
+  /// Normal çıkışta sahip anahtarı `device-offline`a yazılamadıysa, diskte
+  /// kalan çıkmış hesabın sahipliği bu süreçte çevrimdışı oturuma
+  /// bağlanmaz: bir sonraki gerçek `bind` (giriş) bayrağı düşürür.
+  static void forceOfflineScope() => _forceOffline = true;
+
   static void bind(String userId) {
     final normalized = userId.trim();
     if (normalized.isEmpty) {
       throw ArgumentError.value(userId, 'userId', 'Boş olamaz.');
     }
+    if (normalized != offlineUserId) _forceOffline = false;
     if (_activeUserId != normalized) _generation++;
     _activeUserId = normalized;
   }
@@ -69,6 +102,7 @@ class LocalProgressScope {
     _activeUserId = null;
     _generation++;
     _migration = null;
+    _forceOffline = false;
   }
 
   static String physical(String logical) {
@@ -84,7 +118,12 @@ class LocalProgressScope {
 
   static bool isLegacyProgressKey(String key) {
     if (key.startsWith(_scopePrefix)) return false;
-    if (key == ownerKey || key == migratedKey) return false;
+    if (key == ownerKey ||
+        key == migratedKey ||
+        key == migratedV2Key ||
+        key == migratingKey) {
+      return false;
+    }
     if (exactKeys.contains(key)) return true;
     for (final prefix in prefixes) {
       if (key.startsWith(prefix)) return true;
@@ -116,7 +155,10 @@ class LocalProgressScope {
     if (incoming.isEmpty || incoming == offlineUserId) return false;
     try {
       await preferences.reload();
-      if (preferences.getString(migratedKey) != null) return true;
+      final migratedTo = preferences.getString(migratedKey);
+      if (migratedTo != null) {
+        return _migrateSecondGeneration(preferences, migratedTo);
+      }
       // Prepared günlüklerin hedefleri eski fiziksel anahtarlardır. Önce
       // tamamla; yalnız done kayıtları ve tamamlanmış değerler taşınsın.
       for (final namespace in [
@@ -131,7 +173,14 @@ class LocalProgressScope {
         );
       }
       final owner = preferences.getString(ownerKey);
-      final inheritTo = isHumanOwner(owner) ? owner!.trim() : incoming;
+      final intent = preferences.getString(migratingKey)?.trim();
+      final inheritTo = intent != null && intent.isNotEmpty
+          ? intent
+          : (isHumanOwner(owner) ? owner!.trim() : incoming);
+      if (intent != inheritTo &&
+          !await preferences.setString(migratingKey, inheritTo)) {
+        return false;
+      }
       final keys = preferences
           .getKeys()
           .where(isLegacyProgressKey)
@@ -147,13 +196,78 @@ class LocalProgressScope {
         if (!saved) return false;
         if (!await preferences.remove(key)) return false;
       }
-      return preferences.setString(migratedKey, inheritTo);
+      if (!await preferences.setString(migratedKey, inheritTo)) return false;
+      await preferences.remove(migratingKey);
+      return true;
     } catch (_) {
       try {
         await preferences.reload();
       } catch (_) {}
       return false;
     }
+  }
+
+  /// Bir hesabın cihazdaki BÜTÜN kalıcı kayıtlarını tanıyan önekler: kapsamlı
+  /// ilerleme (`zankurd.scope.<uid>.`: kelime listesi, ders kümeleri, çevrimdışı
+  /// favoriler, profil adı, avatar kimliği ve bekleyen bayrağı, rozet
+  /// tarihleri...), sonuç makbuzları, sohbet susturma listesi ve isim kapısı
+  /// bayrağı. Hesap silmede tek tek depo sayılmaz; liste burada TEK yerde
+  /// durur (elle sıralı temizlik yeni anahtarları unutuyordu).
+  static List<String> userOwnedKeyPrefixes(String userId) {
+    final uid = userId.trim();
+    return [
+      '$_scopePrefix$uid.',
+      'zankurd.quiz_result_progress_receipt.$uid:',
+      'chat_muted_v1_$uid',
+      'zankurd.profileName.completed.$uid',
+    ];
+  }
+
+  /// Yalnız [userId]'ye ait kayıtları siler (başka hesaplara dokunmaz) ve her
+  /// silmenin kalıcı olduğunu doğrular; olmazsa fırlatır.
+  static Future<void> clearUserOwnedKeys(
+    SharedPreferences preferences,
+    String userId,
+  ) async {
+    if (userId.trim().isEmpty || userId.trim() == offlineUserId) return;
+    await preferences.reload();
+    final prefixes = userOwnedKeyPrefixes(userId);
+    final keys = preferences
+        .getKeys()
+        .where((key) => prefixes.any(key.startsWith))
+        .toList(growable: false);
+    try {
+      for (final key in keys) {
+        if (!await preferences.remove(key)) {
+          throw StateError('Account key removal was not persisted.');
+        }
+      }
+    } catch (_) {
+      await preferences.reload();
+      rethrow;
+    }
+  }
+
+  static Future<bool> _migrateSecondGeneration(
+    SharedPreferences preferences,
+    String inheritedBy,
+  ) async {
+    if (preferences.getString(migratedV2Key) != null) return true;
+    final owner = inheritedBy.trim();
+    if (owner.isEmpty) return true;
+    for (final key in _secondGenerationKeys) {
+      if (!preferences.containsKey(key)) continue;
+      final target = physicalFor(owner, key);
+      // Devralanın kendi (daha yeni) kaydı varsa ezilmez; genel kopya düşer.
+      if (!preferences.containsKey(target)) {
+        final value = preferences.get(key);
+        if (value != null && !await _write(preferences, target, value)) {
+          return false;
+        }
+      }
+      if (!await preferences.remove(key)) return false;
+    }
+    return preferences.setString(migratedV2Key, owner);
   }
 
   static String physicalFor(String userId, String logical) =>
@@ -165,6 +279,10 @@ class LocalProgressScope {
   static Future<bool> activateOffline(SharedPreferences preferences) async {
     await preferences.reload();
     final owner = preferences.getString(ownerKey);
+    if (_forceOffline && preferences.getString(migratedKey) != null) {
+      bind(offlineUserId);
+      return true;
+    }
     if (isHumanOwner(owner)) {
       bind(owner!.trim());
       return true;

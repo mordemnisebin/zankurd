@@ -75,6 +75,32 @@ class HomeWidgetSync {
     }
   }
 
+  /// Çıkış / hesap silmede önceki hesabın serisini ve günün sorusunu widget'tan
+  /// siler (etiketlere dokunmaz). Widget verisi kullanıcı kimliği taşımayan
+  /// ayrı bir native depoda durur; temizlenmezse çıkıştan sonra ana ekranda
+  /// önceki hesabın serisi görünürdü (2026-11-04 denetimi). Asla fırlatmaz.
+  static Future<void> clear() async {
+    if (!_supported) return;
+    try {
+      await HomeWidget.setAppGroupId(appGroupId);
+      await HomeWidget.saveWidgetData<Object>('streak', 0);
+      await HomeWidget.saveWidgetData<Object>('dailyPrompt', '');
+      await HomeWidget.saveWidgetData<Object>(
+        'updatedAt',
+        DateTime.now().toUtc().millisecondsSinceEpoch,
+      );
+      await HomeWidget.updateWidget(
+        iOSName: iosWidgetKind,
+        androidName: androidWidgetName,
+        qualifiedAndroidName: 'com.zankurd.app.$androidWidgetName',
+      );
+    } on MissingPluginException {
+      // Eklenti yok (test / masaüstü).
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'home_widget_clear');
+    }
+  }
+
   /// Soru metni görsele dayanıyor mu ("Görselde …", "Görseldeki …", "Resimde …",
   /// "Di wêneyê …")? Widget'ta görsel yok; görsele göndermeli bir soru anlamsız
   /// ve cevaplanamaz görünür (U13, 2026-10-28 tur 4, Android emülatör turu).

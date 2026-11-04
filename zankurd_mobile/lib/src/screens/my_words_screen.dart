@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../data/learner_lexicon.dart';
+import '../data/local_progress_scope.dart';
 import '../data/word_list_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -55,6 +56,16 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
   void initState() {
     super.initState();
     _load();
+    LocalProgressScope.revision.addListener(_onProgressRevision);
+  }
+
+  /// Buluttan birleştirme tamamlanınca açık ekran eski nesneyi bırakır ve
+  /// güncel kapsamlı listeyi yeniden yükler (testte verilen mağazaya dokunmaz).
+  void _onProgressRevision() {
+    if (!mounted || widget.store != null) return;
+    _store?.removeListener(_changed);
+    _store = null;
+    _load();
   }
 
   Future<void> _load() async {
@@ -81,6 +92,7 @@ class _MyWordsScreenState extends State<MyWordsScreen> {
 
   @override
   void dispose() {
+    LocalProgressScope.revision.removeListener(_onProgressRevision);
     _store?.removeListener(_changed);
     super.dispose();
   }

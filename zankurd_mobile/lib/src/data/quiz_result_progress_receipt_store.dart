@@ -179,15 +179,18 @@ class QuizResultProgressReceiptStore {
     _cacheUncertain.clear();
   }
 
-  /// Çıkış, yalnız bağlı kullanıcının makbuzunu siler. Kapsam yoksa eski
-  /// davranış kalır: makbuzlar kullanıcıya yazıldığı için toplu silme, kapsam
-  /// açılmadan çağrılan çıkışı yabancı makbuza karşı kapalı tutar.
+  /// Çıkış, yalnız bağlı kullanıcının makbuzunu siler. Sahipsiz (kapsam yok /
+  /// `device-offline`) çıkışta HİÇBİR makbuza dokunulmaz: eskiden burada
+  /// `clearAll` çağrılıyordu ve kayıtlı A'dan çıkıp çevrimdışı misafir olarak
+  /// devam eden kullanıcının misafir çıkışı A dâhil herkesin bekleyen
+  /// tahsilat / kurtarma makbuzunu siliyordu (2026-11-04 denetimi). Makbuz
+  /// anahtarı zaten kullanıcı kimliğini taşır; sahipsiz oturumun silecek kendi
+  /// makbuzu yoktur.
   static Future<void> clearForActiveUser(SharedPreferences preferences) async {
     final userId = LocalProgressScope.activeUserId;
     if (userId == null ||
         userId.isEmpty ||
         userId == LocalProgressScope.offlineUserId) {
-      await clearAll(preferences);
       return;
     }
     final prefix = '$_keyPrefix$userId:';

@@ -83,8 +83,64 @@ class ResultProgressJournal {
             .getKeys()
             .where((key) => key.startsWith(prefix))
             .toList()) {
-      final entry = _decode(preferences.getString(key)!);
-      if (entry['done'] != true) await _apply(preferences, key, entry);
+      final raw = preferences.getString(key);
+      Map<String, dynamic>? entry;
+      try {
+        entry = raw == null ? null : _decode(raw);
+        if (entry != null && !_isValid(entry)) entry = null;
+      } catch (_) {
+        entry = null;
+      }
+      if (entry == null) {
+        // Tek bozuk girdi ilgili günlükteki bütün sonraki işlemleri (XP /
+        // başarı yükleme, bulut eşitleme) durduruyordu (2026-11-04 denetimi).
+        // Ham veri silinmez: ad alanı ÖNEKİ dışındaki bir anahtara taşınır,
+        // sağlam kayıtların kurtarılması sürer.
+        if (raw != null) await _quarantine(preferences, key, raw);
+        continue;
+      }
+      if (entry['done'] != true) {
+        await _apply(preferences, key, entry);
+      } else if (entry.containsKey('values')) {
+        // Tamamlanmış işlemin hedefleri artık gerekmez; yalnız kimlik ve
+        // çıktı (yeniden gösterim) kalır. Günlük sonsuza büyümesin.
+        await _checked(
+          preferences,
+          key,
+          jsonEncode({'result': entry['result'], 'done': true}),
+        );
+      }
+    }
+  }
+
+  static bool _isValid(Map<String, dynamic> entry) {
+    if (entry['result'] is! Map) return false;
+    if (entry['done'] == true && !entry.containsKey('values')) return true;
+    final values = entry['values'];
+    if (values is! Map) return false;
+    for (final target in values.entries) {
+      final v = target.value;
+      final ok =
+          target.key is String &&
+          (v is int ||
+              v is bool ||
+              v is double ||
+              v is String ||
+              (v is List && v.every((item) => item is String)));
+      if (!ok) return false;
+    }
+    return true;
+  }
+
+  static Future<void> _quarantine(
+    SharedPreferences preferences,
+    String key,
+    String raw,
+  ) async {
+    await _checked(preferences, 'zankurd.quarantine.$key', raw);
+    if (!await preferences.remove(key)) {
+      await preferences.reload();
+      throw StateError('Corrupt journal entry was not removed: $key');
     }
   }
 
@@ -101,7 +157,11 @@ class ResultProgressJournal {
     }
     // Done ve hedefler aynı kayıtta: done yazılamazsa hedefler tekrar
     // uygulanabilir; başarılı done hiçbir zaman kazanımı tekrar artırmaz.
-    await _checked(preferences, key, jsonEncode({...entry, 'done': true}));
+    await _checked(
+      preferences,
+      key,
+      jsonEncode({'result': entry['result'], 'done': true}),
+    );
   }
 
   static Future<void> _checked(
