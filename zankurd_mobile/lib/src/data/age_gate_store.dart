@@ -147,6 +147,17 @@ class AgeGate {
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'age_gate_save');
+      // Yazım yarıda kaldıysa diskte sahipsiz bir yetişkin beyanı kalabilir:
+      // bellekte de bilinmiyora düş (yeniden sorulur); çocuk beyanı korunur.
+      if (value == AgeDeclaration.adult) {
+        declaration = null;
+        try {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.remove(declarationKey);
+          await prefs.remove(askedKey);
+          await prefs.remove(ownerKey);
+        } catch (_) {}
+      }
     }
   }
 

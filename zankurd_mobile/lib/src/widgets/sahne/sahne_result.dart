@@ -461,6 +461,9 @@ class _ResultMoreBelowState extends State<_ResultMoreBelow> {
       children: [
         NotificationListener<ScrollMetricsNotification>(
           onNotification: (n) {
+            // Yalnız sonuç listesinin kendisi: iç yatay/iç içe kaydırıcılar
+            // ipucunu yanlış açıp kapatmasın.
+            if (n.depth != 0 || n.metrics.axis != Axis.vertical) return false;
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (mounted) _sync(n.metrics);
             });
@@ -468,6 +471,9 @@ class _ResultMoreBelowState extends State<_ResultMoreBelow> {
           },
           child: NotificationListener<ScrollNotification>(
             onNotification: (n) {
+              if (n.depth != 0 || n.metrics.axis != Axis.vertical) {
+                return false;
+              }
               _sync(n.metrics);
               return false;
             },
@@ -496,15 +502,25 @@ class _ResultMoreBelowState extends State<_ResultMoreBelow> {
                       ),
                     );
                   },
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: t.s2,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: t.edge),
-                    ),
-                    child: SizedBox.square(
-                      dimension: 32,
-                      child: Icon(AppIcons.chevronDown, size: 18, color: t.tx),
+                  // Görünen daire 32, dokunma hedefi 48 (en küçük hedef kuralı).
+                  child: SizedBox.square(
+                    dimension: 48,
+                    child: Center(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: t.s2,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: t.edge),
+                        ),
+                        child: SizedBox.square(
+                          dimension: 32,
+                          child: Icon(
+                            AppIcons.chevronDown,
+                            size: 18,
+                            color: t.tx,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),

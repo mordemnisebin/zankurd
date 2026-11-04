@@ -75,7 +75,7 @@ void main() {
       final applied = File('supabase/applied.md').readAsStringSync();
       expect(
         applied,
-        matches(RegExp(r'\| 2026-11-08_avatar_supurme\.sql \| ⏳')),
+        matches(RegExp(r'\| 2026-11-08_avatar_supurme\.sql \| ✅')),
       );
     },
   );
