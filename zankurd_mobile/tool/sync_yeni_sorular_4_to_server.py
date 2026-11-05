@@ -57,12 +57,26 @@ def select() -> list[dict]:
             raise SystemExit(f"geçersiz soru: {q['id']}")
         row = base.to_row(q)
         row["server_category"] = SERVER_NAME[q["category"]]
+        # prompt_tr / options_tr: options_tr, option_a..d ile AYNI sırada (A,B,C,D).
+        tr = [t.strip() for t in q["answersTr"]]
+        if len(tr) != 4 or not all(tr) or not q["promptTr"].strip():
+            raise SystemExit(f"Türkçe alanlar eksik: {q['id']}")
+        if tr[row["opts"].index(q["correctAnswer"])] != q["correctAnswerTr"].strip():
+            raise SystemExit(f"Türkçe doğru şık hizasız: {q['id']}")
+        row["prompt_tr"] = q["promptTr"].strip()
+        row["options_tr"] = tr
         rows.append(row)
     return rows
 
 
 def row_sql(r: dict) -> str:
-    return dsv.row_sql(r)[:-1] + ", true)"
+    import json
+
+    opts_tr = json.dumps(r["options_tr"], ensure_ascii=False)
+    return (
+        dsv.row_sql(r)[:-1]
+        + f", {base.sql_str(r['prompt_tr'])}, {base.sql_str(opts_tr)}::jsonb, true)"
+    )
 
 
 def main() -> int:
@@ -136,8 +150,11 @@ def main() -> int:
 begin;
 
 -- server_only: istemci paketinde yerel karşılığı olmayan, yalnız sunucudan çekilen sorular
--- (rekabetçi modlar). Sütun W10 kolunda da eklenir; idempotent.
+-- (rekabetçi modlar). server_only / prompt_tr / options_tr sütunları W10 göçünde
+-- (2026-11-17_rekabet_sunucu_havuzu.sql) da eklenir; idempotent, sırayla bağımsız.
 alter table public.questions add column if not exists server_only boolean not null default false;
+alter table public.questions add column if not exists prompt_tr text;
+alter table public.questions add column if not exists options_tr jsonb;
 
 -- Önkoşul: gerekli kategorilerin hepsi sunucuda var (bu göç oluşturmaz).
 do $$
@@ -153,7 +170,7 @@ begin
 end
 $$;
 
-insert into questions ({base.COLUMNS}, server_only)
+insert into questions ({base.COLUMNS}, prompt_tr, options_tr, server_only)
 values
 {values}
 on conflict (id) do nothing;

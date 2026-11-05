@@ -192,6 +192,53 @@ void main() {
     );
   });
 
+  test(
+    'göçte prompt_tr dolu, options_tr 4 elemanlı ve option_a..d ile hizalı',
+    () {
+      for (final col in ['prompt_tr text', 'options_tr jsonb']) {
+        expect(
+          sql,
+          contains(
+            'alter table public.questions add column if not exists $col;',
+          ),
+        );
+      }
+      String lit(String v) => "'${v.replaceAll("'", "''")}'";
+      final rows = RegExp(
+        r"^\('[0-9a-f-]{36}', \(select id from categories.*$",
+        multiLine: true,
+      ).allMatches(sql).map((m) => m.group(0)!).toList();
+      expect(rows.length, bank.length);
+      for (final q in bank) {
+        final tr = (q['answersTr'] as List).cast<String>();
+        expect(tr.length, 4, reason: '${q['id']}');
+        expect(tr.every((t) => t.trim().isNotEmpty), isTrue);
+        expect((q['promptTr'] as String).trim(), isNotEmpty);
+        final json = jsonEncode(tr).replaceAll('","', '", "');
+        final row = rows.firstWhere(
+          (r) => r.contains(lit(q['prompt'] as String)),
+          orElse: () => '',
+        );
+        expect(row, isNotEmpty, reason: '${q['id']} satırı yok');
+        expect(
+          row.contains(
+            ', ${lit(q['promptTr'] as String)}, ${lit(json)}::jsonb, true)',
+          ),
+          isTrue,
+          reason: '${q['id']} prompt_tr/options_tr hizasız',
+        );
+        // Doğru şık konumu: option_a..d ile options_tr aynı indekste.
+        final ci = (q['answers'] as List).indexOf(q['correctAnswer']);
+        expect(tr[ci], q['correctAnswerTr'], reason: '${q['id']}');
+        expect(
+          row.contains(", '${'ABCD'[ci]}', "),
+          isTrue,
+          reason: '${q['id']}',
+        );
+      }
+    },
+  );
+
   test('içerik kuralları: carrier, cevap sızıntısı, tırnak, tekrar', () {
     final turkishOnly = RegExp(r'[ığöüİ]');
     final quoted = RegExp(r'"[^"]*"|“[^”]*”|«[^»]*»|\([^)]*\)');
