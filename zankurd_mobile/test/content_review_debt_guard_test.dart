@@ -29,7 +29,13 @@ void main() {
     // soruları (Sînema, Paradigma, Siyaset, Muzîk, Edebiyat, Teknolojî) tek bir
     // web sayfasına bağlanamayan temel bilgilerdir; yazar olmayan iki model
     // ONAY dedi. Kaynak borcu 2026-11-07 turundaki gibi bilinçli artırıldı.
-    const maximumMissingSourceReferences = 2118;
+    //
+    // 2118 -> 2931 (+813): 2026-11-14 `yeni3_2026_11_14` (814 soru; biri kaynaklı).
+    // On kategoride (Teknolojî, Edebiyat, Sînema, Muzîk, Paradigma, Siyaset,
+    // Cografya, Cîhan, Dîrok, Çand) tek bir web sayfasına bağlanamayan temel
+    // bilgiler; en az iki bağımsız model ONAY dedi. Kaynak borcu önceki
+    // turlardaki gibi bilinçli artırıldı (ölçüm: 2931).
+    const maximumMissingSourceReferences = 2931;
     var missing = 0;
 
     for (final asset in questionBankAssets) {

@@ -93,7 +93,10 @@ void main() {
       // 4060 -> 4756 (+696): 2026-11-10 `yeni2_2026_11_10` (yeni sorular 2). İlk
       // sayım 697 yazılmıştı: ajan son anda bir tekrarı JSON'dan çıkarmış, sayı
       // geri çekilmemişti. Gerçek ölçüm 696 kayıt (JSON ile yükleyici uyuşuyor).
-      4756,
+      // 4756 -> 5570 (+814): 2026-11-14 `yeni3_2026_11_14` (yeni sorular 3).
+      // Paket 821 soruydu; 7'si (6 cevap-sızıntısı, 1 tekrar) yerel JSON'dan
+      // çıkarıldı ve sunucuda `2026-11-18_yeni_sorular_3_eleme.sql` ile elendi.
+      5570,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -211,7 +214,9 @@ void main() {
       // 3374 -> 3563 (+189): 2026-11-07 `yeni_2026_11_07` (oynanabilir).
       // 3563 -> 4259 (+696): 2026-11-10 `yeni2_2026_11_10` (oynanabilir);
       // 697 yanlış sayımdı, bkz. yukarıdaki fiziksel toplam notu.
-      4259,
+      // 4259 -> 5073 (+814): 2026-11-14 `yeni3_2026_11_14` (oynanabilir; 821'den
+      // 7'si elendi, bkz. fiziksel toplam notu).
+      5073,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
