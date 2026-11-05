@@ -1,0 +1,5 @@
+/* Kurmancî izin açıklamaları (1.8, Pro denetimi 2026-11-05).
+   Mikrofon açıklaması jüri uyuşmazlığı nedeniyle eklenmedi: Info.plist'teki
+   Türkçe metin yedek olarak kalır. */
+"NSCameraUsageDescription" = "ZanKurd kamerayê bi kar nayîne; ev destûr tenê ji bo pêkhateya hilbijêra wêneyan a pergalê pêwîst e.";
+"NSPhotoLibraryUsageDescription" = "ZanKurd gihîştina arşîva wêneyên te dike da ku tu wêneyê profîla xwe hilbijêrî.";
