@@ -652,15 +652,31 @@ class _AdminNewQuestionScreenState extends State<AdminNewQuestionScreen> {
             const SizedBox(height: SahneSpace.x2),
             AdminLoader<List<String>>(
               load: widget.repository.loadCategories,
-              builder: (context, categories, _) => SahneRail.fit(
+              // Satır başına 3 çip: canlıda 11 kategori var; tek sığan rayda
+              // çipler okunmayacak kadar daralıyordu (makette 4 vardı).
+              builder: (context, categories, _) => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  for (final name in categories)
-                    SahneRailChip(
-                      key: ValueKey('admin-new-category-$name'),
-                      label: name,
-                      selected: _category == name,
-                      onTap: () => setState(() => _category = name),
+                  for (var i = 0; i < categories.length; i += 3) ...[
+                    if (i > 0) const SizedBox(height: SahneSpace.x2),
+                    SahneRail.fit(
+                      children: [
+                        for (final name in categories.skip(i).take(3))
+                          SahneRailChip(
+                            key: ValueKey('admin-new-category-$name'),
+                            label: name,
+                            selected: _category == name,
+                            onTap: () => setState(() => _category = name),
+                          ),
+                        for (
+                          var k = categories.skip(i).take(3).length;
+                          k < 3;
+                          k++
+                        )
+                          const SizedBox.shrink(),
+                      ],
                     ),
+                  ],
                 ],
               ),
             ),

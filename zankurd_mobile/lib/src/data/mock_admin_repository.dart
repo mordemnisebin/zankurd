@@ -196,6 +196,13 @@ class MockAdminRepository implements AdminRepository {
     'Ziman',
     'Çand',
     'Cografya',
+    'Cîhan',
+    'Edebiyat',
+    'Muzîk',
+    'Sînema',
+    'Siyaset',
+    'Teknolojî',
+    'Paradîgma',
   ];
 
   /// Testler için: eklenen yeni sorular.
