@@ -169,6 +169,11 @@ class StoryProgressStore {
     String nodeId, {
     List<int>? path,
   }) async {
+    final preferences = _preferences;
+    final nodeKey = '$_prefix$storyId';
+    final previousNode = _nodes[storyId];
+    final previousPath = _paths[storyId];
+    final previousAt = _at[storyId];
     _nodes[storyId] = nodeId;
     if (path == null) {
       _paths.remove(storyId);
@@ -176,8 +181,50 @@ class StoryProgressStore {
       _paths[storyId] = List.unmodifiable(path);
     }
     _at[storyId] = DateTime.now().millisecondsSinceEpoch;
-    await _preferences?.setString('$_prefix$storyId', nodeId);
-    await _writeMeta();
+    // Düğüm ve üst veri yazımının İKİ SONUCU da denetlenir (Copilot, W3 turu
+    // 2): eskiden düğüm `setString` sonucu yok sayılıyordu, reddedilen yazım
+    // "kaydedildi" görünüp ilerleme yeniden açılışta eski düğüme dönüyordu.
+    // Başarısızlıkta bellek ve (varsa) yazılmış düğüm geri alınır, çağıran
+    // hata alır.
+    var nodeSaved = true;
+    var metaSaved = true;
+    Object? failure;
+    try {
+      if (preferences != null) {
+        nodeSaved = await preferences.setString(nodeKey, nodeId);
+        if (nodeSaved) metaSaved = await _writeMeta();
+      }
+    } catch (error) {
+      failure = error;
+    }
+    if (failure != null || !nodeSaved || !metaSaved) {
+      if (previousNode == null) {
+        _nodes.remove(storyId);
+      } else {
+        _nodes[storyId] = previousNode;
+      }
+      if (previousPath == null) {
+        _paths.remove(storyId);
+      } else {
+        _paths[storyId] = previousPath;
+      }
+      if (previousAt == null) {
+        _at.remove(storyId);
+      } else {
+        _at[storyId] = previousAt;
+      }
+      try {
+        if (nodeSaved && preferences != null) {
+          if (previousNode == null) {
+            await preferences.remove(nodeKey);
+          } else {
+            await preferences.setString(nodeKey, previousNode);
+          }
+        }
+        await preferences?.reload();
+      } catch (_) {}
+      throw failure ?? StateError('Story progress was not persisted.');
+    }
   }
 
   /// Hikâyenin sonuna ulaşıldığını kalıcı işaretler (katalogdaki ✓).
