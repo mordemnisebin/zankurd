@@ -354,7 +354,7 @@ void main() {
           .firstWhere(
             (l) => l.contains('2026-11-17_rekabet_sunucu_havuzu.sql'),
           );
-      expect(row, contains('⏳'));
+      expect(row, contains('✅'));
       expect(row, contains('min'));
       expect(row, contains('46'));
       expect(row, contains('competitive_server_only_pool'));
