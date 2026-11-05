@@ -3313,6 +3313,36 @@
    "notes": "Kalite denetimi y4 hattı (qa4.py) ve test/yeni_sorular_4_2026_11_17_test.dart bekçisinde; yerel sayımlar değişmez.",
    "columns": {},
    "path": "tool/data/yeni4_2026_11_17_server_only.json"
+  },
+  {
+   "id": "w6_soru_secimi_geri_sql",
+   "description": "2026-11-18 W6 oda/solo soru seçimi göçü geri alma",
+   "glob": "supabase/geri_al/2026-11-18_w6_soru_secimi_geri.sql",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 100,
+   "expectedRecordCount": null,
+   "notes": "İşlev gövdesi geri alma; soru kaydı içermez",
+   "columns": {}
+  },
+  {
+   "id": "w6_server_question_id_code",
+   "description": "Yerel soru kimliği -> sunucu uuid5 eşlemesi (kod, kayıt değil)",
+   "glob": "lib/src/data/server_question_id.dart",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 100,
+   "expectedRecordCount": null,
+   "notes": "Kimlik dönüşümü kodu; soru kaydı içermez",
+   "columns": {}
   }
  ]
 }

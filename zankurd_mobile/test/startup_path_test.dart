@@ -112,7 +112,7 @@ void main() {
     ).readAsStringSync();
     expect(
       loader,
-      contains('compute(_decodeJsonList'),
+      contains('compute(_parseQuestionBank'),
       reason:
           'Dört asset ~1,4 MB; en büyüğü tek başına 1,1 MB. UI isolate inde '
           'çözmek ilk kareyi o süre boyunca bloklar.',
@@ -164,6 +164,9 @@ void main() {
     });
 
     test('tavanı aşmaz ve en eskiyi düşürür', () async {
+      // Tavan banka büyüklüğüne bağlı (alan 6 #7); küçük bankada taban 3.000.
+      SeenQuestionStore.debugBankSize = 1000;
+      addTearDown(() => SeenQuestionStore.debugBankSize = null);
       final store = await SeenQuestionStore.load();
       // Tavanın üstüne çık: 3.500 kimlik.
       await store.markSeen(List.generate(3500, (i) => 'q$i'));

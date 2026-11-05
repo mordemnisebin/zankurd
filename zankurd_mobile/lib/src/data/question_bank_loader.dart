@@ -11,7 +11,15 @@ import 'question_bank_loader_stub.dart'
     if (dart.library.io) 'question_bank_loader_io.dart';
 
 /// `compute` ile arka isolate'te çalıştırılır; üst düzey olmak zorunda.
-List<dynamic> _decodeJsonList(String raw) => json.decode(raw) as List<dynamic>;
+///
+/// JSON çözme VE `QuizQuestion.fromJson` eşlemesi birlikte arka planda yapılır
+/// (alan 9 #9): eskiden yalnız `json.decode` taşınıyor, ~6.800 kaydın nesneye
+/// çevrilmesi ana isolate'te kalıyor ve açılış karelerini tutuyordu. Sonuç
+/// (`QuizQuestion` değişmez, yalnız düz alanlar) isolate sınırından geçer.
+List<QuizQuestion> _parseQuestionBank(String raw) => [
+  for (final e in json.decode(raw) as List<dynamic>)
+    QuizQuestion.fromJson(e as Map<String, dynamic>),
+];
 
 /// Soru bankasını asenkron olarak yükler.
 ///
@@ -127,14 +135,10 @@ class QuestionBankLoader {
       // o süre boyunca bloklanıyordu — `main()` bu yüklemeyi `runApp`tan
       // önce bekliyor (2026-07-31 denetimi).
       //
-      // Yalnız `json.decode` taşınıyor: pahalı olan o. Sonuç düz
-      // List/Map olduğu için isolate sınırından sorunsuz geçer;
-      // `QuizQuestion.fromJson` eşlemesi ucuz ve burada kalıyor.
+      // `json.decode` + `QuizQuestion.fromJson` birlikte taşınıyor.
       // Web'de `compute` senkron çalışır, davranış aynı kalır.
-      final list = await compute(_decodeJsonList, raw);
-      return list
-          .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
-          .toList(growable: false);
+      final list = await compute(_parseQuestionBank, raw);
+      return List<QuizQuestion>.unmodifiable(list);
     } catch (_, stack) {
       _failedAssets.add(assetPath);
       // Ham JSON/parsing hatası içerik taşıyabilir. Yalnız paket kimliğini
@@ -151,12 +155,26 @@ class QuestionBankLoader {
     }
   }
 
+  /// `id` → soru haritası; `_questions` listesinin KİMLİĞİYLE önbelleğe alınır
+  /// (liste yenilenince harita düşer). Kopya kimlikte eski doğrusal taramayla
+  /// AYNI davranış: ilk eşleşme kazanır.
+  List<QuizQuestion>? _indexSource;
+  Map<String, QuizQuestion> _byId = const {};
+
   /// Belirli bir `id`'ye sahip soruyu bulur (MistakeStore için).
+  ///
+  /// Eskiden her çağrı ~6.800 soruyu doğrusal tarıyordu (alan 9 #14); hata
+  /// defteri her kayıt için bir kez çağırır. Harita bir kez kurulur.
   QuizQuestion? findById(String id) {
     _ensureLoadedInTest();
-    for (final q in _questions) {
-      if (q.id == id) return q;
+    if (!identical(_indexSource, _questions)) {
+      final map = <String, QuizQuestion>{};
+      for (final q in _questions) {
+        map.putIfAbsent(q.id, () => q);
+      }
+      _byId = map;
+      _indexSource = _questions;
     }
-    return null;
+    return _byId[id];
   }
 }

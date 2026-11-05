@@ -1812,13 +1812,48 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // Sızıntısız sorular her zaman önce gelir; tur onlarla dolmuyorsa
     // elenmiş adaylarla, o da yetmezse havuzun geri kalanıyla tamamlanır.
     // Tekrar eden bir soru, tek soruluk bir turdan iyidir.
+    //
+    // ## Kusur (alan 6 #4, W6)
+    //
+    // Yedek tamamlama yalnız KİMLİK tekilliğine bakıyordu: süzgeçlerin attığı
+    // sorular (cevabı ele verenler, aynı olgu grubundan olanlar) turu
+    // doldurmak için geri ekleniyordu. Havuz yeterliyken bile `candidates`ın
+    // elenmiş üyeleri `pool`daki temiz sorulardan ÖNCE gelirdi.
+    //
+    // ## Kural
+    //
+    // Tamamlama üç geçişlidir, en az kötüden en kötüye: (1) sızıntı yapmayan
+    // ve turdaki bir soruyla aynı olgu grubunda olmayan; (2) yalnız aynı olgu
+    // grubunda olmayan; (3) herhangi biri. Her geçişte önce `candidates`, sonra
+    // `pool`. Tur yine eksik kalmaz (havuz küçükse sızıntılı tamamlama sürer,
+    // bkz. round_length_floor_test) ama temiz soru varsa kirli soru seçilmez.
     final selected = <QuizQuestion>[...clean];
     if (selected.length < limit) {
       final chosen = selected.map((q) => q.id).toSet();
-      for (final source in [candidates, pool]) {
-        for (final question in source) {
-          if (selected.length >= limit) break;
-          if (chosen.add(question.id)) selected.add(question);
+      final groups = <String>{for (final q in selected) ?FactGroups.of(q.id)};
+      bool sameGroup(QuizQuestion q) {
+        final g = FactGroups.of(q.id);
+        return g != null && groups.contains(g);
+      }
+
+      bool leaks(QuizQuestion q) =>
+          selected.any((s) => QuestionSetPolicy.leaksBetween(s, q));
+
+      final passes = <bool Function(QuizQuestion)>[
+        (q) => !sameGroup(q) && !leaks(q),
+        (q) => !sameGroup(q),
+        (q) => true,
+      ];
+      for (final accepts in passes) {
+        for (final source in [candidates, pool]) {
+          for (final question in source) {
+            if (selected.length >= limit) break;
+            if (chosen.contains(question.id) || !accepts(question)) continue;
+            chosen.add(question.id);
+            selected.add(question);
+            final g = FactGroups.of(question.id);
+            if (g != null) groups.add(g);
+          }
         }
       }
     }

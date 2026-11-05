@@ -34,14 +34,15 @@ for arac in \
   test_w4_apple_hesap_silme_local test_w4_push_cihazlar_local \
   test_seri_dondurma_ust_sinir_local test_seri_dondurma_eski_rpc_koruma_local \
   test_rekabet_sunucu_havuzu_local test_w1_odul_moderasyon_local \
-  test_w8_yonetim_local test_ilerleme_sema_v3_local; do
+  test_w8_yonetim_local test_ilerleme_sema_v3_local \
+  test_w6_soru_secimi_local; do
   echo "-- $arac"
   # verified_quiz_sql_smoke yolu ortam değişkeninden, ötekiler argümandan okur.
   PGLITE_MODULE="$MODUL" node "tool/${arac}.mjs" "$MODUL"
 done
 
 echo "== Python unit testleri"
-(cd tool && python3 -m unittest -q test_send_push_outbox test_prepare_room_limits test_push_delivery_v2_sql)
+(cd tool && python3 -m unittest -q test_send_push_outbox test_prepare_room_limits test_push_delivery_v2_sql test_icerik_alan7_kiyas)
 (cd tool/content_authoring && python3 -m unittest -q test_editorial_queue test_authoring_gates)
 (cd tool/a11y && python3 -m unittest -q tap_target_taramasi_test)
 echo "SQL araçları ve Python testleri geçti."
