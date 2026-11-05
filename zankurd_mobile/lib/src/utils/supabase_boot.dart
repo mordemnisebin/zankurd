@@ -19,10 +19,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 /// * [boot] her zaman AYNI future'ı döndürür; `start` en fazla BİR KEZ
 ///   çağrılır (senkron fırlatma dâhil — `Future.sync` ile).
 /// * [probe] başlatmayı bitirmeyi bekler, başarısız olsa bile ping'i
-///   atar: karar veren şey artık ağa erişilebilirliktir, başlatma
-///   değil. Böylece başlatma patlamış olsa bile sunucu gerçekten
-///   erişilebiliyorsa kurtarma yolu açık kalır; tersi (ping başarısız)
-///   kilit yerinde kalır.
+///   atar. Başlatma patlamışsa ve ping geçerse başlatma BİR KEZ daha
+///   denenir (her yoklamada en çok bir); `true` yalnız `Supabase.instance`
+///   gerçekten kullanılabilirken döner (2026-11-06, G-03). Ping başarısız
+///   ya da yeniden başlatma da patlarsa kilit yerinde kalır.
 /// * [probe] AYNI anda çağrılsa da TEK yolculuk başlatır (in-flight
 ///   paylaşımı). `RemoteAvailability` zaman aşınca denemeyi bırakıp
 ///   yenisini başlatır; her deneme ayrı bir probe future'ı
@@ -71,11 +71,28 @@ class SupabaseBoot {
   }
 
   Future<bool> _journey() async {
+    var bootFailed = false;
     try {
       await boot;
     } catch (_) {
-      // Başlatma hatası kararı VERMEZ; aşağıda ping denenecek.
+      // Başlatma hatası tek başına kararı VERMEZ: önce ping denenir.
+      bootFailed = true;
     }
-    return _ping();
+    final reachable = await _ping();
+    if (!bootFailed || !reachable) return reachable;
+    // G-03: başlatma patlamıştı ama sunucu artık erişilebilir. Başlatma
+    // başarılı olmadan "ulaşılabilir" demek, kurtarmayı (`Supabase.instance
+    // .client`) ömür boyu başarısız bırakırdı: ping geçer, istemci alınamaz,
+    // karar geri alınır, döngü sonsuza dek sürer. `Supabase.initialize`
+    // kısmen kurulmuş örnekte "already initialized" ile örneği döndürür,
+    // hiç kurulmamışsa baştan dener; ikisi de güvenlidir. Başarısızsa
+    // `false` döner ve geri çekilmeli deneme sürer.
+    try {
+      final retry = _boot = Future<Supabase>.sync(_start);
+      await retry;
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 }

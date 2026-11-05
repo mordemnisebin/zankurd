@@ -73,14 +73,19 @@ void main() {
         async.elapse(const Duration(seconds: 4));
         async.flushMicrotasks();
         expect(probeCalls, 2, reason: 'geri çekilmiş deneme başlamalı');
+        // G-02 (2026-11-06): kurtarma kancası varken sunucuya ulaşmak kilidi
+        // AÇMAZ; oda/sıralama hâlâ çevrimdışı depoya bağlıdır. Kilit depo
+        // takası bitince (`completeUpgrade`) kalkar.
         expect(
           availability.reachable,
-          isTrue,
-          reason: 'başarılı deneme kilidi kaldırmalı',
+          isFalse,
+          reason: 'depo takası bitmeden kilit açılmamalı',
         );
-        expect(notified, greaterThan(0), reason: 'dinleyiciler uyarılmalı');
         expect(upgrades, 1, reason: 'uzak oturum kurtarması bir kez istenmeli');
         expect(availability.retrying, isFalse, reason: 'takvim durmalı');
+        availability.completeUpgrade();
+        expect(availability.reachable, isTrue, reason: 'takas bitince açılır');
+        expect(notified, greaterThan(0), reason: 'dinleyiciler uyarılmalı');
       });
     });
 
@@ -179,7 +184,11 @@ void main() {
 
         unawaited(availability.retryNow());
         async.flushMicrotasks();
-        expect(availability.reachable, isTrue, reason: 'ilk kurtarma başarılı');
+        expect(
+          availability.reachable,
+          isFalse,
+          reason: 'takas bitmeden kilit açılmaz (G-02)',
+        );
         expect(
           upgrades,
           0,
@@ -193,6 +202,79 @@ void main() {
 
         availability.considerUpgradeNow();
         expect(upgrades, 1, reason: 'kurtarma ikinci kez tetiklenmemeli');
+        availability.completeUpgrade();
+        expect(availability.reachable, isTrue);
+      });
+    });
+
+    test('G-01: kanca yoklama BİTTİKTEN sonra atanırsa kurtarma yine '
+        'istenir', () {
+      fakeAsync((async) {
+        var upgrades = 0;
+        final availability = RemoteAvailability(
+          reachable: false,
+          probe: () => Future<bool>.value(true),
+          retrySchedule: const [Duration(seconds: 2)],
+        );
+        addTearDown(availability.dispose);
+        availability.startRetries();
+        async.elapse(const Duration(seconds: 3));
+        async.flushMicrotasks();
+        // Kancasız başarı: eski davranış (kilit düşer).
+        expect(availability.reachable, isTrue);
+
+        availability.onUpgradeRequest = () => upgrades += 1;
+        expect(upgrades, 1, reason: 'geç atanan kanca kurtarmayı başlatmalı');
+        expect(
+          availability.reachable,
+          isFalse,
+          reason: 'depo hâlâ çevrimdışı: bant geri kurulmalı',
+        );
+        availability.completeUpgrade();
+        expect(availability.reachable, isTrue);
+      });
+    });
+
+    test('G-02: devam eden kurtarma sırasında retryNow ikinci kurtarma '
+        'başlatmaz', () {
+      fakeAsync((async) {
+        var upgrades = 0;
+        final availability = RemoteAvailability(
+          reachable: false,
+          probe: () => Future<bool>.value(true),
+          onUpgradeRequest: () => upgrades += 1,
+        );
+        addTearDown(availability.dispose);
+        unawaited(availability.retryNow());
+        async.flushMicrotasks();
+        unawaited(availability.retryNow());
+        async.flushMicrotasks();
+        expect(upgrades, 1);
+        availability.upgradeDeclined();
+        unawaited(availability.retryNow());
+        async.flushMicrotasks();
+        expect(upgrades, 2, reason: 'vazgeçilince yeniden denenir');
+      });
+    });
+
+    test('G-05: açılışta ulaşılır sayılan ama ağı olmayan oturum bant '
+        'gösterir ve kurtarılır', () {
+      fakeAsync((async) {
+        var online = false;
+        final availability = RemoteAvailability(
+          reachable: true,
+          probe: () => Future<bool>.value(online),
+          retrySchedule: const [Duration(seconds: 2)],
+        );
+        addTearDown(availability.dispose);
+        unawaited(availability.verifyInBackground());
+        async.flushMicrotasks();
+        expect(availability.reachable, isFalse);
+        expect(availability.retrying, isTrue);
+        online = true;
+        async.elapse(const Duration(seconds: 3));
+        async.flushMicrotasks();
+        expect(availability.reachable, isTrue);
       });
     });
 

@@ -210,6 +210,80 @@ void main() {
     });
   });
 
+  group('yarım geçiş bırakmama (2026-11-06)', () {
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
+      LocalProgressScope.debugReset();
+      await SyncManager.resetForTesting();
+    });
+
+    test('G-04: depo kurulamazsa sağlayıcı çevrimdışı kalır', () async {
+      final authProvider = AuthProvider.offline();
+      final client = _FakeSupabaseClient(_SessionGoTrue(_session('user-1')));
+      final holder = RepositoryHolder(OfflineZanKurdRepository());
+
+      final applied = await upgradeOfflineBootToRemote(
+        client: client,
+        authProvider: authProvider,
+        repositoryHolder: holder,
+        createRepository: (_) => throw StateError('depo kurulamadı'),
+      );
+
+      expect(applied, isFalse);
+      expect(authProvider.isOfflineMode, isTrue, reason: 'yarım geçiş yok');
+      expect(authProvider.currentUser, isNull);
+      expect(holder.repository, isA<OfflineZanKurdRepository>());
+    });
+
+    test('G-07: senkron kurulamazsa geçiş başarısız sayılır ve geri '
+        'alınır', () async {
+      final authProvider = AuthProvider.offline();
+      final client = _FakeSupabaseClient(_SessionGoTrue(_session('user-1')));
+      final holder = RepositoryHolder(OfflineZanKurdRepository());
+      final readyCalls = <ZanKurdRepository>[];
+
+      final applied = await upgradeOfflineBootToRemote(
+        client: client,
+        authProvider: authProvider,
+        repositoryHolder: holder,
+        createRepository: (_) => _CountingRepository(),
+        onRepositoryReady: (repository) async {
+          readyCalls.add(repository);
+          if (readyCalls.length == 1) throw StateError('kuyruk okunamadı');
+        },
+      );
+
+      expect(applied, isFalse, reason: 'senkronsuz uzak depoya geçilmez');
+      expect(holder.repository, isA<OfflineZanKurdRepository>());
+      expect(authProvider.isOfflineMode, isTrue);
+      expect(authProvider.currentUser, isNull);
+      expect(readyCalls, hasLength(2), reason: 'eski depoya yeniden bağlanır');
+      expect(readyCalls.last, same(holder.repository));
+    });
+
+    test('G-06: kayıtlı oturum yok ama misafir de seçilmediyse bağlanır — '
+        'yeni kullanıcı hesap açabilir, anonim oturum açılmaz', () async {
+      final authProvider = AuthProvider.offline();
+      final client = _FakeSupabaseClient(_SessionGoTrue(null));
+      final holder = RepositoryHolder(OfflineZanKurdRepository());
+
+      expect(authProvider.canAttachSupabase(client), isTrue);
+      final applied = await upgradeOfflineBootToRemote(
+        client: client,
+        authProvider: authProvider,
+        repositoryHolder: holder,
+        createRepository: (_) => _CountingRepository(),
+      );
+
+      expect(applied, isTrue);
+      expect(holder.repository, isA<_CountingRepository>());
+      expect(authProvider.isOfflineMode, isFalse);
+      expect(authProvider.canUseRemoteActions, isTrue);
+      expect(authProvider.isAuthenticated, isFalse, reason: 'oturum seçilmedi');
+      expect(client.auth.currentSession, isNull);
+    });
+  });
+
   group('kabuk depo takası', () {
     testWidgets('takas kabuğa yansır, kök ağaç tazelenmez', (tester) async {
       // Store tekillerini sıfırla ve hazır ayarları yaz (yan etki).

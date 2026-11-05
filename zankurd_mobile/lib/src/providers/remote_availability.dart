@@ -73,14 +73,16 @@ class RemoteAvailability extends ChangeNotifier {
     Future<bool> Function()? probe,
     Duration probeTimeout = const Duration(seconds: 4),
     List<Duration> retrySchedule = defaultRetrySchedule,
-    this.onUpgradeRequest,
+    VoidCallback? onUpgradeRequest,
     this.isUpgradeSafe,
   }) : _reachable = reachable, // ignore: prefer_initializing_formals
        _probe = probe, // ignore: prefer_initializing_formals
        _probeTimeout = probeTimeout, // ignore: prefer_initializing_formals
        _retrySchedule = retrySchedule.isEmpty
            ? defaultRetrySchedule
-           : retrySchedule;
+           : retrySchedule {
+    _onUpgradeRequest = onUpgradeRequest;
+  }
 
   final Future<bool> Function()? _probe;
   final Duration _probeTimeout;
@@ -93,7 +95,30 @@ class RemoteAvailability extends ChangeNotifier {
   /// çağrılır ve kancalar kapanır. Kurtarma UYGULANAMAZSA (ör. cihazda
   /// kayıtlı uzak oturum yoksa) kanca yerinde kalır, karar geri alınır
   /// ([upgradeDeclined]) ve sonraki başarılı yoklamada yeniden denenir.
-  VoidCallback? onUpgradeRequest;
+  ///
+  /// ## Geç atama (2026-11-06, G-01)
+  ///
+  /// Kanca, geri çekilme zamanlayıcısı başladıktan SONRA atanabilir
+  /// (`main` soru bankası/senkron beklerken ilk yoklama bitebilir).
+  /// Yoklama kancasız başarılı olduysa [reachable] `true` yapılmış ve
+  /// kurtarma hiç istenmemiş olurdu: oturum boyunca çevrimdışı depoda
+  /// kalınırdı. Kanca sonradan atanınca bu durum fark edilir, bant geri
+  /// kurulur ve kurtarma istenir.
+  VoidCallback? get onUpgradeRequest => _onUpgradeRequest;
+  set onUpgradeRequest(VoidCallback? value) {
+    _onUpgradeRequest = value;
+    if (value == null || _disposed || !_succeededWithoutHook) return;
+    _succeededWithoutHook = false;
+    if (_reachable) {
+      _reachable = false;
+      notifyListeners();
+    }
+    _requestUpgrade();
+  }
+
+  VoidCallback? _onUpgradeRequest;
+  bool _succeededWithoutHook = false;
+  bool _upgrading = false;
 
   /// [onUpgradeRequest]'in ne zaman güvenli olduğu — `main` rota
   /// kökteyken (üstünde açık ekran yokken) true döndürür.
@@ -141,6 +166,27 @@ class RemoteAvailability extends ChangeNotifier {
   void startRetries() {
     if (_disposed || _probe == null || _reachable) return;
     _ensureRetryScheduled();
+  }
+
+  /// Açılışta "ulaşılabilir" sayılan ([reachable] `true`) bir oturumun
+  /// GERÇEKTEN sunucuya ulaşıp ulaşmadığını bir kez doğrular (G-05).
+  ///
+  /// `Supabase.initialize` yerel oturumu okuyarak ağ olmadan da biter;
+  /// `remoteReady` bu yüzden sunucu erişilebilirliği DEĞİLDİR. Ağ yoksa
+  /// bant gösterilir ve geri çekilmeli deneme başlar; bağlantı gelince
+  /// [update] ile kilit kalkar (depo zaten uzaktır, takas gerekmez).
+  /// İlk kareyi bekletmemesi için arka planda çağrılır.
+  Future<void> verifyInBackground() async {
+    final probe = _probe;
+    if (_disposed || probe == null || !_reachable) return;
+    var ok = false;
+    try {
+      ok = await probe().timeout(_probeTimeout);
+    } catch (_) {
+      ok = false;
+    }
+    if (_disposed || ok || !_reachable) return;
+    update(false);
   }
 
   /// Tek seferlik, hemen deneme: ön plana dönüş, kullanıcı eylemi ve
@@ -191,8 +237,17 @@ class RemoteAvailability extends ChangeNotifier {
     if (ok) {
       _retryStep = 0;
       _cancelRetryTimer();
-      update(true);
-      _requestUpgrade();
+      if (_onUpgradeRequest == null) {
+        // Kurtarma kancası yok (ya da henüz atanmadı): ulaşılabilirlik
+        // kararı doğrudan verilir; kanca sonradan atanırsa geri alınır.
+        _succeededWithoutHook = true;
+        update(true);
+      } else {
+        // G-02: depo takası bitmeden sosyal kilit AÇILMAZ. Sunucuya
+        // ulaşıldı ama oda/sıralama hâlâ çevrimdışı depoya bağlıdır;
+        // kilit [completeUpgrade] ile kalkar.
+        _requestUpgrade();
+      }
     } else {
       if (_retryStep < _retrySchedule.length - 1) _retryStep += 1;
       _ensureRetryScheduled();
@@ -218,14 +273,14 @@ class RemoteAvailability extends ChangeNotifier {
   }
 
   void _requestUpgrade() {
-    if (onUpgradeRequest == null) return;
+    if (_onUpgradeRequest == null) return;
     _upgradePending = true;
     _considerUpgrade();
   }
 
   void _considerUpgrade() {
-    if (_disposed || !_upgradePending) return;
-    final request = onUpgradeRequest;
+    if (_disposed || !_upgradePending || _upgrading) return;
+    final request = _onUpgradeRequest;
     if (request == null) return;
     final safe = isUpgradeSafe;
     if (safe != null && !safe()) return;
@@ -235,15 +290,18 @@ class RemoteAvailability extends ChangeNotifier {
     // hemen nullptr'ye çekildiği için uygulanamayan kurtarma bir daha hiç
     // denenmiyordu.
     _upgradePending = false;
+    _upgrading = true;
     request();
   }
 
   /// Kurtarma uygulandı: kancalar kapanır, takvim durur, karar kesindir.
   void completeUpgrade() {
     if (_disposed) return;
-    onUpgradeRequest = null;
+    _onUpgradeRequest = null;
     isUpgradeSafe = null;
     _upgradePending = false;
+    _upgrading = false;
+    _succeededWithoutHook = false;
     _retryStep = 0;
     _cancelRetryTimer();
     update(true);
@@ -260,6 +318,7 @@ class RemoteAvailability extends ChangeNotifier {
   /// çizilir.
   void upgradeDeclined() {
     if (_disposed) return;
+    _upgrading = false;
     if (_reachable) update(false);
     if (_retryStep < _retrySchedule.length - 1) _retryStep += 1;
     _ensureRetryScheduled();
