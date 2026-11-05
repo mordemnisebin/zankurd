@@ -32,6 +32,10 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  # Kurmancî Material/Cupertino metinleri için tarih/sayı biçimleri
+  # (`lib/src/l10n/material_locales.dart`). Zaten flutter_localizations'ın
+  # geçişli bağımlılığıydı; doğrudan kullanıldığı için açıkça yazıldı.
+  intl: ^0.20.2
 
   # `cupertino_icons` bilerek YOK: uygulama hiçbir Cupertino widget'ı/ikonu
   # kullanmıyor ve release derlemede kullanılmayan yazı tipi budanmıyor,

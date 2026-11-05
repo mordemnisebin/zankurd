@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart' show OrdinalSortKey;
 
 import '../game/avatar_frames.dart';
 import '../l10n/strings.dart';
@@ -252,8 +253,13 @@ class _PodiumColumn extends StatelessWidget {
     );
 
     final onReport = this.onReport;
+    // 1.7 (Pro denetimi 2026-11-05): görsel sıra 2 · 1 · 3 ama anlam sırası
+    // yalnız yorumla "1 · 2 · 3" deniyordu; `sortKey` yoktu, ekran okuyucu
+    // DOM sırasını (2, 1, 3) okuyup birinciyi ikinciden sonra duyuruyordu.
+    // Anahtar yer numarasıdır (0 = birinci).
     return Semantics(
       key: ValueKey('leaderboard-rank-row-${entry.rank}'),
+      sortKey: OrdinalSortKey(place.toDouble()),
       container: true,
       label: label,
       hint: onReport == null ? null : Tr.forKu(K.reportTapHint, isKu),

@@ -356,6 +356,11 @@ class _AppShellState extends State<AppShell>
         reason: 'app_shell_initial_connectivity',
       );
     }
+    // H1 (Pro denetimi 2026-11-05): ilk bağlantı okuması beklenirken ekran
+    // kapanırsa `dispose` aboneliği (henüz null) iptal edemiyor, ardından
+    // kurulan dinleyici sonsuza dek sızıyor ve ölü State'e `setState`
+    // çağırıyordu.
+    if (!mounted) return;
     try {
       _connectivitySub = _connectivityMonitor.onConnectivityChanged.listen(
         _applyConnectivityResults,
@@ -1452,6 +1457,11 @@ class _AppShellState extends State<AppShell>
     if (widest <= available || widest <= 0) return bar;
     // %6 güvenlik payı: ölçüm ile NavigationBar'ın kendi yerleşimi arasında
     // küçük fark kalır; etiket ikinci satıra KIRILMAMALI.
+    // 2.1 (Pro denetimi 2026-11-05) incelendi, DEĞİŞTİRİLMEDİ: alt sınır
+    // 0,2 teorik; gerçek yazı tipinde ham çarpan ~0,7'nin altına inmez
+    // (iPhone 17 Pro turu), test yazı tipinde ise 0,25-0,47 çıkar ve
+    // `nav_etiket_kenar_test` tek satır + kenar boşluğu için bu küçülmeyi
+    // ister. Sınırı yükseltmek etiketi iki satıra kırdı (test kanıtı).
     final factor = (available / widest * 0.94).clamp(0.2, 1.0);
     final baseSize = base.fontSize ?? 12;
     return Theme(

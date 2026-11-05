@@ -245,10 +245,10 @@ void main() {
     }
   });
 
-  test('app preserves the supported 200 percent system text scale', () {
+  test('app preserves the supported 300 percent system text scale', () {
     final source = File('lib/main.dart').readAsStringSync();
 
-    expect(source, contains('maxScaleFactor: 2.0'));
+    expect(source, contains('maxScaleFactor: 3.0'));
     expect(source, isNot(contains('maxScaleFactor: 1.35')));
   });
 

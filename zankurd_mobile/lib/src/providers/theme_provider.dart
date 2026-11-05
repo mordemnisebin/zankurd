@@ -26,6 +26,23 @@ class ThemeProvider extends ChangeNotifier {
   ThemeMode get mode => _mode;
   bool get isDark => _mode == ThemeMode.dark;
 
+  /// Ekranda GERÇEKTEN koyu mu? `system` modunda cihazın parlaklığına bakar.
+  ///
+  /// 1.10 (Pro denetimi 2026-11-05): ayar anahtarı `isDark`a bağlıydı;
+  /// kayıtlı tercih `system` ve cihaz koyuyken uygulama koyu çiziliyor ama
+  /// anahtar "kapalı" gösteriyor, dokunuş da (kapalı → koyu) görünür bir
+  /// değişiklik yapmıyordu. Sessiz kaldı çünkü yeni kurulumun varsayılanı
+  /// `dark`, `system` yalnız eski kayıtlardan geliyor.
+  bool isDarkFor(Brightness platformBrightness) => switch (_mode) {
+    ThemeMode.dark => true,
+    ThemeMode.light => false,
+    ThemeMode.system => platformBrightness == Brightness.dark,
+  };
+
+  /// Anahtarı görünen duruma göre çevirir ([isDarkFor]).
+  Future<void> toggleDarkLightFor(Brightness platformBrightness) =>
+      setMode(isDarkFor(platformBrightness) ? ThemeMode.light : ThemeMode.dark);
+
   Future<void> toggleDarkLight() async {
     final next = isDark ? ThemeMode.light : ThemeMode.dark;
     await setMode(next);

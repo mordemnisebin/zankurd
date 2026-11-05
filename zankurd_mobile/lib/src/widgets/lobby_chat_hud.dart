@@ -394,28 +394,37 @@ class QuickReactionBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        // 1.6 (Pro denetimi 2026-11-05): beş düğme 56 px SABİTTİ (toplam 280);
+        // ≈300 px'lik görünümde (bölünmüş ekran, yatay taşma) Row yatayda
+        // taşıyordu. Artık her biri en çok 56, sığmazsa küçülür (dokunma
+        // hedefi 48'in altına inmez: 5 × 48 = 240 sığar).
         for (var i = 0; i < lobbyReactionEmojis.length; i++)
-          Semantics(
-            button: true,
-            label: labels[i],
-            excludeSemantics: true,
-            onTap: () => onReaction(lobbyReactionEmojis[i], labels[i]),
-            child: InkWell(
-              key: ValueKey('room-reaction-${lobbyReactionEmojis[i]}'),
-              customBorder: const StadiumBorder(),
-              onTap: () => onReaction(lobbyReactionEmojis[i], labels[i]),
-              child: Container(
-                width: 56,
-                height: 48,
-                alignment: Alignment.center,
-                decoration: ShapeDecoration(
-                  color: t.s2,
-                  shape: const StadiumBorder(),
-                ),
-                child: Text(
-                  lobbyReactionEmojis[i],
-                  textScaler: TextScaler.noScaling,
-                  style: const TextStyle(fontSize: 22),
+          Flexible(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 56),
+              child: Semantics(
+                button: true,
+                label: labels[i],
+                excludeSemantics: true,
+                onTap: () => onReaction(lobbyReactionEmojis[i], labels[i]),
+                child: InkWell(
+                  key: ValueKey('room-reaction-${lobbyReactionEmojis[i]}'),
+                  customBorder: const StadiumBorder(),
+                  onTap: () => onReaction(lobbyReactionEmojis[i], labels[i]),
+                  child: Container(
+                    width: double.infinity,
+                    height: 48,
+                    alignment: Alignment.center,
+                    decoration: ShapeDecoration(
+                      color: t.s2,
+                      shape: const StadiumBorder(),
+                    ),
+                    child: Text(
+                      lobbyReactionEmojis[i],
+                      textScaler: TextScaler.noScaling,
+                      style: const TextStyle(fontSize: 22),
+                    ),
+                  ),
                 ),
               ),
             ),

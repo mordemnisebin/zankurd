@@ -651,9 +651,13 @@ class _SettingsScreenState extends State<SettingsScreen>
                     builder: (context, themeProvider, _) => SahneListRow.plain(
                       title: context.t(K.darkLightMode),
                       trailing: Switch(
-                        value: themeProvider.isDark,
+                        value: themeProvider.isDarkFor(
+                          MediaQuery.platformBrightnessOf(context),
+                        ),
                         onChanged: (_) {
-                          themeProvider.toggleDarkLight();
+                          themeProvider.toggleDarkLightFor(
+                            MediaQuery.platformBrightnessOf(context),
+                          );
                         },
                       ),
                     ),

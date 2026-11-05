@@ -776,7 +776,9 @@ class ZanKurdApp extends StatelessWidget {
             // Geç kurtarmada kökün üstünde açık rota var mı diye bakılır
             // (bkz. `_navigatorKey`).
             navigatorKey: _navigatorKey,
-            locale: const Locale('tr'),
+            locale: AppMaterialLocales.localeFor(
+              isKu: context.watch<LanguageProvider>().isKu,
+            ),
             supportedLocales: AppMaterialLocales.supported,
             localizationsDelegates: AppMaterialLocales.delegates,
             navigatorObservers: [appRouteObserver, appPageRouteObserver],
@@ -804,9 +806,15 @@ class ZanKurdApp extends StatelessWidget {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 reducedMotionProvider.setSystemReduce(disableAnimations);
               });
+              // 1.1 (Pro denetimi 2026-11-05): üst sınır 2,0'dı; iOS'ta
+              // erişilebilirlik boyutları ≈3,1'e, Android'de yazı tipi
+              // ölçeği 2,0'a kadar çıkar ve görme engelli oyuncular tam da
+              // bu üst basamakları kullanır. Sınır 3,0'a yükseltildi;
+              // düzenler %300'de `large_text_overflow_test`le korunur. Oyun
+              // içi sabit alanlar (sayaç vb.) kendi yerel sınırını koyar.
               return MediaQuery.withClampedTextScaling(
                 minScaleFactor: 0.85,
-                maxScaleFactor: 2.0,
+                maxScaleFactor: 3.0,
                 // Durum çubuğu ikonları hiçbir yerde ayarlanmamıştı; açık
                 // temada beyaz saat/pil krem zemin üzerine düşüyor ve
                 // okunmuyordu (2026-07-25 canlı denetimi, iOS). Ekranların

@@ -4113,25 +4113,38 @@ class ResultExplanationEntry extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: SahneSpace.x1),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
+                // 1.1: %300 yazıda "Doğru cevap: " etiketi tek başına dar
+                // ekranı aşıyordu (320 px'te 71 px taşma); büyük yazıda
+                // etiket ve cevap alt alta iner.
+                Builder(
+                  builder: (context) {
+                    final label = Text(
                       '${context.t(K.correctAnswerLabel)}: ',
                       style: SahneType.captionStrong.copyWith(color: t.okTx),
-                    ),
-                    Expanded(
-                      child: LexiconText(
-                        record.correctAnswer,
-                        style: SahneType.captionStrong.copyWith(color: t.okTx),
-                        policy: LexiconTapPolicy.forReview(
-                          isKu: context.isKu,
-                          prompt: record.prompt,
-                          isAnswer: true,
-                        ),
+                    );
+                    final answer = LexiconText(
+                      record.correctAnswer,
+                      style: SahneType.captionStrong.copyWith(color: t.okTx),
+                      policy: LexiconTapPolicy.forReview(
+                        isKu: context.isKu,
+                        prompt: record.prompt,
+                        isAnswer: true,
                       ),
-                    ),
-                  ],
+                    );
+                    if (MediaQuery.textScalerOf(context).scale(16) >= 32) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [label, answer],
+                      );
+                    }
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        label,
+                        Expanded(child: answer),
+                      ],
+                    );
+                  },
                 ),
                 const SizedBox(height: SahneSpace.x1),
                 LexiconText(
