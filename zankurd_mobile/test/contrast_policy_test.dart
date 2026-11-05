@@ -208,4 +208,22 @@ void main() {
       ]);
     });
   });
+
+  /// 2.1.2 (Pro denetimi 1.5): alınamayan jokerin ad/ikon/fiyat metni alfa
+  /// %40 ile soluklaştırılıyordu (karanlık ≈3,35:1, aydınlık ≈2,47:1). Bu
+  /// politika testi o durumu hiç kapsamıyordu; şimdi joker metninin kullandığı
+  /// ikincil metin, her iki temada her pasif/etkin joker dolgusu üstünde AA.
+  group('joker metni (alınamayan dahil) her iki temada AA', () {
+    for (final entry in {
+      'gece': SahneTokens.night,
+      'gündüz': SahneTokens.day,
+    }.entries) {
+      final t = entry.value;
+      test('${entry.key}: tx2 pasif dolgu ve kapsül üstünde ≥ 4,5', () {
+        expect(contrastRatio(t.tx2, t.disabledFill), greaterThanOrEqualTo(4.5));
+        expect(contrastRatio(t.tx2, t.stageChip), greaterThanOrEqualTo(4.5));
+        expect(contrastRatio(t.tx2, t.s1), greaterThanOrEqualTo(4.5));
+      });
+    }
+  });
 }

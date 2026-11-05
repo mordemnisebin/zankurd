@@ -438,7 +438,20 @@ class SahneButton extends StatelessWidget {
             child: button,
           )
         : SahnePressSink(enabled: enabled, child: button);
-    if (semanticLabel != null) {
+    if (loading) {
+      // 1.9 (Pro denetimi 2026-11-05): yükleme sürerken dokunuş boş işleve
+      // gider ama Material düğmesi ekran okuyucuya "etkin düğme" kalıyordu;
+      // VoiceOver kullanıcısı çift dokunup hiçbir şey olmadığını duyuyordu.
+      // Görünüş korunur (gösterge dönmeye devam eder), anlam düğümü ise
+      // PASİF ve dokunuşsuzdur.
+      button = Semantics(
+        label: semanticLabel ?? label,
+        excludeSemantics: true,
+        button: true,
+        enabled: false,
+        child: button,
+      );
+    } else if (semanticLabel != null) {
       button = Semantics(
         label: semanticLabel,
         excludeSemantics: true,
@@ -508,6 +521,16 @@ class SahneJokerButton extends StatelessWidget {
   /// Kapsülün görsel boyu; dokunma kutusu [sahneTapTarget] (48).
   static const double visualHeight = 48;
 
+  /// 1.4 (Pro denetimi 2026-11-05): ad büyük yazıda `noScaling` ile 14 pt'e
+  /// SABİTLENİYORDU; sistem yazısını %200–300 büyüten kullanıcı jokerlerin
+  /// adını hiç büyümeden, küçük görüyordu. Kapsül ve alt perde şişmesin diye
+  /// ölçek yine sınırlıdır ama 1,0 değil [_nameMaxScale]; `FittedBox` genişliğe
+  /// göre ayrıca küçültür.
+  static const double _nameMaxScale = 1.3;
+
+  static TextScaler _jokerNameScaler(BuildContext context) =>
+      MediaQuery.textScalerOf(context).clamp(maxScaleFactor: _nameMaxScale);
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
@@ -518,7 +541,12 @@ class SahneJokerButton extends StatelessWidget {
     final enabled = tappable && !unaffordable;
     // Jeton yetmiyorsa kapsül AYNI kalır; ikon ve etiket %40 opaklıkta (U8, 2026-10-28 tur 4), kenarsız, ortak pasif dolguda
     // çizilir (kilit simgesi jeton glifinin yerine geçer: kalabalık olmasın).
-    Color dim(Color c) => c.withValues(alpha: 0.4);
+    // 1.5 (Pro denetimi 2026-11-05): alfa %40 metin pasif dolgu üstünde
+    // 3,35:1 (karanlık) / 2,47:1 (aydınlık) veriyordu — fiyatı okutmak için
+    // gösterilen joker adı okunmuyordu. Soluk görünüm artık opaklıkla değil
+    // ikincil metin tokenıyla (`tx2`, AA) kurulur; "alınamaz"ı dolgu, kilit
+    // ve etkin olmayan kenar söyler.
+    Color dim(Color c) => t.tx2;
     final fg = selected ? t.goldTx : (enabled ? t.tx : dim(t.tx));
     final showPrice = !selected && (enabled || unaffordable);
     // Kurul incelemesi 2026-10-19: kapsül gecede zemine karışıyordu (4 model).
@@ -650,9 +678,7 @@ class SahneJokerButton extends StatelessWidget {
                                     label,
                                     key: const ValueKey('joker-name'),
                                     maxLines: largeText ? 1 : 2,
-                                    textScaler: largeText
-                                        ? TextScaler.noScaling
-                                        : null,
+                                    textScaler: _jokerNameScaler(context),
                                     softWrap: !largeText,
                                     textAlign: TextAlign.center,
                                     overflow: largeText
@@ -668,9 +694,7 @@ class SahneJokerButton extends StatelessWidget {
                                   label,
                                   key: const ValueKey('joker-name'),
                                   maxLines: largeText ? 1 : 2,
-                                  textScaler: largeText
-                                      ? TextScaler.noScaling
-                                      : null,
+                                  textScaler: _jokerNameScaler(context),
                                   softWrap: !largeText,
                                   textAlign: TextAlign.center,
                                   overflow: largeText

@@ -348,6 +348,9 @@ void main() {
     // sabit 12 yazılmaz.
     expect(joker, isNot(contains('fontSize: 12,')));
     expect(joker, contains("key: const ValueKey('joker-name')"));
-    expect(joker, contains('c.withValues(alpha: 0.4)'));
+    // 2.1.2 (1.5): alfa %40 soluklaştırma AA'yı geçmiyordu; pasif joker
+    // metni artık ikincil metin tokenı (`tx2`).
+    expect(joker, isNot(contains('withValues(alpha: 0.4)')));
+    expect(joker, contains('Color dim(Color c) => t.tx2;'));
   });
 }

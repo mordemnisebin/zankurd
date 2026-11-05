@@ -1672,7 +1672,8 @@ class SahneResultDock extends StatelessWidget {
     final primaryButton = _DockAction(
       key: primary.key,
       label: primary.label,
-      onTap: primary.loading ? () {} : primary.onPressed,
+      loading: primary.loading,
+      onTap: primary.onPressed,
       child: SahneButton.primary(
         label: primary.label,
         icon: primary.icon,
@@ -1687,6 +1688,31 @@ class SahneResultDock extends StatelessWidget {
     if (other.iconOnly) {
       // W2: tam genişlik birincil + sağda 52'lik simge düğmesi; Y1: ikinci
       // simge ("⋯") aynı biçimde.
+      //
+      // 2.2 (Pro denetimi 2026-11-05): büyük yazıda bu dal Column'a geçmiyordu
+      // (geçiş yalnız simgesiz ikincil içindi); 56'lık simgeler satırda sabit
+      // kalıp birincil etiketi dar bir sütuna sıkıştırıyordu. Büyük yazıda
+      // birincil tam genişlik, simgeler altında ortalı bir satır olur.
+      if (MediaQuery.textScalerOf(context).scale(16) >= 24) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            primaryButton,
+            const SizedBox(height: SahneSpace.x2),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _dockIconButton(context, other),
+                if (more != null) ...[
+                  const SizedBox(width: SahneSpace.x2),
+                  _dockIconButton(context, more!),
+                ],
+              ],
+            ),
+          ],
+        );
+      }
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -1743,11 +1769,18 @@ class _DockAction extends StatelessWidget {
     required this.label,
     required this.onTap,
     required this.child,
+    this.loading = false,
     super.key,
   });
 
   final String label;
-  final VoidCallback onTap;
+
+  /// 1.3 (Pro denetimi 2026-11-05): yükleme sürerken anlam düğümü pasif ve
+  /// dokunuşsuz olmalı; eskiden `onTap` boş işleve çevrilip `enabled: true`
+  /// kalıyordu, VoiceOver "etkin düğme" okuyup çift dokunuşta hiçbir şey
+  /// yapmıyordu.
+  final bool loading;
+  final VoidCallback? onTap;
   final Widget child;
 
   @override
@@ -1755,13 +1788,13 @@ class _DockAction extends StatelessWidget {
     return Semantics(
       container: true,
       button: true,
-      enabled: true,
+      enabled: !loading && onTap != null,
       label: label,
-      onTap: onTap,
+      onTap: loading ? null : onTap,
       excludeSemantics: true,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: onTap,
+        onTap: loading ? null : onTap,
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 56),
           child: Center(child: child),
