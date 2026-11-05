@@ -542,6 +542,13 @@ class SahneListRow extends StatelessWidget {
         ExcludeSemantics(
           child: Text(
             title,
+            // "Sen" satırı (sıralamada sabit): başlık sütunu sıra + avatarın
+            // yanında ~150 pt kalır; ×3 yazıda "Oyunc/u" diye bölünüyordu.
+            // Bu satırın başlığı ×2'ye kadar büyür (LayoutBuilder IntrinsicHeight
+            // içinde patlayacağından ölçüm yerine üst sınır).
+            textScaler: isMe
+                ? MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 2)
+                : null,
             style: SahneType.bodyStrong.copyWith(
               color: !enabled
                   ? t.disabledFg

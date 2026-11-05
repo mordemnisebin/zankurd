@@ -229,8 +229,10 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
               // okuyucuda "seçili". 48: dokunma kılavuzu. Ray kartın
               // DIŞINDA durur: seçili olmayan çip Perde (`s1`) tonundadır ve
               // Perde kartın içinde görünmez oluyordu.
-              SizedBox(
-                height: 48,
+              // minHeight: büyük yazıda sığan ray iki satıra geçer; sabit 48
+              // ikinci satırı taşırıyordu.
+              ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: 48),
                 child: SahneRail.fit(
                   children: [
                     for (final letter in const ['A', 'B', 'C', 'D'])

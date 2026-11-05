@@ -1400,7 +1400,9 @@ class _RankRow extends StatelessWidget {
           children: [
             SahneBadge(label: Tr.forKu(K.you, isKu), tone: SahneBadgeTone.gold),
             const SizedBox(width: SahneSpace.x2),
-            _score(),
+            // Flexible: ×3 yazıda rozet + puan 173 pt'e sığmıyordu (1 px
+            // taşma); puan FittedBox ile küçülür, 1× görünüm aynı kalır.
+            Flexible(child: _score()),
           ],
         ),
         semanticLabel: label,

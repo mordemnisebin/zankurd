@@ -407,7 +407,11 @@ class _SahneDropdownBodyState<T> extends State<_SahneDropdownBody<T>> {
               value: widget.field.value,
               focusNode: _focusNode,
               isExpanded: true,
-              itemHeight: 52,
+              // Büyük yazıda sabit 52 metni kesiyordu ("Bir konu" yarım);
+              // null: öğe yüksekliği içeriğe uyar (en az 48).
+              itemHeight: MediaQuery.textScalerOf(context).scale(16) / 16 > 1.15
+                  ? null
+                  : 52,
               padding: const EdgeInsetsDirectional.only(
                 start: SahneSpace.x4,
                 end: SahneSpace.x3,

@@ -1447,7 +1447,11 @@ class _ShopScreenState extends State<ShopScreen> {
       key: ValueKey('shop-kind-tag-${item.id}'),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: ShapeDecoration(
-        shape: StadiumBorder(
+        // Yuvarlatılmış dikdörtgen: ×3 yazıda etiket iki satıra inince
+        // StadiumBorder oval olup metni kırpıyordu; tek satırda (yükseklik
+        // ≈ 21) yarıçap 10,5'e kırpılır, yani eski hap ile aynıdır.
+        shape: RoundedRectangleBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
           side: BorderSide(color: t.tx2.withValues(alpha: 0.5)),
         ),
       ),
@@ -1481,7 +1485,8 @@ class _ShopScreenState extends State<ShopScreen> {
     final texts = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        // "Seri don/durma": sözcük bölünmez, gerekirse yazı küçülür.
+        SahneUnbrokenText(
           title,
           style: SahneType.bodyStrong.copyWith(
             color: isPurchased ? t.tx2 : t.tx,

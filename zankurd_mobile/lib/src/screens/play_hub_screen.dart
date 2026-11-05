@@ -964,7 +964,12 @@ class _QuickDuelHeroState extends State<_QuickDuelHero> {
     final onTap = widget.onTap;
     final enabled = onTap != null;
     // Son iki sözcük bölünmez: "… asta / te" gibi yarım tamlama kalmasın.
-    final title = glueLastWords(context.t(K.quickDuelHeadline));
+    // Büyük yazıda yapıştırma kalkar: "yakın rakip" tek parça satıra sığmayıp
+    // harf ortasından kırılıyordu ("r/akip"); sözcükler [SahneUnbrokenText]
+    // ile bölünmeden küçülür.
+    final bigText = MediaQuery.textScalerOf(context).scale(14) >= 21;
+    final headline = context.t(K.quickDuelHeadline);
+    final title = bigText ? headline : glueLastWords(headline);
     // Eşleşme odası 10 soruyla kurulur (`MatchmakingScreen`, `limit: 10`).
     // Soru sayısı ve süre ayrı dizgelerdir; ayraç çeviriye girmez.
     final meta =
@@ -1012,7 +1017,7 @@ class _QuickDuelHeroState extends State<_QuickDuelHero> {
                           ),
                         ),
                         const SizedBox(height: SahneSpace.x1),
-                        Text(
+                        SahneUnbrokenText(
                           title,
                           style: SahneType.headline.copyWith(
                             color: SahneVivid.onFill,
@@ -1709,6 +1714,62 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
     final hasEnoughCoins = blockedFee == null;
 
     final t = SahneTokens.of(context);
+    // Büyük yazıda (≥ %150) 'jeton eksik' bloğu (not + bağlantı alt alta) sabit
+    // alt çubukta başlık + düğmeyle birlikte %90 sınırını aşıyordu (320 pt, ×3:
+    // 78 px taşma). O ölçekte blok kaydırma alanının sonuna, ücret ızgarasının
+    // hemen altına girer; sabit çubukta yalnız düğme kalır.
+    final stackedShortfall = MediaQuery.textScalerOf(context).scale(14) >= 21;
+    final Widget? shortfallBlock = hasEnoughCoins
+        ? null
+        : Padding(
+            padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+            // Büyük yazı/dar telefonda (≥ %150) not ve bağlantı alt alta:
+            // yan yana 256 pt'lik panelde sağdan taşıyordu (2026-10-28
+            // tur 3, 320 pt + 2× yazı turu).
+            child: Builder(
+              builder: (context) {
+                final note = SahneShortfallNote(
+                  key: const ValueKey('custom-room-shortfall'),
+                  missing: coinShortfall(
+                    cost: blockedFee,
+                    balance: widget.coinBalance,
+                  ),
+                  fee: blockedFee,
+                  warn: true,
+                );
+                final earn = SahneButton.text(
+                  buttonKey: const ValueKey('custom-room-earn-coins'),
+                  label: context.t(K.earnCoins),
+                  icon: AppIcons.ferrisWheel,
+                  arrow: false,
+                  onPressed: () =>
+                      Navigator.of(context).pop(const _EarnCoinsRequest()),
+                );
+                final stacked =
+                    MediaQuery.textScalerOf(context).scale(14) >= 21;
+                if (stacked) {
+                  return Column(
+                    key: const ValueKey('custom-room-shortfall-row'),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [note, earn],
+                  );
+                }
+                return Row(
+                  key: const ValueKey('custom-room-shortfall-row'),
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: note,
+                      ),
+                    ),
+                    const SizedBox(width: SahneSpace.x2),
+                    earn,
+                  ],
+                );
+              },
+            ),
+          );
     // 2026-10-02 uçtan uca QA: bu sayfa kapatılamıyordu. İçerik (dört seçim
     // grubu) ekrandan uzun olduğundan kaydırma alanı sayfanın tüm yüksekliğini
     // dolduruyordu: perde (barrier) hiçbir yerde açıkta kalmıyor, aşağı çekme
@@ -1771,7 +1832,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                     const SizedBox(width: SahneSpace.x3),
                   ],
                   Expanded(
-                    child: Text(
+                    child: SahneUnbrokenText(
                       context.t(
                         widget.editing ? K.settings : K.customRoomTitle,
                       ),
@@ -2126,6 +2187,10 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                   ),
                                 ],
                               ],
+                              if (!hasEnoughCoins && stackedShortfall) ...[
+                                const SizedBox(height: SahneSpace.x2),
+                                shortfallBlock!,
+                              ],
                             ],
                           ),
                         ),
@@ -2148,57 +2213,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
               // üstünde. Birincil düğme HEP "Oda oluştur"dur ve seçili (yetebilen)
               // ücretle açar; not yalnız dokunulan kilitli ücretin bağlamında
               // görünür, yetebilen bir ücrete dokunmak onu kapatır (tur 9a).
-              if (!hasEnoughCoins)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: SahneSpace.x2),
-                  // Büyük yazı/dar telefonda (≥ %150) not ve bağlantı alt alta:
-                  // yan yana 256 pt'lik panelde sağdan taşıyordu (2026-10-28
-                  // tur 3, 320 pt + 2× yazı turu).
-                  child: Builder(
-                    builder: (context) {
-                      final note = SahneShortfallNote(
-                        key: const ValueKey('custom-room-shortfall'),
-                        missing: coinShortfall(
-                          cost: blockedFee,
-                          balance: widget.coinBalance,
-                        ),
-                        fee: blockedFee,
-                        warn: true,
-                      );
-                      final earn = SahneButton.text(
-                        buttonKey: const ValueKey('custom-room-earn-coins'),
-                        label: context.t(K.earnCoins),
-                        icon: AppIcons.ferrisWheel,
-                        arrow: false,
-                        onPressed: () => Navigator.of(
-                          context,
-                        ).pop(const _EarnCoinsRequest()),
-                      );
-                      final stacked =
-                          MediaQuery.textScalerOf(context).scale(14) >= 21;
-                      if (stacked) {
-                        return Column(
-                          key: const ValueKey('custom-room-shortfall-row'),
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [note, earn],
-                        );
-                      }
-                      return Row(
-                        key: const ValueKey('custom-room-shortfall-row'),
-                        children: [
-                          Expanded(
-                            child: Align(
-                              alignment: AlignmentDirectional.centerStart,
-                              child: note,
-                            ),
-                          ),
-                          const SizedBox(width: SahneSpace.x2),
-                          earn,
-                        ],
-                      );
-                    },
-                  ),
-                ),
+              if (!hasEnoughCoins && !stackedShortfall) shortfallBlock!,
               // 2026-10-19: düğme kaydırma alanının DIŞINDA, sayfanın altında SABİT;
               // uzun seçim listesinde "Oda kur" hiç kaybolmaz. Seçili ücret her
               // zaman yetebilen bir ücrettir (bkz. `_affordableFee`).

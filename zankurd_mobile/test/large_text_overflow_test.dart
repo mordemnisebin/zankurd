@@ -37,6 +37,7 @@ import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 
+import 'support/play_hub_nav.dart';
 import 'support/widget_test_helpers.dart';
 
 /// Sistem yazısı büyütüldüğünde ekranlar taşmamalı.
@@ -54,6 +55,11 @@ import 'support/widget_test_helpers.dart';
 /// olmadığına bakar; Flutter taşmayı hata olarak bildirir. Ekranlar tek tek
 /// açılır, çünkü `takeException` yalnız ilk hatayı verir — hepsini tek
 /// testte toplamak ikinci taşmayı gizlerdi.
+class _LowBalanceRepo extends MockZanKurdRepository {
+  @override
+  Future<int> loadCoinBalance() async => 10;
+}
+
 void main() {
   late MockZanKurdRepository repository;
 
@@ -491,5 +497,75 @@ void main() {
       }
     });
     await expectNoOverflow(t, AsyncDuelListScreen(repository: repo));
+  });
+
+  // ── En dar telefon + en büyük yazı (320 pt, %300) ──
+  //
+  // 2026-11-05: ölçek ve genişlik ayrı ayrı sınanıyordu; ikisi birlikte
+  // sözcükleri ortadan bölüyor ve satırları taşırıyordu. Aşağıdaki vakalar
+  // o birleşimi sabitler.
+  const narrow = Size(320, 568);
+
+  for (final entry in <String, Widget Function()>{
+    'oyun merkezi': () => PlayHubScreen(repository: repository),
+    'mağaza': () => ShopScreen(repository: repository),
+    'sıralama': () => LeaderboardScreen(repository: repository),
+    'arkadaşlar': () => FriendsScreen(repository: repository),
+    'soru öner': () => SuggestQuestionScreen(repository: repository),
+  }.entries) {
+    testWidgets('320 pt + %300 — ${entry.key}', (t) async {
+      await expectNoOverflow(t, entry.value(), size: narrow);
+    });
+  }
+
+  testWidgets('320 pt + %300 — özel oda: yetmeyen ücret bloğu taşmaz', (
+    t,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.onboarding.seen': true,
+      'zankurd.profileName.completed.user': true,
+      'zankurd.navTour.seen': true,
+      'zankurd.quiz_tutorial.seen': true,
+    });
+    t.view.devicePixelRatio = 3.0;
+    t.view.physicalSize = narrow * 3;
+    addTearDown(t.view.reset);
+    // Alt sayfa ayrı bir rotadır: ölçek MediaQuery sarmalıyla değil,
+    // platform yazı ölçeğiyle verilmeli ki sayfaya da ulaşsın.
+    t.platformDispatcher.textScaleFactorTestValue = 3.0;
+    addTearDown(t.platformDispatcher.clearTextScaleFactorTestValue);
+    await t.pumpWidget(
+      testShell(child: PlayHubScreen(repository: _LowBalanceRepo())),
+    );
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 900));
+    await openRoomSheet(t);
+    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await t.pumpAndSettle();
+    final row = find.byKey(const ValueKey('custom-room-settings-row'));
+    // Kaydırma alanı yalnız ~134 pt: satıra parmakla kaydırarak ulaşılır.
+    final scrollable = find.byType(Scrollable).last;
+    await t.scrollUntilVisible(row, 120, scrollable: scrollable);
+    await t.pumpAndSettle();
+    // Satır ×3'te çok uzar (özet metni sarılır): merkezi ekran dışında kalır,
+    // bu yüzden görünen üst kenarına dokunulur.
+    await t.tapAt(t.getTopLeft(row) + const Offset(20, 20));
+    await t.pumpAndSettle();
+    final fee = find.byKey(const ValueKey('custom-room-fee-50'));
+    await t.scrollUntilVisible(fee, 120, scrollable: scrollable);
+    await t.pumpAndSettle();
+    await t.tap(fee);
+    await t.pumpAndSettle();
+    expect(t.takeException(), isNull);
+    // Blok (not + "Jeton kazan") büyük yazıda kaydırma alanının İÇİNDE,
+    // sabit alt çubukta yalnız birincil düğme kalır.
+    expect(
+      find.descendant(
+        of: find.byType(CustomScrollView),
+        matching: find.byKey(const ValueKey('custom-room-shortfall-row')),
+        skipOffstage: false,
+      ),
+      findsOneWidget,
+    );
   });
 }

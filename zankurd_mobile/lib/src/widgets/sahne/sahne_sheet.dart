@@ -96,9 +96,11 @@ class _SahneSheetChrome extends StatelessWidget {
                     Expanded(
                       child: Semantics(
                         header: true,
-                        child: Text(
+                        // Büyük yazıda başlık sözcük ortasından kırılıp
+                        // "13 yaşı/nda v…" diye kesiliyordu (320 pt, ×3).
+                        child: SahneUnbrokenText(
                           title,
-                          maxLines: 2,
+                          maxLines: 4,
                           overflow: TextOverflow.ellipsis,
                           style: SahneType.headline.copyWith(color: t.tx),
                         ),
