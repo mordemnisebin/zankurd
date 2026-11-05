@@ -3,6 +3,7 @@ import '../services/poll_cadence.dart';
 import 'dart:math' show min;
 
 import 'server_daily_event_port.dart';
+import 'server_question_id.dart';
 import 'verified_solo_quiz_port.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -989,39 +990,72 @@ class SupabaseZanKurdRepository
   String _verifiedQuestionKey(Iterable<QuizQuestion> questions) =>
       questions.map((question) => question.id).join(',');
 
+  final _serverQuestionIndex = ServerQuestionIndex();
+
+  /// Bilet isteği en çok bu kadar yapılır (bkz. aşağıdaki kusur notu).
+  static const _verifiedSelectionAttempts = 3;
+
+  /// Sunucunun seçtiği uuid'leri yerel bankayla eşler.
+  ///
+  /// ## Kusur (alan 6 #1 + #5)
+  ///
+  /// Eskiden `local = {id: soru}` HAM yerel kimlikle kuruluyordu; paketli
+  /// kimlikler uuid olmadığından (`r12_sinema_001`) sunucunun uuid'leri hiçbir
+  /// zaman bulunamıyor, doğrulanmış solo tur HER seferinde yerel tura düşüyordu.
+  /// Eşleme artık [serverQuestionId] (uuid5) ile yapılır.
+  ///
+  /// İkinci kusur: sunucu yerel bankada OLMAYAN bir soru seçtiyse (yalnız
+  /// sunucuda tutulan yeni soru, emekli/gizli kategori) tek eksik tüm seti
+  /// düşürüyordu. Eksik soru cevabı bilinmeden oynatılamaz (solo cevabı
+  /// cihazda değerlendirilir); bu yüzden seçim, biletsiz bırakılıp yeniden
+  /// istenir. Sunucu seçimi rastgeledir; eksik soru azınlıkta olduğundan birkaç
+  /// denemede tam eşleşen bir set gelir. Hâlâ gelmezse yerel tura düşülür.
   Future<List<QuizQuestion>?> _loadVerifiedSoloQuestions({
     String? category,
     required int limit,
   }) async {
     final owner = currentUserId;
     if (owner == null) return null;
-    try {
-      final response = await client
-          .rpc(
-            'prepare_verified_solo_questions',
-            params: {'p_category': category, 'p_limit': limit},
-          )
-          .timeout(const Duration(seconds: 4));
-      if (owner != currentUserId || response is! Map) return null;
-      final ids = response['question_ids'];
-      final selectionId = response['selection_id'];
-      final local = {for (final q in playableQuestions) q.id: q};
-      if (selectionId is! String ||
-          ids is! List ||
-          ids.length != limit ||
-          !ids.every((id) => local.containsKey(id))) {
+    for (var attempt = 0; attempt < _verifiedSelectionAttempts; attempt++) {
+      try {
+        final response = await client
+            .rpc(
+              'prepare_verified_solo_questions',
+              params: {'p_category': category, 'p_limit': limit},
+            )
+            .timeout(const Duration(seconds: 4));
+        if (owner != currentUserId || response is! Map) return null;
+        final ids = response['question_ids'];
+        final selectionId = response['selection_id'];
+        if (selectionId is! String || ids is! List || ids.length != limit) {
+          return null;
+        }
+        final local = _serverQuestionIndex.of(playableQuestions);
+        final questions = <QuizQuestion>[];
+        for (final id in ids) {
+          final question = id is String ? local[id.toLowerCase()] : null;
+          if (question == null) break;
+          questions.add(question);
+        }
+        if (questions.length != limit) {
+          // Bu bilet kullanılmaz (3 gün sonra sunucuda temizlenir); yenisi iste.
+          continue;
+        }
+        _verifiedSelections[_verifiedQuestionKey(questions)] = (
+          owner: owner,
+          id: selectionId,
+        );
+        return questions;
+      } catch (error, stack) {
+        _recordError(
+          error,
+          stack,
+          reason: 'verified solo selection unavailable',
+        );
         return null;
       }
-      final questions = [for (final id in ids) local[id]!];
-      _verifiedSelections[_verifiedQuestionKey(questions)] = (
-        owner: owner,
-        id: selectionId,
-      );
-      return questions;
-    } catch (error, stack) {
-      _recordError(error, stack, reason: 'verified solo selection unavailable');
-      return null;
     }
+    return null;
   }
 
   @override
@@ -2545,7 +2579,13 @@ class SupabaseZanKurdRepository
     try {
       await client.rpc(
         'rate_question',
-        params: {'p_question_id': question.id, 'p_rating': rating},
+        // Tek kimlik: yerel soru sunucudaki uuid5 karşılığıyla oylanır; aksi
+        // hâlde aynı sorunun oyları yerel ve sunucu kimliğine bölünürdü
+        // (alan 6 #6). Sunucudan gelen soru zaten uuid'dir, aynen gider.
+        params: {
+          'p_question_id': serverQuestionId(question.id),
+          'p_rating': rating,
+        },
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'rateQuestion rpc failed');
@@ -2557,11 +2597,20 @@ class SupabaseZanKurdRepository
   Future<void> reportQuestion(QuizQuestion question, String reason) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
     await ensureProfile();
+    // Yerel soru sunucudaki uuid5 kimliğiyle bildirilir (alan 6 #3):
+    // `report_question` sayacı uuid olmayan kimlikte sessizce hiçbir şey
+    // yapıyordu, yerel soruların bildirimi moderasyon sayacına hiç
+    // yansımıyordu. Sunucu satırı yalnız uuid görür; editör orijinal yerel
+    // kimliği görsün diye gerekçenin başına eklenir.
+    final serverId = serverQuestionId(question.id);
+    final localTag = serverId == question.id.toLowerCase()
+        ? ''
+        : '[${question.id}] ';
     try {
       await client.from('question_reports').insert({
-        'question_id': question.id,
+        'question_id': serverId,
         'reporter_id': user.id,
-        'reason': _clampReportReason(reason),
+        'reason': _clampReportReason('$localTag$reason'),
       });
     } on PostgrestException catch (error, stack) {
       // (reporter_id, question_id) tekil: aynı soruyu ikinci kez bildirmek
@@ -2575,10 +2624,7 @@ class SupabaseZanKurdRepository
     // Editör kuyruğuna giden sayaç, eski rapor tablosuyla birlikte tutulur.
     // RPC henüz uygulanmamış eski ortamlarda bildirim yine de kaydedilmiş olur.
     try {
-      await client.rpc(
-        'report_question',
-        params: {'p_question_id': question.id},
-      );
+      await client.rpc('report_question', params: {'p_question_id': serverId});
     } catch (error, stack) {
       _recordError(error, stack, reason: 'report_question RPC failed');
     }
@@ -3153,7 +3199,9 @@ class SupabaseZanKurdRepository
             'start_verified_quiz',
             params: {
               'p_client_round_id': clientRoundId,
-              'p_question_ids': [for (final question in questions) question.id],
+              'p_question_ids': [
+                for (final question in questions) serverQuestionId(question.id),
+              ],
               'p_daily': daily,
               'p_selection_id': selection?.id,
             },
@@ -3171,7 +3219,7 @@ class SupabaseZanKurdRepository
   }) async {
     final round = _verifiedRounds[clientRoundId];
     if (round == null) return;
-    round.queue.add((questionId: questionId, choice: choice));
+    round.queue.add((questionId: serverQuestionId(questionId), choice: choice));
     await _flushVerifiedRound(clientRoundId);
   }
 
