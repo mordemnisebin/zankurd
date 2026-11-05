@@ -176,4 +176,8 @@ const questionBankAssets = <String>[
   // web modeli + komut satırı oyuyla çapraz incelendi. Sunucu eşi:
   // `supabase/2026-11-07_yeni_sorular.sql`.
   'assets/data/yeni_2026_11_07_questions.json',
+  // 2026-11-10: YENİ SORULAR 2. Sînema, Paradigma, Siyaset, Muzîk, Edebiyat ve
+  // Teknolojî havuzlarını ~400'e taşır; taslak Argon/Flash, jüri yazar
+  // olmayan iki model. Sunucu eşi: `supabase/2026-11-10_yeni_sorular_2.sql`.
+  'assets/data/yeni2_2026_11_10_questions.json',
 ];
