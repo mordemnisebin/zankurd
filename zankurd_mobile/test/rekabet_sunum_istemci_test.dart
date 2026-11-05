@@ -724,10 +724,86 @@ void main() {
     });
   });
 
+  // 2026-11-05 simülatör turu: canlıda first_day 2026-11-06'dan önce sunucu
+  // `before_cutover` döner; istemci bunu "liste alınamadı" hatası gibi
+  // gösteriyor, "Antrenman olarak oyna" düğmesi 390 pt'te sözcük ortasından
+  // ("Antrenma/n") bölünüyordu. Sessiz kalırdı: iki durum da aynı diyalogdu.
+  group('resmî yarışma henüz başlamadı (before_cutover)', () {
+    test('oturum gerekçesi ayrıştırılır', () {
+      final s = DailyEventSession.fromJson({
+        'available': false,
+        'reason': 'before_cutover',
+      });
+      expect(s.beforeCutover, isTrue);
+      expect(
+        DailyEventSession.fromJson({'available': false}).beforeCutover,
+        isFalse,
+      );
+    });
+
+    testWidgets('diyalog "alınamadı" demez; düğme sözcük bölmez', (
+      tester,
+    ) async {
+      await tester.binding.setSurfaceSize(const Size(390, 900));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      freshMockRepository();
+      final repo = _PortRepo()
+        ..official = false
+        ..session = const DailyEventSession(
+          available: false,
+          reason: 'before_cutover',
+        );
+      await tester.pumpWidget(
+        testShell(child: ContestScreen(repository: repo)),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('contest-start')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('alınamadı'), findsNothing);
+      expect(find.textContaining('henüz başlamadı'), findsOneWidget);
+      // Düğmeler alt alta: onay tam genişlikte (eski yarım genişlik "Antrenma/n"
+      // diye bölüyordu). Sözcük sınırından sarma serbest, ortadan kırma yok.
+      final play = tester.getSize(
+        find.byKey(const ValueKey('contest-practice-play')),
+      );
+      final cancel = tester.getTopLeft(
+        find.byKey(const ValueKey('contest-practice-cancel')),
+      );
+      expect(play.width, greaterThan(220), reason: 'yarım genişlik = bölünme');
+      expect(
+        cancel.dy,
+        greaterThan(
+          tester
+                  .getBottomLeft(
+                    find.byKey(const ValueKey('contest-practice-play')),
+                  )
+                  .dy -
+              1,
+        ),
+        reason: 'Vazgeç, onayın ALTINDA',
+      );
+    });
+
+    testWidgets('gerçek hatada eski "alınamadı" metni kalır', (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 900));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      freshMockRepository();
+      final repo = _PortRepo()..official = false;
+      await tester.pumpWidget(
+        testShell(child: ContestScreen(repository: repo)),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('contest-start')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('alınamadı'), findsOneWidget);
+    });
+  });
+
   test('yeni l10n anahtarları iki dilde dolu', () {
     for (final key in [
       K.contestPracticeTitle,
       K.contestPracticeBody,
+      K.contestPracticeBeforeStartBody,
       K.contestPracticePlay,
       K.contestAlreadyDone,
       K.contestExpired,

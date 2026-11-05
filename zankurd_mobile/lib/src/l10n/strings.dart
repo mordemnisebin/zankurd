@@ -4889,6 +4889,17 @@ class Tr {
       'tr':
           'Günün resmî soru listesi alınamadı. Antrenman olarak oynayabilirsin; sonuç sıralamaya yazılmaz.',
     },
+    // Sunucu `before_cutover` dedi: resmî yarışma henüz açılmadı. Bu bir
+    // HATA değil; "liste alınamadı" demek oyuncuyu ağ sorunu sandırıyordu.
+    // KU: "gera fermî a rojê" + "meşq" + "rêzbendî" yerleşik anahtarlardan;
+    // Copilot ve Gemini 3.8 Flash ilk taslağa RED verip birbirinden farklı
+    // düzeltme önerdi (uyuşmadı) → yerleşik benzer cümlelerden türetildi.
+    K.contestPracticeBeforeStartBody: {
+      'ku':
+          'Gera fermî a rojê hê dest pê nekiriye. Tu dikarî îro wekî meşq bilîzî; encam nakeve rêzbendiyê.',
+      'tr':
+          'Resmî günlük yarışma henüz başlamadı. Bugün antrenman olarak oynayabilirsin; sonuç sıralamaya yazılmaz.',
+    },
     K.contestPracticePlay: {
       'ku': 'Wekî meşq bilîze',
       'tr': 'Antrenman olarak oyna',
@@ -7007,6 +7018,8 @@ class K {
   static const contestBoardTitle = 'contest.board.title';
   static const contestPracticeTitle = 'contest.practice.title';
   static const contestPracticeBody = 'contest.practice.body';
+  static const contestPracticeBeforeStartBody =
+      'contest.practice.before_start.body';
   static const contestPracticePlay = 'contest.practice.play';
   static const contestAlreadyDone = 'contest.alreadyDone';
   static const contestExpired = 'contest.expired';

@@ -550,7 +550,6 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
   @override
   Widget build(BuildContext context) {
     final view = widget.view;
-    final t = SahneTokens.of(context);
     final close = SahneResultAction(
       label: context.t(K.close),
       onPressed: () => Navigator.of(context).pop(),
@@ -647,11 +646,17 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
             if (outcome != AsyncDuelOutcome.draw &&
                 view.myCorrect != null &&
                 view.myCorrect == view.opponentCorrect)
-              Text(
-                context.t(K.asyncDuelTieBreak),
-                key: const ValueKey('async-duel-result-tiebreak'),
-                textAlign: TextAlign.center,
-                style: SahneType.caption.copyWith(color: t.tx2),
+              // Sahne (gece) kapsamının İÇİNDEN okunur: dışarıdaki `t` gündüz
+              // temasında gündüz belirtecini verip koyu gökte #454E79 çiziyordu.
+              Builder(
+                builder: (stageContext) => Text(
+                  context.t(K.asyncDuelTieBreak),
+                  key: const ValueKey('async-duel-result-tiebreak'),
+                  textAlign: TextAlign.center,
+                  style: SahneType.caption.copyWith(
+                    color: SahneTokens.of(stageContext).tx2,
+                  ),
+                ),
               ),
             // Hız belirleyiciyse iki süre de yazılır (veri varsa).
             if (outcome != AsyncDuelOutcome.draw &&
@@ -661,15 +666,19 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen>
                 view.opponentMs != null)
               Padding(
                 padding: const EdgeInsets.only(top: SahneSpace.x1),
-                child: Text(
-                  context.t(K.asyncDuelTimes, {
-                    'my': asyncDuelSecondsLabel(context, view.myMs!),
-                    'name': opponentName,
-                    'opp': asyncDuelSecondsLabel(context, view.opponentMs!),
-                  }),
-                  key: const ValueKey('async-duel-result-times'),
-                  textAlign: TextAlign.center,
-                  style: SahneType.caption.copyWith(color: t.tx2),
+                child: Builder(
+                  builder: (stageContext) => Text(
+                    context.t(K.asyncDuelTimes, {
+                      'my': asyncDuelSecondsLabel(context, view.myMs!),
+                      'name': opponentName,
+                      'opp': asyncDuelSecondsLabel(context, view.opponentMs!),
+                    }),
+                    key: const ValueKey('async-duel-result-times'),
+                    textAlign: TextAlign.center,
+                    style: SahneType.caption.copyWith(
+                      color: SahneTokens.of(stageContext).tx2,
+                    ),
+                  ),
                 ),
               ),
           ],

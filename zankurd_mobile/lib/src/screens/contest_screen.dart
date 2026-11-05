@@ -100,8 +100,13 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
     );
   }
 
+  /// Sunucu "resmî yarışma henüz başlamadı" dedi; antrenman diyaloğu hata
+  /// metni yerine bunu söyler.
+  bool _beforeCutover = false;
+
   Future<void> _startQuiz(Contest contest) async {
     if (_starting) return;
+    _beforeCutover = false;
     setState(() => _starting = true);
     try {
       final repository = widget.repository;
@@ -151,6 +156,7 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
       ErrorReporter.record(error, stack, reason: 'server daily unavailable');
       return false;
     }
+    if (session != null && session.beforeCutover) _beforeCutover = true;
     if (session == null || !session.available) return false;
     if (session.completed) {
       // Bitmiş tur: yazılmamışsa sonucu YAZ (uygulama sonuçtan önce
@@ -239,9 +245,16 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
         context: context,
         builder: (dialogContext) => AlertDialog(
           title: Text(dialogContext.t(K.contestPracticeTitle)),
-          content: Text(dialogContext.t(K.contestPracticeBody)),
+          content: Text(
+            dialogContext.t(
+              _beforeCutover
+                  ? K.contestPracticeBeforeStartBody
+                  : K.contestPracticeBody,
+            ),
+          ),
           actions: [
             DialogActionPair(
+              stacked: true,
               cancel: TextButton(
                 key: const ValueKey('contest-practice-cancel'),
                 onPressed: () => Navigator.of(dialogContext).pop(false),

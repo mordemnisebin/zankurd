@@ -16,15 +16,21 @@ class DialogActionPair extends StatelessWidget {
   const DialogActionPair({
     required this.cancel,
     required this.confirm,
+    this.stacked = false,
     super.key,
   });
 
   final Widget cancel;
   final Widget confirm;
 
+  /// Her zaman alt alta (onay üstte): uzun onay etiketi yarım genişlikte
+  /// sözcük ortasından bölünüyordu ("Antrenma/n olarak oyna", 390 pt).
+  final bool stacked;
+
   @override
   Widget build(BuildContext context) {
-    final largeText = MediaQuery.textScalerOf(context).scale(14) > 15;
+    final largeText =
+        stacked || MediaQuery.textScalerOf(context).scale(14) > 15;
     return SizedBox(
       width: double.infinity,
       child: largeText

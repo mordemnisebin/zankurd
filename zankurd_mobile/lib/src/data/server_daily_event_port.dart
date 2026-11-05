@@ -64,7 +64,15 @@ class DailyEventSession {
     this.submitted = false,
     this.elapsedMs = 0,
     this.resumed = false,
+    this.reason = '',
   });
+
+  /// Sunucunun `available: false` gerekçesi (`before_cutover`: resmî yarışma
+  /// henüz başlamadı; boşsa yok/bilinmiyor).
+  final String reason;
+
+  /// Resmî yarışma henüz açılmadı (ağ/sunucu hatası DEĞİL).
+  bool get beforeCutover => !available && reason == 'before_cutover';
 
   /// Resmî yarışma bugün açık mı (geçiş gününden önce `false`).
   final bool available;
@@ -101,6 +109,7 @@ class DailyEventSession {
       submitted: json['submitted'] == true,
       elapsedMs: n('elapsed_ms'),
       resumed: json['resumed'] == true,
+      reason: json['reason'] as String? ?? '',
     );
   }
 }

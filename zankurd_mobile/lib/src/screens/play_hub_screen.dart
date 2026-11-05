@@ -352,6 +352,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     final controller = _joinCodeController..clear();
     final formKey = GlobalKey<FormState>();
     var joining = false;
+    var showingCodeError = false;
     final inputTextStyle = SahneType.bodyStrong.copyWith(
       color: SahneTokens.of(context).tx,
       letterSpacing: 1.4,
@@ -410,15 +411,24 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                       // Yazarken gösterim biçimine çeker: "482913" alanda
                       // "482 913" görünür; eski kodlarda kanonik `ZK-…`.
                       inputFormatters: const [_RoomCodeInputFormatter()],
+                      // Ekranda bir hata varken metin değişince yeniden
+                      // doğrulanır: "Kod zorunlu" dolu alanın altında
+                      // kalıyordu (2026-11-05 simülatör turu). Hata yokken
+                      // yazarken uyarı çıkmaz.
+                      onChanged: (_) {
+                        if (showingCodeError) formKey.currentState?.validate();
+                      },
                       inputTextStyle: inputTextStyle,
                       prefixIcon: AppIcons.doorOpen,
                       validator: (value) {
+                        showingCodeError = true;
                         if (value == null || value.trim().isEmpty) {
                           return context.t(K.roomCodeRequired);
                         }
                         if (!isSupportedRoomCode(value)) {
                           return context.t(K.roomCodeInvalid);
                         }
+                        showingCodeError = false;
                         return null;
                       },
                     ),
