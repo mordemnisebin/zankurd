@@ -41,6 +41,8 @@ class DailyEventBoardCard extends StatefulWidget {
     this.ready,
     this.clock,
     this.teaser = false,
+    this.saveFailed = false,
+    this.onRetrySave,
   });
 
   final ZanKurdRepository repository;
@@ -52,6 +54,14 @@ class DailyEventBoardCard extends StatefulWidget {
 
   /// Panonun okunmasından ÖNCE tamamlanması gereken iş (sonucu yazmak).
   final Future<void>? ready;
+
+  /// Sonucun sunucuya YAZILAMADIĞI (alan 2 #5): eskiden "Tekrar dene" yalnız
+  /// panoyu okuyordu ve tamamlanmış `ready` Future'ını yeniden bekliyordu;
+  /// eksik kayıt hiç tamamlanmıyordu. Şimdi bu durumda açık bir satır ve
+  /// [onRetrySave] (sonucu GERÇEKTEN yeniden gönderen yeni bir [ready])
+  /// vardır; yeni [ready] gelince pano yeniden okunur.
+  final bool saveFailed;
+  final VoidCallback? onRetrySave;
 
   /// Testler için saat; verilmezse `DateTime.now()`.
   final DateTime Function()? clock;
@@ -91,6 +101,13 @@ class _DailyEventBoardCardState extends State<DailyEventBoardCard>
       _boardDay = today;
       _board = _load();
     });
+  }
+
+  @override
+  void didUpdateWidget(DailyEventBoardCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Yeni bir yazma işi (yeniden deneme) geldi: sonuç yazıldıktan sonra oku.
+    if (!identical(widget.ready, oldWidget.ready)) _board = _load();
   }
 
   @override
@@ -144,6 +161,20 @@ class _DailyEventBoardCardState extends State<DailyEventBoardCard>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SahneSectionHeader(title: context.t(K.contestBoardTitle)),
+        if (widget.saveFailed) ...[
+          _InfoLine(
+            key: const ValueKey('daily-event-save-failed'),
+            icon: AppIcons.clock,
+            text: Tr.forKu(K.contestResultNotSaved, isKu),
+          ),
+          if (widget.onRetrySave != null)
+            SahneButton.text(
+              key: const ValueKey('daily-event-save-retry'),
+              label: context.t(K.retry),
+              onPressed: widget.onRetrySave,
+            ),
+          const SizedBox(height: SahneSpace.x3),
+        ],
         FutureBuilder<DailyEventBoard?>(
           future: _board,
           builder: (context, snapshot) {

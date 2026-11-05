@@ -2,6 +2,7 @@ import 'dart:async';
 import '../services/poll_cadence.dart';
 import 'dart:math' show min;
 
+import 'server_daily_event_port.dart';
 import 'verified_solo_quiz_port.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,6 +36,7 @@ import '../services/apple_revocation.dart';
 import '../utils/client_round_id.dart';
 import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
+import '../utils/test_environment.dart';
 import '../config/category_visibility.dart';
 import 'lesson_completion_store.dart';
 import 'learning_lesson_aliases.dart';
@@ -217,7 +219,11 @@ ResumedPendingAnswer? _requiredPendingAnswer(Map<String, dynamic> json) {
 const String suggestedQuestionLicenseVersion = '2026-08-11';
 
 class SupabaseZanKurdRepository
-    implements ZanKurdRepository, VerifiedSoloQuizPort, AsyncDuelContentPort {
+    implements
+        ZanKurdRepository,
+        VerifiedSoloQuizPort,
+        ServerDailyEventPort,
+        AsyncDuelContentPort {
   SupabaseZanKurdRepository(
     this.client, {
     this.stopwatchFactory = Stopwatch.new,
@@ -1033,6 +1039,9 @@ class SupabaseZanKurdRepository
     );
   }
 
+  /// `false`: sunucuda `get_room_questions_v2` yok (göç uygulanmamış).
+  bool _roomQuestionsV2Supported = true;
+
   @override
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room) async {
     final roomId = room.id;
@@ -1045,7 +1054,21 @@ class SupabaseZanKurdRepository
     }
 
     try {
-      final response = await client.rpc(
+      // 2.1.2 (W2): sunulmamış soruların kimliği opak sıra belirtecidir
+      // (`get_room_questions_v2`); eski sunucuda (göç yok) eski işlev.
+      Object? response;
+      if (_roomQuestionsV2Supported) {
+        try {
+          response = await client.rpc(
+            'get_room_questions_v2',
+            params: {'p_room_id': roomId},
+          );
+        } catch (error) {
+          if (!isMissingRpcError(error)) rethrow;
+          _roomQuestionsV2Supported = false;
+        }
+      }
+      response ??= await client.rpc(
         'get_room_questions',
         params: {'p_room_id': roomId},
       );
@@ -1086,7 +1109,15 @@ class SupabaseZanKurdRepository
   }
 
   @override
+  bool lastDailyEventListWasOfficial = true;
+
+  @override
   Future<List<QuizQuestion>> loadDailyEventQuestions({int limit = 10}) async {
+    // Yerel yedek (aşağıda) resmî liste DEĞİLDİR: sonuç sıralamaya yazılmaz.
+    // Eskiden bu sessizce `dailyQuiz: true` olarak başlıyordu (alan 2 #13);
+    // artık çağıran [lastDailyEventListWasOfficial]e bakıp kullanıcıya açıkça
+    // "antrenman" der.
+    lastDailyEventListWasOfficial = false;
     try {
       final ids = await client
           .rpc('get_verified_daily_question_ids')
@@ -1095,6 +1126,7 @@ class SupabaseZanKurdRepository
       if (ids is List &&
           ids.length == 10 &&
           ids.every((id) => local.containsKey(id))) {
+        lastDailyEventListWasOfficial = true;
         return [for (final id in ids) local[id]!];
       }
     } catch (error, stack) {
@@ -3043,9 +3075,17 @@ class SupabaseZanKurdRepository
     }
   }
 
-  // Her tur kendi zincirinde ilerler: son cevap gönderilmeden ödeme/sonuç
-  // istenmez. Zincir sahip kimliğine bağlıdır; hesap değişirse devam etmez.
-  final _verifiedRounds = <String, ({String owner, Future<void> pending})>{};
+  // Doğrulanmış tur (solo / eski günlük yol): her tur kendi sıralı KUYRUĞUNDA
+  // ilerler. Son cevap teslim edilmeden ödeme/sonuç istenmez; kuyruk sahip
+  // kimliğine bağlıdır, hesap değişirse gönderilmez.
+  //
+  // Kusur (alan 2 #2): eskiden her cevap bir öncekinin Future'ına zincirleniyordu;
+  // geçici bir RPC hatası başarısız Future'ı sonraki her cevabın ÖN KOŞULU yaptı
+  // (`await round.pending` aynı hatayla duruyor, yeni RPC hiç gitmiyordu) ve
+  // jeton doğrulaması da bundan etkileniyordu. Artık gönderen asla fırlatmaz:
+  // başarısız cevap kuyrukta KALIR, sonraki çağrıda ve teslimde yeniden denenir
+  // (sunucu aynı cevabı idempotent karşılar: ilk cevabı korur, ikinci puan yok).
+  final _verifiedRounds = <String, _VerifiedRound>{};
 
   @override
   Future<void> startVerifiedSoloRound({
@@ -3059,9 +3099,10 @@ class SupabaseZanKurdRepository
       _verifiedQuestionKey(questions),
     );
     if (!daily && (selection == null || selection.owner != owner)) return;
-    final pending = () async {
-      if (currentUserId != owner) return;
-      await client
+    _verifiedRounds[clientRoundId] = _VerifiedRound(
+      owner: owner,
+      clientRoundId: clientRoundId,
+      start: () => client
           .rpc(
             'start_verified_quiz',
             params: {
@@ -3071,16 +3112,9 @@ class SupabaseZanKurdRepository
               'p_selection_id': selection?.id,
             },
           )
-          .timeout(const Duration(seconds: 4));
-    }();
-    // Hata yutulmaz: aşağıdaki zincir aynı başarısızlığı taşır; böylece
-    // eksik cevaplı bir turun son cevabı başarıyla kaydedilmiş sayılmaz.
-    _verifiedRounds[clientRoundId] = (owner: owner, pending: pending);
-    try {
-      await pending;
-    } catch (error, stack) {
-      _recordError(error, stack, reason: 'verified solo start unavailable');
-    }
+          .timeout(const Duration(seconds: 4)),
+    );
+    await _flushVerifiedRound(clientRoundId);
   }
 
   @override
@@ -3091,34 +3125,62 @@ class SupabaseZanKurdRepository
   }) async {
     final round = _verifiedRounds[clientRoundId];
     if (round == null) return;
-    final pending = () async {
-      await round.pending;
-      if (currentUserId != round.owner) {
-        throw StateError('Verified solo owner changed.');
-      }
-      await client
-          .rpc(
-            'answer_verified_quiz',
-            params: {
-              'p_client_round_id': clientRoundId,
-              'p_question_id': questionId,
-              'p_choice': choice,
-            },
-          )
-          .timeout(const Duration(seconds: 4));
-    }();
-    _verifiedRounds[clientRoundId] = (owner: round.owner, pending: pending);
+    round.queue.add((questionId: questionId, choice: choice));
+    await _flushVerifiedRound(clientRoundId);
+  }
+
+  /// Kuyruğu sırayla boşaltır; ASLA fırlatmaz (başarısız öğe kuyrukta kalır).
+  Future<void> _drainVerifiedRound(_VerifiedRound round) async {
     try {
-      await pending;
+      if (currentUserId != round.owner) return;
+      if (!round.started) {
+        await round.start();
+        round.started = true;
+      }
+      while (round.queue.isNotEmpty) {
+        if (currentUserId != round.owner) return;
+        final head = round.queue.first;
+        await client
+            .rpc(
+              'answer_verified_quiz',
+              params: {
+                'p_client_round_id': round.clientRoundId,
+                'p_question_id': head.questionId,
+                'p_choice': head.choice,
+              },
+            )
+            .timeout(const Duration(seconds: 4));
+        round.queue.removeAt(0);
+      }
     } catch (error, stack) {
-      _recordError(error, stack, reason: 'verified solo answer unavailable');
+      _recordError(error, stack, reason: 'verified round delivery pending');
     }
   }
 
+  Future<void> _flushVerifiedRound(String clientRoundId) {
+    final round = _verifiedRounds[clientRoundId];
+    if (round == null) return Future<void>.value();
+    final next = round.tail.then((_) => _drainVerifiedRound(round));
+    round.tail = next;
+    return next;
+  }
+
+  /// Ödeme/sonuçtan ÖNCE: başlangıç ve bütün cevaplar sunucuya ulaşmış olmalı.
+  /// Geçici hatada birkaç kez gerçekten yeniden dener; ulaşamazsa fırlatır
+  /// (çağıran ödemeyi/sonucu kuyruğa alır, "kaydedildi" denmez).
   Future<void> _waitVerifiedRound(String clientRoundId) async {
     final round = _verifiedRounds[clientRoundId];
     if (round == null) return; // Kalıcı kuyruktaki turu sunucu çözümler.
-    await round.pending;
+    for (var attempt = 0; attempt < 4; attempt++) {
+      await _flushVerifiedRound(clientRoundId);
+      if (round.started && round.queue.isEmpty) break;
+      if (attempt == 3) {
+        throw StateError('Verified round could not be delivered.');
+      }
+      if (!isFlutterTestEnvironment) {
+        await Future<void>.delayed(Duration(milliseconds: 400 * (attempt + 1)));
+      }
+    }
     if (round.owner != currentUserId) {
       throw StateError('Verified solo owner changed before settlement.');
     }
@@ -3150,23 +3212,171 @@ class SupabaseZanKurdRepository
   Future<bool> submitVerifiedDailyResult(String clientRoundId) async {
     try {
       await _waitVerifiedRound(clientRoundId);
-      final result = await client
-          .rpc(
-            'submit_verified_daily_event_result',
-            params: {'p_client_round_id': clientRoundId},
-          )
-          .timeout(const Duration(seconds: 8));
-      _verifiedDailyMissing = false;
-      return result == true;
     } catch (error, stack) {
-      _recordError(error, stack, reason: 'verified daily result unavailable');
-      // Göç canlıda yoksa (PGRST202 / 42883) resmî yol yoktur; ekran bu
-      // durumda eski canlı `submit_daily_event_result` yoluna düşer.
-      if (error is PostgrestException && _isMissingFunction(error)) {
-        _verifiedDailyMissing = true;
-      }
+      _recordError(error, stack, reason: 'verified daily delivery incomplete');
       return false;
     }
+    // Gerçek yeniden deneme: geçici (ağ/5xx) hatada üç deneme; sunucunun
+    // kesin hükmü (true/false) ya da kalıcı red tekrarlanmaz.
+    for (var attempt = 0; attempt < 3; attempt++) {
+      try {
+        final result = await client
+            .rpc(
+              'submit_verified_daily_event_result',
+              params: {'p_client_round_id': clientRoundId},
+            )
+            .timeout(const Duration(seconds: 8));
+        _verifiedDailyMissing = false;
+        return result == true;
+      } catch (error, stack) {
+        _recordError(error, stack, reason: 'verified daily result unavailable');
+        // Göç canlıda yoksa (PGRST202 / 42883) resmî yol yoktur; ekran bu
+        // durumda eski canlı `submit_daily_event_result` yoluna düşer.
+        if (error is PostgrestException && _isMissingFunction(error)) {
+          _verifiedDailyMissing = true;
+          return false;
+        }
+        if (!_isTransientRpcError(error) || attempt == 2) return false;
+        if (!isFlutterTestEnvironment) {
+          await Future<void>.delayed(
+            Duration(milliseconds: 500 * (attempt + 1)),
+          );
+        }
+      }
+    }
+    return false;
+  }
+
+  /// Ağ/zaman aşımı/5xx: yeniden denemek anlamlı; kesin sunucu reddi (P0001,
+  /// yetki, eksik işlev) tekrarlanmaz.
+  bool _isTransientRpcError(Object error) {
+    if (error is TimeoutException) return true;
+    if (error is PostgrestException) {
+      final code = error.code ?? '';
+      return code.startsWith('5') || code == '08006' || code == '57014';
+    }
+    return isLikelyOfflineError(error);
+  }
+
+  // ───────── Sunucu-yetkili günlük yarışma (ServerDailyEventPort) ─────────
+
+  /// `false`: sunucuda yeni günlük işlevler yok (göç uygulanmamış).
+  bool _serverDailySupported = true;
+
+  @override
+  Future<DailyEventSession?> startServerDailyEvent() async {
+    if (!_serverDailySupported || currentUserId == null) return null;
+    try {
+      final response = await client
+          .rpc('start_verified_daily_v2')
+          .timeout(const Duration(seconds: 8));
+      return DailyEventSession.fromJson(
+        _requiredJsonObject(response, 'start_verified_daily_v2'),
+      );
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) {
+        _serverDailySupported = false;
+        return null;
+      }
+      _recordError(error, stack, reason: 'startServerDailyEvent failed');
+      rethrow;
+    }
+  }
+
+  /// Geçici hatada (ağ/zaman aşımı/5xx) sınırlı yeniden deneme; sunum ve
+  /// cevap sunucuda idempotenttir.
+  Future<T> _retryTransient<T>(Future<T> Function() action) async {
+    for (var attempt = 0; ; attempt++) {
+      try {
+        return await action();
+      } catch (error) {
+        if (attempt >= 2 || !_isTransientRpcError(error)) rethrow;
+        if (!isFlutterTestEnvironment) {
+          await Future<void>.delayed(
+            Duration(milliseconds: 500 * (attempt + 1)),
+          );
+        }
+      }
+    }
+  }
+
+  @override
+  Future<DailyEventPresent> presentServerDailyQuestion(
+    String roundId,
+    int index,
+  ) async {
+    try {
+      final response = await _retryTransient(
+        () => client
+            .rpc(
+              'present_verified_daily_question',
+              params: {'p_round': roundId, 'p_index': index},
+            )
+            .timeout(const Duration(seconds: 8)),
+      );
+      return DailyEventPresent.fromJson(
+        _requiredJsonObject(response, 'present_verified_daily_question'),
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'presentServerDailyQuestion failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<DailyEventAnswer> answerServerDailyQuestion({
+    required String roundId,
+    required int index,
+    required String choice,
+  }) async {
+    try {
+      final response = await _retryTransient(
+        () => client
+            .rpc(
+              'answer_verified_daily_question',
+              params: {
+                'p_round': roundId,
+                'p_index': index,
+                'p_choice': choice,
+              },
+            )
+            .timeout(const Duration(seconds: 8)),
+      );
+      return DailyEventAnswer.fromJson(
+        _requiredJsonObject(response, 'answer_verified_daily_question'),
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'answerServerDailyQuestion failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> submitServerDailyResult(String roundId) async {
+    for (var attempt = 0; attempt < 3; attempt++) {
+      try {
+        final response = await client
+            .rpc(
+              'submit_verified_daily_event_result_v2',
+              params: {'p_round': roundId},
+            )
+            .timeout(const Duration(seconds: 8));
+        final json = _requiredJsonObject(
+          response,
+          'submit_verified_daily_event_result_v2',
+        );
+        return json['submitted'] == true;
+      } catch (error, stack) {
+        _recordError(error, stack, reason: 'submitServerDailyResult failed');
+        if (!_isTransientRpcError(error) || attempt == 2) return false;
+        if (!isFlutterTestEnvironment) {
+          await Future<void>.delayed(
+            Duration(milliseconds: 500 * (attempt + 1)),
+          );
+        }
+      }
+    }
+    return false;
   }
 
   /// `submit_verified_daily_event_result` sunucuda yok (G9 göçü bekliyor).
@@ -4894,6 +5104,29 @@ class SupabaseZanKurdRepository
   /// uygulanmamış); eski anahtarsız çağrı kullanılır.
   bool _duelRequestIdSupported = true;
 
+  /// `false`: sunucuda `*_masked` düello işlevleri yok (2026-11-16 göçü
+  /// uygulanmamış); eski sarmalayıcılar kullanılır.
+  bool _duelMaskedSupported = true;
+
+  /// Düello başlangıç/devam RPC'si: sunulmamış soruların kimliği OPAK sıra
+  /// belirteci olan `*_masked` işlev (alan 1 #4); yoksa (PGRST202) eskisi.
+  /// Gerçek kimlik soru sunulunca gelir (`present_async_duel_question_v2`).
+  Future<dynamic> _duelRpc(
+    String maskedRpc,
+    String legacyRpc,
+    Map<String, dynamic> params,
+  ) async {
+    if (_duelMaskedSupported) {
+      try {
+        return await client.rpc(maskedRpc, params: params);
+      } catch (error) {
+        if (!isMissingRpcError(error)) rethrow;
+        _duelMaskedSupported = false;
+      }
+    }
+    return client.rpc(legacyRpc, params: params);
+  }
+
   /// Düello oluşturan RPC'yi KALICI istek kimliğiyle çağırır. Kimlik çağrıdan
   /// önce yazılır; yanıtı kaybolan çağrının yeniden denemesi sunucuda önceki
   /// düelloyu bulur (yeni düello açmaz). Başarıyla ayrıştırılan yanıtta
@@ -4903,6 +5136,7 @@ class SupabaseZanKurdRepository
     required String kind,
     required String scope,
     required String legacyRpc,
+    required String maskedRpc,
     required Map<String, dynamic> legacyParams,
   }) async {
     final owner = currentUserId;
@@ -4916,10 +5150,10 @@ class SupabaseZanKurdRepository
         maxAge: const Duration(minutes: 10),
       );
       try {
-        response = await client.rpc(
-          legacyRpc,
-          params: {...legacyParams, 'p_request_id': requestId},
-        );
+        response = await _duelRpc(maskedRpc, legacyRpc, {
+          ...legacyParams,
+          'p_request_id': requestId,
+        });
         usedKey = true;
       } catch (error, stack) {
         if (!isMissingRpcError(error)) {
@@ -4931,7 +5165,7 @@ class SupabaseZanKurdRepository
       }
     }
     if (!usedKey) {
-      response = await client.rpc(legacyRpc, params: legacyParams);
+      response = await _duelRpc(maskedRpc, legacyRpc, legacyParams);
     }
     final start = await _withDuelProfiles(
       AsyncDuelStart.fromJson(_requiredJsonObject(response, legacyRpc)),
@@ -4953,6 +5187,7 @@ class SupabaseZanKurdRepository
         kind: 'duel_start',
         scope: category ?? '',
         legacyRpc: 'start_async_duel',
+        maskedRpc: 'start_async_duel_masked',
         legacyParams: {'p_category': category},
       );
     } catch (error, stack) {
@@ -5341,6 +5576,7 @@ class SupabaseZanKurdRepository
         kind: 'duel_challenge',
         scope: '${category ?? ''}|${friendId ?? ''}',
         legacyRpc: 'create_async_duel_challenge',
+        maskedRpc: 'create_async_duel_challenge_masked',
         legacyParams: {'p_category': category, 'p_friend_id': friendId},
       );
     } catch (error, stack) {
@@ -5353,9 +5589,10 @@ class SupabaseZanKurdRepository
   @override
   Future<AsyncDuelStart> resumeAsyncDuel(String duelId) async {
     try {
-      final response = await client.rpc(
+      final response = await _duelRpc(
+        'resume_my_async_duel_masked',
         'resume_my_async_duel',
-        params: {'p_duel_id': duelId},
+        {'p_duel_id': duelId},
       );
       return _withDuelProfiles(
         AsyncDuelStart.fromJson(
@@ -5506,9 +5743,10 @@ class SupabaseZanKurdRepository
         await signInAnonymously();
       }
       await ensureProfile();
-      final response = await client.rpc(
+      final response = await _duelRpc(
+        'accept_async_duel_challenge_masked',
         'accept_async_duel_challenge',
-        params: {'p_code': code},
+        {'p_code': code},
       );
       return _withDuelProfiles(
         AsyncDuelStart.fromJson(
@@ -5718,3 +5956,23 @@ int compareRoomPlayerRows(Map<String, dynamic> a, Map<String, dynamic> b) =>
       DateTime.tryParse(b['joined_at']?.toString() ?? ''),
       b['player_id']?.toString(),
     );
+
+/// Doğrulanmış turun teslim kuyruğu (bkz. `_verifiedRounds`).
+class _VerifiedRound {
+  _VerifiedRound({
+    required this.owner,
+    required this.clientRoundId,
+    required this.start,
+  });
+
+  final String owner;
+  final String clientRoundId;
+
+  /// Başlangıç RPC'si (idempotent; kuyruk boşalmadan yeniden denenebilir).
+  final Future<void> Function() start;
+  bool started = false;
+  final List<({String questionId, String choice})> queue = [];
+
+  /// Hiç fırlatmayan teslim zinciri: bir hata sonrakini engellemez.
+  Future<void> tail = Future<void>.value();
+}

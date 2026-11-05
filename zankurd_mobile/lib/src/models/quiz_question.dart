@@ -548,6 +548,10 @@ class QuizQuestion {
 
   QuizQuestion withRevealedAnswer({
     required String correctAnswer,
+    // Sunucu-yetkili günlük turda sunum yanıtı gerçek kimliği vermez (opak
+    // sıra belirteci); gerçek kimlik cevaptan SONRA gelir ve favori/rapor
+    // için buraya yazılır. Boşsa kimlik değişmez.
+    String? id,
     String? explanation,
     String? explanationKu,
     String? explanationTr,
@@ -556,7 +560,7 @@ class QuizQuestion {
     String? audioUrl,
   }) {
     return QuizQuestion(
-      id: id,
+      id: (id != null && id.isNotEmpty) ? id : this.id,
       category: category,
       prompt: prompt,
       answers: answers,

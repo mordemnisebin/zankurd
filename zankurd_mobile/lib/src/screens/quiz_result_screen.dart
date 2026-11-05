@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../data/server_daily_event_port.dart';
 import '../data/verified_solo_quiz_port.dart';
 import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
@@ -116,6 +117,7 @@ class QuizResultScreen extends StatefulWidget {
     this.dailyCapReached = false,
     this.practice = false,
     this.dailyQuiz = false,
+    this.serverDaily = false,
     this.isLearningExperience = false,
     this.levelGated = false,
     this.contestId,
@@ -168,6 +170,10 @@ class QuizResultScreen extends StatefulWidget {
   final bool rewardQueued;
   final bool practice;
   final bool dailyQuiz;
+
+  /// Günün turu sunucu-yetkili akıştı ([ServerDailyEventPort]): sonuç
+  /// `submit_verified_daily_event_result_v2` ile yazılır.
+  final bool serverDaily;
   final bool isLearningExperience;
 
   /// W13: seviye yolunun turu; eşik altında "Seviye geçilmedi" satırı çıkar.
@@ -1422,19 +1428,45 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   /// sıralama yalnız gösterimdir, tur sonu ekranı bozulmaz.
   Future<void>? _dailyBoardReady;
 
-  Future<void> _submitDailyEventResult() async {
+  /// Sunucu-yetkili günlük turun sonucu yazılamadı (bkz.
+  /// [DailyEventBoardCard.saveFailed]).
+  bool _dailySaveFailed = false;
+
+  /// Sonucu yazar; sunucu-yetkili turda kayıt YAZILAMAZSA açık durum çıkar ve
+  /// "Tekrar dene" aynı işi gerçekten yeniden çalıştırır.
+  Future<void> _runDailySubmit() async {
+    final saved = await _submitDailyEventResult();
+    if (!mounted || saved == !_dailySaveFailed) return;
+    setState(() => _dailySaveFailed = !saved);
+  }
+
+  void _retryDailySubmit() {
+    setState(() {
+      _dailySaveFailed = false;
+      _dailyBoardReady = _runDailySubmit();
+    });
+  }
+
+  /// `true`: kayıt yazıldı (ya da bu yolda "yazılamadı" diye bir kavram yok).
+  Future<bool> _submitDailyEventResult() async {
     try {
       final totalMs = answerRecords.fold<int>(
         0,
         (sum, record) => sum + (record.responseMs ?? 0),
       );
       final verifiedRepository = repository;
+      if (widget.serverDaily && verifiedRepository is ServerDailyEventPort) {
+        final roundId = widget.roundId;
+        if (roundId == null) return false;
+        return (verifiedRepository as ServerDailyEventPort)
+            .submitServerDailyResult(roundId);
+      }
       if (verifiedRepository is VerifiedSoloQuizPort) {
         final roundId = widget.roundId;
-        if (roundId == null) return;
+        if (roundId == null) return true;
         final ok = await (verifiedRepository as VerifiedSoloQuizPort)
             .submitVerifiedDailyResult(roundId);
-        if (ok) return;
+        if (ok) return true;
         // Doğrulanmış RPC canlıda yoksa depo eski canlı yola düşer; RPC
         // varken ret/hata ise depo hiçbir şey yazmaz (false döner).
       }
@@ -1443,8 +1475,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         total: totalQuestions,
         seconds: (totalMs / 1000).round(),
       );
+      return true;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'daily event submit');
+      return !widget.serverDaily;
     }
   }
 
@@ -2444,7 +2478,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         DailyEventBoardCard(
           key: const ValueKey('result-daily-board'),
           repository: repository,
-          ready: _dailyBoardReady ??= _submitDailyEventResult(),
+          ready: _dailyBoardReady ??= _runDailySubmit(),
+          saveFailed: _dailySaveFailed,
+          onRetrySave: _retryDailySubmit,
         ),
       if (secondaryResultActions.isNotEmpty) ...[
         const SizedBox(height: SahneSpace.cardGap),
