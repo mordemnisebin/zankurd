@@ -38,6 +38,7 @@ import {
   appleSubjectOf,
   hasAppleIdentity,
   registerRecentlyDone,
+  revokeFailureBody,
   revokeOutcome,
   timingSafeEqual,
 } from "./lib.ts";
@@ -342,6 +343,8 @@ Deno.serve(async (request: Request): Promise<Response> => {
 
       let refreshToken: string | null = row?.refresh_token ?? null;
       const code = body.authorization_code?.trim();
+      // Satırdan okunan jeton zaten kalıcıdır; takas edilen ancak yazılınca kalıcı olur.
+      let tokenSaved = refreshToken !== null;
       if (!refreshToken && code) {
         // Girişten hemen sonra silme: kod henüz saklanmamış. #16: sahibi bu
         // kullanıcı değilse reddedilir; geçerliyse jeton ÖNCE saklanır, iptal
@@ -353,12 +356,16 @@ Deno.serve(async (request: Request): Promise<Response> => {
             return json({ revoked: false, error: "apple_subject_mismatch" }, 403);
           }
           refreshToken = exchanged.refresh;
-          const { error: saveError } = await admin.from("apple_auth_tokens").upsert({
-            user_id: user.id,
-            refresh_token: refreshToken,
-            updated_at: new Date().toISOString(),
-          });
-          if (saveError) console.error("apple_auth_tokens upsert failed", saveError.code);
+          // Jeton kalıcı saklanmadıkça "kuyrukta" denemez: yazım bir kez yeniden denenir.
+          for (let attempt = 0; attempt < 2 && !tokenSaved; attempt++) {
+            const { error: saveError } = await admin.from("apple_auth_tokens").upsert({
+              user_id: user.id,
+              refresh_token: refreshToken,
+              updated_at: new Date().toISOString(),
+            });
+            if (saveError) console.error("apple_auth_tokens upsert failed", saveError.code);
+            else tokenSaved = true;
+          }
         }
       }
       if (!refreshToken) return json({ revoked: false, reason: "no_token" });
@@ -367,7 +374,10 @@ Deno.serve(async (request: Request): Promise<Response> => {
       // silinir. Başarısızlıkta satır KALIR: hesap silinse bile (FK yok) yetim
       // olarak cron tarafından yeniden denenir.
       if (!(await revokeAtApple(refreshToken))) {
-        return json({ revoked: false, error: "revoke_failed", queued: true }, 502);
+        // Jeton kalıcı değilse süpürücünün yeniden deneyeceği kayıt YOK: `queued`
+        // denmez; istemci hesap silmeyi durdurup "tekrar dene" göstermeli (kod hâlâ
+        // geçerliyse yeniden takas edilir).
+        return json(revokeFailureBody(tokenSaved), 502);
       }
       const { error: deleteError } = await admin
         .from("apple_auth_tokens")

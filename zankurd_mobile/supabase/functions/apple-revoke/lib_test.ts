@@ -9,6 +9,7 @@ import {
   decodeJwtPayload,
   hasAppleIdentity,
   registerRecentlyDone,
+  revokeFailureBody,
   revokeOutcome,
   timingSafeEqual,
 } from "./lib.ts";
@@ -80,4 +81,13 @@ Deno.test("iptal sonucu: yalnız 200 ve invalid_grant amaca ulaşmıştır (#3)"
 
 Deno.test("cron sırrı sabit zamanlı karşılaştırılır", () => {
   assert(timingSafeEqual("s", "s") && !timingSafeEqual("s", "t") && !timingSafeEqual("", "s"), "sır");
+});
+
+// Copilot RET: takas edilen jeton yazılamayıp Apple iptali de başarısızsa eskiden
+// `queued: true` deniyordu, oysa sweep'in göreceği kayıt yoktu.
+Deno.test("iptal başarısızlığı: kayıt yoksa queued denmez, revoke_failed_unsaved", () => {
+  const saved = revokeFailureBody(true);
+  assert(saved.error === "revoke_failed" && saved.queued === true, "saklı jeton kuyrukta");
+  const unsaved = revokeFailureBody(false);
+  assert(unsaved.error === "revoke_failed_unsaved" && unsaved.queued === false, "saklanamadı");
 });

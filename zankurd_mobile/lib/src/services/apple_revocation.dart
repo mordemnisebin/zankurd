@@ -125,7 +125,18 @@ Future<bool> _registerWithRetry(
   }
 }
 
-/// Hesap silmeden ÖNCE çağrılır. Hiç fırlatmaz (iptal hesap silmeyi
+/// Apple iptali başarısız VE jeton kalıcı saklanamadı (`revoke_failed_unsaved`):
+/// sunucuda yeniden denenecek kayıt yok. Hesap silme DURDURULUR; kullanıcıya
+/// "tekrar dene" gösterilir (hesap silinirse Apple bağlantısı bir daha
+/// iptal edilemez).
+class AppleRevokeUnsavedException implements Exception {
+  const AppleRevokeUnsavedException();
+
+  @override
+  String toString() => 'AppleRevokeUnsavedException';
+}
+
+/// Hesap silmeden ÖNCE çağrılır. Tek istisna dışında hiç fırlatmaz (iptal hesap silmeyi
 /// ENGELLEMEZ). `true` YALNIZ sunucu `revoked: true` döndüyse: saklı jeton
 /// yoksa (`no_token`, HTTP 200) ya da Apple reddettiyse `false` (GPT-6 Pro
 /// ALAN 4 #1: eskiden çağrının hatasız bitmesi başarı sayılıyordu). Apple
@@ -163,6 +174,15 @@ Future<bool> revokeAppleAuthorization(SupabaseClient client) async {
     }
     return revoked;
   } catch (error, stack) {
+    final details = error is FunctionException ? error.details : null;
+    if (details is Map && details['error'] == 'revoke_failed_unsaved') {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'apple-revoke revoke failed, token unsaved (deletion stops)',
+      );
+      throw const AppleRevokeUnsavedException();
+    }
     ErrorReporter.record(
       error,
       stack,

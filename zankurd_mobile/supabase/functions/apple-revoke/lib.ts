@@ -105,3 +105,12 @@ export function timingSafeEqual(a: string, b: string): boolean {
   for (let i = 0; i < len; i++) diff |= (x[i] ?? 0) ^ (y[i] ?? 0);
   return diff === 0;
 }
+
+/// Apple iptali başarısız olunca yanıt gövdesi. Jeton kalıcı saklandıysa sweep
+/// yeniden dener (`queued: true`); saklanamadıysa yeniden denenecek kayıt YOK:
+/// `revoke_failed_unsaved` (istemci hesap silmeyi durdurup "tekrar dene" gösterir).
+export function revokeFailureBody(tokenSaved: boolean): Record<string, unknown> {
+  return tokenSaved
+    ? { revoked: false, error: "revoke_failed", queued: true }
+    : { revoked: false, error: "revoke_failed_unsaved", queued: false };
+}

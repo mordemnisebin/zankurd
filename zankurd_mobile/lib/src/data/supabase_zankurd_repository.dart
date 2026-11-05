@@ -732,7 +732,8 @@ class SupabaseZanKurdRepository
       // Apple ile girilmiş hesapta ÖNCE Apple bağlantısı iptal edilir
       // (Kılavuz 5.1.1(v)); hesap silindikten sonra kullanıcının JWT'si
       // geçersiz olur ve iptal edilemez. İptal başarısız olursa silme
-      // YİNE DE sürer (`revokeAppleAuthorization` hiç fırlatmaz).
+      // YİNE DE sürer; tek istisna `AppleRevokeUnsavedException`: iptal yapılamadı
+      // VE yeniden denenecek kayıt yok → silme durur, kullanıcı tekrar dener.
       if (hasAppleIdentity) {
         await revokeAppleAuthorization(client);
       }

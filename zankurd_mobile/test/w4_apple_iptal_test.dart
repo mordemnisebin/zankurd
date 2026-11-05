@@ -22,6 +22,7 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/services/apple_revocation.dart';
 
 class _Http extends http.BaseClient {
@@ -80,6 +81,16 @@ User _user({
       ),
   ],
 );
+
+class _AppleRepo extends SupabaseZanKurdRepository {
+  _AppleRepo(super.client);
+
+  @override
+  bool get hasAppleIdentity => true;
+
+  @override
+  Future<bool> removeAllOwnAvatarObjects() async => true;
+}
 
 void main() {
   setUp(resetAppleRegistrationStateForTest);
@@ -193,4 +204,40 @@ void main() {
       );
     },
   );
+
+  // Copilot RET: jeton saklanamadı + Apple iptali başarısız → yeniden denenecek
+  // kayıt yok; hesap silinmemeli.
+  test('revoke_failed_unsaved: hesap silme DURUR (RPC çağrılmaz)', () async {
+    final paths = <String>[];
+    final h = _Http((body, _) async {
+      if (body['action'] == 'revoke') {
+        return (502, {'revoked': false, 'error': 'revoke_failed_unsaved'});
+      }
+      return (200, <String, dynamic>{});
+    });
+    final client = _client(h);
+    await expectLater(
+      revokeAppleAuthorization(client),
+      throwsA(isA<AppleRevokeUnsavedException>()),
+    );
+    await expectLater(
+      _AppleRepo(client).deleteMyAccount(),
+      throwsA(isA<AppleRevokeUnsavedException>()),
+    );
+    expect(
+      h.bodies.every((b) => b['action'] == 'revoke'),
+      isTrue,
+      reason: '$paths',
+    );
+  });
+
+  test('revoke_failed (jeton kuyrukta) hesap silmeyi engellemez', () async {
+    final h = _Http((_, _) async {
+      return (
+        502,
+        {'revoked': false, 'error': 'revoke_failed', 'queued': true},
+      );
+    });
+    expect(await revokeAppleAuthorization(_client(h)), isFalse);
+  });
 }
