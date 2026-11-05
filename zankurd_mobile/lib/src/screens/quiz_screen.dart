@@ -2,6 +2,7 @@ import 'dart:async';
 import '../services/poll_cadence.dart';
 import 'dart:math';
 
+import '../data/server_daily_event_port.dart';
 import '../data/verified_solo_quiz_port.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
@@ -102,6 +103,7 @@ class QuizScreen extends StatefulWidget {
     this.versusBannerText,
     this.resumeSnapshot,
     this.roundId,
+    this.serverDaily,
     @visibleForTesting this.suspenseHold,
     super.key,
   });
@@ -143,6 +145,12 @@ class QuizScreen extends StatefulWidget {
   /// Çevrimiçi odada ortak room.id önceliklidir. Yoksa State başında
   /// üretilen solo kimliği yaşam döngüsü resume boyunca korunur.
   final String? roundId;
+
+  /// Günün yarışması SUNUCU-YETKİLİ akışı (2.1.2, [ServerDailyEventPort]):
+  /// sorular yer tutucudur (yalnız devam edilen sorunun içeriği dolu), her soru
+  /// sunulduğu anda sunucudan gelir ve cevabı sunucu değerlendirir. Cevap
+  /// anahtarı pakette/istemcide bulunmaz.
+  final ServerDailyRound? serverDaily;
 
   /// Cevaptan sonraki "gerilim tutuşu" süresi. `null` → üretimde 520 ms,
   /// test ortamında sıfır. Yalnız testler üretim değerini zorlamak için verir
@@ -232,7 +240,9 @@ class _QuizScreenState extends State<QuizScreen>
   /// Sunucu doğru şıkkı gönderimle birlikte açarsa hüküm hemen görünür —
   /// aynı anda çalan doğru/yanlış sesiyle tutarlı kalmak için (Astra).
   bool get _verdictPending =>
-      _usesServerHiddenAnswers && answered && !_hasSafeCurrentReveal;
+      (_usesServerHiddenAnswers || _serverDaily) &&
+      answered &&
+      !_hasSafeCurrentReveal;
 
   /// Hüküm (doğru/yanlış rengi, ✓/✕, şerit) gizli mi: gerilim tutuşu ya da
   /// sunucu-gizli bekleme.
@@ -594,6 +604,12 @@ class _QuizScreenState extends State<QuizScreen>
   bool get _usesServerHiddenAnswers =>
       _isMultiplayer && widget.repository.usesServerHiddenAnswers;
 
+  /// Günün yarışması sunucu-yetkili akışta mı (bkz. [QuizScreen.serverDaily]).
+  bool get _serverDaily => widget.serverDaily != null;
+
+  /// Sonraki sorunun sunumu sürerken ikinci "Sonraki" dokunuşu yutulur.
+  bool _serverDailyAdvancing = false;
+
   /// Bot yarışında yerel "ben" satırının kimliği (oturum kimliği yoksa).
   static const _localSelfId = 'local:self';
 
@@ -657,9 +673,25 @@ class _QuizScreenState extends State<QuizScreen>
               learning: _isLearningExperience,
             ),
     ];
+    final serverDaily = widget.serverDaily;
+    if (serverDaily != null) {
+      // Devam: sayaçlar sunucunun kaydettiği oturumdan gelir (yerel tahmin
+      // yok). Puan yaklaşık: önceki cevapların hız puanı sunucuda tutulmaz.
+      final session = serverDaily.session;
+      index = session.answered.clamp(0, _questions.length - 1);
+      correctCount = session.correct;
+      wrongCount = (session.answered - session.correct).clamp(0, 1 << 20);
+      streak = session.currentStreak;
+      bestStreak = session.bestStreak;
+      score = session.correct * 100;
+      _initialTimerFraction = _serverDailyTimerFraction(
+        serverDaily.firstElapsedMs,
+      );
+    }
     final verifiedRepository = widget.repository;
     if (widget.room.id == null &&
         !widget.practice &&
+        !_serverDaily &&
         verifiedRepository is VerifiedSoloQuizPort) {
       unawaited(
         (verifiedRepository as VerifiedSoloQuizPort).startVerifiedSoloRound(
@@ -1659,6 +1691,9 @@ class _QuizScreenState extends State<QuizScreen>
 
   /// Gösterilen soruyu tekrar-önleme deposuna işler.
   void _markQuestionSeen() {
+    // Sunucu günlük turunda sunulan sorunun kimliği cevaptan önce opak
+    // belirteçtir; "görüldü" defterine sahte kimlik yazılmaz.
+    if (_serverDaily) return;
     final id = question.id;
     _saveLocalProgress(() async {
       final store = await SeenQuestionStore.load();
@@ -2991,8 +3026,13 @@ class _QuizScreenState extends State<QuizScreen>
       final loaded = await widget.repository.loadRoomQuestions(widget.room);
       if (!mounted || !_hasExpectedOnlineOwner || _terminalHandling) return;
       if (loaded.length != _questions.length ||
+          // Sunulmamış sorunun kimliği opak sıra belirtecidir ve sunulunca
+          // GERÇEK kimliğe döner (2.1.2, get_room_questions_v2); sıra yalnız
+          // içeriği zaten bilinen sorularda kimlikle doğrulanır.
           loaded.asMap().entries.any(
-            (entry) => entry.value.id != _questions[entry.key].id,
+            (entry) =>
+                _questions[entry.key].prompt.isNotEmpty &&
+                entry.value.id != _questions[entry.key].id,
           )) {
         throw StateError('Room question order changed.');
       }
@@ -3322,6 +3362,10 @@ class _QuizScreenState extends State<QuizScreen>
   /// sunucu (`claim_solo_reward`) ikinci talepte ödemez.
   final String _soloRoundId = newClientRoundId();
 
+  // Sunucu-yetkili günlük turda ödül/sonuç kimliği SUNUCUNUN tur kimliğidir
+  // (`claim_verified_solo_reward` ve günlük sonuç o oturumu bulur): aşağıdaki
+  // `clientRoundId:` kullanımları `widget.serverDaily?.roundId ?? _soloRoundId`.
+
   // İlk model bağlanırken hesaplanır; rebuild/resume yeni tohum üretmez.
   late final String _answerOrderRoundId =
       (widget.room.id?.trim().isNotEmpty ?? false)
@@ -3335,7 +3379,7 @@ class _QuizScreenState extends State<QuizScreen>
   String get _analyticsRoundId {
     final roomId = widget.room.id?.trim();
     if (roomId != null && roomId.isNotEmpty) return roomId;
-    return _soloRoundId;
+    return widget.serverDaily?.roundId ?? _soloRoundId;
   }
 
   /// Son turun sıfır jetonu, günlük tavana varıldığı İÇİN müydü?
@@ -3395,7 +3439,7 @@ class _QuizScreenState extends State<QuizScreen>
               correctCount: correctCount,
               bestStreak: bestStreak,
               totalQuestions: totalQuestions,
-              clientRoundId: _soloRoundId,
+              clientRoundId: widget.serverDaily?.roundId ?? _soloRoundId,
             )
           : await widget.repository.awardQuizCoins(
               score: score,
@@ -3441,7 +3485,9 @@ class _QuizScreenState extends State<QuizScreen>
             bestStreak: bestStreak,
             totalQuestions: totalQuestions,
             roomId: widget.room.id,
-            clientRoundId: widget.room.id == null ? _soloRoundId : null,
+            clientRoundId: widget.room.id == null
+                ? (widget.serverDaily?.roundId ?? _soloRoundId)
+                : null,
           );
           rewardQueued = true;
           durable = true;
@@ -3737,6 +3783,7 @@ class _QuizScreenState extends State<QuizScreen>
             opponents: _opponents.toList(),
             practice: widget.practice,
             dailyQuiz: widget.dailyQuiz,
+            serverDaily: _serverDaily,
             isLearningExperience: _isLearningExperience,
             levelGated: widget.levelGated,
             contestId: widget.contestId,
@@ -4158,7 +4205,8 @@ class _QuizScreenState extends State<QuizScreen>
       }
       selectedAnswer = answer;
       _suspense =
-          (!isTimeout || _usesServerHiddenAnswers) && !_skipsSuspenseHold;
+          (!isTimeout || _usesServerHiddenAnswers || _serverDaily) &&
+          !_skipsSuspenseHold;
     });
     final responseMs = _questionStopwatch.elapsedMilliseconds;
     final hold = _skipsSuspenseHold
@@ -4175,18 +4223,20 @@ class _QuizScreenState extends State<QuizScreen>
     final scoredResponseMs = !_usesTimer && !_isMultiplayer
         ? max(0, widget.room.secondsPerQuestion * 1000 - 1)
         : responseMs;
-    Future<Map<String, dynamic>> sendAnswer() => widget.repository
-        .submitAnswer(
-          room: widget.room,
-          question: question,
-          selectedOptionOptionKey: optionKey,
-          responseMs: scoredResponseMs,
-        )
-        .timeout(
-          _isMultiplayer
-              ? const Duration(seconds: 8)
-              : const Duration(milliseconds: 300),
-        );
+    Future<Map<String, dynamic>> sendAnswer() => _serverDaily
+        ? _sendServerDailyAnswer(questionIndex, optionKey, scoredResponseMs)
+        : widget.repository
+              .submitAnswer(
+                room: widget.room,
+                question: question,
+                selectedOptionOptionKey: optionKey,
+                responseMs: scoredResponseMs,
+              )
+              .timeout(
+                _isMultiplayer
+                    ? const Duration(seconds: 8)
+                    : const Duration(milliseconds: 300),
+              );
     // Çevrimiçi odada RPC dokunulduğu ANDA gider; 520 ms'lik gerilim tutuşu
     // yalnız sonucun AÇIKLANMASINI geciktirir. Sunucu süreyi kendi alım
     // anından ölçtüğü için eskiden süre dolumuna 400 ms kala verilen geçerli
@@ -4203,6 +4253,7 @@ class _QuizScreenState extends State<QuizScreen>
     final verifiedRepository = widget.repository;
     if (widget.room.id == null &&
         !widget.practice &&
+        !_serverDaily &&
         verifiedRepository is VerifiedSoloQuizPort) {
       unawaited(
         (verifiedRepository as VerifiedSoloQuizPort).recordVerifiedSoloAnswer(
@@ -4276,7 +4327,7 @@ class _QuizScreenState extends State<QuizScreen>
       }
 
       QuizQuestion? revealedQuestion;
-      if (_usesServerHiddenAnswers) {
+      if (_usesServerHiddenAnswers || _serverDaily) {
         final correctAnswer = question.answerForOptionKey(
           result['correct_option'] as String?,
         );
@@ -4285,6 +4336,7 @@ class _QuizScreenState extends State<QuizScreen>
         }
         revealedQuestion = question.withRevealedAnswer(
           correctAnswer: correctAnswer,
+          id: result['question_id'] as String?,
           explanation: result['explanation'] as String?,
           explanationKu: result['explanation_ku'] as String?,
           explanationTr: result['explanation_tr'] as String?,
@@ -4355,6 +4407,11 @@ class _QuizScreenState extends State<QuizScreen>
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'submitAnswer failed');
+      if (_serverDaily) {
+        // Doğruluğu yalnız sunucu bilir: yerel değerlendirme YOK.
+        await _recoverServerDailyAnswer(questionIndex);
+        return;
+      }
       if (_usesServerHiddenAnswers) {
         if (!mounted || index != questionIndex) return;
         setState(() {
@@ -4442,6 +4499,70 @@ class _QuizScreenState extends State<QuizScreen>
     }
   }
 
+  /// Sunucuda geçen süreye göre sayaç kesri (1 = tam süre; 0 = süre doldu).
+  double? _serverDailyTimerFraction(int elapsedMs) {
+    if (elapsedMs <= 0) return null;
+    final totalMs = widget.room.secondsPerQuestion * 1000;
+    if (totalMs <= 0) return null;
+    return ((totalMs - elapsedMs) / totalMs).clamp(0.0, 1.0).toDouble();
+  }
+
+  /// Günün yarışması cevabı: hüküm sunucudan (doğru şık, gerçek kimlik,
+  /// açıklama cevaptan SONRA). Hız puanı yerelde, sunucunun hükmüyle hesaplanır.
+  Future<Map<String, dynamic>> _sendServerDailyAnswer(
+    int questionIndex,
+    String optionKey,
+    int responseMs,
+  ) async {
+    final round = widget.serverDaily!;
+    final answer = await round.port.answerServerDailyQuestion(
+      roundId: round.roundId,
+      index: questionIndex,
+      choice: optionKey,
+    );
+    return {
+      'is_correct': answer.isCorrect,
+      'correct_option': answer.correctOption,
+      'question_id': answer.questionId,
+      'explanation': answer.explanation,
+      'explanation_ku': answer.explanationKu,
+      'explanation_tr': answer.explanationTr,
+      'points': SpeedScore.calculate(
+        responseMs: responseMs,
+        limitSeconds: widget.room.secondsPerQuestion,
+        correct: answer.isCorrect,
+      ),
+    };
+  }
+
+  /// Cevap sunucuya ulaşamadı (ağ). Hüküm bilinmediğinden yerel puanlama yok:
+  /// seçim açılır; süre kaldıysa sayaç sürer, dolduysa "süre doldu" yeniden
+  /// denenir (sunucu aynı cevabı idempotent karşılar).
+  Future<void> _recoverServerDailyAnswer(int questionIndex) async {
+    if (!mounted || index != questionIndex) return;
+    final wasTimeout = selectedAnswer == 'TIMEOUT';
+    setState(() {
+      selectedAnswer = '';
+      _suspense = false;
+    });
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(context.t(K.answerSendFailed))));
+    // Süresiz turda yeniden seçim yeter (süre dolumu yok).
+    if (!_usesTimer) return;
+    final totalMs = widget.room.secondsPerQuestion * 1000;
+    final remainingMs = totalMs - _questionStopwatch.elapsedMilliseconds;
+    if (!wasTimeout && remainingMs > 0) {
+      _timerController.value = (remainingMs / totalMs).clamp(0.0, 1.0);
+      _timerController.reverse();
+      return;
+    }
+    await Future<void>.delayed(const Duration(seconds: 2));
+    if (mounted && index == questionIndex && !answered) {
+      unawaited(_answer('TIMEOUT'));
+    }
+  }
+
   Future<void> _next() async {
     _autoNextTimer?.cancel();
     _revealTimer?.cancel();
@@ -4486,6 +4607,7 @@ class _QuizScreenState extends State<QuizScreen>
                 : (_botRace?.toPlayers() ?? const []),
             practice: widget.practice,
             dailyQuiz: widget.dailyQuiz,
+            serverDaily: _serverDaily,
             isLearningExperience: _isLearningExperience,
             levelGated: widget.levelGated,
             contestId: widget.contestId,
@@ -4497,6 +4619,34 @@ class _QuizScreenState extends State<QuizScreen>
         result: _completionResult(),
       );
       return;
+    }
+
+    if (_serverDaily) {
+      if (_serverDailyAdvancing) return;
+      _serverDailyAdvancing = true;
+      try {
+        final round = widget.serverDaily!;
+        final next = index + 1;
+        final presented = await round.port.presentServerDailyQuestion(
+          round.roundId,
+          next,
+        );
+        if (!mounted) return;
+        _questions[next] = presented.question
+            .forRound(_answerOrderRoundId)
+            .localized(isKu: _isKu, learning: false);
+        _initialTimerFraction = _serverDailyTimerFraction(presented.elapsedMs);
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'daily present failed');
+        if (!mounted) return;
+        // Sunum idempotent: oyuncu "Sonraki"ye yeniden basar.
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.t(K.contestStartFailed))),
+        );
+        return;
+      } finally {
+        _serverDailyAdvancing = false;
+      }
     }
 
     _explanationController.stop();

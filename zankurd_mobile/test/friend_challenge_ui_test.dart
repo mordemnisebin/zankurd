@@ -826,7 +826,7 @@ void main() {
   group('Supabase deposu RPC çağrıları', () {
     test('create doğru RPC adı ve parametreler; kod ayrıştırılır', () async {
       final http = _JsonRpcHttpClient({
-        'create_async_duel_challenge': {
+        'create_async_duel_challenge_masked': {
           'duel_id': 'd-1',
           'role': 'creator',
           'opponent_name': null,
@@ -847,7 +847,7 @@ void main() {
         category: 'Ziman',
         friendId: 'u-9',
       );
-      expect(http.paths, ['/rest/v1/rpc/create_async_duel_challenge']);
+      expect(http.paths, ['/rest/v1/rpc/create_async_duel_challenge_masked']);
       expect(http.bodies.single, {'p_category': 'Ziman', 'p_friend_id': 'u-9'});
       expect(start.challengeCode, 'DK7M2Q9XA');
       expect(start.invitedName, 'Rojda');
@@ -855,7 +855,7 @@ void main() {
 
     test('accept doğru RPC adı; yeniden açılış alanları okunur', () async {
       final http = _JsonRpcHttpClient({
-        'accept_async_duel_challenge': {
+        'accept_async_duel_challenge_masked': {
           'duel_id': 'd-2',
           'role': 'opponent',
           'opponent_name': 'Rojda',
@@ -873,7 +873,7 @@ void main() {
         ),
       );
       final start = await repo.acceptAsyncDuelChallenge('DK7M2Q9XA');
-      expect(http.paths, ['/rest/v1/rpc/accept_async_duel_challenge']);
+      expect(http.paths, ['/rest/v1/rpc/accept_async_duel_challenge_masked']);
       expect(http.bodies.single, {'p_code': 'DK7M2Q9XA'});
       expect(start.role, AsyncDuelRole.opponent);
       expect(start.answeredCount, 3);

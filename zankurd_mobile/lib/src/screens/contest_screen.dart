@@ -5,14 +5,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../data/achievement_store.dart';
+import '../data/server_daily_event_port.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/contest.dart';
+import '../models/quiz_question.dart';
+import '../models/room.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
 import '../widgets/arena_kit.dart';
+import '../widgets/dialog_action_pair.dart';
 import '../widgets/daily_event_board.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/skeleton_loader.dart';
@@ -100,45 +104,15 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
     if (_starting) return;
     setState(() => _starting = true);
     try {
-      // Etkinlik, tema/kategori etiketinden bağımsız günlük havuzdan beslenir;
-      // "Günün dersi"nden ayrı tohumla, onun setini dışlayarak seçilir.
-      var questions = await widget.repository.loadDailyEventQuestions(
-        limit: contest.questionCount,
-      );
-      if (questions.isEmpty) {
-        questions = widget.repository.playableQuestions
-            .take(contest.questionCount)
-            .toList();
-      }
-      if (!mounted) return;
-      if (questions.isEmpty) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(context.t(K.noQuestionsFound))));
+      final repository = widget.repository;
+      // 2.1.2: sunucu-yetkili akış (cevap anahtarı istemcide YOK). Yeni yol
+      // yoksa ya da ulaşılamazsa eski akışa düşülür; o da resmî liste
+      // alınamazsa kullanıcıya açıkça "antrenman" der (alan 2 #13).
+      if (repository is ServerDailyEventPort &&
+          await _startServerDaily(repository as ServerDailyEventPort)) {
         return;
       }
-
-      final room = widget.repository
-          .createRoom(category: 'Tevlihev')
-          .copyWith(
-            name: context.t(K.dailyEvent),
-            questionCount: questions.length,
-            // Günlük etkinlik tempolu bir mod; 20sn (2026-07-21 kullanıcı kararı).
-            secondsPerQuestion: kDailyEventSecondsPerQuestion,
-          );
-
-      await Navigator.of(context).push(
-        AppRoute.to(
-          QuizScreen(
-            repository: widget.repository,
-            room: room,
-            questions: questions,
-            dailyQuiz: true,
-          ),
-        ),
-      );
-      if (!mounted) return;
-      setState(_loadContest);
+      await _startLegacyQuiz(contest);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'contest quiz start failed');
       if (!mounted) return;
@@ -148,6 +122,156 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
     } finally {
       if (mounted) setState(() => _starting = false);
     }
+  }
+
+  void _snack(String key) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(context.t(key))));
+  }
+
+  GameRoom _dailyRoom(int questionCount) => widget.repository
+      .createRoom(category: 'Tevlihev')
+      .copyWith(
+        name: context.t(K.dailyEvent),
+        questionCount: questionCount,
+        // Günlük etkinlik tempolu bir mod; 20sn (2026-07-21 kullanıcı kararı).
+        secondsPerQuestion: kDailyEventSecondsPerQuestion,
+      );
+
+  /// Sunucu-yetkili günlük tur. `true`: iş burada bitti (oynandı ya da
+  /// kullanıcıya açık mesaj verildi); `false`: eski akışa düş.
+  Future<bool> _startServerDaily(ServerDailyEventPort port) async {
+    final DailyEventSession? session;
+    try {
+      session = await port.startServerDailyEvent();
+    } catch (error, stack) {
+      // Ulaşılamadı: eski akış kendi dürüst "antrenman" kararını verir.
+      ErrorReporter.record(error, stack, reason: 'server daily unavailable');
+      return false;
+    }
+    if (session == null || !session.available) return false;
+    if (session.completed) {
+      // Bitmiş tur: yazılmamışsa sonucu YAZ (uygulama sonuçtan önce
+      // kapanmış olabilir), sonra bugünün turu bitti de.
+      var saved = session.submitted;
+      if (!saved) saved = await port.submitServerDailyResult(session.roundId);
+      if (!mounted) return true;
+      setState(() => _doneToday = true);
+      _snack(saved ? K.contestAlreadyDone : K.contestResultNotSaved);
+      return true;
+    }
+    if (session.expired) {
+      _snack(K.contestExpired);
+      return true;
+    }
+    final presented = await port.presentServerDailyQuestion(
+      session.roundId,
+      session.answered,
+    );
+    if (!mounted) return true;
+    // Yalnız sunulan sorunun içeriği dolu; ötekiler yer tutucu (sunucu sırayla
+    // açar). Cevap anahtarı hiçbir soruda yoktur.
+    final questions = [
+      for (var i = 0; i < session.total; i++)
+        i == session.answered
+            ? presented.question
+            : QuizQuestion(
+                id: 'pending-$i',
+                category: 'Tevlihev',
+                prompt: '',
+                answers: const [],
+                correctAnswer: '',
+                explanation: '',
+              ),
+    ];
+    if (session.resumed && session.answered > 0) _snack(K.contestResumed);
+    await Navigator.of(context).push(
+      AppRoute.to(
+        QuizScreen(
+          repository: widget.repository,
+          room: _dailyRoom(session.total),
+          questions: questions,
+          dailyQuiz: true,
+          serverDaily: ServerDailyRound(
+            port: port,
+            session: session,
+            firstElapsedMs: presented.elapsedMs,
+          ),
+        ),
+      ),
+    );
+    if (!mounted) return true;
+    setState(_loadContest);
+    return true;
+  }
+
+  Future<void> _startLegacyQuiz(Contest contest) async {
+    // Etkinlik, tema/kategori etiketinden bağımsız günlük havuzdan beslenir;
+    // "Günün dersi"nden ayrı tohumla, onun setini dışlayarak seçilir.
+    var questions = await widget.repository.loadDailyEventQuestions(
+      limit: contest.questionCount,
+    );
+    var official = true;
+    final repository = widget.repository;
+    if (repository is ServerDailyEventPort) {
+      official =
+          (repository as ServerDailyEventPort).lastDailyEventListWasOfficial;
+    }
+    if (questions.isEmpty) {
+      questions = widget.repository.playableQuestions
+          .take(contest.questionCount)
+          .toList();
+      if (repository is ServerDailyEventPort) official = false;
+    }
+    if (!mounted) return;
+    if (questions.isEmpty) {
+      _snack(K.noQuestionsFound);
+      return;
+    }
+    if (!official) {
+      // Resmî liste alınamadı: yerel set sıralamaya YAZILMAZ. Sessizce
+      // `dailyQuiz: true` açmak oyuncuyu "yarıştım" sanıp boşa oynatıyordu.
+      // Başla düğmesinin dönen göstergesi diyalog açıkken sürmesin.
+      setState(() => _starting = false);
+      final proceed = await showDialog<bool>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          title: Text(dialogContext.t(K.contestPracticeTitle)),
+          content: Text(dialogContext.t(K.contestPracticeBody)),
+          actions: [
+            DialogActionPair(
+              cancel: TextButton(
+                key: const ValueKey('contest-practice-cancel'),
+                onPressed: () => Navigator.of(dialogContext).pop(false),
+                child: Text(dialogContext.t(K.cancel)),
+              ),
+              confirm: FilledButton(
+                key: const ValueKey('contest-practice-play'),
+                onPressed: () => Navigator.of(dialogContext).pop(true),
+                child: Text(dialogContext.t(K.contestPracticePlay)),
+              ),
+            ),
+          ],
+        ),
+      );
+      if (proceed != true || !mounted) return;
+    }
+
+    await Navigator.of(context).push(
+      AppRoute.to(
+        QuizScreen(
+          repository: widget.repository,
+          room: _dailyRoom(questions.length),
+          questions: questions,
+          // Antrenman günlük tur sayılmaz: sayaç, görev ve sıralama bağlanmaz.
+          dailyQuiz: official,
+        ),
+      ),
+    );
+    if (!mounted) return;
+    setState(_loadContest);
   }
 
   @override

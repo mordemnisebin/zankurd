@@ -45,7 +45,8 @@ class _RoomRowsHttpClient extends http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    if (!request.url.path.endsWith('/rpc/get_room_questions')) {
+    if (!(request.url.path.endsWith('/rpc/get_room_questions_v2') ||
+        request.url.path.endsWith('/rpc/get_room_questions'))) {
       throw StateError('Beklenmeyen istek: ${request.url.path}');
     }
     final bytes = utf8.encode(jsonEncode(rows));

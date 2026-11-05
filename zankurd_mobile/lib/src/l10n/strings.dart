@@ -4838,6 +4838,38 @@ class Tr {
       'ku': 'Rêzbendî niha nehat barkirin.',
       'tr': 'Sıralama şu an yüklenemedi.',
     },
+    // 2.1.2 W2: resmî günlük liste alınamazsa sessiz yerel yarışma yerine
+    // açık "antrenman" durumu; yarım tur devamı; sonuç yeniden deneme.
+    K.contestPracticeTitle: {
+      'ku': 'Wekî meşq bilîze?',
+      'tr': 'Antrenman olarak oynansın mı?',
+    },
+    K.contestPracticeBody: {
+      'ku':
+          'Lîsta fermî a pirsên rojê nehat girtin. Tu dikarî wekî meşq bilîzî; encam nakeve rêzbendiyê.',
+      'tr':
+          'Günün resmî soru listesi alınamadı. Antrenman olarak oynayabilirsin; sonuç sıralamaya yazılmaz.',
+    },
+    K.contestPracticePlay: {
+      'ku': 'Wekî meşq bilîze',
+      'tr': 'Antrenman olarak oyna',
+    },
+    K.contestAlreadyDone: {
+      'ku': 'Te gera fermî a îro qedand. Gera nû sibê vedibe.',
+      'tr': 'Bugünün resmî turunu bitirdin. Yeni tur yarın açılır.',
+    },
+    K.contestExpired: {
+      'ku': 'Dema gera îro qediya; nikare berdewam bike.',
+      'tr': 'Bugünkü turun süresi doldu; devam edilemiyor.',
+    },
+    K.contestResumed: {
+      'ku': 'Tu ji cihê ku te hiştibû berdewam dikî.',
+      'tr': 'Kaldığın yerden devam ediyorsun.',
+    },
+    K.contestResultNotSaved: {
+      'ku': 'Encam nehat tomarkirin. Dîsa biceribîne.',
+      'tr': 'Sonuç kaydedilemedi. Tekrar dene.',
+    },
     // ── Yönetim bölümü (2.2, yalnız sahip hesabı) ────────────────────
     K.adminEntry: {'ku': 'Rêveberî', 'tr': 'Yönetim'},
     K.adminEntrySub: {
@@ -6904,6 +6936,13 @@ class K {
   static const rewardUnitRound = 'reward.unit.round';
   static const rewardUnlockedOn = 'reward.unlockedOn';
   static const contestBoardTitle = 'contest.board.title';
+  static const contestPracticeTitle = 'contest.practice.title';
+  static const contestPracticeBody = 'contest.practice.body';
+  static const contestPracticePlay = 'contest.practice.play';
+  static const contestAlreadyDone = 'contest.alreadyDone';
+  static const contestExpired = 'contest.expired';
+  static const contestResumed = 'contest.resumed';
+  static const contestResultNotSaved = 'contest.resultNotSaved';
   static const contestYesterdayWinner = 'contest.board.yesterdayWinner';
   static const contestNextIn = 'contest.board.nextIn';
   static const contestTeaserParticipants = 'contest.teaser.participants';

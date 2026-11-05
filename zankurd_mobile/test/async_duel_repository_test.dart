@@ -545,8 +545,10 @@ void main() {
     test(
       'startAsyncDuel doğru RPC adını ve p_category parametresini gönderir',
       () async {
+        // 2.1.2 (W2): yeni istemci önce opak sıra belirteçli `*_masked`
+        // işlevi dener (eskiye düşüş: test/rekabet_sunum_istemci_test.dart).
         final httpClient = _AsyncDuelHttpClient({
-          'start_async_duel': _startAsyncDuelJson,
+          'start_async_duel_masked': _startAsyncDuelJson,
         });
         final repo = _SignedInAsyncDuelRepository(
           SupabaseClient(
@@ -558,7 +560,9 @@ void main() {
 
         final start = await repo.startAsyncDuel(category: 'Ziman');
 
-        expect(httpClient.requestedPaths, ['/rest/v1/rpc/start_async_duel']);
+        expect(httpClient.requestedPaths, [
+          '/rest/v1/rpc/start_async_duel_masked',
+        ]);
         expect(httpClient.requestBodies.single, {'p_category': 'Ziman'});
         expect(start.duelId, 'duel-creator-1');
         expect(start.questions.single.hasHiddenAnswer, isTrue);
