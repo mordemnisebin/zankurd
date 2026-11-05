@@ -185,6 +185,21 @@ class Tr {
       'tr':
           '13 yaşından küçükler için sohbet, arkadaş özellikleri ve kullanım analizi kapalı kalır; öğrenme ve tek başına oyun açıktır.',
     },
+    // Ayarlar › yaş beyanı satırı (2.1.2 W7, bulgu 1.7): yanlış dokunuşu
+    // düzeltme yolu. Beyan doğrulama değildir; yalnız cihazdaki sınırı belirler.
+    K.settingsAgeTitle: {'ku': 'Daxuyaniya temenê min', 'tr': 'Yaş beyanım'},
+    K.settingsAgeAdult: {
+      'ku': 'Ez 13 salî an jê mezintir im',
+      'tr': '13 yaşında veya daha büyüğüm',
+    },
+    K.settingsAgeMinor: {
+      'ku': 'Ez ji 13 salî biçûktir im',
+      'tr': '13 yaşından küçüğüm',
+    },
+    K.settingsAgeUnknown: {
+      'ku': 'Hê nehatiye bersivandin',
+      'tr': 'Henüz cevaplanmadı',
+    },
     K.ageGateMinorOff: {
       'ku': 'Ev taybetmendî ji bo kesên bin 13 salî girtî ye.',
       'tr': 'Bu özellik 13 yaş altı için kapalı.',
@@ -7006,6 +7021,10 @@ class K {
   static const ageGateTitle = 'ageGate.title';
   static const ageGateBody = 'ageGate.body';
   static const ageGateMinorOff = 'ageGate.minorOff';
+  static const settingsAgeTitle = 'settings.age.title';
+  static const settingsAgeAdult = 'settings.age.adult';
+  static const settingsAgeMinor = 'settings.age.minor';
+  static const settingsAgeUnknown = 'settings.age.unknown';
   // Yönetim bölümü (2.2, yalnız sahip hesabı).
   static const adminEntry = 'admin.Entry';
   static const adminEntrySub = 'admin.EntrySub';

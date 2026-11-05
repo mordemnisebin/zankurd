@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/age_gate_store.dart';
+import '../services/analytics_service.dart';
 import '../utils/error_reporter.dart';
 
 /// Ölçüm rızası: iki AYRI anahtar, ikisi de varsayılan KAPALI.
@@ -34,6 +35,37 @@ class AnalyticsConsentProvider extends ChangeNotifier {
        _crashReportsEnabled = initialCrashReportsEnabled {
     isEnabled = initialEnabled;
     ErrorReporter.crashlyticsEnabled = initialCrashReportsEnabled;
+    AgeGate.adultLost.addListener(_onAdultLost);
+  }
+
+  /// Yetişkin beyanı kaybolunca (başka hesaba geçiş, çocuk beyanı, hesap
+  /// silme) rıza ve SDK durumu YENİ kullanıcıya göre sıfırlanır: anahtarlar
+  /// cihaz geneli olduğundan A'nın "evet"i B'ye geçmemeli ve çalışan Firebase
+  /// Analytics/Crashlytics B oturumunda veri toplamaya devam etmemeli
+  /// (GPT-6 Pro 2.1.2 alan 7 bulgu 1.1). Diskteki seçim de silinir; yoksa B
+  /// "13+" dediği anda A'nın eski seçimi B'nin rızası gibi uygulanırdı.
+  void _onAdultLost() {
+    _writeGeneration.updateAll(
+      (_, v) => v + 1,
+    ); // bekleyen yazımları geçersiz kıl
+    final hadAny = _enabled || _crashReportsEnabled || isEnabled;
+    _enabled = false;
+    isEnabled = false;
+    _crashReportsEnabled = false;
+    ErrorReporter.crashlyticsEnabled = false;
+    _crashChoicePending = false;
+    unawaited(AnalyticsService.instance.disable());
+    unawaited(ErrorReporter.setCollectionEnabled(false));
+    _writeTail = _writeTail.then((_) async {
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.remove(_storageKey);
+        await prefs.setBool(_crashStorageKey, false);
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'analytics_consent_reset');
+      }
+    });
+    if (hadAny && !_disposed) notifyListeners();
   }
 
   static const _storageKey = 'zankurd.analyticsConsent';
@@ -66,6 +98,7 @@ class AnalyticsConsentProvider extends ChangeNotifier {
   @override
   void dispose() {
     _disposed = true;
+    AgeGate.adultLost.removeListener(_onAdultLost);
     super.dispose();
   }
 

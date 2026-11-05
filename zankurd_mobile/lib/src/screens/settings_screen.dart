@@ -283,6 +283,14 @@ class _SettingsScreenState extends State<SettingsScreen>
     ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
   }
 
+  /// Yaş beyanını düzeltme yolu: aynı soru sayfası açılır, cevap yenisiyle
+  /// değişir (çocuk -> yetişkin ya da tersi). Yetişkinden çocuğa geçiş rızayı
+  /// kapatır (bkz. `AgeGate.adultLost`).
+  Future<void> _openAgeDeclaration() async {
+    await StartupPrompts.showAgeGateSheet(context);
+    if (mounted) setState(() {});
+  }
+
   Future<void> _setPresenceVisibility(bool enabled) async {
     final saved = await context.read<AuthProvider>().presence.setEnabled(
       enabled,
@@ -497,6 +505,19 @@ class _SettingsScreenState extends State<SettingsScreen>
                         '${context.t(K.exportData)}. ${context.t(K.exportDataSub)}',
                     chevron: true,
                     onTap: _exportData,
+                  ),
+                  SahneListRow.plain(
+                    key: const ValueKey('settings-age-declaration'),
+                    title: context.t(K.settingsAgeTitle),
+                    subtitle: context.t(
+                      AgeGate.isAdult
+                          ? K.settingsAgeAdult
+                          : AgeGate.isMinor
+                          ? K.settingsAgeMinor
+                          : K.settingsAgeUnknown,
+                    ),
+                    chevron: true,
+                    onTap: _openAgeDeclaration,
                   ),
                   Consumer<AnalyticsConsentProvider>(
                     builder: (context, consent, _) => SahneListRow.plain(

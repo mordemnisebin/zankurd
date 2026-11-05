@@ -48,6 +48,15 @@ class AgeGate {
 
   static String? _boundUserId;
 
+  /// Yetişkin beyanı kaybolduğunda (başka hesaba geçiş, çocuk beyanı, hesap
+  /// silme, yazım hatası) artar. `AnalyticsConsentProvider` dinler ve
+  /// analitik/Crashlytics rızasını SDK ile birlikte sıfırlar: rıza anahtarları
+  /// cihaz geneli olduğundan A'nın "evet"i B'ye geçmesin (GPT-6 Pro 2.1.2
+  /// alan 7 bulgu 1.1). Bellek içi.
+  static final ValueNotifier<int> adultLost = ValueNotifier<int>(0);
+
+  static void _notifyAdultLost() => adultLost.value++;
+
   /// Bağlamı olmayan katmanların okuduğu tek boğaz noktası (bkz.
   /// `AnalyticsConsentProvider.isEnabled` ile aynı desen).
   static AgeDeclaration? declaration;
@@ -97,7 +106,10 @@ class AgeGate {
       await _invalidateAdult(prefs);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'age_gate_bind');
-      if (declaration == AgeDeclaration.adult) declaration = null;
+      if (declaration == AgeDeclaration.adult) {
+        declaration = null;
+        _notifyAdultLost();
+      }
     }
   }
 
@@ -105,6 +117,7 @@ class AgeGate {
   /// sorulur). Diske silme de başarısız olabilir; bellek yine de temizlenir.
   static Future<void> _invalidateAdult(SharedPreferences prefs) async {
     if (declaration == AgeDeclaration.adult) declaration = null;
+    _notifyAdultLost();
     await prefs.remove(declarationKey);
     await prefs.remove(askedKey);
     await prefs.remove(ownerKey);
@@ -124,14 +137,20 @@ class AgeGate {
       await _invalidateAdult(prefs);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'age_gate_forget');
-      if (declaration == AgeDeclaration.adult) declaration = null;
+      if (declaration == AgeDeclaration.adult) {
+        declaration = null;
+        _notifyAdultLost();
+      }
     }
   }
 
   /// Beyanı yazar. Yazım başarısız olsa da bellekteki değer uygulanır:
   /// çocuk beyanı bir hata yüzünden kısıtsız kalmasın.
   static Future<void> declare(AgeDeclaration value) async {
+    final wasAdult = declaration == AgeDeclaration.adult;
     declaration = value;
+    // Yetişkinden çocuğa (Ayarlar'daki düzeltme yolu) geçiş de rızayı kapatır.
+    if (wasAdult && value != AgeDeclaration.adult) _notifyAdultLost();
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(declarationKey, value.name);
@@ -151,6 +170,7 @@ class AgeGate {
       // bellekte de bilinmiyora düş (yeniden sorulur); çocuk beyanı korunur.
       if (value == AgeDeclaration.adult) {
         declaration = null;
+        _notifyAdultLost();
         try {
           final prefs = await SharedPreferences.getInstance();
           await prefs.remove(declarationKey);
