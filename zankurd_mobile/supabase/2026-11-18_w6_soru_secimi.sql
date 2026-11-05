@@ -57,7 +57,7 @@ declare
 begin
   for r in select * from (values
     ('public.start_room_game(uuid)', '918cef7cf52cde1d9dd3994ef2383c0e', '19ed6e01a674cbc526bd3f9129c03400'),
-    ('public.prepare_verified_solo_questions(text,integer)', 'a20a15d07f5ad79871fa5fa4a4b889bb', 'b05a81c69927ce5b3346c85720b977bc')
+    ('public.prepare_verified_solo_questions(text,integer)', 'a20a15d07f5ad79871fa5fa4a4b889bb', '7eec7c84820ab8602e5315ff6ea373eb')
   ) t(imza, taban, nihai)
   loop
     v_def := pg_get_functiondef(to_regprocedure(r.imza));
@@ -168,11 +168,14 @@ select pg_temp.w6_yama(
   $y$  -- (2026-11-18, W6) Bütün havuzu random() ile sıralamak yerine: rastgele bir uuid
   -- eşiğinden (birincil anahtar indeksi) en çok 5 x p_limit uygun soru okunur; eşikten
   -- sonrası biterse baştan tamamlanır; p_limit bu küçük kümeden random() ile seçilir.
+  -- Eşik `(select p from pivot)` skaler alt sorgusudur: planlayıcı onu birincil anahtar
+  -- indeksinde aralık koşulu (Index Cond) olarak kullanır; `from ..., pivot` birleşimi
+  -- bunu yapamaz ve bütün indeksi taratır (PGlite EXPLAIN: 6.951 satır -> 284).
   with pivot as materialized (select gen_random_uuid() as p),
   tail_part as materialized (
     select q.id from public.questions q
-    join public.categories c on c.id = q.category_id, pivot
-    where q.id >= pivot.p
+    join public.categories c on c.id = q.category_id
+    where q.id >= (select p from pivot)
       and q.is_approved = true and c.is_active = true
       and (p_category is null or p_category = 'Tevlihev' or c.name = p_category)
       and q.correct_option in ('A','B','C','D')
@@ -187,8 +190,8 @@ select pg_temp.w6_yama(
   ),
   head_part as (
     select q.id from public.questions q
-    join public.categories c on c.id = q.category_id, pivot
-    where q.id < pivot.p
+    join public.categories c on c.id = q.category_id
+    where q.id < (select p from pivot)
       and q.is_approved = true and c.is_active = true
       and (p_category is null or p_category = 'Tevlihev' or c.name = p_category)
       and q.correct_option in ('A','B','C','D')

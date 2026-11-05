@@ -57,7 +57,7 @@ void main() {
     expect(geriRaw, contains('md5 zinciri'));
     // applied.md satırı nihai md5'leri de taşır.
     expect(applied, contains('19ed6e01a674cbc526bd3f9129c03400'));
-    expect(applied, contains('b05a81c69927ce5b3346c85720b977bc'));
+    expect(applied, contains('7eec7c84820ab8602e5315ff6ea373eb'));
   });
 
   test('yalnız sunulan sorular görülmüş; solo seçim kimlik eşiğinden', () {
