@@ -361,6 +361,7 @@ class SupabaseZanKurdRepository
       'avatar_color': ?avatarColor,
     });
     _profileCache.remove(user.id);
+    _ownChatIdentity = null;
   }
 
   /// Profil satırı yoksa oluşturur; varsa adı EZMEZ.
@@ -523,6 +524,7 @@ class SupabaseZanKurdRepository
           })
           .eq('id', pinnedOwner);
       _profileCache.remove(pinnedOwner);
+      _ownChatIdentity = null;
       await _clearAvatarDirtyIfSent(identity, pinnedKey);
       return true;
     } on PostgrestException catch (error, stack) {
@@ -2156,16 +2158,64 @@ class SupabaseZanKurdRepository
   }) async {
     final user = client.auth.currentUser;
     if (user == null) return;
-    final name = await getProfileName();
-    final identity = await loadAvatarIdentity();
+    final (name, avatarColor) = await _chatIdentity(user.id);
     await client.from('room_messages').insert({
       'room_id': roomId,
       'sender_id': user.id,
       'sender_name': name,
-      'sender_avatar_color': identity.colorHex,
+      'sender_avatar_color': avatarColor,
       'text': text.trim(),
       'created_at': DateTime.now().toUtc().toIso8601String(),
     });
+  }
+
+  /// Gönderenin sohbet satırındaki adı/rengi. Eskiden HER mesajdan önce iki
+  /// ayrı profil okuması (`getProfileName` + `loadAvatarIdentity`) yapılıyordu
+  /// (2026-11-06, alan 9 #8); kalabalık odada her tuş vuruşu 3 istek demekti.
+  /// Artık tek okuma ve kısa süreli önbellek; ad/avatar yazımları önbelleği
+  /// siler. Bekleyen (gönderilmemiş) yerel avatar değişikliği varsa sunucu
+  /// satırı değil yerel kopya geçerlidir: eski iki çağrılı yol aynen kullanılır.
+  ({String userId, String name, String? color, DateTime at})? _ownChatIdentity;
+  static const _ownChatIdentityTtl = Duration(minutes: 2);
+
+  Future<(String, String?)> _chatIdentity(String userId) async {
+    final cached = _ownChatIdentity;
+    if (cached != null &&
+        cached.userId == userId &&
+        DateTime.now().difference(cached.at) < _ownChatIdentityTtl &&
+        !await _avatarIdentityDirty()) {
+      return (cached.name, cached.color);
+    }
+    if (await _avatarIdentityDirty()) {
+      final name = await getProfileName();
+      final identity = await loadAvatarIdentity();
+      return (name, identity.colorHex);
+    }
+    try {
+      final row = await client
+          .from('profiles')
+          .select('display_name, avatar_color')
+          .eq('id', userId)
+          .maybeSingle();
+      final name = row?['display_name'];
+      final color = row?['avatar_color'];
+      final resolvedName = name is String && name.isNotEmpty
+          ? name
+          : 'ZanKurd Oyuncusu';
+      final resolvedColor = color is String ? color : null;
+      if (client.auth.currentUser?.id == userId) {
+        _ownChatIdentity = (
+          userId: userId,
+          name: resolvedName,
+          color: resolvedColor,
+          at: DateTime.now(),
+        );
+      }
+      return (resolvedName, resolvedColor);
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'chat identity failed');
+      return ('ZanKurd Oyuncusu', null);
+    }
   }
 
   @override
