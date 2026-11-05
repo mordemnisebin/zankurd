@@ -13,15 +13,15 @@
 --
 -- BULGULAR (ALAN 1)
 --  #2  claim_verified_solo_reward: p_limit=1 ya da hepsi boş/yanlış turdan taban 4 jeton
---      veriyordu (4 + doğru + seri). Artık: en az 5 soru (ilk oturum 5 soruluk), en az
---      1 doğru, toplam süre >= soru sayısı saniye; aksi hâlde 0 jeton ('not_eligible').
+--      veriyordu (4 + doğru + seri). Artık: en az 4 soru (turnuva maçı 4, öteki doğrulanmış turlar 10), en az
+--      1 doğru, toplam süre >= soru başına 0,5 sn; aksi hâlde 0 jeton ('not_eligible').
 --      Sonuç reward_result'a yazılır (tekrar çağrı aynı yanıtı verir).
 --  #11 redeem_referral_code: kanıt olarak aranan coin_transactions 'solo_round' kaydı
 --      artık yalnız yukarıdaki koşulu geçen turlardan doğar; boş turla davet ödülü kapanır.
 --      Kısıtlı çağıran ya da kısıtlı davet eden ödül akışına giremez.
 --  #1  claim_share_reward: paylaşımın kendisi sunucuda doğrulanamaz (işletim sistemi
 --      paylaşım sayfası). Günlük tek 25 jeton artık o gün DOĞRULANMIŞ bir oyun etkinliğine
---      bağlı: en az 5 soruluk ve >=1 doğrulu doğrulanmış tur, solo/oda ödülü kaydı ya da
+--      bağlı: en az 4 soruluk ve >=1 doğrulu doğrulanmış tur, solo/oda ödülü kaydı ya da
 --      bitmiş bir düello. Doğrudan RPC'yle boş hesap günde 25 jeton alamaz.
 --  #5  Kısıtlı hesap: solo ödülü, paylaşım ödülü, davet ödülü, haftalık lig ve turnuva
 --      katılımı artık user_is_restricted'a bakar (turnuva: tournament_entries BEFORE INSERT
@@ -122,8 +122,8 @@ declare
   v_eski text;
 begin
   for r in select * from (values
-    ('public.claim_verified_solo_reward(uuid)', '59a7f6bd99579a61432a3f130205f365', 'a2a323a59194de777594d1b6bbecfac8'),
-    ('public.claim_share_reward()', '25158efdb59ff51916a39c3f47a67a8f', '98723fccd5bb2f0f02cff8b5cba5d28f'),
+    ('public.claim_verified_solo_reward(uuid)', '59a7f6bd99579a61432a3f130205f365', 'f5c436fce1af1aca396974bc7e7ef53e'),
+    ('public.claim_share_reward()', '25158efdb59ff51916a39c3f47a67a8f', '458eee841181b9f389011ef24e81a1ae'),
     ('public.redeem_referral_code(text)', '400c043982e1083382260710293f3126', '0f05b43313c943134f5f5ea72da39849'),
     ('public.spend_coins_once(integer,text,text)', '0510d92fa5d2d86b7817f6c1c0263276', 'a5f795df27c7e85da04151f6debdaee2'),
     ('public.record_activity(boolean)', '213973cf0b805c29f1a96bda2b23d576', '466ceb76c6f4a0d92e9828e97f75748e'),
@@ -299,13 +299,17 @@ select pg_temp.w1_yama(
   if public.user_is_restricted(auth.uid()) then
     return jsonb_build_object('amount', 0, 'account_restricted', true);
   end if;
-  -- (2026-11-16 W1) Taban ödül YOK: en az 5 soru (ilk oturum 5 soruluk), en az 1 doğru
-  -- ve toplam süre en az soru sayısı kadar saniye. Tek soruluk / boş cevaplı / anında
-  -- biten tur 4 jeton (ve davet ödülü kanıtı) üretemez. Sonuç kaydedilir (tekrar çağrı
-  -- aynı yanıtı verir).
+  -- (2026-11-16 W1) Taban ödül YOK: en az 4 soru, en az 1 doğru ve toplam süre en az
+  -- soru başına 0,5 sn. Eşik istemcinin doğrulanmış (sunucu seçimli) en kısa meşru
+  -- turuna göre: turnuva maçı 4 soru, öteki turlar 10; ders/hikâye/kelime mini
+  -- sınavları sunucu seçimi olmadığından zaten doğrulanmış oturum açmaz (ödül 0).
+  -- Tek soruluk / boş cevaplı / anında biten tur 4 jeton (ve davet ödülü kanıtı)
+  -- üretemez. Süre alt sınırı gevşek: başlangıç isteği geç ulaşıp cevaplar peş peşe
+  -- gelirse meşru hızlı oyuncu reddedilmesin. Süresiz mod yalnız üst sınırı kaldırır.
+  -- Sonuç kaydedilir (tekrar çağrı aynı yanıtı verir).
   v_n := cardinality(v_session.question_ids);
   v_secs := extract(epoch from (v_session.completed_at - v_session.started_at));
-  if v_n < 5 or v_session.correct_count < 1 or v_secs < v_n then
+  if v_n < 4 or v_session.correct_count < 1 or v_secs < v_n * 0.5 then
     v_result := jsonb_build_object('amount', 0, 'daily_cap', 45, 'cap_reached', false,
       'session_id', v_session.id, 'not_eligible', true);
     update public.verified_quiz_sessions set reward_result = v_result where id = v_session.id;
@@ -339,14 +343,14 @@ select pg_temp.w1_yama(
   end if;
 
   -- (2026-11-16 W1) Paylaşımın kendisi sunucuda doğrulanamaz; ödül o gün DOĞRULANMIŞ bir
-  -- oyun etkinliğine bağlanır: >=5 soruluk ve >=1 doğrulu doğrulanmış tur, solo/oda ödülü
+  -- oyun etkinliğine bağlanır: >=4 soruluk ve >=1 doğrulu doğrulanmış tur, solo/oda ödülü
   -- kaydı ya da bitmiş düello. Etkinliksiz doğrudan RPC günde 25 jeton alamaz.
   if not (
     exists (
       select 1 from public.verified_quiz_sessions s
       where s.user_id = v_uid
         and s.completed_at >= v_from and s.completed_at < v_from + interval '1 day'
-        and s.correct_count >= 1 and cardinality(s.question_ids) >= 5)
+        and s.correct_count >= 1 and cardinality(s.question_ids) >= 4)
     or exists (
       select 1 from public.coin_transactions ct
       where ct.player_id = v_uid

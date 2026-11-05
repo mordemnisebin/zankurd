@@ -80,7 +80,7 @@ void main() {
   test('#2/#11: solo ödülünde taban yok; asgari soru/doğru/süre', () {
     expect(
       code,
-      contains('v_n < 5 or v_session.correct_count < 1 or v_secs < v_n'),
+      contains('v_n < 4 or v_session.correct_count < 1 or v_secs < v_n * 0.5'),
     );
     expect(code, contains("'not_eligible', true"));
     expect(code, contains('user_is_restricted(auth.uid())'));
@@ -88,7 +88,7 @@ void main() {
 
   test('#1: paylaşım ödülü doğrulanmış etkinliğe bağlı', () {
     expect(code, contains('public.verified_quiz_sessions s'));
-    expect(code, contains('cardinality(s.question_ids) >= 5'));
+    expect(code, contains('cardinality(s.question_ids) >= 4'));
     expect(code, contains("'No verified play today'"));
     expect(code, contains('public.async_duel_results r'));
   });

@@ -345,13 +345,25 @@ assert.equal((await one("select count(*)::int c from olcek_tur3_yedek where ad l
   assert.equal(bos.amount, 0); assert.equal(bos.not_eligible, true);
   const sifir = await claimSolo(1, await tur(1, 10, 0, 40));
   assert.equal(sifir.amount, 0, 'sıfır doğru: taban ödül yok');
-  const hizli = await claimSolo(1, await tur(1, 10, 5, 2));
+  const hizli = await claimSolo(1, await tur(1, 10, 5, 1));
   assert.equal(hizli.amount, 0, 'anında biten tur ödül vermez');
   const normal = await claimSolo(1, await tur(1, 10, 6, 40));
   assert(normal.amount >= 4 + 6, 'dürüst tur ödülünü alır: ' + JSON.stringify(normal));
   assert.equal(normal.not_eligible, undefined);
   const bes = await claimSolo(1, await tur(1, 5, 1, 30));
-  assert(bes.amount > 0, 'ilk oturum (5 soru, 1 doğru) hâlâ ödül alır');
+  assert(bes.amount > 0, '5 soru, 1 doğru hâlâ ödül alır');
+  // Meşru en kısa doğrulanmış tur: turnuva maçı (4 soru) — hızlı oyuncu 4 soruyu 3 sn'de bitirir.
+  const turnuva = await claimSolo(1, await tur(1, 4, 3, 3));
+  assert(turnuva.amount > 0, '4 soruluk hızlı turnuva turu reddedilmez: ' + JSON.stringify(turnuva));
+  // 10 soruyu 6 sn'de (soru başına 0,6 sn) bitiren çok hızlı iyi oyuncu reddedilmez.
+  const hizliIyi = await claimSolo(1, await tur(1, 10, 9, 6));
+  assert(hizliIyi.amount > 0, 'çok hızlı meşru tur reddedilmez: ' + JSON.stringify(hizliIyi));
+  // Süresiz mod yalnız üst sınırı kaldırır: 10 dakikalık tur ödül alır.
+  const suresiz = await claimSolo(1, await tur(1, 10, 6, 600));
+  assert(suresiz.amount >= 0 && suresiz.not_eligible === undefined, 'süresiz/uzun tur reddedilmez');
+  // 3 soruluk tur (hiçbir doğrulanmış istemci yolu yok) ve soru başına <0,5 sn tur reddedilir.
+  assert.equal((await claimSolo(1, await tur(1, 3, 3, 30))).amount, 0, '3 soru: ödül yok');
+  assert.equal((await claimSolo(1, await tur(1, 10, 10, 4))).amount, 0, '10 soru 4 sn (0,4 sn/soru): ödül yok');
   // Aynı sonuç yeniden istenince saklı yanıt (tek soruluk tur da).
   const id = await tur(1, 1, 0, 3);
   const a = await claimSolo(1, id); const b = await claimSolo(1, id);
