@@ -90,7 +90,7 @@ class _Repo extends SupabaseZanKurdRepository {
   @override
   Future<void> ensureProfile() async {}
   @override
-  Future<User> signInAnonymously() async => User(
+  Future<User> signInAnonymously() async => const User(
     id: 'synthetic-user',
     appMetadata: {},
     userMetadata: {},

@@ -3181,6 +3181,36 @@
    "columns": {}
   },
   {
+   "id": "w6_soru_secimi_geri_sql",
+   "description": "2026-11-18 W6 oda/solo soru seçimi göçü geri alma",
+   "glob": "supabase/geri_al/2026-11-18_w6_soru_secimi_geri.sql",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 100,
+   "expectedRecordCount": null,
+   "notes": "İşlev gövdesi geri alma; soru kaydı içermez",
+   "columns": {}
+  },
+  {
+   "id": "w6_server_question_id_code",
+   "description": "Yerel soru kimliği -> sunucu uuid5 eşlemesi (kod, kayıt değil)",
+   "glob": "lib/src/data/server_question_id.dart",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 100,
+   "expectedRecordCount": null,
+   "notes": "Kimlik dönüşümü kodu; soru kaydı içermez",
+   "columns": {}
+  },
+  {
    "id": "yeni3_2026_11_14",
    "description": "2026-11-14: yeni sorular 3 (821); ChatGPT taslağı, Gemini 4 Argon + ChatGPT/Copilot jürisi",
    "path": "assets/data/yeni3_2026_11_14_questions.json",

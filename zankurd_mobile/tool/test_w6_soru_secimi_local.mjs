@@ -13,6 +13,7 @@ import {pathToFileURL} from 'node:url';
 import path from 'node:path';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
+import {execFileSync} from 'node:child_process';
 const modulePath = process.argv[2];
 if (!modulePath || !path.isAbsolute(modulePath)) throw Error('Mutlak yerel PGlite yolu gerekli');
 const {PGlite} = await import(pathToFileURL(modulePath).href);
@@ -47,7 +48,8 @@ await db.exec(`
   create table public.categories(id uuid primary key default gen_random_uuid(), name text, is_active boolean);
   create table public.questions(id uuid primary key default gen_random_uuid(), category_id uuid references public.categories(id),
     prompt text, option_a text, option_b text, option_c text, option_d text,
-    correct_option text, question_type text, is_approved boolean);
+    correct_option text, question_type text, is_approved boolean,
+    explanation text, explanation_ku text, explanation_tr text);
   create table public.verified_solo_selections(id uuid primary key default gen_random_uuid(), user_id uuid,
     question_ids uuid[], created_at timestamptz not null default clock_timestamp());
   create table public.olcek_tur3_yedek (ad text primary key, tanim text not null, alindi timestamptz not null default now());
@@ -232,4 +234,28 @@ for (const fn of [SRG, PVS]) {
   assert.equal(acl.a, false); assert.equal(acl.s, true);
 }
 pass('anon EXECUTE yok, authenticated var');
+// --- icerik_alan7 canlı kıyas SQL'i (salt okunur) gerçekten çalışır ve sınıflar -------------
+{
+  const kiyasSql = execFileSync('python3', [new URL('./icerik_alan7_canli_kiyas.py', import.meta.url).pathname, 'sql'], {encoding: 'utf8'});
+  assert(!/\b(insert|update|delete|truncate|drop|alter|create|commit)\b/i.test(kiyasSql.replace(/--.*$/gm, '').replace(/'(?:[^']|'')*'/g, "''")),
+    'kıyas SQL\'i yazma/commit içermemeli');
+  assert(/begin read only;/.test(kiyasSql) && /rollback;/.test(kiyasSql));
+  // Sentetik canlı: bir hedefin değeri eskiyle aynı (uygula), biri yeniyle (zaten), biri farklı (farkli + soru atla), biri yok.
+  const hedefler = [...kiyasSql.matchAll(/^  \('([0-9a-f-]{36})','([^']*)','([^']*)'/gm)].map(m => ({id: m[1], yerel: m[2], sutun: m[3]}));
+  assert(hedefler.length === 375, 'hedef sayısı 375: ' + hedefler.length);
+  const k = hedefler.find(h => h.sutun === 'prompt');
+  const kPrompts = kiyasSql.match(new RegExp("^  \\('" + k.id + "','" + k.yerel + "','prompt','((?:[^']|'')*)','((?:[^']|'')*)'", 'm'));
+  const eski = kPrompts[1].replaceAll("''", "'");
+  await db.query(`insert into public.categories(id,name,is_active) values ('c0000000-0000-0000-0000-0000000000aa','K',true) on conflict do nothing`);
+  await db.query(`insert into public.questions(id,category_id,prompt,option_a,option_b,option_c,option_d,correct_option,question_type,is_approved)
+    values ($1,'c0000000-0000-0000-0000-0000000000aa',$2,'a','b','c','d','A','multiple_choice',true)`, [k.id, eski]);
+  const sonuc = (await db.query(kiyasSql.replace('begin read only;', '').replace('rollback;', ''))).rows[0].alan7_kiyas;
+  const rows = JSON.parse(sonuc);
+  assert.equal(rows.length, 375);
+  const kr = rows.find(r => r.id === k.id && r.sutun === 'prompt');
+  assert.equal(kr.durum, 'uygula');
+  assert.equal(kr.canli, eski);
+  assert.equal(rows.filter(r => r.durum === 'yok').length, rows.filter(r => r.id !== k.id).length, 'canlıda olmayan hedefler yok');
+  pass('icerik_alan7 kıyas SQL\'i salt okunur, 375 hedefi sınıflar (uygula/yok), canlı değeri döker');
+}
 console.log('TAMAM');

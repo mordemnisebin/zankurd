@@ -78,10 +78,7 @@ void main() {
       final repo = freshMockRepository();
       for (final category in ['Edebiyat', 'Sînema', 'Dîrok', 'Cîhan']) {
         final turn = await repo.loadQuestions(categoryId: category, limit: 10);
-        final groups = [
-          for (final q in turn)
-            if (FactGroups.of(q.id) case final g?) g,
-        ];
+        final groups = [for (final q in turn) ?FactGroups.of(q.id)];
         expect(
           groups.toSet().length,
           groups.length,

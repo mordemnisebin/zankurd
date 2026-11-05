@@ -40,7 +40,7 @@ for arac in \
 done
 
 echo "== Python unit testleri"
-(cd tool && python3 -m unittest -q test_send_push_outbox test_prepare_room_limits test_push_delivery_v2_sql)
+(cd tool && python3 -m unittest -q test_send_push_outbox test_prepare_room_limits test_push_delivery_v2_sql test_icerik_alan7_kiyas)
 (cd tool/content_authoring && python3 -m unittest -q test_editorial_queue test_authoring_gates)
 (cd tool/a11y && python3 -m unittest -q tap_target_taramasi_test)
 echo "SQL araçları ve Python testleri geçti."
