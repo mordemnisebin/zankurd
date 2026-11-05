@@ -171,6 +171,15 @@ for (let i = 0; i < 60; i++) {
 }
 assert(kapsam.size >= 150, 'çeşitlilik: 60 turda ' + kapsam.size + ' farklı soru (en az 150 beklenir)');
 pass('2 prepare: 60 çağrı, hep 10 tekil uygun soru, ' + kapsam.size + ' farklı soru, süzgeçler aynı');
+// server_only: yalnız sunucuda tutulan sorular solo seçimden dışlanır (sütunu göç ekledi).
+await db.exec('delete from public.verified_solo_selections');
+await db.exec(`update public.questions set server_only = true where id in (select id from public.questions where category_id = 'c0000000-0000-0000-0000-000000000001' and prompt like 'Soru %' order by id limit 300)`);
+const SO = new Set((await db.query('select id from public.questions where server_only')).rows.map(r => r.id));
+assert.equal(SO.size, 300);
+for (let i = 0; i < 20; i++) for (const id of (await prep('Buyuk', 10)).question_ids) assert(!SO.has(id), 'server_only soru solo seçildi');
+await assert.rejects(prep('Buyuk', 51 - 1 + 90), /Invalid question count/);
+pass('3 server_only sorular solo seçimden dışlanır (sütun göçle eklendi)');
+await db.exec('update public.questions set server_only = false');
 await db.exec('delete from public.verified_solo_selections'); // günlük 100 bilet sınırı
 const tevlihev = await prep('Tevlihev', 10);
 assert.equal(tevlihev.question_ids.length, 10);

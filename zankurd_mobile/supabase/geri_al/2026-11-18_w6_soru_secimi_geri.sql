@@ -5,7 +5,8 @@
 -- yok) ve md5 zincirleri doğrulanır; biri eksik/bozuksa hiçbir şey geri alınmaz. İşlev
 -- yoksa ya da canlı gövde göçten sonra değişmişse durur. Geri yükleme sonrası sahip,
 -- SECURITY DEFINER, search_path ve anon/PUBLIC EXECUTE yokluğu doğrulanır.
--- KAPSAM: ileri göçün olcek_tur3_yedek RLS/yetki kapatması geri ALINMAZ (zararsız).
+-- KAPSAM: ileri göçün olcek_tur3_yedek RLS/yetki kapatması ve `questions.server_only` sütunu
+-- (W10 ile ortak, veri taşır) geri ALINMAZ (zararsız).
 -- Bu dosya yalnız 'w6:' satırlarını siler.
 begin;
 

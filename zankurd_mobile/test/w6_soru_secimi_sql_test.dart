@@ -41,6 +41,8 @@ void main() {
     expect(applied, contains('2026-11-18_w6_soru_secimi.sql | ⏳'));
     // Yeni nesne yok.
     expect(code, isNot(contains('create table if not exists')));
+    expect(code, contains('add column if not exists server_only'));
+    expect(code, contains('and q.server_only = false'));
     expect(code, isNot(contains('cron.schedule')));
     expect(code, isNot(contains('create index')));
   });
@@ -57,7 +59,7 @@ void main() {
     expect(geriRaw, contains('md5 zinciri'));
     // applied.md satırı nihai md5'leri de taşır.
     expect(applied, contains('19ed6e01a674cbc526bd3f9129c03400'));
-    expect(applied, contains('7eec7c84820ab8602e5315ff6ea373eb'));
+    expect(applied, contains('ea49c4455504e3ea44bea08c8f821bd6'));
   });
 
   test('yalnız sunulan sorular görülmüş; solo seçim kimlik eşiğinden', () {

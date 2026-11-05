@@ -1,7 +1,7 @@
 -- 2.1.2 W6 (ChatGPT Pro alan 6 #2, alan 9 #1): SORU SEÇİMİ. YAZILDI, CANLIYA UYGULANMADI.
 -- Geri alma: geri_al/2026-11-18_w6_soru_secimi_geri.sql
 --
--- Bu göç YENİ nesne yaratmaz; iki işlevin gövdesini yamalar (tur7 ile aynı düzen:
+-- Bu göç iki işlevin gövdesini yamalar (tur7 ile aynı düzen:
 -- TAM gövde md5 ön koşulu + olcek_tur3_yedek 'w6:<imza>' + yama md5 zinciri; ya hep
 -- ya hiç). Eski istemci (build 45) sözleşmesi: imza ve dönüş biçimi DEĞİŞMEZ.
 --
@@ -22,6 +22,11 @@
 begin;
 
 set local lock_timeout = '10s';
+
+-- `server_only` (2026-11-17_rekabet_sunucu_havuzu.sql ile AYNI tanım, idempotent): sütun
+-- henüz yoksa (göç sırası) burada oluşur; varsa hiçbir şey yapmaz. Solo seçim bu soruları
+-- dışlar (aşağıda).
+alter table public.questions add column if not exists server_only boolean not null default false;
 
 do $w6_onkosul$
 begin
@@ -57,7 +62,7 @@ declare
 begin
   for r in select * from (values
     ('public.start_room_game(uuid)', '918cef7cf52cde1d9dd3994ef2383c0e', '19ed6e01a674cbc526bd3f9129c03400'),
-    ('public.prepare_verified_solo_questions(text,integer)', 'a20a15d07f5ad79871fa5fa4a4b889bb', '7eec7c84820ab8602e5315ff6ea373eb')
+    ('public.prepare_verified_solo_questions(text,integer)', 'a20a15d07f5ad79871fa5fa4a4b889bb', 'ea49c4455504e3ea44bea08c8f821bd6')
   ) t(imza, taban, nihai)
   loop
     v_def := pg_get_functiondef(to_regprocedure(r.imza));
@@ -168,6 +173,9 @@ select pg_temp.w6_yama(
   $y$  -- (2026-11-18, W6) Bütün havuzu random() ile sıralamak yerine: rastgele bir uuid
   -- eşiğinden (birincil anahtar indeksi) en çok 5 x p_limit uygun soru okunur; eşikten
   -- sonrası biterse baştan tamamlanır; p_limit bu küçük kümeden random() ile seçilir.
+  -- server_only sorular (yalnız sunucuda tutulan rekabet havuzu; yerel bankada yok)
+  -- solo'da DIŞLANIR: build 45 ve yeni istemci solo'da yerel bankada olmayan soruyu
+  -- oynatamaz (alan 6 #5).
   -- Eşik `(select p from pivot)` skaler alt sorgusudur: planlayıcı onu birincil anahtar
   -- indeksinde aralık koşulu (Index Cond) olarak kullanır; `from ..., pivot` birleşimi
   -- bunu yapamaz ve bütün indeksi taratır (PGlite EXPLAIN: 6.951 satır -> 284).
@@ -177,6 +185,7 @@ select pg_temp.w6_yama(
     join public.categories c on c.id = q.category_id
     where q.id >= (select p from pivot)
       and q.is_approved = true and c.is_active = true
+      and q.server_only = false
       and (p_category is null or p_category = 'Tevlihev' or c.name = p_category)
       and q.correct_option in ('A','B','C','D')
       and btrim(coalesce(q.prompt, '')) <> ''
@@ -193,6 +202,7 @@ select pg_temp.w6_yama(
     join public.categories c on c.id = q.category_id
     where q.id < (select p from pivot)
       and q.is_approved = true and c.is_active = true
+      and q.server_only = false
       and (p_category is null or p_category = 'Tevlihev' or c.name = p_category)
       and q.correct_option in ('A','B','C','D')
       and btrim(coalesce(q.prompt, '')) <> ''
