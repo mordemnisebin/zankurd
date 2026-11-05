@@ -90,7 +90,8 @@ void main() {
       // 3759 -> 3795 (+36): 2026-10-19 `kolay_2026_10_19`, kolay havuz takviyesi.
       // 3795 -> 3871 (+76): 2026-10-25 `dersler4_2026_10_25` (dil bilgisi derinliği).
       // 3871 -> 4060 (+189): 2026-11-07 `yeni_2026_11_07` (yeni sorular).
-      4060,
+      // 4060 -> 4757 (+697): 2026-11-10 `yeni2_2026_11_10` (yeni sorular 2).
+      4757,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '

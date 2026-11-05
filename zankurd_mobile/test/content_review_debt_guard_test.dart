@@ -24,7 +24,12 @@ void main() {
     // soruları (Sînema, Paradigma, Siyaset, Muzîk, Edebiyat) tek bir web
     // sayfasına bağlanamayan temel bilgilerdir; yazar olmayan bir web modeli ve
     // bir komut satırı modeli ONAY dedi. Kaynak borcu bilinçli artırıldı.
-    const maximumMissingSourceReferences = 1424;
+    //
+    // 1424 -> 2118 (+694): 2026-11-10 `yeni2_2026_11_10`. Yeni genel bilgi
+    // soruları (Sînema, Paradigma, Siyaset, Muzîk, Edebiyat, Teknolojî) tek bir
+    // web sayfasına bağlanamayan temel bilgilerdir; yazar olmayan iki model
+    // ONAY dedi. Kaynak borcu 2026-11-07 turundaki gibi bilinçli artırıldı.
+    const maximumMissingSourceReferences = 2118;
     var missing = 0;
 
     for (final asset in questionBankAssets) {

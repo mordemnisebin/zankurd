@@ -98,6 +98,7 @@ void main() {
       'dersler4': fromJson('assets/data/dersler4_2026_10_25_questions.json'),
       // 2026-11-07: yeni sorular (Sînema/Paradigma/Siyaset/Muzîk/Edebiyat).
       'yeni': fromJson('assets/data/yeni_2026_11_07_questions.json'),
+      'yeni2': fromJson('assets/data/yeni2_2026_11_10_questions.json'),
       'curated (Dart)': curatedQuestionBank,
     };
     optionBanks = {
@@ -171,6 +172,8 @@ void main() {
         ...fromJson('assets/data/dersler4_2026_10_25_questions.json'),
         // 2026-11-07: yeni sorular.
         ...fromJson('assets/data/yeni_2026_11_07_questions.json'),
+        // 2026-11-10: yeni sorular 2.
+        ...fromJson('assets/data/yeni2_2026_11_10_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;
