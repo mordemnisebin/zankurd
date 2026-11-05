@@ -10,10 +10,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show User;
 import 'package:zankurd_mobile/src/data/admin_repository.dart';
 import 'package:zankurd_mobile/src/data/mock_admin_repository.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/models/admin.dart';
+import 'package:zankurd_mobile/src/screens/admin/admin_entry_row.dart';
 import 'package:zankurd_mobile/src/screens/admin/admin_home_screen.dart';
 import 'package:zankurd_mobile/src/screens/admin/admin_notify_screen.dart';
 import 'package:zankurd_mobile/src/screens/admin/admin_content_screen.dart';
@@ -391,6 +393,119 @@ void main() {
     });
   });
 
+  group('2.1.2 W8: yönetim düzeltmeleri', () {
+    testWidgets('#7: uyarılmış oyuncuya engelle/askıya al hâlâ sunulur', (
+      t,
+    ) async {
+      final repo = MockAdminRepository();
+      await _pump(t, AdminUsersScreen(repository: repo));
+      await t.tap(find.byKey(const ValueKey('admin-user-warn-u-x1')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-confirm-ok')));
+      await t.pumpAndSettle();
+      // Uyarı sonrası: uyar yok, askıya al + engelle + kaldır var.
+      expect(find.byKey(const ValueKey('admin-user-warn-u-x1')), findsNothing);
+      expect(
+        find.byKey(const ValueKey('admin-user-suspend-u-x1')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('admin-user-block-u-x1')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('admin-user-lift-u-x1')),
+        findsOneWidget,
+      );
+      await t.tap(find.byKey(const ValueKey('admin-user-block-u-x1')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-confirm-ok')));
+      await t.pumpAndSettle();
+      // Engelli: yalnız kaldır.
+      expect(find.byKey(const ValueKey('admin-user-block-u-x1')), findsNothing);
+      expect(
+        find.byKey(const ValueKey('admin-user-lift-u-x1')),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('#5: geçmiş döneme gidilir ve son döneme dönülür', (t) async {
+      final repo = MockAdminRepository();
+      await _pump(t, AdminRewardsScreen(repository: repo));
+      expect(find.text('2026-11-12'), findsOneWidget);
+      expect(find.byKey(const ValueKey('admin-period-next')), findsNothing);
+      await t.tap(find.byKey(const ValueKey('admin-period-prev')));
+      await t.pumpAndSettle();
+      expect(find.text('2026-11-11'), findsOneWidget);
+      expect(find.byKey(const ValueKey('admin-period-prev')), findsNothing);
+      await t.tap(find.byKey(const ValueKey('admin-period-next')));
+      await t.pumpAndSettle();
+      expect(find.text('2026-11-12'), findsOneWidget);
+      // Tür değişince son döneme döner.
+      await t.tap(find.byKey(const ValueKey('admin-period-prev')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-period-weekly')));
+      await t.pumpAndSettle();
+      expect(find.text('2026-11-09'), findsOneWidget);
+    });
+
+    testWidgets('#14: ödül verilmediyse "Kaydedildi" denmez, neden söylenir', (
+      t,
+    ) async {
+      final repo = _RefusingRewardRepository(AdminGrantOutcome.alreadyRewarded);
+      await _pump(t, AdminRewardsScreen(repository: repo));
+      await t.tap(find.byKey(const ValueKey('admin-grant-coins-u-berfin')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-confirm-ok')));
+      await t.pump();
+      expect(find.text(_t(K.adminRewardAlready)), findsOneWidget);
+      expect(find.text(_t(K.adminDone)), findsNothing);
+    });
+
+    testWidgets('#17: aynı derece başka birine verilmişse nedeni söylenir', (
+      t,
+    ) async {
+      final taken = _RefusingRewardRepository(AdminGrantOutcome.rankTaken);
+      await _pump(t, AdminRewardsScreen(repository: taken));
+      await t.tap(find.byKey(const ValueKey('admin-grant-coins-u-berfin')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-confirm-ok')));
+      await t.pump();
+      expect(find.text(_t(K.adminRewardRankTaken)), findsOneWidget);
+    });
+
+    testWidgets('#27: hesap değişince yönetici yetkisi yeniden sorulur', (
+      t,
+    ) async {
+      final auth = _SwitchableAuthProvider('a');
+      final repo = _PerUserAdminRepository(adminId: 'a', auth: auth);
+      await t.pumpWidget(
+        testShell(
+          authProvider: auth,
+          child: Provider<AdminRepository>.value(
+            value: repo,
+            child: const Scaffold(body: AdminEntryRow()),
+          ),
+        ),
+      );
+      await t.pumpAndSettle();
+      expect(
+        find.byKey(const ValueKey('settings-admin-entry')),
+        findsOneWidget,
+      );
+      auth.switchTo('b'); // yönetici olmayan başka hesap
+      await t.pumpAndSettle();
+      expect(find.byKey(const ValueKey('settings-admin-entry')), findsNothing);
+      expect(repo.queries, 2, reason: 'her hesap için yeniden soruldu');
+      auth.switchTo('a');
+      await t.pumpAndSettle();
+      expect(
+        find.byKey(const ValueKey('settings-admin-entry')),
+        findsOneWidget,
+      );
+    });
+  });
+
   group('hata dayanıklılığı', () {
     testWidgets('yükleme hatasında "yüklenemedi" + yeniden dene', (t) async {
       await _pump(t, AdminHomeScreen(repository: _ThrowingAdminRepository()));
@@ -406,6 +521,51 @@ class _ThrowingAdminRepository extends MockAdminRepository {
 
   @override
   Future<AdminStats> loadStats() async => throw StateError('ağ yok');
+}
+
+class _RefusingRewardRepository extends MockAdminRepository {
+  _RefusingRewardRepository(this.outcome);
+  final AdminGrantOutcome outcome;
+
+  @override
+  Future<AdminGrantOutcome> grantReward(
+    AdminRewardPeriodKind kind,
+    String periodKey, {
+    required String userId,
+    required int coins,
+  }) async => outcome;
+}
+
+class _SwitchableAuthProvider extends FakeAuthProvider {
+  _SwitchableAuthProvider(String id) : _id = id;
+  String _id;
+
+  @override
+  User? get currentUser => User(
+    id: _id,
+    appMetadata: const {},
+    userMetadata: const {},
+    aud: 'authenticated',
+    createdAt: '2026-11-01T00:00:00Z',
+  );
+
+  void switchTo(String id) {
+    _id = id;
+    notifyListeners();
+  }
+}
+
+class _PerUserAdminRepository extends MockAdminRepository {
+  _PerUserAdminRepository({required this.adminId, required this.auth});
+  final String adminId;
+  final _SwitchableAuthProvider auth;
+  int queries = 0;
+
+  @override
+  Future<bool> isAdmin() async {
+    queries++;
+    return auth.currentUser?.id == adminId;
+  }
 }
 
 class _Save {

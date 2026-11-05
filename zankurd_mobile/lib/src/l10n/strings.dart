@@ -5115,6 +5115,30 @@ class Tr {
       'tr': 'Oyuncu askıya alındı',
     },
     K.adminActLift: {'ku': 'Astengî hat rakirin', 'tr': 'Kısıt kaldırıldı'},
+    K.adminActAutoReward: {
+      'ku': 'Mîhenga xelata xweber hat guhertin',
+      'tr': 'Otomatik ödül ayarı değişti',
+    },
+    K.adminActAutoRewardError: {
+      'ku': 'Di xelata xweber de çewtî çêbû',
+      'tr': 'Otomatik ödülde hata',
+    },
+    K.adminRewardAlready: {
+      'ku': 'Ev xelat berê hatibû dayîn; tiştekî nû nehat tomarkirin.',
+      'tr': 'Bu ödül zaten verilmişti; yeni kayıt yapılmadı.',
+    },
+    K.adminRewardRankTaken: {
+      'ku': 'Di vê demê de ji bo vê pîleyê berê xelat hatibû dayîn.',
+      'tr': 'Bu dönemde bu derece için ödül zaten verilmişti.',
+    },
+    K.adminPeriodPrev: {'ku': 'Dema berê', 'tr': 'Önceki dönem'},
+    K.adminPeriodNext: {'ku': 'Dema paşê', 'tr': 'Sonraki dönem'},
+    K.adminModeUsageNote: {
+      'ku':
+          'Her rêz bûyera xwe dihejmêre: lîstika solo ya destpêkirî, odeya avakirî, duela vekirî, turnuvaya avakirî û beşdariya pêşbirka rojê.',
+      'tr':
+          'Her satır kendi olayını sayar: başlatılan solo oyun, kurulan oda, açılan düello, kurulan turnuva ve günün yarışmasına katılım.',
+    },
   };
 
   /// [key] için [language] karşılığı; yoksa Kurmancî'ye düşer.
@@ -7103,4 +7127,11 @@ class K {
   static const adminActBlock = 'admin.ActBlock';
   static const adminActSuspend = 'admin.ActSuspend';
   static const adminActLift = 'admin.ActLift';
+  static const adminActAutoReward = 'admin.ActAutoReward';
+  static const adminActAutoRewardError = 'admin.ActAutoRewardError';
+  static const adminRewardAlready = 'admin.RewardAlready';
+  static const adminRewardRankTaken = 'admin.RewardRankTaken';
+  static const adminPeriodPrev = 'admin.PeriodPrev';
+  static const adminPeriodNext = 'admin.PeriodNext';
+  static const adminModeUsageNote = 'admin.ModeUsageNote';
 }

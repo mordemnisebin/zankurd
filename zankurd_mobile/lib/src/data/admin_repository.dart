@@ -51,8 +51,15 @@ abstract class AdminRepository {
   Future<List<AdminContributor>> loadContributors();
   Future<void> rewardContributor(String userId, {required int coins});
 
-  Future<AdminRewardPeriod> loadRewardPeriod(AdminRewardPeriodKind kind);
-  Future<void> grantReward(
+  /// [periodKey] verilmezse son TAMAMLANAN dönem; verilirse o dönem (bitmemiş
+  /// dönemi sunucu reddeder). Dönemin `prevKey`/`nextKey`'i gezinmeyi sağlar.
+  Future<AdminRewardPeriod> loadRewardPeriod(
+    AdminRewardPeriodKind kind, {
+    String? periodKey,
+  });
+
+  /// Sunucu ikinci ödül vermeyi hata saymaz; sonuç [AdminGrantOutcome] ile döner.
+  Future<AdminGrantOutcome> grantReward(
     AdminRewardPeriodKind kind,
     String periodKey, {
     required String userId,
