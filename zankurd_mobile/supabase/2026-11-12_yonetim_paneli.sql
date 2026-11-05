@@ -1,4 +1,4 @@
--- ZanKurd 2.2 — Yönetim paneli sunucu tarafı (TASLAK, CANLIYA UYGULANMADI).
+-- ZanKurd 2.2 — Yönetim paneli sunucu tarafı (CANLIDA: 2026-11-05 uygulandı, bkz. applied.md).
 --
 -- Amaç: yalnız sahip hesabında görünen uygulama içi "Yönetim" bölümünün
 -- sunucu yetkisi. İstemci gizlemesi güvenlik değildir; bu dosya yetkiyi
