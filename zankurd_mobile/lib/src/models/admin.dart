@@ -186,12 +186,28 @@ class AdminRewardCandidate {
   );
 }
 
+/// `admin_grant_reward` sonucu. Sunucu ikinci ödül vermeyi HATA saymaz; ama
+/// ekran "Kaydedildi" demesin diye sonuç ayrı tutulur (2.1.2 W8, alan 8 #14).
+enum AdminGrantOutcome {
+  /// Ödül bu çağrıda verildi.
+  granted,
+
+  /// Aynı kişiye aynı dönem için ödül daha önce verilmişti; yeni kayıt yok.
+  alreadyRewarded,
+
+  /// Aynı dönemde aynı derece başka birine verilmişti (ör. 1. kısıtlanınca
+  /// sıradaki 1. oldu); yeni kayıt yok.
+  rankTaken,
+}
+
 class AdminRewardPeriod {
   const AdminRewardPeriod({
     required this.kind,
     required this.periodKey,
     required this.candidates,
     required this.suggestedCoins,
+    this.prevKey,
+    this.nextKey,
   });
 
   final AdminRewardPeriodKind kind;
@@ -203,6 +219,13 @@ class AdminRewardPeriod {
 
   /// Sıraya göre önerilen jeton: indeks 0 → 1. sıra.
   final List<int> suggestedCoins;
+
+  /// Bir önceki dönemin anahtarı (geçmiş dönem seçimi); her zaman vardır.
+  final String? prevKey;
+
+  /// Bir sonraki TAMAMLANMIŞ dönemin anahtarı; bu dönem en son tamamlanan
+  /// dönemse `null` (bitmemiş dönem ödüllendirilemez).
+  final String? nextKey;
 }
 
 /// Bir oyuncunun moderasyon durumu.
@@ -252,6 +275,12 @@ enum AdminAuditAction {
   block,
   suspend,
   lift,
+
+  /// Otomatik ödül anahtarı açıldı/kapandı.
+  autoReward,
+
+  /// Otomatik ödül bir kişide hata verdi (sunucu `reward_auto_error`).
+  autoRewardError,
 }
 
 class AdminAuditEntry {

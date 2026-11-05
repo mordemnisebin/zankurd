@@ -104,7 +104,13 @@ class _UserCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final restricted = report.state != AdminUserState.ok;
+    // Uyarılmış oyuncu oyunda KISITLI değildir (sunucu `user_is_restricted`
+    // yalnız engel/askıyı sayar): daha ağır önlem hâlâ sunulur, "kısıtı
+    // kaldır" ise uyarıyı silmek için yine vardır (W8, alan 8 #7).
+    final restricted =
+        report.state == AdminUserState.blocked ||
+        report.state == AdminUserState.suspended;
+    final warned = report.state == AdminUserState.warned;
     return SahneSurfaceCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -147,13 +153,14 @@ class _UserCard extends StatelessWidget {
             runSpacing: SahneSpace.x2,
             children: [
               if (!restricted) ...[
-                _action(
-                  context,
-                  'warn',
-                  context.t(K.adminWarn),
-                  AppIcons.triangleExclamation,
-                  AdminUserAction.warn,
-                ),
+                if (!warned)
+                  _action(
+                    context,
+                    'warn',
+                    context.t(K.adminWarn),
+                    AppIcons.triangleExclamation,
+                    AdminUserAction.warn,
+                  ),
                 _action(
                   context,
                   'suspend',
@@ -169,7 +176,8 @@ class _UserCard extends StatelessWidget {
                   AppIcons.lock,
                   AdminUserAction.block,
                 ),
-              ] else
+              ],
+              if (restricted || warned)
                 _action(
                   context,
                   'lift',

@@ -69,7 +69,8 @@ class SupabaseAdminRepository implements AdminRepository {
   );
 
   /// Sunucudaki `admin_audit_log.action` → ekran eylemi. Tanınmayanlar
-  /// (örn. `auto_reward_set`) günlükte listelenmez.
+  /// (örn. `notify_pref_set`) "Son işlemler"de listelenmez; `auto_reward_set` ve
+  /// `reward_auto_error` listelenir (2.1.2 W8, alan 8 #20).
   static const _auditActions = <String, AdminAuditAction>{
     'suggestion_approve': AdminAuditAction.approve,
     'question_add': AdminAuditAction.approve,
@@ -84,6 +85,8 @@ class SupabaseAdminRepository implements AdminRepository {
     'user_block': AdminAuditAction.block,
     'user_suspend': AdminAuditAction.suspend,
     'user_lift': AdminAuditAction.lift,
+    'auto_reward_set': AdminAuditAction.autoReward,
+    'reward_auto_error': AdminAuditAction.autoRewardError,
   };
 
   static String _kindName(AdminRewardPeriodKind kind) => kind.name;
@@ -329,16 +332,21 @@ class SupabaseAdminRepository implements AdminRepository {
   // ── Ödüller ────────────────────────────────────────────────────────
 
   @override
-  Future<AdminRewardPeriod> loadRewardPeriod(AdminRewardPeriodKind kind) async {
+  Future<AdminRewardPeriod> loadRewardPeriod(
+    AdminRewardPeriodKind kind, {
+    String? periodKey,
+  }) async {
     final raw = _map(
       await client.rpc<dynamic>(
         'admin_list_reward_candidates',
-        params: {'p_kind': _kindName(kind), 'p_period_key': null},
+        params: {'p_kind': _kindName(kind), 'p_period_key': periodKey},
       ),
     );
     return AdminRewardPeriod(
       kind: kind,
       periodKey: _str(raw['period_key']),
+      prevKey: raw['prev_key'] as String?,
+      nextKey: raw['next_key'] as String?,
       suggestedCoins: [
         for (final c in (raw['suggested_coins'] as List)) _int(c),
       ],
@@ -356,15 +364,16 @@ class SupabaseAdminRepository implements AdminRepository {
   }
 
   @override
-  Future<void> grantReward(
+  Future<AdminGrantOutcome> grantReward(
     AdminRewardPeriodKind kind,
     String periodKey, {
     required String userId,
     required int coins,
   }) async {
-    // `granted:false / already_rewarded` hata DEĞİL: sunucu aynı kişiye
-    // ikinci ödülü vermez; liste yenilenince "verildi" görünür.
-    await client.rpc<dynamic>(
+    // `granted:false` hata DEĞİL (sunucu ikinci ödül vermez) ama "Kaydedildi"
+    // DEMEMELİ: neden ayrı sonuç olarak döner (W8, alan 8 #14). Eski sunucu
+    // (W8 göçü öncesi) da aynı biçimi döndürür; gövde yoksa verildi sayılır.
+    final reply = await client.rpc<dynamic>(
       'admin_grant_reward',
       params: {
         'p_kind': _kindName(kind),
@@ -373,6 +382,12 @@ class SupabaseAdminRepository implements AdminRepository {
         'p_coins': coins,
       },
     );
+    if (reply is Map && reply['granted'] == false) {
+      return reply['reason'] == 'rank_already_rewarded'
+          ? AdminGrantOutcome.rankTaken
+          : AdminGrantOutcome.alreadyRewarded;
+    }
+    return AdminGrantOutcome.granted;
   }
 
   @override

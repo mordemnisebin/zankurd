@@ -72,8 +72,8 @@
     "difficulty": 2,
     "id": "r15_cand_B1_12",
     "category": "Çand",
-    "prompt": "Di govenda bi navê 'Çepik' de, kîjan tevgera destan cihê girîng digire?",
-    "promptTr": "'Çepik' adlı halk oyununda hangi el hareketi önemli bir yer tutar?",
+    "prompt": "Di govenda bi navê \"Çepik\" de, kîjan tevgera destan cihê girîng digire?",
+    "promptTr": "\"Çepik\" adlı halk oyununda hangi el hareketi önemli bir yer tutar?",
     "answers": [
       "Lêdana çepikan",
       "Destên li serê danîn",
@@ -242,8 +242,8 @@
     "difficulty": 3,
     "id": "r15_cand_B1_19",
     "category": "Çand",
-    "prompt": "Di hin komên muzîka xelkî ya Kurdî de, 'qernête' navê kîjan cureya amûrê ye?",
-    "promptTr": "Bazı Kürt halk müziği topluluklarında 'qernête' hangi çalgı türünün adıdır?",
+    "prompt": "Di hin komên muzîka xelkî ya Kurdî de, \"qernête\" navê kîjan cureya amûrê ye?",
+    "promptTr": "Bazı Kürt halk müziği topluluklarında \"qernête\" hangi çalgı türünün adıdır?",
     "answers": [
       "Tembûr",
       "Santûr",
@@ -276,8 +276,8 @@
     "difficulty": 3,
     "id": "r15_cand_B1_20",
     "category": "Çand",
-    "prompt": "Amûra bi navê 'buzûq' ku di muzîka Rojavayê Kurdistanê de jî tê bikaranîn, ji kîjan malbata amûrên muzîkê ye?",
-    "promptTr": "Rojava Kürdistanı müziğinde de kullanılan 'buzuk' hangi çalgı ailesindendir?",
+    "prompt": "Amûra bi navê \"buzûq\" ku di muzîka Rojavayê Kurdistanê de jî tê bikaranîn, ji kîjan malbata amûrên muzîkê ye?",
+    "promptTr": "Rojava Kürdistanı müziğinde de kullanılan \"buzuk\" hangi çalgı ailesindendir?",
     "answers": [
       "Amûrên têlî",
       "Amûrên nefesî",
@@ -344,8 +344,8 @@
     "difficulty": 1,
     "id": "r15_cand_B1_24",
     "category": "Çand",
-    "prompt": "Di kevneşopiya devkî ya Kurdî de, 'lorî' ji bo kîjan cureya stranê tê gotin?",
-    "promptTr": "Kürt sözlü geleneğinde 'lorî' hangi tür ezgiye verilen addır?",
+    "prompt": "Di kevneşopiya devkî ya Kurdî de, \"lorî\" ji bo kîjan cureya stranê tê gotin?",
+    "promptTr": "Kürt sözlü geleneğinde \"lorî\" hangi tür ezgiye verilen addır?",
     "answers": [
       "Strana nêçîrê",
       "Strana razandina zarokan",
@@ -446,8 +446,8 @@
     "difficulty": 3,
     "id": "r15_cand_B1_31",
     "category": "Çand",
-    "prompt": "Baweriya ku bi navê 'Yarsanî' tê nasîn, bi kîjan navê din jî tê binavkirin?",
-    "promptTr": "'Yarsanî' olarak bilinen inanç başka hangi adla da anılır?",
+    "prompt": "Baweriya ku bi navê \"Yarsanî\" tê nasîn, bi kîjan navê din jî tê binavkirin?",
+    "promptTr": "\"Yarsanî\" olarak bilinen inanç başka hangi adla da anılır?",
     "answers": [
       "Qadirî",
       "Êzidî",
@@ -684,8 +684,8 @@
     "difficulty": 3,
     "id": "r15_cand_B1_11",
     "category": "Çand",
-    "prompt": "Di hin cil û zînetên kevneşopî de, 'pazbend' bi gelemperî li kîjan beşê laşî tê girêdan?",
-    "promptTr": "Bazı geleneksel kıyafet ve takılarda 'pazbend' genellikle vücudun neresine bağlanır?",
+    "prompt": "Di hin cil û zînetên kevneşopî de, \"pazbend\" bi gelemperî li kîjan beşê laşî tê girêdan?",
+    "promptTr": "Bazı geleneksel kıyafet ve takılarda \"pazbend\" genellikle vücudun neresine bağlanır?",
     "answers": [
       "Li beşa jorîn a milî",
       "Li stûyî",
@@ -854,8 +854,8 @@
     "difficulty": 2,
     "id": "r15_cand_B2_01",
     "category": "Çand",
-    "prompt": "Gotina pêşiyan a 'Aqil bi pereyan nayê kirîn' çi wate dide?",
-    "promptTr": "'Akıl parayla satın alınmaz' atasözü ne anlama gelir?",
+    "prompt": "Gotina pêşiyan a \"Aqil bi pereyan nayê kirîn\" çi wate dide?",
+    "promptTr": "\"Akıl parayla satın alınmaz\" atasözü ne anlama gelir?",
     "answers": [
       "Her kesê dewlemend jîr e",
       "Xwendin ji bo hemû kesan bêkêr e",
@@ -888,8 +888,8 @@
     "difficulty": 2,
     "id": "r15_cand_B2_02",
     "category": "Çand",
-    "prompt": "Gotina 'Hezar carî bipîve, carekê bibire' çi şîret dike?",
-    "promptTr": "'Bin kere ölç, bir kere kes' atasözü ne öğütler?",
+    "prompt": "Gotina \"Hezar carî bipîve, carekê bibire\" çi şîret dike?",
+    "promptTr": "\"Bin kere ölç, bir kere kes\" atasözü ne öğütler?",
     "answers": [
       "Her karî bi lez bike",
       "Bêyî şîretê biryar mede",
@@ -922,8 +922,8 @@
     "difficulty": 2,
     "id": "r15_cand_B2_03",
     "category": "Çand",
-    "prompt": "Gotina pêşiyan a 'Bi pirsê mirov diçe mala Xwedê' çi wate dide?",
-    "promptTr": "'İnsan sora sora Allah'ın evine kadar gider' atasözü ne anlama gelir?",
+    "prompt": "Gotina pêşiyan a \"Bi pirsê mirov diçe mala Xwedê\" çi wate dide?",
+    "promptTr": "\"İnsan sora sora Allah'ın evine kadar gider\" atasözü ne anlama gelir?",
     "answers": [
       "Pirsîn nîşana nezaniyê ye û divê neyê kirin",
       "Rêyên dûr tenê bi lezê tên derbaskirin",
@@ -956,8 +956,8 @@
     "difficulty": 3,
     "id": "r15_cand_B2_06",
     "category": "Çand",
-    "prompt": "Gotina 'Dinya bi dor e, ne bi zor e' girîngiya çi destnîşan dike?",
-    "promptTr": "'Dünya sabırla yürür, zorla değil' atasözü neyin önemini vurgular?",
+    "prompt": "Gotina \"Dinya bi dor e, ne bi zor e\" girîngiya çi destnîşan dike?",
+    "promptTr": "\"Dünya sabırla yürür, zorla değil\" atasözü neyin önemini vurgular?",
     "answers": [
       "Sebir û nermiyê",
       "Şer û dijminatiyê",
@@ -990,8 +990,8 @@
     "difficulty": 3,
     "id": "r15_cand_B2_07",
     "category": "Çand",
-    "prompt": "Gotina 'Dil ne sifre ye ku mirov li ber hemûyan veke' çi şîret dike?",
-    "promptTr": "'Gönül, herkesin önüne açılacak bir sofra değildir' atasözü ne öğütler?",
+    "prompt": "Gotina \"Dil ne sifre ye ku mirov li ber hemûyan veke\" çi şîret dike?",
+    "promptTr": "\"Gönül, herkesin önüne açılacak bir sofra değildir\" atasözü ne öğütler?",
     "answers": [
       "Mirov divê razên xwe ji her kesî re venebêje",
       "Mirov divê ji hemû kesan dûr bimîne",
@@ -1024,8 +1024,8 @@
     "difficulty": 1,
     "id": "r15_cand_B2_08",
     "category": "Çand",
-    "prompt": "Gotina 'Çi çandî, wê biçînî' çi wate dide?",
-    "promptTr": "'Ne ekersen onu biçersin' atasözü ne anlama gelir?",
+    "prompt": "Gotina \"Çi çandî, wê biçînî\" çi wate dide?",
+    "promptTr": "\"Ne ekersen onu biçersin\" atasözü ne anlama gelir?",
     "answers": [
       "Her hewildan bêencam dimîne",
       "Mirov nikare encamên kiryarên xwe bibîne",
@@ -1058,8 +1058,8 @@
     "difficulty": 3,
     "id": "r15_cand_B2_09",
     "category": "Çand",
-    "prompt": "Gotina 'Ê ku ne di şer de be, şêr e' kîjan reftarê rexne dike?",
-    "promptTr": "'Kavgada olmayan aslan kesilir' atasözü hangi davranışı eleştirir?",
+    "prompt": "Gotina \"Ê ku ne di şer de be, şêr e\" kîjan reftarê rexne dike?",
+    "promptTr": "\"Kavgada olmayan aslan kesilir\" atasözü hangi davranışı eleştirir?",
     "answers": [
       "Bi hev re xebitîn",
       "Ji alîkariya kesên din re spas kirin",
@@ -1092,8 +1092,8 @@
     "difficulty": 1,
     "id": "r15_cand_B2_10",
     "category": "Çand",
-    "prompt": "Gotina 'Îro zû ye, sibê dereng e' çi şîret dike?",
-    "promptTr": "'Bugün erken, yarın geç' atasözü ne öğütler?",
+    "prompt": "Gotina \"Îro zû ye, sibê dereng e\" çi şîret dike?",
+    "promptTr": "\"Bugün erken, yarın geç\" atasözü ne öğütler?",
     "answers": [
       "Hemû karan bi lez û bêplan bike",
       "Her karî heta roja dawî bihêle",
@@ -1126,8 +1126,8 @@
     "difficulty": 2,
     "id": "r15_cand_B2_11",
     "category": "Çand",
-    "prompt": "Gotina 'Ê ku bi hêrs rabû, bi zirarê rûnişt' çi wate dide?",
-    "promptTr": "'Öfkeyle kalkan zararla oturur' atasözü ne anlama gelir?",
+    "prompt": "Gotina \"Ê ku bi hêrs rabû, bi zirarê rûnişt\" çi wate dide?",
+    "promptTr": "\"Öfkeyle kalkan zararla oturur\" atasözü ne anlama gelir?",
     "answers": [
       "Bêdengî her tim tê wateya tirsê",
       "Biryara bi hêrs dikare bibe sedema zirarê",
@@ -1160,8 +1160,8 @@
     "difficulty": 3,
     "id": "r15_cand_B2_12",
     "category": "Çand",
-    "prompt": "Gotina 'Ê ku li hespê xelkê siwar dibe, zû dadikeve' kîjan ramanê vedibêje?",
-    "promptTr": "'Başkasının atına binen çabuk iner' atasözü hangi düşünceyi anlatır?",
+    "prompt": "Gotina \"Ê ku li hespê xelkê siwar dibe, zû dadikeve\" kîjan ramanê vedibêje?",
+    "promptTr": "\"Başkasının atına binen çabuk iner\" atasözü hangi düşünceyi anlatır?",
     "answers": [
       "Piştgiriya li ser tiştên kesên din her tim ewle nîne",
       "Malê kesên din ji mala xwe ewletir e",
@@ -1194,8 +1194,8 @@
     "difficulty": 3,
     "id": "r15_cand_B2_13",
     "category": "Çand",
-    "prompt": "Gotina 'Dînek kevirekî davêje bîrê, çil aqilmend nikarin derxînin' çi wate dide?",
-    "promptTr": "'Bir deli kuyuya bir taş atar, kırk akıllı çıkaramaz' atasözü ne anlama gelir?",
+    "prompt": "Gotina \"Dînek kevirekî davêje bîrê, çil aqilmend nikarin derxînin\" çi wate dide?",
+    "promptTr": "\"Bir deli kuyuya bir taş atar, kırk akıllı çıkaramaz\" atasözü ne anlama gelir?",
     "answers": [
       "Zanîn tenê bi temenê mezin dibe",
       "Karê giran her tim zû diqede",
@@ -1228,8 +1228,8 @@
     "difficulty": 2,
     "id": "r15_cand_B2_14",
     "category": "Çand",
-    "prompt": "Gotina 'Her teyr bi refa xwe re difire' çi wate dide?",
-    "promptTr": "'Her kuş kendi sürüsüyle uçar' atasözü ne anlama gelir?",
+    "prompt": "Gotina \"Her teyr bi refa xwe re difire\" çi wate dide?",
+    "promptTr": "\"Her kuş kendi sürüsüyle uçar\" atasözü ne anlama gelir?",
     "answers": [
       "Kesên cihêreng nikarin hev nas bikin",
       "Mirov her tim ji koma xwe dûr dikeve",
@@ -1262,8 +1262,8 @@
     "difficulty": 3,
     "id": "r15_cand_B2_16",
     "category": "Çand",
-    "prompt": "Gotina 'Bi dinyayê bişêwire, bi aqilê xwe bike' çi şîret dike?",
-    "promptTr": "'Dünyaya danış, kendi aklınla yap' atasözü ne öğütler?",
+    "prompt": "Gotina \"Bi dinyayê bişêwire, bi aqilê xwe bike\" çi şîret dike?",
+    "promptTr": "\"Dünyaya danış, kendi aklınla yap\" atasözü ne öğütler?",
     "answers": [
       "Şîretan bibihîze, lê bi aqilê xwe biryar bide",
       "Ji şîretên hemû kesan dûr bimîne",
@@ -1296,8 +1296,8 @@
     "difficulty": 2,
     "id": "r15_cand_B2_17",
     "category": "Çand",
-    "prompt": "Gotina 'Firsend tim bi dest nakeve' çi wate dide?",
-    "promptTr": "'Fırsat her zaman ele geçmez' atasözü ne anlama gelir?",
+    "prompt": "Gotina \"Firsend tim bi dest nakeve\" çi wate dide?",
+    "promptTr": "\"Fırsat her zaman ele geçmez\" atasözü ne anlama gelir?",
     "answers": [
       "Hemû derfet her roj dubare dibin",
       "Mirov divê ji her derfetê dûr bimîne",
@@ -1330,8 +1330,8 @@
     "difficulty": 3,
     "id": "r15_cand_B2_18",
     "category": "Çand",
-    "prompt": "Gotina 'Av bi bêjîngê nayê civandin' çi wate dide?",
-    "promptTr": "'Elekte su toplanmaz' atasözü ne anlama gelir?",
+    "prompt": "Gotina \"Av bi bêjîngê nayê civandin\" çi wate dide?",
+    "promptTr": "\"Elekte su toplanmaz\" atasözü ne anlama gelir?",
     "answers": [
       "Her amûr ji bo hemû karan guncaw e",
       "Bi amûrê neguncaw encama xwestî nayê bidestxistin",
@@ -1364,8 +1364,8 @@
     "difficulty": 3,
     "id": "r15_cand_B2_20",
     "category": "Çand",
-    "prompt": "Gotina 'Aqilê sivik barê giran e' çi wate dide?",
-    "promptTr": "'Hafif akıl ağır yüktür' atasözü ne anlama gelir?",
+    "prompt": "Gotina \"Aqilê sivik barê giran e\" çi wate dide?",
+    "promptTr": "\"Hafif akıl ağır yüktür\" atasözü ne anlama gelir?",
     "answers": [
       "Bêfikirî karan hêsantir dike",
       "Mirovên bêtecrûbe her tim serkeftî dibin",
@@ -1432,8 +1432,8 @@
     "difficulty": 2,
     "id": "r15_cand_B2_27",
     "category": "Çand",
-    "prompt": "Di çîroka 'Ristem û Sohrab' de, Sohrab ji Ristem re çi ye?",
-    "promptTr": "'Rüstem ile Sührab' hikâyesinde Sührab, Rüstem'in nesidir?",
+    "prompt": "Di çîroka \"Ristem û Sohrab\" de, Sohrab ji Ristem re çi ye?",
+    "promptTr": "\"Rüstem ile Sührab\" hikâyesinde Sührab, Rüstem'in nesidir?",
     "answers": [
       "Kurê wî ye",
       "Xalê wî ye",
@@ -1466,8 +1466,8 @@
     "difficulty": 4,
     "id": "r15_cand_B2_28",
     "category": "Çand",
-    "prompt": "Di destana 'Bîjan û Menîje' ya ku di edebiyata Kurdî de jî guhertoyên wê hene de, Menîje keça kî ye?",
-    "promptTr": "Kürt edebiyatında da farklı anlatımları bulunan 'Bijan ile Menije' destanında Menije kimin kızıdır?",
+    "prompt": "Di destana \"Bîjan û Menîje\" ya ku di edebiyata Kurdî de jî guhertoyên wê hene de, Menîje keça kî ye?",
+    "promptTr": "Kürt edebiyatında da farklı anlatımları bulunan \"Bijan ile Menije\" destanında Menije kimin kızıdır?",
     "answers": [
       "Zal",
       "Efrasiyab",
@@ -1735,40 +1735,6 @@
   },
   {
     "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "r15_cand_B2_39",
-    "category": "Çand",
-    "prompt": "Di kevneşopiya serdana malbateke ku kesek ji dest daye de, ji gotinên dilovaniyê re bi Kurmancî çi tê gotin?",
-    "promptTr": "Bir yakınını kaybetmiş aileyi ziyaret etme geleneğinde söylenen başsağlığı sözlerine Kurmancîde ne denir?",
-    "answers": [
-      "Pîrozbahî",
-      "Vexwendin",
-      "Spasdarî",
-      "Sersaxî"
-    ],
-    "answersTr": [
-      "Tebrik",
-      "Davet",
-      "Teşekkür",
-      "Başsağlığı"
-    ],
-    "correctAnswer": "Sersaxî",
-    "correctAnswerTr": "Başsağlığı",
-    "explanation": "Sersaxî, bir yakınını kaybeden kişilere yönelik başsağlığı sözlerini ve taziye geleneğini ifade eder.",
-    "explanationKu": "Sersaxî gotin û merasîma dilovaniyê ye ku ji kesên xemgîn re piştî windakirina kesekî tê kirin.",
-    "explanationTr": "Sersaxî, bir yakınını kaybeden kişilere yönelik başsağlığı sözlerini ve taziye geleneğini ifade eder.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "kurmanci",
-      "sourceTitle": "Yeni sorular 3 (2026-11-14, üç bağımsız jüri)",
-      "qualityVersion": 2,
-      "reviewedBy": "Taslak: ChatGPT (GPT-6 Extra High); jüri: Gemini 4 Argon (Yüksek) + ChatGPT yeni sohbet / Copilot; derleme: Claude Opus 5.5",
-      "reviewedAt": "2026-11-14",
-      "lastContentCheckAt": "2026-11-14"
-    }
-  },
-  {
-    "type": "multipleChoice",
     "difficulty": 1,
     "id": "r15_cand_B2_40",
     "category": "Çand",
@@ -1788,9 +1754,9 @@
     ],
     "correctAnswer": "Xwedê şifayê bide",
     "correctAnswerTr": "Allah şifa versin",
-    "explanation": "'Allah şifa versin' sözü, hasta kişinin iyileşmesi için kullanılan bir dua ve iyi dilektir.",
-    "explanationKu": "Hevoka 'Xwedê şifayê bide' dua û daxwazeke başbûna kesê nexweş e.",
-    "explanationTr": "'Allah şifa versin' sözü, hasta kişinin iyileşmesi için kullanılan bir dua ve iyi dilektir.",
+    "explanation": "\"Allah şifa versin\" sözü, hasta kişinin iyileşmesi için kullanılan bir dua ve iyi dilektir.",
+    "explanationKu": "Hevoka \"Xwedê şifayê bide\" dua û daxwazeke başbûna kesê nexweş e.",
+    "explanationTr": "\"Allah şifa versin\" sözü, hasta kişinin iyileşmesi için kullanılan bir dua ve iyi dilektir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -1893,40 +1859,6 @@
     "explanation": "Bal arıları çiçeklerden topladıkları nektarı petek hücrelerinde bala dönüştürür.",
     "explanationKu": "Mêşên hingiv nektara gulan berhev dikin û di şaneyên hingiv de vediguherînin hingiv.",
     "explanationTr": "Bal arıları çiçeklerden topladıkları nektarı petek hücrelerinde bala dönüştürür.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "kurmanci",
-      "sourceTitle": "Yeni sorular 3 (2026-11-14, üç bağımsız jüri)",
-      "qualityVersion": 2,
-      "reviewedBy": "Taslak: ChatGPT (GPT-6 Extra High); jüri: Gemini 4 Argon (Yüksek) + ChatGPT yeni sohbet / Copilot; derleme: Claude Opus 5.5",
-      "reviewedAt": "2026-11-14",
-      "lastContentCheckAt": "2026-11-14"
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "r15_cihan_B1_10",
-    "category": "Cîhan",
-    "prompt": "Tirtûla perperokê piştî guherîna xwe ya tevahî dibe çi?",
-    "promptTr": "Kelebek tırtılı tam başkalaşımını tamamladıktan sonra neye dönüşür?",
-    "answers": [
-      "Mêş",
-      "Mûrî",
-      "Perperok",
-      "Melex"
-    ],
-    "answersTr": [
-      "Sinek",
-      "Karınca",
-      "Kelebek",
-      "Çekirge"
-    ],
-    "correctAnswer": "Perperok",
-    "correctAnswerTr": "Kelebek",
-    "explanation": "Kelebek tırtılı, pupa evresinin ardından yetişkin bir kelebeğe dönüşür.",
-    "explanationKu": "Tirtûla perperokê piştî qonaxa pûpê vediguhere perperokeke mezin.",
-    "explanationTr": "Kelebek tırtılı, pupa evresinin ardından yetişkin bir kelebeğe dönüşür.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -2384,7 +2316,7 @@
     "difficulty": 1,
     "id": "r15_cihan_B1_25",
     "category": "Cîhan",
-    "prompt": "Tabloya navdar a “Mona Lisa” ji aliyê kê ve hatiye xêzkirin?",
+    "prompt": "Tabloya navdar a \"Mona Lisa\" ji aliyê kê ve hatiye xêzkirin?",
     "promptTr": "Ünlü Mona Lisa tablosunu kim resmetmiştir?",
     "answers": [
       "Leonardo da Vinci",
@@ -2418,7 +2350,7 @@
     "difficulty": 1,
     "id": "r15_cihan_B1_26",
     "category": "Cîhan",
-    "prompt": "Tabloya bi navê “Guernica” kîjan hunermendî xêz kiriye?",
+    "prompt": "Tabloya bi navê \"Guernica\" kîjan hunermendî xêz kiriye?",
     "promptTr": "Guernica adlı tabloyu hangi sanatçı yapmıştır?",
     "answers": [
       "Joan Miró",
@@ -2452,7 +2384,7 @@
     "difficulty": 3,
     "id": "r15_cihan_B1_27",
     "category": "Cîhan",
-    "prompt": "Tabloya “The Birth of Venus” ji aliyê kê ve hatiye xêzkirin?",
+    "prompt": "Tabloya \"The Birth of Venus\" ji aliyê kê ve hatiye xêzkirin?",
     "promptTr": "Venüs'ün Doğuşu (The Birth of Venus) tablosunu kim yapmıştır?",
     "answers": [
       "Sandro Botticelli",
@@ -2486,7 +2418,7 @@
     "difficulty": 4,
     "id": "r15_cihan_B1_28",
     "category": "Cîhan",
-    "prompt": "Berhema çapkirî ya “The Great Wave off Kanagawa” ji aliyê kê ve hatiye afirandin?",
+    "prompt": "Berhema çapkirî ya \"The Great Wave off Kanagawa\" ji aliyê kê ve hatiye afirandin?",
     "promptTr": "Kanagawa Açıklarında Büyük Dalga (The Great Wave off Kanagawa) adlı baskı eseri kim yaratmıştır?",
     "answers": [
       "Ogata Kōrin",
@@ -4322,8 +4254,8 @@
     "difficulty": 3,
     "id": "r15_cografya_B1_35",
     "category": "Cografya",
-    "prompt": "Kîjan çol li başûrê Nîvgirava Erebistanê ye û bi navê 'Çaryeka Vala' jî tê nasîn?",
-    "promptTr": "Arap Yarımadası'nın güneyinde bulunan ve 'Boş Çeyrek' olarak da bilinen çöl hangisidir?",
+    "prompt": "Kîjan çol li başûrê Nîvgirava Erebistanê ye û bi navê \"Çaryeka Vala\" jî tê nasîn?",
+    "promptTr": "Arap Yarımadası'nın güneyinde bulunan ve \"Boş Çeyrek\" olarak da bilinen çöl hangisidir?",
     "answers": [
       "Çola Rub el-Xalî",
       "Çola Karakumê",
@@ -4338,9 +4270,9 @@
     ],
     "correctAnswer": "Çola Rub el-Xalî",
     "correctAnswerTr": "Rubülhali Çölü",
-    "explanation": "Rubülhali Çölü, Arap Yarımadası'nın güneyindedir ve adı 'Boş Çeyrek' anlamına gelir.",
-    "explanationKu": "Çola Rub el-Xalî li başûrê Nîvgirava Erebistanê ye û navê wê tê wateya 'Çaryeka Vala'.",
-    "explanationTr": "Rubülhali Çölü, Arap Yarımadası'nın güneyindedir ve adı 'Boş Çeyrek' anlamına gelir.",
+    "explanation": "Rubülhali Çölü, Arap Yarımadası'nın güneyindedir ve adı \"Boş Çeyrek\" anlamına gelir.",
+    "explanationKu": "Çola Rub el-Xalî li başûrê Nîvgirava Erebistanê ye û navê wê tê wateya \"Çaryeka Vala\".",
+    "explanationTr": "Rubülhali Çölü, Arap Yarımadası'nın güneyindedir ve adı \"Boş Çeyrek\" anlamına gelir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -6532,8 +6464,8 @@
     "difficulty": 2,
     "id": "r15_dirok_A1_05",
     "category": "Dîrok",
-    "prompt": "Romana bi navê 'Şivanê Kurmanca' ji aliyê kê ve hate nivîsandin?",
-    "promptTr": "'Şivanê Kurmanca' adlı roman kim tarafından yazıldı?",
+    "prompt": "Romana bi navê \"Şivanê Kurmanca\" ji aliyê kê ve hate nivîsandin?",
+    "promptTr": "\"Şivanê Kurmanca\" adlı roman kim tarafından yazıldı?",
     "answers": [
       "Erebê Şemo",
       "Hecî Qadirê Koyî",
@@ -6548,9 +6480,9 @@
     ],
     "correctAnswer": "Erebê Şemo",
     "correctAnswerTr": "Ereb Şemo",
-    "explanation": "Ereb Şemo, 'Şivanê Kurmanca' romanını yazdı ve eser 1935 yılında yayımlandı.",
-    "explanationKu": "Erebê Şemo romana 'Şivanê Kurmanca' nivîsand û ew di sala 1935an de hate weşandin.",
-    "explanationTr": "Ereb Şemo, 'Şivanê Kurmanca' romanını yazdı ve eser 1935 yılında yayımlandı.",
+    "explanation": "Ereb Şemo, \"Şivanê Kurmanca\" romanını yazdı ve eser 1935 yılında yayımlandı.",
+    "explanationKu": "Erebê Şemo romana \"Şivanê Kurmanca\" nivîsand û ew di sala 1935an de hate weşandin.",
+    "explanationTr": "Ereb Şemo, \"Şivanê Kurmanca\" romanını yazdı ve eser 1935 yılında yayımlandı.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -6600,8 +6532,8 @@
     "difficulty": 4,
     "id": "r15_dirok_A1_09",
     "category": "Dîrok",
-    "prompt": "Berhema bi navê 'Adat û Rusûmatnameê Ekradiye', ku adet û jiyana civakî ya Kurdan vedibêje, kê nivîsî?",
-    "promptTr": "Kürtlerin geleneklerini ve toplumsal yaşamını anlatan 'Adat û Rusûmatnameê Ekradiye' eserini kim yazdı?",
+    "prompt": "Berhema bi navê \"Adat û Rusûmatnameê Ekradiye\", ku adet û jiyana civakî ya Kurdan vedibêje, kê nivîsî?",
+    "promptTr": "Kürtlerin geleneklerini ve toplumsal yaşamını anlatan \"Adat û Rusûmatnameê Ekradiye\" eserini kim yazdı?",
     "answers": [
       "Erebê Şemo",
       "Hecî Qadirê Koyî",
@@ -6789,40 +6721,6 @@
     "explanation": "Hülagû Han, 1258 yılında Bağdat'ı ele geçiren Moğol ordusuna komuta etti.",
     "explanationKu": "Hûlagû Xan fermandariya artêşa Mongolan kir ku di sala 1258an de Bexda girt.",
     "explanationTr": "Hülagû Han, 1258 yılında Bağdat'ı ele geçiren Moğol ordusuna komuta etti.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "kurmanci",
-      "sourceTitle": "Yeni sorular 3 (2026-11-14, üç bağımsız jüri)",
-      "qualityVersion": 2,
-      "reviewedBy": "Taslak: ChatGPT (GPT-6 Extra High); jüri: Gemini 4 Argon (Yüksek) + ChatGPT yeni sohbet / Copilot; derleme: Claude Opus 5.5",
-      "reviewedAt": "2026-11-14",
-      "lastContentCheckAt": "2026-11-14"
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "r15_dirok_A1_21",
-    "category": "Dîrok",
-    "prompt": "Kê di sala 1526an de Împaratoriya Baburiyan damezirand?",
-    "promptTr": "1526 yılında Babür İmparatorluğu'nu kim kurdu?",
-    "answers": [
-      "Babur",
-      "Şah Cîhan",
-      "Humayûn",
-      "Ekber"
-    ],
-    "answersTr": [
-      "Babür",
-      "Şah Cihan",
-      "Hümayun",
-      "Ekber Şah"
-    ],
-    "correctAnswer": "Babur",
-    "correctAnswerTr": "Babür",
-    "explanation": "Babür, 1526 yılında Panipat'taki zaferinin ardından Babür İmparatorluğu'nu kurdu.",
-    "explanationKu": "Babur di sala 1526an de piştî serketina xwe ya li Panîpatê Împaratoriya Baburiyan damezirand.",
-    "explanationTr": "Babür, 1526 yılında Panipat'taki zaferinin ardından Babür İmparatorluğu'nu kurdu.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -7110,7 +7008,7 @@
     "difficulty": 3,
     "id": "r15_dirok_B1_12",
     "category": "Dîrok",
-    "prompt": "Dîroknasê ku berhema navdar a bi navê 'Muqeddîme' nivîsand kî bû?",
+    "prompt": "Dîroknasê ku berhema navdar a bi navê \"Muqeddîme\" nivîsand kî bû?",
     "promptTr": "Mukaddime adlı ünlü eseri yazan tarihçi kimdi?",
     "answers": [
       "Îbn Xeldûn",
@@ -7144,7 +7042,7 @@
     "difficulty": 3,
     "id": "r15_dirok_B1_13",
     "category": "Dîrok",
-    "prompt": "Geştyarê ku serpêhatiyên geştên xwe yên Afrîka û Asyayê di berhema bi navê 'Rîhle' de vegotin kî bû?",
+    "prompt": "Geştyarê ku serpêhatiyên geştên xwe yên Afrîka û Asyayê di berhema bi navê \"Rîhle\" de vegotin kî bû?",
     "promptTr": "Afrika ve Asya yolculuklarını Rihle adlı eserinde anlatan gezgin kimdi?",
     "answers": [
       "El-Mesûdî",
@@ -7586,7 +7484,7 @@
     "difficulty": 3,
     "id": "r15_dirok_B1_36",
     "category": "Dîrok",
-    "prompt": "Tevgera reformên siyasî ya bi navê 'Bihara Pragê' di sala 1968an de li kîjan welatî derket holê?",
+    "prompt": "Tevgera reformên siyasî ya bi navê \"Bihara Pragê\" di sala 1968an de li kîjan welatî derket holê?",
     "promptTr": "Prag Baharı olarak bilinen siyasi reform hareketi 1968 yılında hangi ülkede ortaya çıktı?",
     "answers": [
       "Romanya",
@@ -7688,8 +7586,8 @@
     "difficulty": 3,
     "id": "r15_dirok_B1_03",
     "category": "Dîrok",
-    "prompt": "Zanistê ku berhema navdar a matematîkê ya 'el-Cebr we'l-Muqabele' nivîsand kî bû?",
-    "promptTr": "Ünlü matematik eseri 'El-Cebr ve'l-Mukabele'yi yazan bilim insanı kimdi?",
+    "prompt": "Zanistê ku berhema navdar a matematîkê ya \"el-Cebr we'l-Muqabele\" nivîsand kî bû?",
+    "promptTr": "Ünlü matematik eseri \"El-Cebr ve'l-Mukabele\"yi yazan bilim insanı kimdi?",
     "answers": [
       "El-Xwarizmî",
       "El-Bîrûnî",
@@ -7722,7 +7620,7 @@
     "difficulty": 2,
     "id": "r15_dirok_B1_04",
     "category": "Dîrok",
-    "prompt": "Kê berhema bijîşkiyê ya bi navê 'el-Qanûn fi't-Tibb' nivîsand?",
+    "prompt": "Kê berhema bijîşkiyê ya bi navê \"el-Qanûn fi't-Tibb\" nivîsand?",
     "promptTr": "El-Kanun fi't-Tıbb adlı tıp eserini kim yazdı?",
     "answers": [
       "Îbn Sîna",
@@ -7926,7 +7824,7 @@
     "difficulty": 4,
     "id": "r15_dirok_B1_14",
     "category": "Dîrok",
-    "prompt": "Kê berhema zanistî ya bi navê 'Kitêba el-Menazir' li ser ronahî û dîtinê nivîsand?",
+    "prompt": "Kê berhema zanistî ya bi navê \"Kitêba el-Menazir\" li ser ronahî û dîtinê nivîsand?",
     "promptTr": "Işık ve görme üzerine Kitabü'l-Menâzır adlı bilimsel eseri kim yazdı?",
     "answers": [
       "Îbn Bace",
@@ -10507,40 +10405,6 @@
   },
   {
     "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "r15_edebiyat_B1_05",
-    "category": "Edebiyat",
-    "prompt": "Kovara Hawar di kîjan salê de dest bi weşanê kir?",
-    "promptTr": "Hawar dergisi hangi yılda yayımlanmaya başladı?",
-    "answers": [
-      "1942",
-      "1922",
-      "1932",
-      "1952"
-    ],
-    "answersTr": [
-      "1942",
-      "1922",
-      "1932",
-      "1952"
-    ],
-    "correctAnswer": "1932",
-    "correctAnswerTr": "1932",
-    "explanation": "Hawar dergisi 15 Mayıs 1932'de yayımlanmaya başladı.",
-    "explanationKu": "Kovara Hawar di 15ê Gulana 1932an de dest bi weşanê kir.",
-    "explanationTr": "Hawar dergisi 15 Mayıs 1932'de yayımlanmaya başladı.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "kurmanci",
-      "sourceTitle": "Yeni sorular 3 (2026-11-14, üç bağımsız jüri)",
-      "qualityVersion": 2,
-      "reviewedBy": "Taslak: ChatGPT (GPT-6 Extra High); jüri: Gemini 4 Argon (Yüksek) + ChatGPT yeni sohbet / Copilot; derleme: Claude Opus 5.5",
-      "reviewedAt": "2026-11-14",
-      "lastContentCheckAt": "2026-11-14"
-    }
-  },
-  {
-    "type": "multipleChoice",
     "difficulty": 3,
     "id": "r15_edebiyat_B1_06",
     "category": "Edebiyat",
@@ -11156,7 +11020,7 @@
     "difficulty": 1,
     "id": "r15_edebiyat_B1_28",
     "category": "Edebiyat",
-    "prompt": "Nivîskarê romana Kürk Mantolu Madonna kî ye?",
+    "prompt": "Nivîskarê romana \"Kürk Mantolu Madonna\" kî ye?",
     "promptTr": "Kürk Mantolu Madonna romanının yazarı kimdir?",
     "answers": [
       "Yakup Kadri Karaosmanoğlu",
@@ -11190,8 +11054,8 @@
     "difficulty": 3,
     "id": "r15_edebiyat_B1_31",
     "category": "Edebiyat",
-    "prompt": "Di edebiyatê de têgeha 'oksîmoron' çi wateyê dide?",
-    "promptTr": "Edebiyatta 'oksimoron' terimi ne anlama gelir?",
+    "prompt": "Di edebiyatê de têgeha \"oksîmoron\" çi wateyê dide?",
+    "promptTr": "Edebiyatta \"oksimoron\" terimi ne anlama gelir?",
     "answers": [
       "Rêzkirina bûyeran li gorî demê",
       "Anîna du peyvên bi wateyên dijber li cem hev",
@@ -11360,8 +11224,8 @@
     "difficulty": 2,
     "id": "r15_edebiyat_B2_01",
     "category": "Edebiyat",
-    "prompt": "Helbesta bi navê 'The Raven' ji aliyê kê ve hatiye nivîsandin?",
-    "promptTr": "'The Raven' (Kuzgun) adlı şiiri kim yazmıştır?",
+    "prompt": "Helbesta bi navê \"The Raven\" ji aliyê kê ve hatiye nivîsandin?",
+    "promptTr": "\"The Raven\" (Kuzgun) adlı şiiri kim yazmıştır?",
     "answers": [
       "Henry Wadsworth Longfellow",
       "Ralph Waldo Emerson",
@@ -11376,9 +11240,9 @@
     ],
     "correctAnswer": "Edgar Allan Poe",
     "correctAnswerTr": "Edgar Allan Poe",
-    "explanation": "'Kuzgun', Edgar Allan Poe'nun 1845 yılında yayımlanan ünlü şiiridir.",
-    "explanationKu": "'The Raven' helbesteke navdar a Edgar Allan Poe ye ku di sala 1845an de hatiye weşandin.",
-    "explanationTr": "'Kuzgun', Edgar Allan Poe'nun 1845 yılında yayımlanan ünlü şiiridir.",
+    "explanation": "\"Kuzgun\", Edgar Allan Poe'nun 1845 yılında yayımlanan ünlü şiiridir.",
+    "explanationKu": "\"The Raven\" helbesteke navdar a Edgar Allan Poe ye ku di sala 1845an de hatiye weşandin.",
+    "explanationTr": "\"Kuzgun\", Edgar Allan Poe'nun 1845 yılında yayımlanan ünlü şiiridir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -11410,9 +11274,9 @@
     ],
     "correctAnswer": "Leaves of Grass",
     "correctAnswerTr": "Çimen Yaprakları",
-    "explanation": "'Çimen Yaprakları', Walt Whitman'ın ilk kez 1855 yılında yayımlanan şiir kitabıdır.",
-    "explanationKu": "'Leaves of Grass' pirtûka helbestan a Walt Whitman e ku cara yekem di sala 1855an de hatiye weşandin.",
-    "explanationTr": "'Çimen Yaprakları', Walt Whitman'ın ilk kez 1855 yılında yayımlanan şiir kitabıdır.",
+    "explanation": "\"Çimen Yaprakları\", Walt Whitman'ın ilk kez 1855 yılında yayımlanan şiir kitabıdır.",
+    "explanationKu": "\"Leaves of Grass\" pirtûka helbestan a Walt Whitman e ku cara yekem di sala 1855an de hatiye weşandin.",
+    "explanationTr": "\"Çimen Yaprakları\", Walt Whitman'ın ilk kez 1855 yılında yayımlanan şiir kitabıdır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -11444,9 +11308,9 @@
     ],
     "correctAnswer": "The Waste Land",
     "correctAnswerTr": "Çorak Ülke",
-    "explanation": "'Çorak Ülke', T. S. Eliot'ın 1922 yılında yayımlanan modernist şiiridir.",
-    "explanationKu": "'The Waste Land' helbesteke modernîst a T. S. Eliot e ku di sala 1922an de hatiye weşandin.",
-    "explanationTr": "'Çorak Ülke', T. S. Eliot'ın 1922 yılında yayımlanan modernist şiiridir.",
+    "explanation": "\"Çorak Ülke\", T. S. Eliot'ın 1922 yılında yayımlanan modernist şiiridir.",
+    "explanationKu": "\"The Waste Land\" helbesteke modernîst a T. S. Eliot e ku di sala 1922an de hatiye weşandin.",
+    "explanationTr": "\"Çorak Ülke\", T. S. Eliot'ın 1922 yılında yayımlanan modernist şiiridir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -11462,8 +11326,8 @@
     "difficulty": 3,
     "id": "r15_edebiyat_B2_05",
     "category": "Edebiyat",
-    "prompt": "Kê helbesta bi navê 'The Tyger' nivîsiye?",
-    "promptTr": "'The Tyger' (Kaplan) adlı şiiri kim yazmıştır?",
+    "prompt": "Kê helbesta bi navê \"The Tyger\" nivîsiye?",
+    "promptTr": "\"The Tyger\" (Kaplan) adlı şiiri kim yazmıştır?",
     "answers": [
       "John Milton",
       "William Wordsworth",
@@ -11478,9 +11342,9 @@
     ],
     "correctAnswer": "William Blake",
     "correctAnswerTr": "William Blake",
-    "explanation": "'Kaplan', William Blake'in 'Songs of Experience' adlı eserinde yer alan şiiridir.",
-    "explanationKu": "'The Tyger' helbesta William Blake ye û di berhema wî ya 'Songs of Experience' de cih digire.",
-    "explanationTr": "'Kaplan', William Blake'in 'Songs of Experience' adlı eserinde yer alan şiiridir.",
+    "explanation": "\"Kaplan\", William Blake'in \"Songs of Experience\" adlı eserinde yer alan şiiridir.",
+    "explanationKu": "\"The Tyger\" helbesta William Blake ye û di berhema wî ya \"Songs of Experience\" de cih digire.",
+    "explanationTr": "\"Kaplan\", William Blake'in \"Songs of Experience\" adlı eserinde yer alan şiiridir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -11496,8 +11360,8 @@
     "difficulty": 2,
     "id": "r15_edebiyat_B2_06",
     "category": "Edebiyat",
-    "prompt": "Helbesta 'I Wandered Lonely as a Cloud' ji aliyê kê ve hatiye nivîsandin?",
-    "promptTr": "'I Wandered Lonely as a Cloud' adlı şiiri kim yazmıştır?",
+    "prompt": "Helbesta \"I Wandered Lonely as a Cloud\" ji aliyê kê ve hatiye nivîsandin?",
+    "promptTr": "\"I Wandered Lonely as a Cloud\" adlı şiiri kim yazmıştır?",
     "answers": [
       "John Keats",
       "Samuel Taylor Coleridge",
@@ -11512,9 +11376,9 @@
     ],
     "correctAnswer": "William Wordsworth",
     "correctAnswerTr": "William Wordsworth",
-    "explanation": "William Wordsworth, 'I Wandered Lonely as a Cloud' şiirinde sarı nergis çiçeklerini betimler.",
-    "explanationKu": "William Wordsworth di helbesta 'I Wandered Lonely as a Cloud' de dîmena kulîlkên zer vedibêje.",
-    "explanationTr": "William Wordsworth, 'I Wandered Lonely as a Cloud' şiirinde sarı nergis çiçeklerini betimler.",
+    "explanation": "William Wordsworth, \"I Wandered Lonely as a Cloud\" şiirinde sarı nergis çiçeklerini betimler.",
+    "explanationKu": "William Wordsworth di helbesta \"I Wandered Lonely as a Cloud\" de dîmena kulîlkên zer vedibêje.",
+    "explanationTr": "William Wordsworth, \"I Wandered Lonely as a Cloud\" şiirinde sarı nergis çiçeklerini betimler.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -11530,8 +11394,8 @@
     "difficulty": 2,
     "id": "r15_edebiyat_B2_07",
     "category": "Edebiyat",
-    "prompt": "Pirtûka helbestan a bi navê 'Les Fleurs du mal' ji aliyê kê ve hatiye nivîsandin?",
-    "promptTr": "'Les Fleurs du mal' (Kötülük Çiçekleri) adlı şiir kitabını kim yazmıştır?",
+    "prompt": "Pirtûka helbestan a bi navê \"Les Fleurs du mal\" ji aliyê kê ve hatiye nivîsandin?",
+    "promptTr": "\"Les Fleurs du mal\" (Kötülük Çiçekleri) adlı şiir kitabını kim yazmıştır?",
     "answers": [
       "Paul Verlaine",
       "Stéphane Mallarmé",
@@ -11546,9 +11410,9 @@
     ],
     "correctAnswer": "Charles Baudelaire",
     "correctAnswerTr": "Charles Baudelaire",
-    "explanation": "'Kötülük Çiçekleri', Charles Baudelaire'in 1857 yılında yayımlanan eseridir.",
-    "explanationKu": "'Les Fleurs du mal' berhema Charles Baudelaire ye û di sala 1857an de hatiye weşandin.",
-    "explanationTr": "'Kötülük Çiçekleri', Charles Baudelaire'in 1857 yılında yayımlanan eseridir.",
+    "explanation": "\"Kötülük Çiçekleri\", Charles Baudelaire'in 1857 yılında yayımlanan eseridir.",
+    "explanationKu": "\"Les Fleurs du mal\" berhema Charles Baudelaire ye û di sala 1857an de hatiye weşandin.",
+    "explanationTr": "\"Kötülük Çiçekleri\", Charles Baudelaire'in 1857 yılında yayımlanan eseridir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -11564,8 +11428,8 @@
     "difficulty": 4,
     "id": "r15_edebiyat_B2_08",
     "category": "Edebiyat",
-    "prompt": "Kê berhema helbestan a bi navê 'Duino Elegies' nivîsiye?",
-    "promptTr": "'Duino Ağıtları' adlı şiir eserini kim yazmıştır?",
+    "prompt": "Kê berhema helbestan a bi navê \"Duino Elegies\" nivîsiye?",
+    "promptTr": "\"Duino Ağıtları\" adlı şiir eserini kim yazmıştır?",
     "answers": [
       "Rainer Maria Rilke",
       "Hermann Hesse",
@@ -11580,9 +11444,9 @@
     ],
     "correctAnswer": "Rainer Maria Rilke",
     "correctAnswerTr": "Rainer Maria Rilke",
-    "explanation": "'Duino Ağıtları', Rainer Maria Rilke'nin on ağıttan oluşan eseridir.",
-    "explanationKu": "'Duino Elegies' berhema Rainer Maria Rilke ye û ji deh elegiyan pêk tê.",
-    "explanationTr": "'Duino Ağıtları', Rainer Maria Rilke'nin on ağıttan oluşan eseridir.",
+    "explanation": "\"Duino Ağıtları\", Rainer Maria Rilke'nin on ağıttan oluşan eseridir.",
+    "explanationKu": "\"Duino Elegies\" berhema Rainer Maria Rilke ye û ji deh elegiyan pêk tê.",
+    "explanationTr": "\"Duino Ağıtları\", Rainer Maria Rilke'nin on ağıttan oluşan eseridir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -11598,8 +11462,8 @@
     "difficulty": 3,
     "id": "r15_edebiyat_B2_09",
     "category": "Edebiyat",
-    "prompt": "Kê romana bi helbestê ya bi navê 'Eugene Onegin' nivîsiye?",
-    "promptTr": "'Yevgeni Onegin' adlı manzum romanı kim yazmıştır?",
+    "prompt": "Kê romana bi helbestê ya bi navê \"Eugene Onegin\" nivîsiye?",
+    "promptTr": "\"Yevgeni Onegin\" adlı manzum romanı kim yazmıştır?",
     "answers": [
       "Aleksandr Puşkin",
       "Mihail Lermontov",
@@ -11614,9 +11478,9 @@
     ],
     "correctAnswer": "Aleksandr Puşkin",
     "correctAnswerTr": "Aleksandr Puşkin",
-    "explanation": "'Yevgeni Onegin', Aleksandr Puşkin'in manzum biçimde yazdığı romanıdır.",
-    "explanationKu": "'Eugene Onegin' romana bi helbestê ya Aleksandr Puşkin e ku bi awayê helbestî hatiye nivîsandin.",
-    "explanationTr": "'Yevgeni Onegin', Aleksandr Puşkin'in manzum biçimde yazdığı romanıdır.",
+    "explanation": "\"Yevgeni Onegin\", Aleksandr Puşkin'in manzum biçimde yazdığı romanıdır.",
+    "explanationKu": "\"Eugene Onegin\" romana bi helbestê ya Aleksandr Puşkin e ku bi awayê helbestî hatiye nivîsandin.",
+    "explanationTr": "\"Yevgeni Onegin\", Aleksandr Puşkin'in manzum biçimde yazdığı romanıdır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -11632,8 +11496,8 @@
     "difficulty": 3,
     "id": "r15_edebiyat_B2_10",
     "category": "Edebiyat",
-    "prompt": "Helbesta 'Because I could not stop for Death' ji aliyê kê ve hatiye nivîsandin?",
-    "promptTr": "'Because I could not stop for Death' adlı şiiri kim yazmıştır?",
+    "prompt": "Helbesta \"Because I could not stop for Death\" ji aliyê kê ve hatiye nivîsandin?",
+    "promptTr": "\"Because I could not stop for Death\" adlı şiiri kim yazmıştır?",
     "answers": [
       "Christina Rossetti",
       "Emily Dickinson",
@@ -11648,9 +11512,9 @@
     ],
     "correctAnswer": "Emily Dickinson",
     "correctAnswerTr": "Emily Dickinson",
-    "explanation": "'Because I could not stop for Death', Emily Dickinson'ın ölümü kişileştirdiği şiiridir.",
-    "explanationKu": "'Because I could not stop for Death' helbesta Emily Dickinson e ku mirinê wekî kesekî xêz dike.",
-    "explanationTr": "'Because I could not stop for Death', Emily Dickinson'ın ölümü kişileştirdiği şiiridir.",
+    "explanation": "\"Because I could not stop for Death\", Emily Dickinson'ın ölümü kişileştirdiği şiiridir.",
+    "explanationKu": "\"Because I could not stop for Death\" helbesta Emily Dickinson e ku mirinê wekî kesekî xêz dike.",
+    "explanationTr": "\"Because I could not stop for Death\", Emily Dickinson'ın ölümü kişileştirdiği şiiridir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -11666,8 +11530,8 @@
     "difficulty": 2,
     "id": "r15_edebiyat_B2_11",
     "category": "Edebiyat",
-    "prompt": "Kê pirtûka helbestan a bi navê 'Twenty Love Poems and a Song of Despair' nivîsiye?",
-    "promptTr": "'Yirmi Aşk Şiiri ve Umutsuz Bir Şarkı' adlı kitabı kim yazmıştır?",
+    "prompt": "Kê pirtûka helbestan a bi navê \"Twenty Love Poems and a Song of Despair\" nivîsiye?",
+    "promptTr": "\"Yirmi Aşk Şiiri ve Umutsuz Bir Şarkı\" adlı kitabı kim yazmıştır?",
     "answers": [
       "César Vallejo",
       "Octavio Paz",
@@ -11682,9 +11546,9 @@
     ],
     "correctAnswer": "Pablo Neruda",
     "correctAnswerTr": "Pablo Neruda",
-    "explanation": "'Yirmi Aşk Şiiri ve Umutsuz Bir Şarkı', Pablo Neruda'nın 1924 yılında yayımlanan eseridir.",
-    "explanationKu": "'Twenty Love Poems and a Song of Despair' berhema Pablo Neruda ye ku di sala 1924an de hatiye weşandin.",
-    "explanationTr": "'Yirmi Aşk Şiiri ve Umutsuz Bir Şarkı', Pablo Neruda'nın 1924 yılında yayımlanan eseridir.",
+    "explanation": "\"Yirmi Aşk Şiiri ve Umutsuz Bir Şarkı\", Pablo Neruda'nın 1924 yılında yayımlanan eseridir.",
+    "explanationKu": "\"Twenty Love Poems and a Song of Despair\" berhema Pablo Neruda ye ku di sala 1924an de hatiye weşandin.",
+    "explanationTr": "\"Yirmi Aşk Şiiri ve Umutsuz Bir Şarkı\", Pablo Neruda'nın 1924 yılında yayımlanan eseridir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -11700,8 +11564,8 @@
     "difficulty": 4,
     "id": "r15_edebiyat_B2_14",
     "category": "Edebiyat",
-    "prompt": "Kê berhema helbestî ya bi navê 'Ben Ruhi Bey Nasılım' nivîsiye?",
-    "promptTr": "'Ben Ruhi Bey Nasılım' adlı şiir eserini kim yazmıştır?",
+    "prompt": "Kê berhema helbestî ya bi navê \"Ben Ruhi Bey Nasılım\" nivîsiye?",
+    "promptTr": "\"Ben Ruhi Bey Nasılım\" adlı şiir eserini kim yazmıştır?",
     "answers": [
       "Ece Ayhan",
       "İlhan Berk",
@@ -11716,9 +11580,9 @@
     ],
     "correctAnswer": "Edip Cansever",
     "correctAnswerTr": "Edip Cansever",
-    "explanation": "'Ben Ruhi Bey Nasılım', Edip Cansever'in Ruhi Bey karakteri etrafında kurduğu şiir eseridir.",
-    "explanationKu": "'Ben Ruhi Bey Nasılım' berhema Edip Cansever e ku li ser karakterê Ruhi Bey hatiye avakirin.",
-    "explanationTr": "'Ben Ruhi Bey Nasılım', Edip Cansever'in Ruhi Bey karakteri etrafında kurduğu şiir eseridir.",
+    "explanation": "\"Ben Ruhi Bey Nasılım\", Edip Cansever'in Ruhi Bey karakteri etrafında kurduğu şiir eseridir.",
+    "explanationKu": "\"Ben Ruhi Bey Nasılım\" berhema Edip Cansever e ku li ser karakterê Ruhi Bey hatiye avakirin.",
+    "explanationTr": "\"Ben Ruhi Bey Nasılım\", Edip Cansever'in Ruhi Bey karakteri etrafında kurduğu şiir eseridir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -11734,8 +11598,8 @@
     "difficulty": 2,
     "id": "r15_edebiyat_B2_16",
     "category": "Edebiyat",
-    "prompt": "Kê pirtûka bi navê 'Semaver' nivîsiye?",
-    "promptTr": "'Semaver' adlı kitabı kim yazmıştır?",
+    "prompt": "Kê pirtûka bi navê \"Semaver\" nivîsiye?",
+    "promptTr": "\"Semaver\" adlı kitabı kim yazmıştır?",
     "answers": [
       "Memduh Şevket Esendal",
       "Haldun Taner",
@@ -11750,9 +11614,9 @@
     ],
     "correctAnswer": "Sait Faik Abasıyanık",
     "correctAnswerTr": "Sait Faik Abasıyanık",
-    "explanation": "'Semaver', Sait Faik Abasıyanık'ın 1936 yılında yayımlanan öykü kitabıdır.",
-    "explanationKu": "'Semaver' pirtûka çîrokên Sait Faik Abasıyanık e ku di sala 1936an de hatiye weşandin.",
-    "explanationTr": "'Semaver', Sait Faik Abasıyanık'ın 1936 yılında yayımlanan öykü kitabıdır.",
+    "explanation": "\"Semaver\", Sait Faik Abasıyanık'ın 1936 yılında yayımlanan öykü kitabıdır.",
+    "explanationKu": "\"Semaver\" pirtûka çîrokên Sait Faik Abasıyanık e ku di sala 1936an de hatiye weşandin.",
+    "explanationTr": "\"Semaver\", Sait Faik Abasıyanık'ın 1936 yılında yayımlanan öykü kitabıdır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -11938,8 +11802,8 @@
     "difficulty": 1,
     "id": "r15_edebiyat_B2_21",
     "category": "Edebiyat",
-    "prompt": "Cureyê helbestê yê bi navê 'haiku' ji edebiyata kîjan welatî derketiye?",
-    "promptTr": "'Haiku' adı verilen şiir türü hangi ülkenin edebiyatından doğmuştur?",
+    "prompt": "Cureyê helbestê yê bi navê \"haiku\" ji edebiyata kîjan welatî derketiye?",
+    "promptTr": "\"Haiku\" adı verilen şiir türü hangi ülkenin edebiyatından doğmuştur?",
     "answers": [
       "Hindistan",
       "Japonya",
@@ -11989,7 +11853,7 @@
     "correctAnswer": "A Doll's House",
     "correctAnswerTr": "Bir Bebek Evi",
     "explanation": "Nora Helmer, Henrik Ibsen'in Bir Bebek Evi adlı tiyatro oyununun başkarakteridir.",
-    "explanationKu": "Nora Helmer karaktera sereke ya şanoya «A Doll's House» a Henrik Ibsen e.",
+    "explanationKu": "Nora Helmer karaktera sereke ya şanoya \"A Doll's House\" a Henrik Ibsen e.",
     "explanationTr": "Nora Helmer, Henrik Ibsen'in Bir Bebek Evi adlı tiyatro oyununun başkarakteridir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12006,7 +11870,7 @@
     "difficulty": 2,
     "id": "r15_edebiyat_B3_02",
     "category": "Edebiyat",
-    "prompt": "Nivîskarê şanoya «The Cherry Orchard» kî ye?",
+    "prompt": "Nivîskarê şanoya \"The Cherry Orchard\" kî ye?",
     "promptTr": "Vişne Bahçesi adlı tiyatro oyununun yazarı kimdir?",
     "answers": [
       "Nikolay Gogol",
@@ -12023,7 +11887,7 @@
     "correctAnswer": "Anton Çehov",
     "correctAnswerTr": "Anton Çehov",
     "explanation": "Vişne Bahçesi adlı tiyatro oyununu Anton Çehov yazmıştır.",
-    "explanationKu": "Anton Çehov şanoya «The Cherry Orchard» nivîsandiye.",
+    "explanationKu": "Anton Çehov şanoya \"The Cherry Orchard\" nivîsandiye.",
     "explanationTr": "Vişne Bahçesi adlı tiyatro oyununu Anton Çehov yazmıştır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12040,7 +11904,7 @@
     "difficulty": 3,
     "id": "r15_edebiyat_B3_05",
     "category": "Edebiyat",
-    "prompt": "Şanoya «Six Characters in Search of an Author» ji hêla kîjan nivîskarê Îtalyayî ve hatiye nivîsandin?",
+    "prompt": "Şanoya \"Six Characters in Search of an Author\" ji hêla kîjan nivîskarê Îtalyayî ve hatiye nivîsandin?",
     "promptTr": "Altı Kişi Yazarını Arıyor adlı tiyatro oyunu hangi İtalyan yazar tarafından yazılmıştır?",
     "answers": [
       "Carlo Goldoni",
@@ -12057,7 +11921,7 @@
     "correctAnswer": "Luigi Pirandello",
     "correctAnswerTr": "Luigi Pirandello",
     "explanation": "Altı Kişi Yazarını Arıyor adlı tiyatro oyununun yazarı Luigi Pirandello'dur.",
-    "explanationKu": "Luigi Pirandello nivîskarê şanoya «Six Characters in Search of an Author» e.",
+    "explanationKu": "Luigi Pirandello nivîskarê şanoya \"Six Characters in Search of an Author\" e.",
     "explanationTr": "Altı Kişi Yazarını Arıyor adlı tiyatro oyununun yazarı Luigi Pirandello'dur.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12074,7 +11938,7 @@
     "difficulty": 3,
     "id": "r15_edebiyat_B3_06",
     "category": "Edebiyat",
-    "prompt": "Nivîskarê şanoya «The Visit» (Der Besuch der alten Dame) kî ye?",
+    "prompt": "Nivîskarê şanoya \"The Visit\" (Der Besuch der alten Dame) kî ye?",
     "promptTr": "Yaşlı Hanımın Ziyareti adlı tiyatro oyununun yazarı kimdir?",
     "answers": [
       "Peter Weiss",
@@ -12091,7 +11955,7 @@
     "correctAnswer": "Friedrich Dürrenmatt",
     "correctAnswerTr": "Friedrich Dürrenmatt",
     "explanation": "Friedrich Dürrenmatt, zengin bir kadının memleketine dönüşünü anlatan Yaşlı Hanımın Ziyareti oyununun yazarıdır.",
-    "explanationKu": "Friedrich Dürrenmatt nivîskarê şanoya «The Visit» e ku çîroka vegera jineke dewlemend bo bajarê xwe vedibêje.",
+    "explanationKu": "Friedrich Dürrenmatt nivîskarê şanoya \"The Visit\" e ku çîroka vegera jineke dewlemend bo bajarê xwe vedibêje.",
     "explanationTr": "Friedrich Dürrenmatt, zengin bir kadının memleketine dönüşünü anlatan Yaşlı Hanımın Ziyareti oyununun yazarıdır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12125,7 +11989,7 @@
     "correctAnswer": "Huis clos",
     "correctAnswerTr": "Gizli Oturum",
     "explanation": "Gizli Oturum oyununda üç kişi öldükten sonra bir odada kalır ve birbirlerinden uzaklaşamaz.",
-    "explanationKu": "Di şanoya «Huis clos» de sê kes piştî mirinê di odeyekê de dimînin û nikarin ji hev dûr bikevin.",
+    "explanationKu": "Di şanoya \"Huis clos\" de sê kes piştî mirinê di odeyekê de dimînin û nikarin ji hev dûr bikevin.",
     "explanationTr": "Gizli Oturum oyununda üç kişi öldükten sonra bir odada kalır ve birbirlerinden uzaklaşamaz.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12142,7 +12006,7 @@
     "difficulty": 4,
     "id": "r15_edebiyat_B3_08",
     "category": "Edebiyat",
-    "prompt": "Nivîskarê şanoya «Ubu roi» kî ye?",
+    "prompt": "Nivîskarê şanoya \"Ubu roi\" kî ye?",
     "promptTr": "Kral Übü adlı tiyatro oyununun yazarı kimdir?",
     "answers": [
       "Maurice Maeterlinck",
@@ -12159,7 +12023,7 @@
     "correctAnswer": "Alfred Jarry",
     "correctAnswerTr": "Alfred Jarry",
     "explanation": "Alfred Jarry, ilk kez 1896 yılında sahnelenen Kral Übü adlı tiyatro oyununun yazarıdır.",
-    "explanationKu": "Alfred Jarry nivîskarê şanoya «Ubu roi» ye ku cara yekem di sala 1896an de hate pêşkêşkirin.",
+    "explanationKu": "Alfred Jarry nivîskarê şanoya \"Ubu roi\" ye ku cara yekem di sala 1896an de hate pêşkêşkirin.",
     "explanationTr": "Alfred Jarry, ilk kez 1896 yılında sahnelenen Kral Übü adlı tiyatro oyununun yazarıdır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12176,7 +12040,7 @@
     "difficulty": 2,
     "id": "r15_edebiyat_B3_09",
     "category": "Edebiyat",
-    "prompt": "Kî şanoya «Cyrano de Bergerac» nivîsandiye?",
+    "prompt": "Kî şanoya \"Cyrano de Bergerac\" nivîsandiye?",
     "promptTr": "Cyrano de Bergerac adlı tiyatro oyununu kim yazmıştır?",
     "answers": [
       "Edmond Rostand",
@@ -12193,7 +12057,7 @@
     "correctAnswer": "Edmond Rostand",
     "correctAnswerTr": "Edmond Rostand",
     "explanation": "Edmond Rostand, ilk kez 1897 yılında sahnelenen Cyrano de Bergerac oyununu yazmıştır.",
-    "explanationKu": "Edmond Rostand şanoya «Cyrano de Bergerac» nivîsandiye û ev şano di sala 1897an de cara yekem hate pêşkêşkirin.",
+    "explanationKu": "Edmond Rostand şanoya \"Cyrano de Bergerac\" nivîsandiye û ev şano di sala 1897an de cara yekem hate pêşkêşkirin.",
     "explanationTr": "Edmond Rostand, ilk kez 1897 yılında sahnelenen Cyrano de Bergerac oyununu yazmıştır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12210,7 +12074,7 @@
     "difficulty": 2,
     "id": "r15_edebiyat_B3_10",
     "category": "Edebiyat",
-    "prompt": "Nivîskarê şanoya «Keşanlı Ali Destanı» kî ye?",
+    "prompt": "Nivîskarê şanoya \"Keşanlı Ali Destanı\" kî ye?",
     "promptTr": "Keşanlı Ali Destanı adlı tiyatro oyununun yazarı kimdir?",
     "answers": [
       "Güngör Dilmen",
@@ -12227,7 +12091,7 @@
     "correctAnswer": "Haldun Taner",
     "correctAnswerTr": "Haldun Taner",
     "explanation": "Keşanlı Ali Destanı adlı müzikli tiyatro oyununun yazarı Haldun Taner'dir.",
-    "explanationKu": "Haldun Taner nivîskarê şanoya muzîkal a «Keşanlı Ali Destanı» ye.",
+    "explanationKu": "Haldun Taner nivîskarê şanoya muzîkal a \"Keşanlı Ali Destanı\" ye.",
     "explanationTr": "Keşanlı Ali Destanı adlı müzikli tiyatro oyununun yazarı Haldun Taner'dir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12244,7 +12108,7 @@
     "difficulty": 3,
     "id": "r15_edebiyat_B3_11",
     "category": "Edebiyat",
-    "prompt": "Kîjan nivîskarê tirkî şanoya «Köşebaşı» nivîsandiye?",
+    "prompt": "Kîjan nivîskarê tirkî şanoya \"Köşebaşı\" nivîsandiye?",
     "promptTr": "Köşebaşı adlı tiyatro oyununu hangi Türk yazar yazmıştır?",
     "answers": [
       "Turgut Özakman",
@@ -12261,7 +12125,7 @@
     "correctAnswer": "Ahmet Kutsi Tecer",
     "correctAnswerTr": "Ahmet Kutsi Tecer",
     "explanation": "Ahmet Kutsi Tecer, 1947 yılında kitap olarak yayımlanan Köşebaşı adlı tiyatro oyununu yazmıştır.",
-    "explanationKu": "Ahmet Kutsi Tecer şanoya «Köşebaşı» nivîsandiye ku di sala 1947an de wekî pirtûk hate çapkirin.",
+    "explanationKu": "Ahmet Kutsi Tecer şanoya \"Köşebaşı\" nivîsandiye ku di sala 1947an de wekî pirtûk hate çapkirin.",
     "explanationTr": "Ahmet Kutsi Tecer, 1947 yılında kitap olarak yayımlanan Köşebaşı adlı tiyatro oyununu yazmıştır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12278,7 +12142,7 @@
     "difficulty": 2,
     "id": "r15_edebiyat_B3_12",
     "category": "Edebiyat",
-    "prompt": "Nivîskarê şanoya «Bir Adam Yaratmak» kî ye?",
+    "prompt": "Nivîskarê şanoya \"Bir Adam Yaratmak\" kî ye?",
     "promptTr": "Bir Adam Yaratmak adlı tiyatro oyununun yazarı kimdir?",
     "answers": [
       "Necip Fazıl Kısakürek",
@@ -12295,7 +12159,7 @@
     "correctAnswer": "Necip Fazıl Kısakürek",
     "correctAnswerTr": "Necip Fazıl Kısakürek",
     "explanation": "Necip Fazıl Kısakürek, Hüsrev adlı bir yazarı konu alan Bir Adam Yaratmak oyununu yazmıştır.",
-    "explanationKu": "Necip Fazıl Kısakürek şanoya «Bir Adam Yaratmak» nivîsandiye ku li ser nivîskarekî bi navê Hüsrev e.",
+    "explanationKu": "Necip Fazıl Kısakürek şanoya \"Bir Adam Yaratmak\" nivîsandiye ku li ser nivîskarekî bi navê Hüsrev e.",
     "explanationTr": "Necip Fazıl Kısakürek, Hüsrev adlı bir yazarı konu alan Bir Adam Yaratmak oyununu yazmıştır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12312,7 +12176,7 @@
     "difficulty": 2,
     "id": "r15_edebiyat_B3_13",
     "category": "Edebiyat",
-    "prompt": "Şanoya «Lysistrata» ya Yewnana Kevn ji hêla kî ve hatiye nivîsandin?",
+    "prompt": "Şanoya \"Lysistrata\" ya Yewnana Kevn ji hêla kî ve hatiye nivîsandin?",
     "promptTr": "Antik Yunan tiyatrosunun Lysistrata adlı oyunu kim tarafından yazılmıştır?",
     "answers": [
       "Menandros",
@@ -12329,7 +12193,7 @@
     "correctAnswer": "Aristophanes",
     "correctAnswerTr": "Aristophanes",
     "explanation": "Aristophanes, ilk kez MÖ 411 yılında sahnelenen Lysistrata oyununu yazmıştır.",
-    "explanationKu": "Aristophanes şanoya «Lysistrata» nivîsandiye ku cara yekem di sala 411an berî Zayînê de hate pêşkêşkirin.",
+    "explanationKu": "Aristophanes şanoya \"Lysistrata\" nivîsandiye ku cara yekem di sala 411an berî Zayînê de hate pêşkêşkirin.",
     "explanationTr": "Aristophanes, ilk kez MÖ 411 yılında sahnelenen Lysistrata oyununu yazmıştır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12414,8 +12278,8 @@
     "difficulty": 2,
     "id": "r15_edebiyat_B3_16",
     "category": "Edebiyat",
-    "prompt": "Kîjan romana Charles Dickens bi gotina «Ew dema herî baş bû, ew dema herî xirab bû» dest pê dike?",
-    "promptTr": "Charles Dickens'ın hangi romanı 'Zamanların en iyisiydi, zamanların en kötüsüydü' sözleriyle başlar?",
+    "prompt": "Kîjan romana Charles Dickens bi gotina \"Ew dema herî baş bû, ew dema herî xirab bû\" dest pê dike?",
+    "promptTr": "Charles Dickens'ın hangi romanı \"Zamanların en iyisiydi, zamanların en kötüsüydü\" sözleriyle başlar?",
     "answers": [
       "Bleak House",
       "A Tale of Two Cities",
@@ -12431,42 +12295,8 @@
     "correctAnswer": "A Tale of Two Cities",
     "correctAnswerTr": "İki Şehrin Hikâyesi",
     "explanation": "İki Şehrin Hikâyesi romanı, zamanların en iyi ve en kötü dönemlerini karşı karşıya getiren cümleyle başlar.",
-    "explanationKu": "Romana «A Tale of Two Cities» bi hevoka ku demên herî baş û herî xirab beramberî hev datîne dest pê dike.",
+    "explanationKu": "Romana \"A Tale of Two Cities\" bi hevoka ku demên herî baş û herî xirab beramberî hev datîne dest pê dike.",
     "explanationTr": "İki Şehrin Hikâyesi romanı, zamanların en iyi ve en kötü dönemlerini karşı karşıya getiren cümleyle başlar.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "kurmanci",
-      "sourceTitle": "Yeni sorular 3 (2026-11-14, üç bağımsız jüri)",
-      "qualityVersion": 2,
-      "reviewedBy": "Taslak: ChatGPT (GPT-6 Extra High); jüri: Gemini 4 Argon (Yüksek) + ChatGPT yeni sohbet / Copilot; derleme: Claude Opus 5.5",
-      "reviewedAt": "2026-11-14",
-      "lastContentCheckAt": "2026-11-14"
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "r15_edebiyat_B3_17",
-    "category": "Edebiyat",
-    "prompt": "Kîjan romana J. R. R. Tolkien bi hevoka «Hobîtek di kunekê de li binê erdê dijîbû» dest pê dike?",
-    "promptTr": "J. R. R. Tolkien'in hangi romanı 'Yerdeki bir delikte bir hobbit yaşardı' cümlesiyle başlar?",
-    "answers": [
-      "The Hobbit",
-      "The Children of Húrin",
-      "The Fellowship of the Ring",
-      "The Silmarillion"
-    ],
-    "answersTr": [
-      "Hobbit",
-      "Húrin'in Çocukları",
-      "Yüzük Kardeşliği",
-      "Silmarillion"
-    ],
-    "correctAnswer": "The Hobbit",
-    "correctAnswerTr": "Hobbit",
-    "explanation": "Hobbit romanı, bir delikte yaşayan hobbitin tanıtılmasıyla başlar.",
-    "explanationKu": "Romana «The Hobbit» bi danasîna hobîtekî ku di kunekê de dijî dest pê dike.",
-    "explanationTr": "Hobbit romanı, bir delikte yaşayan hobbitin tanıtılmasıyla başlar.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -12482,8 +12312,8 @@
     "difficulty": 3,
     "id": "r15_edebiyat_B3_18",
     "category": "Edebiyat",
-    "prompt": "Kîjan pirtûka J. M. Barrie bi hevoka «Hemû zarok, ji bilî yekî, mezin dibin» dest pê dike?",
-    "promptTr": "J. M. Barrie'nin hangi kitabı 'Biri dışında bütün çocuklar büyür' cümlesiyle başlar?",
+    "prompt": "Kîjan pirtûka J. M. Barrie bi hevoka \"Hemû zarok, ji bilî yekî, mezin dibin\" dest pê dike?",
+    "promptTr": "J. M. Barrie'nin hangi kitabı \"Biri dışında bütün çocuklar büyür\" cümlesiyle başlar?",
     "answers": [
       "The Wind in the Willows",
       "The Secret Garden",
@@ -12499,7 +12329,7 @@
     "correctAnswer": "Peter and Wendy",
     "correctAnswerTr": "Peter ve Wendy",
     "explanation": "Peter ve Wendy kitabı, biri dışında bütün çocukların büyüdüğünü belirten cümleyle başlar.",
-    "explanationKu": "Pirtûka «Peter and Wendy» bi hevoka ku dibêje hemû zarok ji bilî yekî mezin dibin dest pê dike.",
+    "explanationKu": "Pirtûka \"Peter and Wendy\" bi hevoka ku dibêje hemû zarok ji bilî yekî mezin dibin dest pê dike.",
     "explanationTr": "Peter ve Wendy kitabı, biri dışında bütün çocukların büyüdüğünü belirten cümleyle başlar.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12516,7 +12346,7 @@
     "difficulty": 1,
     "id": "r15_edebiyat_B3_19",
     "category": "Edebiyat",
-    "prompt": "Navê keçika sereke ya romana «Anne of Green Gables» çi ye?",
+    "prompt": "Navê keçika sereke ya romana \"Anne of Green Gables\" çi ye?",
     "promptTr": "Yeşilin Kızı Anne romanının başkarakteri olan kızın adı nedir?",
     "answers": [
       "Sara Crewe",
@@ -12533,7 +12363,7 @@
     "correctAnswer": "Anne Shirley",
     "correctAnswerTr": "Anne Shirley",
     "explanation": "Anne Shirley, Lucy Maud Montgomery'nin Yeşilin Kızı Anne romanının başkarakteridir.",
-    "explanationKu": "Anne Shirley karaktera sereke ya romana «Anne of Green Gables» a Lucy Maud Montgomery ye.",
+    "explanationKu": "Anne Shirley karaktera sereke ya romana \"Anne of Green Gables\" a Lucy Maud Montgomery ye.",
     "explanationTr": "Anne Shirley, Lucy Maud Montgomery'nin Yeşilin Kızı Anne romanının başkarakteridir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12584,7 +12414,7 @@
     "difficulty": 2,
     "id": "r15_edebiyat_B3_21",
     "category": "Edebiyat",
-    "prompt": "Di romana «Twenty Thousand Leagues Under the Seas» de, navê keştiya binavê ya Kapîtan Nemo çi ye?",
+    "prompt": "Di romana \"Twenty Thousand Leagues Under the Seas\" de, navê keştiya binavê ya Kapîtan Nemo çi ye?",
     "promptTr": "Denizler Altında Yirmi Bin Fersah romanında Kaptan Nemo'nun denizaltısının adı nedir?",
     "answers": [
       "Argo",
@@ -12601,7 +12431,7 @@
     "correctAnswer": "Nautilus",
     "correctAnswerTr": "Nautilus",
     "explanation": "Jules Verne'in Denizler Altında Yirmi Bin Fersah romanında Kaptan Nemo, Nautilus adlı denizaltıyı kullanır.",
-    "explanationKu": "Di romana Jules Verne ya «Twenty Thousand Leagues Under the Seas» de Kapîtan Nemo keştiya binavê ya bi navê Nautilus bi kar tîne.",
+    "explanationKu": "Di romana Jules Verne ya \"Twenty Thousand Leagues Under the Seas\" de Kapîtan Nemo keştiya binavê ya bi navê Nautilus bi kar tîne.",
     "explanationTr": "Jules Verne'in Denizler Altında Yirmi Bin Fersah romanında Kaptan Nemo, Nautilus adlı denizaltıyı kullanır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12652,7 +12482,7 @@
     "difficulty": 3,
     "id": "r15_edebiyat_B3_25",
     "category": "Edebiyat",
-    "prompt": "Kî nivîskarê romana kurdî ya bi navê «Sobarto» ye?",
+    "prompt": "Kî nivîskarê romana kurdî ya bi navê \"Sobarto\" ye?",
     "promptTr": "Sobarto adlı Kürtçe romanın yazarı kimdir?",
     "answers": [
       "Fawaz Husên",
@@ -12669,7 +12499,7 @@
     "correctAnswer": "Helîm Yûsiv",
     "correctAnswerTr": "Helîm Yûsiv",
     "explanation": "Helîm Yûsiv, 1999 yılında yayımlanan Sobarto adlı Kürtçe romanı yazmıştır.",
-    "explanationKu": "Helîm Yûsiv romana kurdî ya «Sobarto» nivîsandiye ku di sala 1999an de hatiye çapkirin.",
+    "explanationKu": "Helîm Yûsiv romana kurdî ya \"Sobarto\" nivîsandiye ku di sala 1999an de hatiye çapkirin.",
     "explanationTr": "Helîm Yûsiv, 1999 yılında yayımlanan Sobarto adlı Kürtçe romanı yazmıştır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -12686,7 +12516,7 @@
     "difficulty": 4,
     "id": "r15_edebiyat_B3_26",
     "category": "Edebiyat",
-    "prompt": "Kîjan nivîskar kovara «Ayre» ya ku bi giranî bi Zazakî dihat weşandin, derxist?",
+    "prompt": "Kîjan nivîskar kovara \"Ayre\" ya ku bi giranî bi Zazakî dihat weşandin, derxist?",
     "promptTr": "Ağırlıklı olarak Zazaca yayımlanan Ayre dergisini hangi yazar çıkardı?",
     "answers": [
       "Koyo Berz",
@@ -12703,7 +12533,7 @@
     "correctAnswer": "Ebubekir Pamukçu",
     "correctAnswerTr": "Ebubekir Pamukçu",
     "explanation": "Ebubekir Pamukçu, Ayre dergisini 1985-1987 yılları arasında İsveç'te yayımlamıştır.",
-    "explanationKu": "Ebubekir Pamukçu kovara «Ayre» di navbera salên 1985 û 1987an de li Swêdê derxist.",
+    "explanationKu": "Ebubekir Pamukçu kovara \"Ayre\" di navbera salên 1985 û 1987an de li Swêdê derxist.",
     "explanationTr": "Ebubekir Pamukçu, Ayre dergisini 1985-1987 yılları arasında İsveç'te yayımlamıştır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13060,8 +12890,8 @@
     "difficulty": 4,
     "id": "r15_muzik_B1_36",
     "category": "Muzîk",
-    "prompt": "Di muzîkê de, şêwaza bestekirina bi navê 'kanon' li ser kîjan prensîbê radiweste?",
-    "promptTr": "Müzikte 'kanon' adlı besteleme tekniği hangi ilkeye dayanır?",
+    "prompt": "Di muzîkê de, şêwaza bestekirina bi navê \"kanon\" li ser kîjan prensîbê radiweste?",
+    "promptTr": "Müzikte \"kanon\" adlı besteleme tekniği hangi ilkeye dayanır?",
     "answers": [
       "Tenê yek amûr di hemû berhemê de bê bikaranîn",
       "Hemû deng di heman demê de bi notên cuda dest pê bikin",
@@ -13111,7 +12941,7 @@
     "correctAnswer": "Kind of Blue",
     "correctAnswerTr": "Kind of Blue",
     "explanation": "Miles Davis'in Kind of Blue adlı caz albümü 1959 yılında yayımlanmıştır.",
-    "explanationKu": "Albûma cazê ya 'Kind of Blue' di sala 1959an de ji aliyê Miles Davis ve hate weşandin.",
+    "explanationKu": "Albûma cazê ya \"Kind of Blue\" di sala 1959an de ji aliyê Miles Davis ve hate weşandin.",
     "explanationTr": "Miles Davis'in Kind of Blue adlı caz albümü 1959 yılında yayımlanmıştır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13128,8 +12958,8 @@
     "difficulty": 2,
     "id": "r15_muzik_B1_13",
     "category": "Muzîk",
-    "prompt": "Bestekarê 'Konsertoyên Brandenburgê' kî ye?",
-    "promptTr": "'Brandenburg Konçertoları'nın bestecisi kimdir?",
+    "prompt": "Bestekarê \"Konsertoyên Brandenburgê\" kî ye?",
+    "promptTr": "\"Brandenburg Konçertoları\"nın bestecisi kimdir?",
     "answers": [
       "Georg Philipp Telemann",
       "Henry Purcell",
@@ -13162,8 +12992,8 @@
     "difficulty": 1,
     "id": "r15_muzik_B1_14",
     "category": "Muzîk",
-    "prompt": "Baleya 'Swan Lake' (Gola Qûyan) a kîjan bestekarî ye?",
-    "promptTr": "'Kuğu Gölü' balesinin bestecisi kimdir?",
+    "prompt": "Baleya \"Swan Lake\" (Gola Qûyan) a kîjan bestekarî ye?",
+    "promptTr": "\"Kuğu Gölü\" balesinin bestecisi kimdir?",
     "answers": [
       "Léo Delibes",
       "Pyotr Ilyich Tchaikovsky",
@@ -13179,7 +13009,7 @@
     "correctAnswer": "Pyotr Ilyich Tchaikovsky",
     "correctAnswerTr": "Pyotr İlyiç Çaykovski",
     "explanation": "Kuğu Gölü balesinin müziğini Pyotr İlyiç Çaykovski bestelemiştir.",
-    "explanationKu": "Pyotr Ilyich Tchaikovsky muzîka baleya 'Swan Lake' beste kir.",
+    "explanationKu": "Pyotr Ilyich Tchaikovsky muzîka baleya \"Swan Lake\" beste kir.",
     "explanationTr": "Kuğu Gölü balesinin müziğini Pyotr İlyiç Çaykovski bestelemiştir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13196,8 +13026,8 @@
     "difficulty": 2,
     "id": "r15_muzik_B1_15",
     "category": "Muzîk",
-    "prompt": "Operaya 'La traviata' ji aliyê kîjan bestekarî ve hatiye bestekirin?",
-    "promptTr": "'La traviata' operasını hangi besteci yazmıştır?",
+    "prompt": "Operaya \"La traviata\" ji aliyê kîjan bestekarî ve hatiye bestekirin?",
+    "promptTr": "\"La traviata\" operasını hangi besteci yazmıştır?",
     "answers": [
       "Gaetano Donizetti",
       "Vincenzo Bellini",
@@ -13213,7 +13043,7 @@
     "correctAnswer": "Giuseppe Verdi",
     "correctAnswerTr": "Giuseppe Verdi",
     "explanation": "Ünlü La traviata operasının bestecisi Giuseppe Verdi'dir.",
-    "explanationKu": "Giuseppe Verdi bestekarê operaya navdar a 'La traviata' ye.",
+    "explanationKu": "Giuseppe Verdi bestekarê operaya navdar a \"La traviata\" ye.",
     "explanationTr": "Ünlü La traviata operasının bestecisi Giuseppe Verdi'dir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13230,8 +13060,8 @@
     "difficulty": 2,
     "id": "r15_muzik_B1_16",
     "category": "Muzîk",
-    "prompt": "Berhema orkestrayê ya bi navê 'Boléro' ya kîjan bestekarî ye?",
-    "promptTr": "'Boléro' adlı orkestra eserini hangi besteci yazmıştır?",
+    "prompt": "Berhema orkestrayê ya bi navê \"Boléro\" ya kîjan bestekarî ye?",
+    "promptTr": "\"Boléro\" adlı orkestra eserini hangi besteci yazmıştır?",
     "answers": [
       "Erik Satie",
       "Paul Dukas",
@@ -13247,7 +13077,7 @@
     "correctAnswer": "Maurice Ravel",
     "correctAnswerTr": "Maurice Ravel",
     "explanation": "Boléro adlı orkestra eserini Maurice Ravel bestelemiştir.",
-    "explanationKu": "Maurice Ravel berhema orkestrayê ya 'Boléro' beste kir.",
+    "explanationKu": "Maurice Ravel berhema orkestrayê ya \"Boléro\" beste kir.",
     "explanationTr": "Boléro adlı orkestra eserini Maurice Ravel bestelemiştir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13264,8 +13094,8 @@
     "difficulty": 3,
     "id": "r15_muzik_B1_17",
     "category": "Muzîk",
-    "prompt": "'Der Ring des Nibelungen' zencîra operayên kîjan bestekarî ye?",
-    "promptTr": "'Nibelung Yüzüğü' adlı opera dizisi hangi besteciye aittir?",
+    "prompt": "\"Der Ring des Nibelungen\" zencîra operayên kîjan bestekarî ye?",
+    "promptTr": "\"Nibelung Yüzüğü\" adlı opera dizisi hangi besteciye aittir?",
     "answers": [
       "Richard Strauss",
       "Engelbert Humperdinck",
@@ -13281,7 +13111,7 @@
     "correctAnswer": "Richard Wagner",
     "correctAnswerTr": "Richard Wagner",
     "explanation": "Richard Wagner, Nibelung Yüzüğü adlı dört operalık diziyi bestelemiştir.",
-    "explanationKu": "Richard Wagner zencîra çar operayan a bi navê 'Der Ring des Nibelungen' beste kir.",
+    "explanationKu": "Richard Wagner zencîra çar operayan a bi navê \"Der Ring des Nibelungen\" beste kir.",
     "explanationTr": "Richard Wagner, Nibelung Yüzüğü adlı dört operalık diziyi bestelemiştir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13298,8 +13128,8 @@
     "difficulty": 3,
     "id": "r15_muzik_B1_18",
     "category": "Muzîk",
-    "prompt": "Strana hunerî ya 'Erlkönig', ku li ser helbesta Goethe ye, ji aliyê kîjan bestekarî ve hatiye bestekirin?",
-    "promptTr": "Goethe'nin şiirine dayanan 'Erlkönig' adlı sanat şarkısını hangi besteci bestelemiştir?",
+    "prompt": "Strana hunerî ya \"Erlkönig\", ku li ser helbesta Goethe ye, ji aliyê kîjan bestekarî ve hatiye bestekirin?",
+    "promptTr": "Goethe'nin şiirine dayanan \"Erlkönig\" adlı sanat şarkısını hangi besteci bestelemiştir?",
     "answers": [
       "Franz Schubert",
       "Hugo Wolf",
@@ -13315,7 +13145,7 @@
     "correctAnswer": "Franz Schubert",
     "correctAnswerTr": "Franz Schubert",
     "explanation": "Franz Schubert, Goethe'nin şiirini ses ve piyano için Erlkönig adıyla bestelemiştir.",
-    "explanationKu": "Franz Schubert li ser helbesta Goethe berhema 'Erlkönig' ji bo deng û piyanoyê beste kir.",
+    "explanationKu": "Franz Schubert li ser helbesta Goethe berhema \"Erlkönig\" ji bo deng û piyanoyê beste kir.",
     "explanationTr": "Franz Schubert, Goethe'nin şiirini ses ve piyano için Erlkönig adıyla bestelemiştir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13332,8 +13162,8 @@
     "difficulty": 3,
     "id": "r15_muzik_B1_19",
     "category": "Muzîk",
-    "prompt": "Berhema 'Le Carnaval des animaux' (Karnavala Heywanan) a kîjan bestekarî ye?",
-    "promptTr": "'Hayvanlar Karnavalı' adlı eserin bestecisi kimdir?",
+    "prompt": "Berhema \"Le Carnaval des animaux\" (Karnavala Heywanan) a kîjan bestekarî ye?",
+    "promptTr": "\"Hayvanlar Karnavalı\" adlı eserin bestecisi kimdir?",
     "answers": [
       "César Franck",
       "Emmanuel Chabrier",
@@ -13349,7 +13179,7 @@
     "correctAnswer": "Camille Saint-Saëns",
     "correctAnswerTr": "Camille Saint-Saëns",
     "explanation": "Camille Saint-Saëns, Hayvanlar Karnavalı adlı süiti bestelemiştir.",
-    "explanationKu": "Camille Saint-Saëns sûîta 'Le Carnaval des animaux' beste kir.",
+    "explanationKu": "Camille Saint-Saëns sûîta \"Le Carnaval des animaux\" beste kir.",
     "explanationTr": "Camille Saint-Saëns, Hayvanlar Karnavalı adlı süiti bestelemiştir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13366,8 +13196,8 @@
     "difficulty": 3,
     "id": "r15_muzik_B1_20",
     "category": "Muzîk",
-    "prompt": "Sûîta orkestrayê ya 'The Planets' a kîjan bestekarî ye?",
-    "promptTr": "'Gezegenler' adlı orkestra süitinin bestecisi kimdir?",
+    "prompt": "Sûîta orkestrayê ya \"The Planets\" a kîjan bestekarî ye?",
+    "promptTr": "\"Gezegenler\" adlı orkestra süitinin bestecisi kimdir?",
     "answers": [
       "Ralph Vaughan Williams",
       "Benjamin Britten",
@@ -13383,7 +13213,7 @@
     "correctAnswer": "Gustav Holst",
     "correctAnswerTr": "Gustav Holst",
     "explanation": "Gustav Holst, Gezegenler adlı orkestra süitini bestelemiştir.",
-    "explanationKu": "Gustav Holst sûîta orkestrayê ya 'The Planets' beste kir.",
+    "explanationKu": "Gustav Holst sûîta orkestrayê ya \"The Planets\" beste kir.",
     "explanationTr": "Gustav Holst, Gezegenler adlı orkestra süitini bestelemiştir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13400,8 +13230,8 @@
     "difficulty": 2,
     "id": "r15_muzik_B1_21",
     "category": "Muzîk",
-    "prompt": "Berhema muzîkî ya ji bo zarokan 'Peter and the Wolf' ji aliyê kê ve hatiye bestekirin?",
-    "promptTr": "Çocuklara yönelik 'Peter ve Kurt' adlı müzikli öyküyü kim bestelemiştir?",
+    "prompt": "Berhema muzîkî ya ji bo zarokan \"Peter and the Wolf\" ji aliyê kê ve hatiye bestekirin?",
+    "promptTr": "Çocuklara yönelik \"Peter ve Kurt\" adlı müzikli öyküyü kim bestelemiştir?",
     "answers": [
       "Aram Khachaturian",
       "Sergei Prokofiev",
@@ -13417,7 +13247,7 @@
     "correctAnswer": "Sergei Prokofiev",
     "correctAnswerTr": "Sergey Prokofyev",
     "explanation": "Sergey Prokofyev, Peter ve Kurt'u orkestra müziğiyle bir öykü anlatmak amacıyla bestelemiştir.",
-    "explanationKu": "Sergei Prokofiev berhema 'Peter and the Wolf' ji bo vegotina çîrokekê bi muzîka orkestrayê beste kir.",
+    "explanationKu": "Sergei Prokofiev berhema \"Peter and the Wolf\" ji bo vegotina çîrokekê bi muzîka orkestrayê beste kir.",
     "explanationTr": "Sergey Prokofyev, Peter ve Kurt'u orkestra müziğiyle bir öykü anlatmak amacıyla bestelemiştir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13434,8 +13264,8 @@
     "difficulty": 4,
     "id": "r15_muzik_B1_22",
     "category": "Muzîk",
-    "prompt": "Kê berhema 'Pictures at an Exhibition' (Wêneyên Pêşangehê) di destpêkê de ji bo piyanoyê beste kir?",
-    "promptTr": "'Bir Sergiden Tablolar' eserini başlangıçta piyano için kim bestelemiştir?",
+    "prompt": "Kê berhema \"Pictures at an Exhibition\" (Wêneyên Pêşangehê) di destpêkê de ji bo piyanoyê beste kir?",
+    "promptTr": "\"Bir Sergiden Tablolar\" eserini başlangıçta piyano için kim bestelemiştir?",
     "answers": [
       "Nikolai Rimsky-Korsakov",
       "Mily Balakirev",
@@ -13451,7 +13281,7 @@
     "correctAnswer": "Modest Mussorgsky",
     "correctAnswerTr": "Modest Musorgski",
     "explanation": "Modest Musorgski, Bir Sergiden Tablolar'ı başlangıçta piyano parçaları dizisi olarak bestelemiştir.",
-    "explanationKu": "Modest Mussorgsky berhema 'Pictures at an Exhibition' di destpêkê de wek komeke parçeyên piyanoyê beste kir.",
+    "explanationKu": "Modest Mussorgsky berhema \"Pictures at an Exhibition\" di destpêkê de wek komeke parçeyên piyanoyê beste kir.",
     "explanationTr": "Modest Musorgski, Bir Sergiden Tablolar'ı başlangıçta piyano parçaları dizisi olarak bestelemiştir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13468,8 +13298,8 @@
     "difficulty": 3,
     "id": "r15_muzik_B1_23",
     "category": "Muzîk",
-    "prompt": "Berhema sîmfonîk a 'Finlandia' a kîjan bestekarî ye?",
-    "promptTr": "'Finlandia' adlı senfonik eserin bestecisi kimdir?",
+    "prompt": "Berhema sîmfonîk a \"Finlandia\" a kîjan bestekarî ye?",
+    "promptTr": "\"Finlandia\" adlı senfonik eserin bestecisi kimdir?",
     "answers": [
       "Gustav Mahler",
       "Jean Sibelius",
@@ -13485,7 +13315,7 @@
     "correctAnswer": "Jean Sibelius",
     "correctAnswerTr": "Jean Sibelius",
     "explanation": "Jean Sibelius, Finlandia adlı senfonik eseri bestelemiştir.",
-    "explanationKu": "Jean Sibelius berhema sîmfonîk a 'Finlandia' beste kir.",
+    "explanationKu": "Jean Sibelius berhema sîmfonîk a \"Finlandia\" beste kir.",
     "explanationTr": "Jean Sibelius, Finlandia adlı senfonik eseri bestelemiştir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13536,7 +13366,7 @@
     "difficulty": 2,
     "id": "r15_muzik_B2_04",
     "category": "Muzîk",
-    "prompt": "Kîjan stranbêjê di sala 1939an de strana 'Strange Fruit' tomar kir û navdar kir?",
+    "prompt": "Kîjan stranbêjê di sala 1939an de strana \"Strange Fruit\" tomar kir û navdar kir?",
     "promptTr": "1939 yılında Strange Fruit şarkısını kaydedip ünlendiren şarkıcı kimdir?",
     "answers": [
       "Sarah Vaughan",
@@ -13553,7 +13383,7 @@
     "correctAnswer": "Billie Holiday",
     "correctAnswerTr": "Billie Holiday",
     "explanation": "Billie Holiday, Strange Fruit'i 1939 yılında kaydetti ve şarkı onun yorumuyla büyük ün kazandı.",
-    "explanationKu": "Billie Holiday di sala 1939an de 'Strange Fruit' tomar kir û ev stran bi performansa wê pir navdar bû.",
+    "explanationKu": "Billie Holiday di sala 1939an de \"Strange Fruit\" tomar kir û ev stran bi performansa wê pir navdar bû.",
     "explanationTr": "Billie Holiday, Strange Fruit'i 1939 yılında kaydetti ve şarkı onun yorumuyla büyük ün kazandı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13604,7 +13434,7 @@
     "difficulty": 3,
     "id": "r15_muzik_B2_07",
     "category": "Muzîk",
-    "prompt": "Kê strana rockabilly ya bi navê 'Blue Suede Shoes' nivîsand?",
+    "prompt": "Kê strana rockabilly ya bi navê \"Blue Suede Shoes\" nivîsand?",
     "promptTr": "Blue Suede Shoes adlı rockabilly şarkısını kim yazdı?",
     "answers": [
       "Gene Vincent",
@@ -13621,7 +13451,7 @@
     "correctAnswer": "Carl Perkins",
     "correctAnswerTr": "Carl Perkins",
     "explanation": "Carl Perkins, Blue Suede Shoes'u yazdı ve 1956 yılında kendi yorumuyla yayımladı.",
-    "explanationKu": "Carl Perkins 'Blue Suede Shoes' nivîsand û di sala 1956an de bi performansa xwe belav kir.",
+    "explanationKu": "Carl Perkins \"Blue Suede Shoes\" nivîsand û di sala 1956an de bi performansa xwe belav kir.",
     "explanationTr": "Carl Perkins, Blue Suede Shoes'u yazdı ve 1956 yılında kendi yorumuyla yayımladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13706,7 +13536,7 @@
     "difficulty": 2,
     "id": "r15_muzik_B2_10",
     "category": "Muzîk",
-    "prompt": "Strana rockê ya bi navê 'Smoke on the Water' ji kîjan komê ye?",
+    "prompt": "Strana rockê ya bi navê \"Smoke on the Water\" ji kîjan komê ye?",
     "promptTr": "Smoke on the Water adlı rock şarkısı hangi gruba aittir?",
     "answers": [
       "Uriah Heep",
@@ -13723,7 +13553,7 @@
     "correctAnswer": "Deep Purple",
     "correctAnswerTr": "Deep Purple",
     "explanation": "Deep Purple, Smoke on the Water şarkısını 1972 tarihli Machine Head albümünde yayımladı.",
-    "explanationKu": "Koma Deep Purple strana 'Smoke on the Water' di albûma 'Machine Head' a sala 1972an de belav kir.",
+    "explanationKu": "Koma Deep Purple strana \"Smoke on the Water\" di albûma \"Machine Head\" a sala 1972an de belav kir.",
     "explanationTr": "Deep Purple, Smoke on the Water şarkısını 1972 tarihli Machine Head albümünde yayımladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13740,7 +13570,7 @@
     "difficulty": 2,
     "id": "r15_muzik_B2_11",
     "category": "Muzîk",
-    "prompt": "Albûma 'London Calling' ji kîjan koma punk rockê ye?",
+    "prompt": "Albûma \"London Calling\" ji kîjan koma punk rockê ye?",
     "promptTr": "London Calling albümü hangi punk rock grubuna aittir?",
     "answers": [
       "The Smiths",
@@ -13757,7 +13587,7 @@
     "correctAnswer": "The Clash",
     "correctAnswerTr": "The Clash",
     "explanation": "The Clash grubu London Calling albümünü 1979 yılında Britanya'da yayımladı.",
-    "explanationKu": "Koma The Clash albûma 'London Calling' di sala 1979an de li Brîtanyayê belav kir.",
+    "explanationKu": "Koma The Clash albûma \"London Calling\" di sala 1979an de li Brîtanyayê belav kir.",
     "explanationTr": "The Clash grubu London Calling albümünü 1979 yılında Britanya'da yayımladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13774,7 +13604,7 @@
     "difficulty": 2,
     "id": "r15_muzik_B2_12",
     "category": "Muzîk",
-    "prompt": "Kîjan koma rockê albûma 'Paranoid' di sala 1970an de belav kir?",
+    "prompt": "Kîjan koma rockê albûma \"Paranoid\" di sala 1970an de belav kir?",
     "promptTr": "1970 yılında Paranoid albümünü hangi rock grubu yayımladı?",
     "answers": [
       "Black Sabbath",
@@ -13791,7 +13621,7 @@
     "correctAnswer": "Black Sabbath",
     "correctAnswerTr": "Black Sabbath",
     "explanation": "Black Sabbath, ikinci stüdyo albümü Paranoid'i 1970 yılında yayımladı.",
-    "explanationKu": "Koma Black Sabbath albûma xwe ya duyemîn 'Paranoid' di sala 1970an de belav kir.",
+    "explanationKu": "Koma Black Sabbath albûma xwe ya duyemîn \"Paranoid\" di sala 1970an de belav kir.",
     "explanationTr": "Black Sabbath, ikinci stüdyo albümü Paranoid'i 1970 yılında yayımladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13808,7 +13638,7 @@
     "difficulty": 1,
     "id": "r15_muzik_B2_13",
     "category": "Muzîk",
-    "prompt": "Strana navdar a 'Hotel California' ji kîjan koma rockê ye?",
+    "prompt": "Strana navdar a \"Hotel California\" ji kîjan koma rockê ye?",
     "promptTr": "Ünlü Hotel California şarkısı hangi rock grubuna aittir?",
     "answers": [
       "America",
@@ -13825,7 +13655,7 @@
     "correctAnswer": "Eagles",
     "correctAnswerTr": "Eagles",
     "explanation": "Eagles grubu Hotel California şarkısını aynı adlı albümünde yayımladı.",
-    "explanationKu": "Koma Eagles strana 'Hotel California' di albûma xwe ya bi heman navî de belav kir.",
+    "explanationKu": "Koma Eagles strana \"Hotel California\" di albûma xwe ya bi heman navî de belav kir.",
     "explanationTr": "Eagles grubu Hotel California şarkısını aynı adlı albümünde yayımladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13842,7 +13672,7 @@
     "difficulty": 1,
     "id": "r15_muzik_B2_14",
     "category": "Muzîk",
-    "prompt": "Kîjan stranbêja popê strana 'Vogue' di sala 1990an de belav kir?",
+    "prompt": "Kîjan stranbêja popê strana \"Vogue\" di sala 1990an de belav kir?",
     "promptTr": "1990 yılında Vogue şarkısını hangi pop şarkıcısı yayımladı?",
     "answers": [
       "Cyndi Lauper",
@@ -13859,7 +13689,7 @@
     "correctAnswer": "Madonna",
     "correctAnswerTr": "Madonna",
     "explanation": "Madonna, Vogue şarkısını 1990 yılında yayımladı ve şarkı onun tanınmış eserlerinden biri oldu.",
-    "explanationKu": "Madonna strana 'Vogue' di sala 1990an de belav kir û ew di nav stranên wê yên navdar de cih girt.",
+    "explanationKu": "Madonna strana \"Vogue\" di sala 1990an de belav kir û ew di nav stranên wê yên navdar de cih girt.",
     "explanationTr": "Madonna, Vogue şarkısını 1990 yılında yayımladı ve şarkı onun tanınmış eserlerinden biri oldu.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13876,7 +13706,7 @@
     "difficulty": 3,
     "id": "r15_muzik_B2_16",
     "category": "Muzîk",
-    "prompt": "Kê strana 'I Will Always Love You' nivîsand ku paşê bi performansa Whitney Houston jî navdar bû?",
+    "prompt": "Kê strana \"I Will Always Love You\" nivîsand ku paşê bi performansa Whitney Houston jî navdar bû?",
     "promptTr": "Daha sonra Whitney Houston'ın yorumuyla da ünlenen I Will Always Love You şarkısını kim yazdı?",
     "answers": [
       "Dolly Parton",
@@ -13893,7 +13723,7 @@
     "correctAnswer": "Dolly Parton",
     "correctAnswerTr": "Dolly Parton",
     "explanation": "Dolly Parton, I Will Always Love You'yu yazdı ve 1974 yılında kendi sesiyle yayımladı.",
-    "explanationKu": "Dolly Parton strana 'I Will Always Love You' nivîsand û di sala 1974an de bi dengê xwe belav kir.",
+    "explanationKu": "Dolly Parton strana \"I Will Always Love You\" nivîsand û di sala 1974an de bi dengê xwe belav kir.",
     "explanationTr": "Dolly Parton, I Will Always Love You'yu yazdı ve 1974 yılında kendi sesiyle yayımladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13910,7 +13740,7 @@
     "difficulty": 3,
     "id": "r15_muzik_B2_17",
     "category": "Muzîk",
-    "prompt": "Kîjan muzîkjenî karakterê sehneyê yê bi navê 'Ziggy Stardust' afirand?",
+    "prompt": "Kîjan muzîkjenî karakterê sehneyê yê bi navê \"Ziggy Stardust\" afirand?",
     "promptTr": "Ziggy Stardust adlı sahne karakterini hangi müzisyen yarattı?",
     "answers": [
       "Elton John",
@@ -13927,7 +13757,7 @@
     "correctAnswer": "David Bowie",
     "correctAnswerTr": "David Bowie",
     "explanation": "David Bowie, Ziggy Stardust karakterini 1972 yılında bir konsept albümle tanıttı.",
-    "explanationKu": "David Bowie di sala 1972an de karakterê 'Ziggy Stardust' di albûmeke konseptê de pêşkêş kir.",
+    "explanationKu": "David Bowie di sala 1972an de karakterê \"Ziggy Stardust\" di albûmeke konseptê de pêşkêş kir.",
     "explanationTr": "David Bowie, Ziggy Stardust karakterini 1972 yılında bir konsept albümle tanıttı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13944,7 +13774,7 @@
     "difficulty": 1,
     "id": "r15_muzik_B2_18",
     "category": "Muzîk",
-    "prompt": "Kîjan stranbêja Amerîkî bi strana 'I Wanna Dance with Somebody (Who Loves Me)' ya sala 1987an navdar bû?",
+    "prompt": "Kîjan stranbêja Amerîkî bi strana \"I Wanna Dance with Somebody (Who Loves Me)\" ya sala 1987an navdar bû?",
     "promptTr": "1987 tarihli I Wanna Dance with Somebody (Who Loves Me) şarkısıyla tanınan Amerikalı şarkıcı kimdir?",
     "answers": [
       "Anita Baker",
@@ -13961,7 +13791,7 @@
     "correctAnswer": "Whitney Houston",
     "correctAnswerTr": "Whitney Houston",
     "explanation": "Whitney Houston, I Wanna Dance with Somebody şarkısını Whitney adlı albümünde yayımladı.",
-    "explanationKu": "Whitney Houston strana 'I Wanna Dance with Somebody' di albûma xwe ya 'Whitney' de belav kir.",
+    "explanationKu": "Whitney Houston strana \"I Wanna Dance with Somebody\" di albûma xwe ya \"Whitney\" de belav kir.",
     "explanationTr": "Whitney Houston, I Wanna Dance with Somebody şarkısını Whitney adlı albümünde yayımladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -13978,7 +13808,7 @@
     "difficulty": 2,
     "id": "r15_muzik_B2_19",
     "category": "Muzîk",
-    "prompt": "Kîjan stranbêjê strana 'What's Love Got to Do with It' di sala 1984an de bi dengê xwe belav kir?",
+    "prompt": "Kîjan stranbêjê strana \"What's Love Got to Do with It\" di sala 1984an de bi dengê xwe belav kir?",
     "promptTr": "What's Love Got to Do with It şarkısını 1984 yılında hangi şarkıcı seslendirip yayımladı?",
     "answers": [
       "Gloria Gaynor",
@@ -13995,7 +13825,7 @@
     "correctAnswer": "Tina Turner",
     "correctAnswerTr": "Tina Turner",
     "explanation": "Tina Turner, What's Love Got to Do with It şarkısını Private Dancer albümünde yayımladı.",
-    "explanationKu": "Tina Turner strana 'What's Love Got to Do with It' di albûma 'Private Dancer' de belav kir.",
+    "explanationKu": "Tina Turner strana \"What's Love Got to Do with It\" di albûma \"Private Dancer\" de belav kir.",
     "explanationTr": "Tina Turner, What's Love Got to Do with It şarkısını Private Dancer albümünde yayımladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -14012,7 +13842,7 @@
     "difficulty": 2,
     "id": "r15_muzik_B2_21",
     "category": "Muzîk",
-    "prompt": "Strana Adele ya bi navê 'Rolling in the Deep' di kîjan albûma wê ya stûdyoyê de ye?",
+    "prompt": "Strana Adele ya bi navê \"Rolling in the Deep\" di kîjan albûma wê ya stûdyoyê de ye?",
     "promptTr": "Adele'in Rolling in the Deep şarkısı hangi stüdyo albümünde yer alır?",
     "answers": [
       "19",
@@ -14029,7 +13859,7 @@
     "correctAnswer": "21",
     "correctAnswerTr": "21",
     "explanation": "Rolling in the Deep, Adele'in 2011 yılında çıkan 21 albümünde yer alır.",
-    "explanationKu": "Strana 'Rolling in the Deep' di albûma '21' a Adele de ye ku di sala 2011an de derket.",
+    "explanationKu": "Strana \"Rolling in the Deep\" di albûma \"21\" a Adele de ye ku di sala 2011an de derket.",
     "explanationTr": "Rolling in the Deep, Adele'in 2011 yılında çıkan 21 albümünde yer alır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -14046,7 +13876,7 @@
     "difficulty": 4,
     "id": "r15_muzik_B2_25",
     "category": "Muzîk",
-    "prompt": "Muzîkala 'Cats' li ser bingeha helbestên kîjan nivîskarî hatiye afirandin?",
+    "prompt": "Muzîkala \"Cats\" li ser bingeha helbestên kîjan nivîskarî hatiye afirandin?",
     "promptTr": "Cats müzikali hangi yazarın şiirleri temel alınarak oluşturulmuştur?",
     "answers": [
       "T. S. Eliot",
@@ -14063,7 +13893,7 @@
     "correctAnswer": "T. S. Eliot",
     "correctAnswerTr": "T. S. Eliot",
     "explanation": "Cats müzikali, T. S. Eliot'ın Old Possum's Book of Practical Cats adlı şiir kitabından uyarlanmıştır.",
-    "explanationKu": "Muzîkala 'Cats' li ser bingeha pirtûka helbestan a T. S. Eliot ya bi navê 'Old Possum's Book of Practical Cats' hatiye afirandin.",
+    "explanationKu": "Muzîkala \"Cats\" li ser bingeha pirtûka helbestan a T. S. Eliot ya bi navê \"Old Possum's Book of Practical Cats\" hatiye afirandin.",
     "explanationTr": "Cats müzikali, T. S. Eliot'ın Old Possum's Book of Practical Cats adlı şiir kitabından uyarlanmıştır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -14080,7 +13910,7 @@
     "difficulty": 3,
     "id": "r15_muzik_B2_30",
     "category": "Muzîk",
-    "prompt": "Albûma muzîka kurdî ya bi navê 'Dûrî' ji kîjan hunermendî ye?",
+    "prompt": "Albûma muzîka kurdî ya bi navê \"Dûrî\" ji kîjan hunermendî ye?",
     "promptTr": "Dûrî adlı Kürtçe müzik albümü hangi sanatçıya aittir?",
     "answers": [
       "Hozan Dîno",
@@ -14097,7 +13927,7 @@
     "correctAnswer": "Ciwan Haco",
     "correctAnswerTr": "Ciwan Haco",
     "explanation": "Ciwan Haco, Dûrî albümünü 1994 yılında İtalyan müzisyen Paolo Vinaccia ile iş birliği yaparak hazırladı.",
-    "explanationKu": "Ciwan Haco albûma 'Dûrî' di sala 1994an de bi hevkariya muzîkjenê îtalî Paolo Vinaccia amade kir.",
+    "explanationKu": "Ciwan Haco albûma \"Dûrî\" di sala 1994an de bi hevkariya muzîkjenê îtalî Paolo Vinaccia amade kir.",
     "explanationTr": "Ciwan Haco, Dûrî albümünü 1994 yılında İtalyan müzisyen Paolo Vinaccia ile iş birliği yaparak hazırladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -14114,7 +13944,7 @@
     "difficulty": 3,
     "id": "r15_muzik_B2_02",
     "category": "Muzîk",
-    "prompt": "Kê parçeya cazê ya bi navê 'Take Five' beste kir?",
+    "prompt": "Kê parçeya cazê ya bi navê \"Take Five\" beste kir?",
     "promptTr": "Take Five adlı caz parçasını kim besteledi?",
     "answers": [
       "Duke Ellington",
@@ -14131,7 +13961,7 @@
     "correctAnswer": "Paul Desmond",
     "correctAnswerTr": "Paul Desmond",
     "explanation": "Take Five'ın bestecisi Paul Desmond'dur ve eser Dave Brubeck Quartet'in yorumuyla ünlenmiştir.",
-    "explanationKu": "Bestekarê 'Take Five' Paul Desmond e û parçe bi performansa Dave Brubeck Quartetê navdar bû.",
+    "explanationKu": "Bestekarê \"Take Five\" Paul Desmond e û parçe bi performansa Dave Brubeck Quartetê navdar bû.",
     "explanationTr": "Take Five'ın bestecisi Paul Desmond'dur ve eser Dave Brubeck Quartet'in yorumuyla ünlenmiştir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -14148,7 +13978,7 @@
     "difficulty": 4,
     "id": "r15_muzik_B2_06",
     "category": "Muzîk",
-    "prompt": "Bestekarê parçeya cazê ya bi navê 'Take the A Train' kî ye?",
+    "prompt": "Bestekarê parçeya cazê ya bi navê \"Take the A Train\" kî ye?",
     "promptTr": "Take the A Train adlı caz eserinin bestecisi kimdir?",
     "answers": [
       "Benny Goodman",
@@ -14165,7 +13995,7 @@
     "correctAnswer": "Billy Strayhorn",
     "correctAnswerTr": "Billy Strayhorn",
     "explanation": "Take the A Train'i Billy Strayhorn besteledi ve eser Duke Ellington orkestrasıyla ün kazandı.",
-    "explanationKu": "Billy Strayhorn 'Take the A Train' beste kir û parçe bi orkestraya Duke Ellington navdar bû.",
+    "explanationKu": "Billy Strayhorn \"Take the A Train\" beste kir û parçe bi orkestraya Duke Ellington navdar bû.",
     "explanationTr": "Take the A Train'i Billy Strayhorn besteledi ve eser Duke Ellington orkestrasıyla ün kazandı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -14182,7 +14012,7 @@
     "difficulty": 1,
     "id": "r15_muzik_B2_15",
     "category": "Muzîk",
-    "prompt": "Albûm û strana bi navê 'Purple Rain' bi kîjan hunermendê pop-rockê ve girêdayî ne?",
+    "prompt": "Albûm û strana bi navê \"Purple Rain\" bi kîjan hunermendê pop-rockê ve girêdayî ne?",
     "promptTr": "Purple Rain adlı albüm ve şarkı hangi pop-rock sanatçısına aittir?",
     "answers": [
       "Lionel Richie",
@@ -14199,7 +14029,7 @@
     "correctAnswer": "Prince",
     "correctAnswerTr": "Prince",
     "explanation": "Prince, Purple Rain albümünü 1984 yılında grubu The Revolution ile birlikte yayımladı.",
-    "explanationKu": "Prince albûma 'Purple Rain' di sala 1984an de bi koma xwe The Revolution re belav kir.",
+    "explanationKu": "Prince albûma \"Purple Rain\" di sala 1984an de bi koma xwe The Revolution re belav kir.",
     "explanationTr": "Prince, Purple Rain albümünü 1984 yılında grubu The Revolution ile birlikte yayımladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -14216,7 +14046,7 @@
     "difficulty": 3,
     "id": "r15_muzik_B2_22",
     "category": "Muzîk",
-    "prompt": "Kê muzîka muzîkala 'West Side Story' beste kir?",
+    "prompt": "Kê muzîka muzîkala \"West Side Story\" beste kir?",
     "promptTr": "West Side Story müzikalinin müziğini kim besteledi?",
     "answers": [
       "Richard Rodgers",
@@ -14233,7 +14063,7 @@
     "correctAnswer": "Leonard Bernstein",
     "correctAnswerTr": "Leonard Bernstein",
     "explanation": "West Side Story'nin müziğini Leonard Bernstein besteledi, şarkı sözlerini ise Stephen Sondheim yazdı.",
-    "explanationKu": "Leonard Bernstein muzîka 'West Side Story' beste kir û Stephen Sondheim gotinên stranên wê nivîsandin.",
+    "explanationKu": "Leonard Bernstein muzîka \"West Side Story\" beste kir û Stephen Sondheim gotinên stranên wê nivîsandin.",
     "explanationTr": "West Side Story'nin müziğini Leonard Bernstein besteledi, şarkı sözlerini ise Stephen Sondheim yazdı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -14250,7 +14080,7 @@
     "difficulty": 2,
     "id": "r15_muzik_B2_23",
     "category": "Muzîk",
-    "prompt": "Bestekarê muzîkala 'The Phantom of the Opera' kî ye?",
+    "prompt": "Bestekarê muzîkala \"The Phantom of the Opera\" kî ye?",
     "promptTr": "The Phantom of the Opera müzikalinin bestecisi kimdir?",
     "answers": [
       "Andrew Lloyd Webber",
@@ -14267,7 +14097,7 @@
     "correctAnswer": "Andrew Lloyd Webber",
     "correctAnswerTr": "Andrew Lloyd Webber",
     "explanation": "Andrew Lloyd Webber, 1986 yılında Londra'da sahnelenmeye başlayan The Phantom of the Opera müzikalinin müziğini besteledi.",
-    "explanationKu": "Andrew Lloyd Webber muzîka muzîkala 'The Phantom of the Opera' beste kir ku di sala 1986an de li Londonê dest pê kir.",
+    "explanationKu": "Andrew Lloyd Webber muzîka muzîkala \"The Phantom of the Opera\" beste kir ku di sala 1986an de li Londonê dest pê kir.",
     "explanationTr": "Andrew Lloyd Webber, 1986 yılında Londra'da sahnelenmeye başlayan The Phantom of the Opera müzikalinin müziğini besteledi.",
     "metadata": {
       "reviewStatus": "approved",
@@ -14284,7 +14114,7 @@
     "difficulty": 2,
     "id": "r15_muzik_B2_24",
     "category": "Muzîk",
-    "prompt": "Kîjan hunermendî muzîkala 'Hamilton' nivîsand û muzîka wê beste kir?",
+    "prompt": "Kîjan hunermendî muzîkala \"Hamilton\" nivîsand û muzîka wê beste kir?",
     "promptTr": "Hamilton müzikalini yazan ve müziğini besteleyen sanatçı kimdir?",
     "answers": [
       "Stephen Schwartz",
@@ -14301,7 +14131,7 @@
     "correctAnswer": "Lin-Manuel Miranda",
     "correctAnswerTr": "Lin-Manuel Miranda",
     "explanation": "Lin-Manuel Miranda, Hamilton müzikalinin metnini, şarkı sözlerini ve müziğini yazdı.",
-    "explanationKu": "Lin-Manuel Miranda çîrok, gotinên stranan û muzîka muzîkala 'Hamilton' nivîsand.",
+    "explanationKu": "Lin-Manuel Miranda çîrok, gotinên stranan û muzîka muzîkala \"Hamilton\" nivîsand.",
     "explanationTr": "Lin-Manuel Miranda, Hamilton müzikalinin metnini, şarkı sözlerini ve müziğini yazdı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -14318,7 +14148,7 @@
     "difficulty": 3,
     "id": "r15_muzik_B2_26",
     "category": "Muzîk",
-    "prompt": "Bestekarê muzîka operaya 'Porgy and Bess' kî ye?",
+    "prompt": "Bestekarê muzîka operaya \"Porgy and Bess\" kî ye?",
     "promptTr": "Porgy and Bess operasının müziğini besteleyen kişi kimdir?",
     "answers": [
       "Samuel Barber",
@@ -14335,7 +14165,7 @@
     "correctAnswer": "George Gershwin",
     "correctAnswerTr": "George Gershwin",
     "explanation": "George Gershwin, Porgy and Bess operasının müziğini besteledi ve opera ilk kez 1935 yılında sahnelendi.",
-    "explanationKu": "George Gershwin muzîka operaya 'Porgy and Bess' beste kir û opera di sala 1935an de cara yekem hate pêşkêşkirin.",
+    "explanationKu": "George Gershwin muzîka operaya \"Porgy and Bess\" beste kir û opera di sala 1935an de cara yekem hate pêşkêşkirin.",
     "explanationTr": "George Gershwin, Porgy and Bess operasının müziğini besteledi ve opera ilk kez 1935 yılında sahnelendi.",
     "metadata": {
       "reviewStatus": "approved",
@@ -14352,7 +14182,7 @@
     "difficulty": 4,
     "id": "r15_muzik_B2_27",
     "category": "Muzîk",
-    "prompt": "Kê operaya îtalî ya bi navê 'Norma' beste kir?",
+    "prompt": "Kê operaya îtalî ya bi navê \"Norma\" beste kir?",
     "promptTr": "Norma adlı İtalyan operasını kim besteledi?",
     "answers": [
       "Vincenzo Bellini",
@@ -14369,7 +14199,7 @@
     "correctAnswer": "Vincenzo Bellini",
     "correctAnswerTr": "Vincenzo Bellini",
     "explanation": "Vincenzo Bellini, Norma operasını besteledi ve eser ilk kez 1831 yılında Milano'da sahnelendi.",
-    "explanationKu": "Vincenzo Bellini operaya 'Norma' beste kir û ew di sala 1831an de li Milanoyê cara yekem hate pêşkêşkirin.",
+    "explanationKu": "Vincenzo Bellini operaya \"Norma\" beste kir û ew di sala 1831an de li Milanoyê cara yekem hate pêşkêşkirin.",
     "explanationTr": "Vincenzo Bellini, Norma operasını besteledi ve eser ilk kez 1831 yılında Milano'da sahnelendi.",
     "metadata": {
       "reviewStatus": "approved",
@@ -14386,7 +14216,7 @@
     "difficulty": 4,
     "id": "r15_muzik_B2_28",
     "category": "Muzîk",
-    "prompt": "Bestekarê operaya 'Lucia di Lammermoor' kî ye?",
+    "prompt": "Bestekarê operaya \"Lucia di Lammermoor\" kî ye?",
     "promptTr": "Lucia di Lammermoor operasının bestecisi kimdir?",
     "answers": [
       "Jules Massenet",
@@ -14403,7 +14233,7 @@
     "correctAnswer": "Gaetano Donizetti",
     "correctAnswerTr": "Gaetano Donizetti",
     "explanation": "Gaetano Donizetti, Lucia di Lammermoor operasını besteledi ve eser ilk kez 1835 yılında sahnelendi.",
-    "explanationKu": "Gaetano Donizetti operaya 'Lucia di Lammermoor' beste kir û ew di sala 1835an de cara yekem hate pêşkêşkirin.",
+    "explanationKu": "Gaetano Donizetti operaya \"Lucia di Lammermoor\" beste kir û ew di sala 1835an de cara yekem hate pêşkêşkirin.",
     "explanationTr": "Gaetano Donizetti, Lucia di Lammermoor operasını besteledi ve eser ilk kez 1835 yılında sahnelendi.",
     "metadata": {
       "reviewStatus": "approved",
@@ -14420,7 +14250,7 @@
     "difficulty": 4,
     "id": "r15_muzik_B2_29",
     "category": "Muzîk",
-    "prompt": "Kê operaya 'Cavalleria rusticana' beste kir?",
+    "prompt": "Kê operaya \"Cavalleria rusticana\" beste kir?",
     "promptTr": "Cavalleria rusticana operasını kim besteledi?",
     "answers": [
       "Pietro Mascagni",
@@ -14437,7 +14267,7 @@
     "correctAnswer": "Pietro Mascagni",
     "correctAnswerTr": "Pietro Mascagni",
     "explanation": "Pietro Mascagni, 1890 yılında ilk kez sahnelenen tek perdelik Cavalleria rusticana operasını besteledi.",
-    "explanationKu": "Pietro Mascagni operaya yekperdeyî ya 'Cavalleria rusticana' beste kir ku di sala 1890an de cara yekem hate pêşkêşkirin.",
+    "explanationKu": "Pietro Mascagni operaya yekperdeyî ya \"Cavalleria rusticana\" beste kir ku di sala 1890an de cara yekem hate pêşkêşkirin.",
     "explanationTr": "Pietro Mascagni, 1890 yılında ilk kez sahnelenen tek perdelik Cavalleria rusticana operasını besteledi.",
     "metadata": {
       "reviewStatus": "approved",
@@ -14658,8 +14488,8 @@
     "difficulty": 3,
     "id": "r15_muzik_B3_08",
     "category": "Muzîk",
-    "prompt": "Kîjan rêza beşan mînakeke standard a forma 'rondo' ye?",
-    "promptTr": "Hangi bölüm dizilişi standart bir 'rondo' biçimi örneğidir?",
+    "prompt": "Kîjan rêza beşan mînakeke standard a forma \"rondo\" ye?",
+    "promptTr": "Hangi bölüm dizilişi standart bir \"rondo\" biçimi örneğidir?",
     "answers": [
       "A-B-A-C-A",
       "A-B-C-D-A",
@@ -14760,8 +14590,8 @@
     "difficulty": 4,
     "id": "r15_muzik_B3_15",
     "category": "Muzîk",
-    "prompt": "Usûla 'Düyek' di muzîka klasîk a Tirkî de çend zemanî ye?",
-    "promptTr": "Türk klasik müziğinde 'Düyek' usulü kaç zamanlıdır?",
+    "prompt": "Usûla \"Düyek\" di muzîka klasîk a Tirkî de çend zemanî ye?",
+    "promptTr": "Türk klasik müziğinde \"Düyek\" usulü kaç zamanlıdır?",
     "answers": [
       "Deh zemanî",
       "Heşt zemanî",
@@ -14794,8 +14624,8 @@
     "difficulty": 2,
     "id": "r15_muzik_B3_16",
     "category": "Muzîk",
-    "prompt": "Di muzîka klasîk a erebî de 'maqam' herî zêde çi diyar dike?",
-    "promptTr": "Arap klasik müziğinde 'makam' temelde neyi belirtir?",
+    "prompt": "Di muzîka klasîk a erebî de \"maqam\" herî zêde çi diyar dike?",
+    "promptTr": "Arap klasik müziğinde \"makam\" temelde neyi belirtir?",
     "answers": [
       "Amûreke têlî",
       "Cureyek tomarê deng",
@@ -14896,8 +14726,8 @@
     "difficulty": 3,
     "id": "r15_muzik_B3_20",
     "category": "Muzîk",
-    "prompt": "Kîjan bestekarê Osmanî perçeya 'Yine Bir Gül Nihal' bestekiriye?",
-    "promptTr": "'Yine Bir Gül Nihal' eserini hangi Osmanlı bestecisi bestelemiştir?",
+    "prompt": "Kîjan bestekarê Osmanî perçeya \"Yine Bir Gül Nihal\" bestekiriye?",
+    "promptTr": "\"Yine Bir Gül Nihal\" eserini hangi Osmanlı bestecisi bestelemiştir?",
     "answers": [
       "Dede Efendi",
       "Tanburi Cemil Bey",
@@ -14912,9 +14742,9 @@
     ],
     "correctAnswer": "Dede Efendi",
     "correctAnswerTr": "Dede Efendi",
-    "explanation": "'Yine Bir Gül Nihal', Hamamizade İsmail Dede Efendi tarafından bestelenmiştir.",
-    "explanationKu": "'Yine Bir Gül Nihal' ji aliyê Hamâmîzâde İsmail Dede Efendi ve hatiye bestekirin.",
-    "explanationTr": "'Yine Bir Gül Nihal', Hamamizade İsmail Dede Efendi tarafından bestelenmiştir.",
+    "explanation": "\"Yine Bir Gül Nihal\", Hamamizade İsmail Dede Efendi tarafından bestelenmiştir.",
+    "explanationKu": "\"Yine Bir Gül Nihal\" ji aliyê Hamâmîzâde İsmail Dede Efendi ve hatiye bestekirin.",
+    "explanationTr": "\"Yine Bir Gül Nihal\", Hamamizade İsmail Dede Efendi tarafından bestelenmiştir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -14930,8 +14760,8 @@
     "difficulty": 4,
     "id": "r15_muzik_B3_21",
     "category": "Muzîk",
-    "prompt": "Kîjan bestekar stranê 'Enta Omri' ji bo Ûmm Kulthûm bestekir?",
-    "promptTr": "Ümmü Gülsüm'ün seslendirdiği 'Enta Omri' şarkısını kim besteledi?",
+    "prompt": "Kîjan bestekar stranê \"Enta Omri\" ji bo Ûmm Kulthûm bestekir?",
+    "promptTr": "Ümmü Gülsüm'ün seslendirdiği \"Enta Omri\" şarkısını kim besteledi?",
     "answers": [
       "Riyad el-Sunbatî",
       "Mohammed Abdel Wahab",
@@ -14946,9 +14776,9 @@
     ],
     "correctAnswer": "Mohammed Abdel Wahab",
     "correctAnswerTr": "Muhammed Abdülvehhab",
-    "explanation": "'Enta Omri'yi Muhammed Abdülvehhab bestelemiş, Ümmü Gülsüm seslendirmiştir.",
-    "explanationKu": "'Enta Omri' ji aliyê Mohammed Abdel Wahab ve hatiye bestekirin û Ûmm Kulthûm ew stran gotiye.",
-    "explanationTr": "'Enta Omri'yi Muhammed Abdülvehhab bestelemiş, Ümmü Gülsüm seslendirmiştir.",
+    "explanation": "\"Enta Omri\"yi Muhammed Abdülvehhab bestelemiş, Ümmü Gülsüm seslendirmiştir.",
+    "explanationKu": "\"Enta Omri\" ji aliyê Mohammed Abdel Wahab ve hatiye bestekirin û Ûmm Kulthûm ew stran gotiye.",
+    "explanationTr": "\"Enta Omri\"yi Muhammed Abdülvehhab bestelemiş, Ümmü Gülsüm seslendirmiştir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -16358,8 +16188,8 @@
     "difficulty": 2,
     "id": "r15_paradigma_B1_32",
     "category": "Paradigma",
-    "prompt": "Kê di sala 1665an de ji bo valahiyên biçûk ên ku di korkê de dîtin, peyva 'şane' bi kar anî?",
-    "promptTr": "1665 yılında kork dokusunda gördüğü küçük boşluklar için 'hücre' terimini kullanan kişi kimdir?",
+    "prompt": "Kê di sala 1665an de ji bo valahiyên biçûk ên ku di korkê de dîtin, peyva \"şane\" bi kar anî?",
+    "promptTr": "1665 yılında kork dokusunda gördüğü küçük boşluklar için \"hücre\" terimini kullanan kişi kimdir?",
     "answers": [
       "Robert Hooke",
       "Theodor Schwann",
@@ -16374,9 +16204,9 @@
     ],
     "correctAnswer": "Robert Hooke",
     "correctAnswerTr": "Robert Hooke",
-    "explanation": "Robert Hooke, 1665 yılında kork dokusunu inceleyerek biyolojide 'hücre' terimini kullandı.",
-    "explanationKu": "Robert Hooke di sala 1665an de piştî çavdêriya korkê peyva 'şane' di biyolojiyê de bi kar anî.",
-    "explanationTr": "Robert Hooke, 1665 yılında kork dokusunu inceleyerek biyolojide 'hücre' terimini kullandı.",
+    "explanation": "Robert Hooke, 1665 yılında kork dokusunu inceleyerek biyolojide \"hücre\" terimini kullandı.",
+    "explanationKu": "Robert Hooke di sala 1665an de piştî çavdêriya korkê peyva \"şane\" di biyolojiyê de bi kar anî.",
+    "explanationTr": "Robert Hooke, 1665 yılında kork dokusunu inceleyerek biyolojide \"hücre\" terimini kullandı.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -16460,7 +16290,7 @@
     "difficulty": 2,
     "id": "r15_paradigma_B2_01",
     "category": "Paradigma",
-    "prompt": "Kîjan matematîkzan nivîskarê berhema kevnar a bi navê 'Elements' e?",
+    "prompt": "Kîjan matematîkzan nivîskarê berhema kevnar a bi navê \"Elements\" e?",
     "promptTr": "Elementler adlı antik eserin yazarı hangi matematikçidir?",
     "answers": [
       "Dîofantos",
@@ -16477,7 +16307,7 @@
     "correctAnswer": "Eukleîdes",
     "correctAnswerTr": "Öklid",
     "explanation": "Öklid, Elementler adlı eserinde klasik geometrinin temellerini sistemli biçimde sundu.",
-    "explanationKu": "Eukleîdes di berhema 'Elements' de bingehên geometriya klasîk bi awayekî rêkûpêk pêşkêş kir.",
+    "explanationKu": "Eukleîdes di berhema \"Elements\" de bingehên geometriya klasîk bi awayekî rêkûpêk pêşkêş kir.",
     "explanationTr": "Öklid, Elementler adlı eserinde klasik geometrinin temellerini sistemli biçimde sundu.",
     "metadata": {
       "reviewStatus": "approved",
@@ -16494,7 +16324,7 @@
     "difficulty": 4,
     "id": "r15_paradigma_B2_03",
     "category": "Paradigma",
-    "prompt": "Kîjan matematîkzanê Yewnanî nivîskarê berhema 'Arithmetica' ye?",
+    "prompt": "Kîjan matematîkzanê Yewnanî nivîskarê berhema \"Arithmetica\" ye?",
     "promptTr": "Arithmetica adlı eserin yazarı hangi Yunan matematikçidir?",
     "answers": [
       "Apollonios",
@@ -16511,7 +16341,7 @@
     "correctAnswer": "Dîofantos",
     "correctAnswerTr": "Diofantos",
     "explanation": "Diofantos, Arithmetica adlı eserinde sayısal ve cebirsel problemleri ele aldı.",
-    "explanationKu": "Dîofantos di berhema 'Arithmetica' de pirsgirêkên hejmarî û cebrî nirxand.",
+    "explanationKu": "Dîofantos di berhema \"Arithmetica\" de pirsgirêkên hejmarî û cebrî nirxand.",
     "explanationTr": "Diofantos, Arithmetica adlı eserinde sayısal ve cebirsel problemleri ele aldı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -16868,7 +16698,7 @@
     "difficulty": 4,
     "id": "r15_paradigma_B2_14",
     "category": "Paradigma",
-    "prompt": "Kîjan şaristaniyê bi girêkên li ser benan, ku 'kîpû' tê gotin, tomarên hejmarî digirt?",
+    "prompt": "Kîjan şaristaniyê bi girêkên li ser benan, ku \"kîpû\" tê gotin, tomarên hejmarî digirt?",
     "promptTr": "Kipu adı verilen düğümlü iplerle sayısal kayıtlar tutan uygarlık hangisidir?",
     "answers": [
       "Mayayan",
@@ -16936,7 +16766,7 @@
     "difficulty": 3,
     "id": "r15_paradigma_B2_16",
     "category": "Paradigma",
-    "prompt": "Kîjan sofîst bi gotina 'Mirov pîvana hemû tiştan e' tê nasîn?",
+    "prompt": "Kîjan sofîst bi gotina \"Mirov pîvana hemû tiştan e\" tê nasîn?",
     "promptTr": "İnsan her şeyin ölçüsüdür sözüyle tanınan sofist kimdir?",
     "answers": [
       "Sokrates",
@@ -16953,7 +16783,7 @@
     "correctAnswer": "Protagoras",
     "correctAnswerTr": "Protagoras",
     "explanation": "İnsan her şeyin ölçüsüdür sözü sofist filozof Protagoras'a atfedilir.",
-    "explanationKu": "Gotina 'Mirov pîvana hemû tiştan e' bi fîlozofê sofîst Protagoras re tê girêdan.",
+    "explanationKu": "Gotina \"Mirov pîvana hemû tiştan e\" bi fîlozofê sofîst Protagoras re tê girêdan.",
     "explanationTr": "İnsan her şeyin ölçüsüdür sözü sofist filozof Protagoras'a atfedilir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -16987,7 +16817,7 @@
     "correctAnswer": "Apeiron",
     "correctAnswerTr": "Apeiron",
     "explanation": "Anaksimandros, apeironu her şeyin sınırsız ve belirsiz ilkesi olarak öne sürdü.",
-    "explanationKu": "Anaksîmendros 'apeiron' wekî bingehê bêsînor û nediyar ê hemû tiştan pêşniyar kir.",
+    "explanationKu": "Anaksîmendros \"apeiron\" wekî bingehê bêsînor û nediyar ê hemû tiştan pêşniyar kir.",
     "explanationTr": "Anaksimandros, apeironu her şeyin sınırsız ve belirsiz ilkesi olarak öne sürdü.",
     "metadata": {
       "reviewStatus": "approved",
@@ -17072,7 +16902,7 @@
     "difficulty": 2,
     "id": "r15_paradigma_B2_20",
     "category": "Paradigma",
-    "prompt": "Kîjan fîlozof li Atînayê dibistana felsefî ya bi navê 'Baxçe' damezrand?",
+    "prompt": "Kîjan fîlozof li Atînayê dibistana felsefî ya bi navê \"Baxçe\" damezrand?",
     "promptTr": "Atina'da Bahçe adıyla bilinen felsefe okulunu hangi filozof kurdu?",
     "answers": [
       "Epîkuros",
@@ -17089,7 +16919,7 @@
     "correctAnswer": "Epîkuros",
     "correctAnswerTr": "Epikuros",
     "explanation": "Epikuros, Atina'da Bahçe adıyla bilinen felsefe okulunu kurdu.",
-    "explanationKu": "Epîkuros li Atînayê dibistana xwe ya felsefî ya bi navê 'Baxçe' damezrand.",
+    "explanationKu": "Epîkuros li Atînayê dibistana xwe ya felsefî ya bi navê \"Baxçe\" damezrand.",
     "explanationTr": "Epikuros, Atina'da Bahçe adıyla bilinen felsefe okulunu kurdu.",
     "metadata": {
       "reviewStatus": "approved",
@@ -17106,7 +16936,7 @@
     "difficulty": 3,
     "id": "r15_paradigma_B2_21",
     "category": "Paradigma",
-    "prompt": "Li gorî Empedoklês, çend 'rehên' bingehîn cîhanê pêk dianîn?",
+    "prompt": "Li gorî Empedoklês, çend \"rehên\" bingehîn cîhanê pêk dianîn?",
     "promptTr": "Empedokles'e göre evreni oluşturan temel köklerin sayısı kaçtı?",
     "answers": [
       "Pênc",
@@ -17140,7 +16970,7 @@
     "difficulty": 4,
     "id": "r15_paradigma_B2_22",
     "category": "Paradigma",
-    "prompt": "Berhema 'Enneads' ji nivîsên kîjan fîlozofî pêk hatiye?",
+    "prompt": "Berhema \"Enneads\" ji nivîsên kîjan fîlozofî pêk hatiye?",
     "promptTr": "Enneadlar adlı eser hangi filozofun yazılarından oluşur?",
     "answers": [
       "Seneka",
@@ -17157,7 +16987,7 @@
     "correctAnswer": "Plotînos",
     "correctAnswerTr": "Plotinos",
     "explanation": "Plotinos'un öğrencisi Porphyrios, onun yazılarını Enneadlar adlı eserde derledi.",
-    "explanationKu": "Şagirtê Plotînos, Porfîrios, nivîsên wî di berhema 'Enneads' de kom kir.",
+    "explanationKu": "Şagirtê Plotînos, Porfîrios, nivîsên wî di berhema \"Enneads\" de kom kir.",
     "explanationTr": "Plotinos'un öğrencisi Porphyrios, onun yazılarını Enneadlar adlı eserde derledi.",
     "metadata": {
       "reviewStatus": "approved",
@@ -17174,7 +17004,7 @@
     "difficulty": 4,
     "id": "r15_paradigma_B2_23",
     "category": "Paradigma",
-    "prompt": "Kîjan fîlozof di ravekirina cîhanê de 'Nous' ango hiş wekî hêza rêkûpêkê pêşniyar kir?",
+    "prompt": "Kîjan fîlozof di ravekirina cîhanê de \"Nous\" ango hiş wekî hêza rêkûpêkê pêşniyar kir?",
     "promptTr": "Evrenin açıklanmasında Nous yani aklı düzenleyici güç olarak öne süren filozof kimdir?",
     "answers": [
       "Anaksagoras",
@@ -17191,7 +17021,7 @@
     "correctAnswer": "Anaksagoras",
     "correctAnswerTr": "Anaksagoras",
     "explanation": "Anaksagoras, Nous kavramını evrene düzen veren akıl olarak öne sürdü.",
-    "explanationKu": "Anaksagoras 'Nous' wekî hişê ku rêkûpêkiyê dide cîhanê pêşniyar kir.",
+    "explanationKu": "Anaksagoras \"Nous\" wekî hişê ku rêkûpêkiyê dide cîhanê pêşniyar kir.",
     "explanationTr": "Anaksagoras, Nous kavramını evrene düzen veren akıl olarak öne sürdü.",
     "metadata": {
       "reviewStatus": "approved",
@@ -17208,7 +17038,7 @@
     "difficulty": 1,
     "id": "r15_paradigma_B2_24",
     "category": "Paradigma",
-    "prompt": "Peyva Yewnanî 'philosophia' bi wateya çi ye?",
+    "prompt": "Peyva Yewnanî \"philosophia\" bi wateya çi ye?",
     "promptTr": "Yunanca philosophia kelimesinin anlamı nedir?",
     "answers": [
       "Lêkolîna stêran",
@@ -17225,7 +17055,7 @@
     "correctAnswer": "Hezkirina hikmetê",
     "correctAnswerTr": "Bilgelik sevgisi",
     "explanation": "Philosophia kelimesi, Yunancada sevgi ve bilgelik anlamına gelen sözcüklerden oluşur.",
-    "explanationKu": "Peyva 'philosophia' ji peyvên Yewnanî yên hezkirin û hikmetê pêk hatiye.",
+    "explanationKu": "Peyva \"philosophia\" ji peyvên Yewnanî yên hezkirin û hikmetê pêk hatiye.",
     "explanationTr": "Philosophia kelimesi, Yunancada sevgi ve bilgelik anlamına gelen sözcüklerden oluşur.",
     "metadata": {
       "reviewStatus": "approved",
@@ -17684,7 +17514,7 @@
     "difficulty": 1,
     "id": "r15_paradigma_B3_01",
     "category": "Paradigma",
-    "prompt": "Kîjan fîlozof pirtûka «Leviathan» nivîsand?",
+    "prompt": "Kîjan fîlozof pirtûka \"Leviathan\" nivîsand?",
     "promptTr": "Leviathan adlı kitabı hangi filozof yazdı?",
     "answers": [
       "David Hume",
@@ -17701,7 +17531,7 @@
     "correctAnswer": "Thomas Hobbes",
     "correctAnswerTr": "Thomas Hobbes",
     "explanation": "Thomas Hobbes, Leviathan adlı eserini 1651 yılında yayımladı.",
-    "explanationKu": "Thomas Hobbes pirtûka «Leviathan» di sala 1651ê de weşand.",
+    "explanationKu": "Thomas Hobbes pirtûka \"Leviathan\" di sala 1651ê de weşand.",
     "explanationTr": "Thomas Hobbes, Leviathan adlı eserini 1651 yılında yayımladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -17718,7 +17548,7 @@
     "difficulty": 2,
     "id": "r15_paradigma_B3_02",
     "category": "Paradigma",
-    "prompt": "Di felsefeya René Descartes de «dubendiya kartêzyen» kîjan du cureyên hebûnê ji hev vediqetîne?",
+    "prompt": "Di felsefeya René Descartes de \"dubendiya kartêzyen\" kîjan du cureyên hebûnê ji hev vediqetîne?",
     "promptTr": "René Descartes felsefesindeki Kartezyen düalizm hangi iki varlık türünü birbirinden ayırır?",
     "answers": [
       "Deng û reng",
@@ -17752,7 +17582,7 @@
     "difficulty": 2,
     "id": "r15_paradigma_B3_03",
     "category": "Paradigma",
-    "prompt": "Kîjan fîlozof pirtûka «A Treatise of Human Nature» nivîsand?",
+    "prompt": "Kîjan fîlozof pirtûka \"A Treatise of Human Nature\" nivîsand?",
     "promptTr": "A Treatise of Human Nature adlı eseri hangi filozof yazdı?",
     "answers": [
       "John Stuart Mill",
@@ -17769,7 +17599,7 @@
     "correctAnswer": "David Hume",
     "correctAnswerTr": "David Hume",
     "explanation": "David Hume, A Treatise of Human Nature eserinde insan zihnini ve deneyimini inceledi.",
-    "explanationKu": "David Hume di «A Treatise of Human Nature» de hiş û tecrubeya mirovan lêkolîn kir.",
+    "explanationKu": "David Hume di \"A Treatise of Human Nature\" de hiş û tecrubeya mirovan lêkolîn kir.",
     "explanationTr": "David Hume, A Treatise of Human Nature eserinde insan zihnini ve deneyimini inceledi.",
     "metadata": {
       "reviewStatus": "approved",
@@ -17786,7 +17616,7 @@
     "difficulty": 2,
     "id": "r15_paradigma_B3_04",
     "category": "Paradigma",
-    "prompt": "Pirtûka «Fenomenolojiya Giyanê» ya kîjan fîlozofî ye?",
+    "prompt": "Pirtûka \"Fenomenolojiya Giyanê\" ya kîjan fîlozofî ye?",
     "promptTr": "Tinin Fenomenolojisi adlı kitap hangi filozofa aittir?",
     "answers": [
       "Friedrich Schelling",
@@ -17803,7 +17633,7 @@
     "correctAnswer": "Georg Wilhelm Friedrich Hegel",
     "correctAnswerTr": "Georg Wilhelm Friedrich Hegel",
     "explanation": "Hegel, Tinin Fenomenolojisi adlı eserini 1807 yılında yayımladı.",
-    "explanationKu": "Hegel «Fenomenolojiya Giyanê» di sala 1807an de weşand.",
+    "explanationKu": "Hegel \"Fenomenolojiya Giyanê\" di sala 1807an de weşand.",
     "explanationTr": "Hegel, Tinin Fenomenolojisi adlı eserini 1807 yılında yayımladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -17820,7 +17650,7 @@
     "difficulty": 3,
     "id": "r15_paradigma_B3_05",
     "category": "Paradigma",
-    "prompt": "Kîjan fîlozof nivîskarê «Die Welt als Wille und Vorstellung» e?",
+    "prompt": "Kîjan fîlozof nivîskarê \"Die Welt als Wille und Vorstellung\" e?",
     "promptTr": "İsteme ve Tasarım Olarak Dünya adlı eserin yazarı hangi filozoftur?",
     "answers": [
       "Arthur Schopenhauer",
@@ -17871,7 +17701,7 @@
     "correctAnswer": "Dasein",
     "correctAnswerTr": "Dasein",
     "explanation": "Heidegger, Dasein kavramıyla dünyada yaşayan ve kendi varlığını sorgulayan insan varoluşunu ele aldı.",
-    "explanationKu": "Heidegger bi têgeha «Dasein» hebûna mirov a ku di cîhanê de dijî û ji hebûna xwe dipirse destnîşan kir.",
+    "explanationKu": "Heidegger bi têgeha \"Dasein\" hebûna mirov a ku di cîhanê de dijî û ji hebûna xwe dipirse destnîşan kir.",
     "explanationTr": "Heidegger, Dasein kavramıyla dünyada yaşayan ve kendi varlığını sorgulayan insan varoluşunu ele aldı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -17905,7 +17735,7 @@
     "correctAnswer": "Lîstikên zimanî",
     "correctAnswerTr": "Dil oyunları",
     "explanation": "Wittgenstein, dil oyunları kavramını dilin farklı bağlamlardaki kullanımını açıklamak için kullandı.",
-    "explanationKu": "Wittgenstein têgeha «lîstikên zimanî» ji bo ravekirina bikaranîna ziman di şertên cuda de bi kar anî.",
+    "explanationKu": "Wittgenstein têgeha \"lîstikên zimanî\" ji bo ravekirina bikaranîna ziman di şertên cuda de bi kar anî.",
     "explanationTr": "Wittgenstein, dil oyunları kavramını dilin farklı bağlamlardaki kullanımını açıklamak için kullandı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -17922,7 +17752,7 @@
     "difficulty": 2,
     "id": "r15_paradigma_B3_08",
     "category": "Paradigma",
-    "prompt": "Kîjan fîlozofa jin pirtûka «Le Deuxième Sexe» nivîsand?",
+    "prompt": "Kîjan fîlozofa jin pirtûka \"Le Deuxième Sexe\" nivîsand?",
     "promptTr": "İkinci Cins adlı kitabı hangi kadın filozof yazdı?",
     "answers": [
       "Simone Weil",
@@ -17939,7 +17769,7 @@
     "correctAnswer": "Simone de Beauvoir",
     "correctAnswerTr": "Simone de Beauvoir",
     "explanation": "Simone de Beauvoir, İkinci Cins adlı kitabını 1949 yılında yayımladı.",
-    "explanationKu": "Simone de Beauvoir pirtûka «Le Deuxième Sexe» di sala 1949an de weşand.",
+    "explanationKu": "Simone de Beauvoir pirtûka \"Le Deuxième Sexe\" di sala 1949an de weşand.",
     "explanationTr": "Simone de Beauvoir, İkinci Cins adlı kitabını 1949 yılında yayımladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -17956,7 +17786,7 @@
     "difficulty": 3,
     "id": "r15_paradigma_B3_09",
     "category": "Paradigma",
-    "prompt": "Di teoriya dadmendiyê de têgeha «perdeya nezanînê» bi kîjan fîlozofî ve girêdayî ye?",
+    "prompt": "Di teoriya dadmendiyê de têgeha \"perdeya nezanînê\" bi kîjan fîlozofî ve girêdayî ye?",
     "promptTr": "Adalet teorisindeki cehalet peçesi kavramı hangi filozofla ilişkilidir?",
     "answers": [
       "Amartya Sen",
@@ -17973,7 +17803,7 @@
     "correctAnswer": "John Rawls",
     "correctAnswerTr": "John Rawls",
     "explanation": "John Rawls, cehalet peçesini kişisel bilgiler bilinmeden adalet ilkelerinin seçilmesini açıklamak için kullandı.",
-    "explanationKu": "John Rawls «perdeya nezanînê» ji bo hilbijartina prensîbên dadmendiyê bê agahiyên kesane bi kar anî.",
+    "explanationKu": "John Rawls \"perdeya nezanînê\" ji bo hilbijartina prensîbên dadmendiyê bê agahiyên kesane bi kar anî.",
     "explanationTr": "John Rawls, cehalet peçesini kişisel bilgiler bilinmeden adalet ilkelerinin seçilmesini açıklamak için kullandı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -17990,7 +17820,7 @@
     "difficulty": 3,
     "id": "r15_paradigma_B3_10",
     "category": "Paradigma",
-    "prompt": "Kîjan nivîskara felsefî «A Vindication of the Rights of Woman» nivîsand?",
+    "prompt": "Kîjan nivîskara felsefî \"A Vindication of the Rights of Woman\" nivîsand?",
     "promptTr": "Kadın Haklarının Savunusu adlı eseri hangi felsefi yazar kaleme aldı?",
     "answers": [
       "Olympe de Gouges",
@@ -18007,7 +17837,7 @@
     "correctAnswer": "Mary Wollstonecraft",
     "correctAnswerTr": "Mary Wollstonecraft",
     "explanation": "Mary Wollstonecraft, Kadın Haklarının Savunusu eserini 1792 yılında yayımladı.",
-    "explanationKu": "Mary Wollstonecraft pirtûka «A Vindication of the Rights of Woman» di sala 1792an de weşand.",
+    "explanationKu": "Mary Wollstonecraft pirtûka \"A Vindication of the Rights of Woman\" di sala 1792an de weşand.",
     "explanationTr": "Mary Wollstonecraft, Kadın Haklarının Savunusu eserini 1792 yılında yayımladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -18024,7 +17854,7 @@
     "difficulty": 4,
     "id": "r15_paradigma_B3_11",
     "category": "Paradigma",
-    "prompt": "Kîjan fîlozof pirtûka «The Concept of Mind» nivîsand?",
+    "prompt": "Kîjan fîlozof pirtûka \"The Concept of Mind\" nivîsand?",
     "promptTr": "Zihin Kavramı adlı eseri hangi filozof yazdı?",
     "answers": [
       "Hilary Putnam",
@@ -18041,7 +17871,7 @@
     "correctAnswer": "Gilbert Ryle",
     "correctAnswerTr": "Gilbert Ryle",
     "explanation": "Gilbert Ryle, Zihin Kavramı eserinde zihinsel kavramları dildeki kullanımları üzerinden inceledi.",
-    "explanationKu": "Gilbert Ryle di «The Concept of Mind» de têgehên derbarê hişê ji aliyê bikaranîna ziman ve lêkolîn kir.",
+    "explanationKu": "Gilbert Ryle di \"The Concept of Mind\" de têgehên derbarê hişê ji aliyê bikaranîna ziman ve lêkolîn kir.",
     "explanationTr": "Gilbert Ryle, Zihin Kavramı eserinde zihinsel kavramları dildeki kullanımları üzerinden inceledi.",
     "metadata": {
       "reviewStatus": "approved",
@@ -18058,7 +17888,7 @@
     "difficulty": 2,
     "id": "r15_paradigma_B3_13",
     "category": "Paradigma",
-    "prompt": "Berhevoka nivîsên bi navê «Essais» ya kîjan fîlozof-nivîskarî ye?",
+    "prompt": "Berhevoka nivîsên bi navê \"Essais\" ya kîjan fîlozof-nivîskarî ye?",
     "promptTr": "Denemeler (Essais) adlı yazı derlemesi hangi filozof-yazara aittir?",
     "answers": [
       "Voltaire",
@@ -18075,7 +17905,7 @@
     "correctAnswer": "Michel de Montaigne",
     "correctAnswerTr": "Michel de Montaigne",
     "explanation": "Michel de Montaigne, Denemeler adlı eserinde deneyimlerini ve düşüncelerini ele aldı.",
-    "explanationKu": "Michel de Montaigne di «Essais» de li ser tecrube û ramanên xwe nivîsand.",
+    "explanationKu": "Michel de Montaigne di \"Essais\" de li ser tecrube û ramanên xwe nivîsand.",
     "explanationTr": "Michel de Montaigne, Denemeler adlı eserinde deneyimlerini ve düşüncelerini ele aldı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -18364,7 +18194,7 @@
     "difficulty": 3,
     "id": "r15_paradigma_B3_24",
     "category": "Paradigma",
-    "prompt": "Kîjan bijîşk pirtûka anatomiyê ya «De humani corporis fabrica» nivîsand?",
+    "prompt": "Kîjan bijîşk pirtûka anatomiyê ya \"De humani corporis fabrica\" nivîsand?",
     "promptTr": "De humani corporis fabrica adlı anatomi kitabını hangi hekim yazdı?",
     "answers": [
       "Andreas Vesalius",
@@ -18381,7 +18211,7 @@
     "correctAnswer": "Andreas Vesalius",
     "correctAnswerTr": "Andreas Vesalius",
     "explanation": "Andreas Vesalius, De humani corporis fabrica adlı eserini 1543 yılında yayımladı.",
-    "explanationKu": "Andreas Vesalius pirtûka «De humani corporis fabrica» di sala 1543an de weşand.",
+    "explanationKu": "Andreas Vesalius pirtûka \"De humani corporis fabrica\" di sala 1543an de weşand.",
     "explanationTr": "Andreas Vesalius, De humani corporis fabrica adlı eserini 1543 yılında yayımladı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -18398,7 +18228,7 @@
     "difficulty": 2,
     "id": "r15_paradigma_B3_25",
     "category": "Paradigma",
-    "prompt": "Pirtûka derbarê bandorên dermanên dijî kêzikan a bi navê «Silent Spring» ji aliyê kê ve hate nivîsandin?",
+    "prompt": "Pirtûka derbarê bandorên dermanên dijî kêzikan a bi navê \"Silent Spring\" ji aliyê kê ve hate nivîsandin?",
     "promptTr": "Böcek ilaçlarının etkilerini ele alan Sessiz Bahar kitabını kim yazdı?",
     "answers": [
       "Rachel Carson",
@@ -18415,7 +18245,7 @@
     "correctAnswer": "Rachel Carson",
     "correctAnswerTr": "Rachel Carson",
     "explanation": "Rachel Carson, Sessiz Bahar eserinde böcek ilaçlarının çevresel zararlarını ele aldı.",
-    "explanationKu": "Rachel Carson di «Silent Spring» de li ser zirara dermanên dijî kêzikan ji bo jîngehê nivîsand.",
+    "explanationKu": "Rachel Carson di \"Silent Spring\" de li ser zirara dermanên dijî kêzikan ji bo jîngehê nivîsand.",
     "explanationTr": "Rachel Carson, Sessiz Bahar eserinde böcek ilaçlarının çevresel zararlarını ele aldı.",
     "metadata": {
       "reviewStatus": "approved",
@@ -18500,7 +18330,7 @@
     "difficulty": 3,
     "id": "r15_paradigma_B3_28",
     "category": "Paradigma",
-    "prompt": "Di ezmûneke «du-alî kor» de, kîjan kes agahiya dabeşkirina dermana rastîn û kontrolê nizanin?",
+    "prompt": "Di ezmûneke \"du-alî kor\" de, kîjan kes agahiya dabeşkirina dermana rastîn û kontrolê nizanin?",
     "promptTr": "Çift kör bir deneyde gerçek tedavi ve kontrol atamasını kimler bilmez?",
     "answers": [
       "Beşdar û lêkolînerên ku tedawiyê didin",
@@ -18602,7 +18432,7 @@
     "difficulty": 3,
     "id": "r15_paradigma_B3_31",
     "category": "Paradigma",
-    "prompt": "Di rêbaza zanistî de «danasîna operasyonel» ya têgehekê çi diyar dike?",
+    "prompt": "Di rêbaza zanistî de \"danasîna operasyonel\" ya têgehekê çi diyar dike?",
     "promptTr": "Bilimsel yöntemde bir kavramın işlemsel tanımı neyi belirtir?",
     "answers": [
       "Nirxa exlaqî ya têgehê",
@@ -18670,7 +18500,7 @@
     "difficulty": 4,
     "id": "r15_paradigma_B3_34",
     "category": "Paradigma",
-    "prompt": "Di testên hîpotezê de «xeletiya cureya yekem» çi ye?",
+    "prompt": "Di testên hîpotezê de \"xeletiya cureya yekem\" çi ye?",
     "promptTr": "Hipotez testlerinde birinci tür hata nedir?",
     "answers": [
       "Hîpoteza sifir a rast redkirin",
@@ -19316,7 +19146,7 @@
     "difficulty": 2,
     "id": "r15_sinema_A1_04",
     "category": "Sînema",
-    "prompt": "Kê fîlma Okul Tıraşı (Brother's Keeper) ya sala 2021ê derhênaye?",
+    "prompt": "Kê fîlma \"Okul Tıraşı\" (Brother's Keeper) ya sala 2021ê derhênaye?",
     "promptTr": "2021 yapımı Okul Tıraşı (Brother's Keeper) filmini kim yönetti?",
     "answers": [
       "Tolga Karaçelik",
@@ -21186,7 +21016,7 @@
     "difficulty": 2,
     "id": "r15_sinema_B3_23",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlma Gurbet Kuşları (1964) kî ye?",
+    "prompt": "Derhênerê fîlma \"Gurbet Kuşları\" (1964) kî ye?",
     "promptTr": "Gurbet Kuşları (1964) filminin yönetmeni kimdir?",
     "answers": [
       "Halit Refiğ",
@@ -21220,7 +21050,7 @@
     "difficulty": 3,
     "id": "r15_sinema_B3_24",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlma Karpuz Kabuğundan Gemiler Yapmak kî ye?",
+    "prompt": "Derhênerê fîlma \"Karpuz Kabuğundan Gemiler Yapmak\" kî ye?",
     "promptTr": "Karpuz Kabuğundan Gemiler Yapmak filminin yönetmeni kimdir?",
     "answers": [
       "Ahmet Uluçay",
@@ -21254,7 +21084,7 @@
     "difficulty": 1,
     "id": "r15_sinema_B3_25",
     "category": "Sînema",
-    "prompt": "Fîlma Hababam Sınıfı (1975) ji berhema kîjan nivîskarî hatiye adaptekirin?",
+    "prompt": "Fîlma \"Hababam Sınıfı\" (1975) ji berhema kîjan nivîskarî hatiye adaptekirin?",
     "promptTr": "Hababam Sınıfı (1975) filmi hangi yazarın eserinden uyarlanmıştır?",
     "answers": [
       "Yaşar Kemal",
@@ -21288,7 +21118,7 @@
     "difficulty": 1,
     "id": "r15_sinema_B3_26",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlma Babam ve Oğlum (2005) kî ye?",
+    "prompt": "Derhênerê fîlma \"Babam ve Oğlum\" (2005) kî ye?",
     "promptTr": "Babam ve Oğlum (2005) filminin yönetmeni kimdir?",
     "answers": [
       "Derviş Zaim",
@@ -21730,8 +21560,8 @@
     "difficulty": 1,
     "id": "r15_siyaset_B1_07",
     "category": "Siyaset",
-    "prompt": "Di zanista siyasî de 'rêjeya beşdarbûna hilbijartinê' çi nîşan dide?",
-    "promptTr": "Siyaset biliminde 'seçime katılım oranı' neyi gösterir?",
+    "prompt": "Di zanista siyasî de \"rêjeya beşdarbûna hilbijartinê\" çi nîşan dide?",
+    "promptTr": "Siyaset biliminde \"seçime katılım oranı\" neyi gösterir?",
     "answers": [
       "Rêjeya dengên nederbasdar",
       "Rêjeya dengdarên ku dengê xwe dane",
@@ -21866,8 +21696,8 @@
     "difficulty": 1,
     "id": "r15_siyaset_B1_11",
     "category": "Siyaset",
-    "prompt": "Di hilbijartinan de 'dengê nederbasdar' çi ye?",
-    "promptTr": "Seçimlerde 'geçersiz oy' nedir?",
+    "prompt": "Di hilbijartinan de \"dengê nederbasdar\" çi ye?",
+    "promptTr": "Seçimlerde \"geçersiz oy\" nedir?",
     "answers": [
       "Dengê ku li gorî rêzikên dengdanê nayê hesibandin",
       "Dengê ku ji bo namzedê serketî hatiye dayîn",
@@ -22410,8 +22240,8 @@
     "difficulty": 2,
     "id": "r15_siyaset_B1_20",
     "category": "Siyaset",
-    "prompt": "Di hesabkirina dengên derbasdar de 'piraniya mutleq' bi gelemperî tê çi wateyê?",
-    "promptTr": "Geçerli oyların sayımında 'mutlak çoğunluk' genel olarak ne anlama gelir?",
+    "prompt": "Di hesabkirina dengên derbasdar de \"piraniya mutleq\" bi gelemperî tê çi wateyê?",
+    "promptTr": "Geçerli oyların sayımında \"mutlak çoğunluk\" genel olarak ne anlama gelir?",
     "answers": [
       "Herî zêde deng li gorî namzedên din",
       "Zêdetir ji nîvê dengan",
@@ -22444,8 +22274,8 @@
     "difficulty": 2,
     "id": "r15_siyaset_B1_32",
     "category": "Siyaset",
-    "prompt": "Berhema 'The Origins of Totalitarianism' (Kokên Totalîtarîzmê) ji aliyê kê ve hatiye nivîsandin?",
-    "promptTr": "'The Origins of Totalitarianism' (Totalitarizmin Kaynakları) adlı eseri kim yazmıştır?",
+    "prompt": "Berhema \"The Origins of Totalitarianism\" (Kokên Totalîtarîzmê) ji aliyê kê ve hatiye nivîsandin?",
+    "promptTr": "\"The Origins of Totalitarianism\" (Totalitarizmin Kaynakları) adlı eseri kim yazmıştır?",
     "answers": [
       "Emma Goldman",
       "Rosa Luxemburg",
@@ -22478,8 +22308,8 @@
     "difficulty": 4,
     "id": "r15_siyaset_B1_37",
     "category": "Siyaset",
-    "prompt": "Berhema zanista siyasî ya 'Polyarchy: Participation and Opposition' ji aliyê kê ve hatiye nivîsandin?",
-    "promptTr": "'Polyarchy: Participation and Opposition' (Poliarşi: Katılım ve Muhalefet) adlı siyaset bilimi eserini kim yazmıştır?",
+    "prompt": "Berhema zanista siyasî ya \"Polyarchy: Participation and Opposition\" ji aliyê kê ve hatiye nivîsandin?",
+    "promptTr": "\"Polyarchy: Participation and Opposition\" (Poliarşi: Katılım ve Muhalefet) adlı siyaset bilimi eserini kim yazmıştır?",
     "answers": [
       "Giovanni Sartori",
       "David Easton",
@@ -24416,8 +24246,8 @@
     "difficulty": 3,
     "id": "r15_teknoloji_A1_38",
     "category": "Teknolojî",
-    "prompt": "Kîjan nivîskar bi şanoya xwe ya R.U.R. peyva 'robot' li cîhanê navdar kir?",
-    "promptTr": "R.U.R. adlı tiyatro eseriyle 'robot' sözcüğünü dünyaya tanıtan yazar kimdir?",
+    "prompt": "Kîjan nivîskar bi şanoya xwe ya R.U.R. peyva \"robot\" li cîhanê navdar kir?",
+    "promptTr": "R.U.R. adlı tiyatro eseriyle \"robot\" sözcüğünü dünyaya tanıtan yazar kimdir?",
     "answers": [
       "H. G. Wells",
       "Karel Čapek",
@@ -24432,9 +24262,9 @@
     ],
     "correctAnswer": "Karel Čapek",
     "correctAnswerTr": "Karel Čapek",
-    "explanation": "Karel Čapek'in R.U.R. adlı oyunu, 1921 yılında 'robot' sözcüğünün yaygınlaşmasını sağladı.",
-    "explanationKu": "Şanoya R.U.R. ya Karel Čapek di sala 1921an de peyva 'robot' di nav gel de belav kir.",
-    "explanationTr": "Karel Čapek'in R.U.R. adlı oyunu, 1921 yılında 'robot' sözcüğünün yaygınlaşmasını sağladı.",
+    "explanation": "Karel Čapek'in R.U.R. adlı oyunu, 1921 yılında \"robot\" sözcüğünün yaygınlaşmasını sağladı.",
+    "explanationKu": "Şanoya R.U.R. ya Karel Čapek di sala 1921an de peyva \"robot\" di nav gel de belav kir.",
+    "explanationTr": "Karel Čapek'in R.U.R. adlı oyunu, 1921 yılında \"robot\" sözcüğünün yaygınlaşmasını sağladı.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -24843,40 +24673,6 @@
     "explanation": "Termal macun, çip ile soğutucu arasındaki mikroskobik boşlukları doldurarak ısı aktarımını iyileştirir.",
     "explanationKu": "Pastaya termal valahiyên pir biçûk ên navbera çîp û sarkerê dadigire û derbaskirina germê baştir dike.",
     "explanationTr": "Termal macun, çip ile soğutucu arasındaki mikroskobik boşlukları doldurarak ısı aktarımını iyileştirir.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "kurmanci",
-      "sourceTitle": "Yeni sorular 3 (2026-11-14, üç bağımsız jüri)",
-      "qualityVersion": 2,
-      "reviewedBy": "Taslak: ChatGPT (GPT-6 Extra High); jüri: Gemini 4 Argon (Yüksek) + ChatGPT yeni sohbet / Copilot; derleme: Claude Opus 5.5",
-      "reviewedAt": "2026-11-14",
-      "lastContentCheckAt": "2026-11-14"
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "r15_teknoloji_B1_01",
-    "category": "Teknolojî",
-    "prompt": "Di nav astên cacheya L1, L2 û L3 de, kîjan ast bi gelemperî herî nêzîkî navika pêvajokarê ye?",
-    "promptTr": "L1, L2 ve L3 önbellek düzeyleri arasında genellikle işlemci çekirdeğine en yakın olan hangisidir?",
-    "answers": [
-      "L4",
-      "L3",
-      "L1",
-      "L2"
-    ],
-    "answersTr": [
-      "L4",
-      "L3",
-      "L1",
-      "L2"
-    ],
-    "correctAnswer": "L1",
-    "correctAnswerTr": "L1",
-    "explanation": "L1 önbelleği genellikle işlemci çekirdeğine en yakın düzeydir ve verilere erişim gecikmesini azaltır.",
-    "explanationKu": "Cacheya L1 bi gelemperî herî nêzîkî navika pêvajokarê ye û derengiya gihîştina daneyan kêm dike.",
-    "explanationTr": "L1 önbelleği genellikle işlemci çekirdeğine en yakın düzeydir ve verilere erişim gecikmesini azaltır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -25520,9 +25316,9 @@
     ],
     "correctAnswer": "Pîrozbahiya Noelê",
     "correctAnswerTr": "Noel kutlaması",
-    "explanation": "Neil Papworth, 3 Aralık 1992'de «Merry Christmas» yani «Mutlu Noeller» mesajını gönderdi.",
-    "explanationKu": "Neil Papworth di 3ê kanûna pêşîn a 1992an de peyama «Merry Christmas» şand.",
-    "explanationTr": "Neil Papworth, 3 Aralık 1992'de «Merry Christmas» yani «Mutlu Noeller» mesajını gönderdi.",
+    "explanation": "Neil Papworth, 3 Aralık 1992'de \"Merry Christmas\" yani \"Mutlu Noeller\" mesajını gönderdi.",
+    "explanationKu": "Neil Papworth di 3ê kanûna pêşîn a 1992an de peyama \"Merry Christmas\" şand.",
+    "explanationTr": "Neil Papworth, 3 Aralık 1992'de \"Merry Christmas\" yani \"Mutlu Noeller\" mesajını gönderdi.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",
@@ -26014,8 +25810,8 @@
     "difficulty": 3,
     "id": "r15_teknoloji_B2_02",
     "category": "Teknolojî",
-    "prompt": "Di zîrekiya çêkirî de, 'embedding' bi gelemperî çi ye?",
-    "promptTr": "Yapay zekâda 'embedding' genellikle nedir?",
+    "prompt": "Di zîrekiya çêkirî de, \"embedding\" bi gelemperî çi ye?",
+    "promptTr": "Yapay zekâda \"embedding\" genellikle nedir?",
     "answers": [
       "Parastina hemû daneyan di pelên wêneyan de",
       "Rêzkirina agahiyan tenê li gorî tarîxê",
@@ -26048,8 +25844,8 @@
     "difficulty": 3,
     "id": "r15_teknoloji_B2_03",
     "category": "Teknolojî",
-    "prompt": "Di modelên Transformer de, mekanîzmaya 'self-attention' bi taybetî çi dike?",
-    "promptTr": "Transformer modellerinde 'self-attention' mekanizması özellikle ne yapar?",
+    "prompt": "Di modelên Transformer de, mekanîzmaya \"self-attention\" bi taybetî çi dike?",
+    "promptTr": "Transformer modellerinde \"self-attention\" mekanizması özellikle ne yapar?",
     "answers": [
       "Girîngiya têkiliyên di navbera tokenên heman rêzê de diyar dike",
       "Hejmara pelên li ser dîskê dipîve",
@@ -26082,8 +25878,8 @@
     "difficulty": 2,
     "id": "r15_teknoloji_B2_04",
     "category": "Teknolojî",
-    "prompt": "Di daxwazeke 'zero-shot' de, kîjan taybetmendî heye?",
-    "promptTr": "'Zero-shot' bir istemin özelliği nedir?",
+    "prompt": "Di daxwazeke \"zero-shot\" de, kîjan taybetmendî heye?",
+    "promptTr": "\"Zero-shot\" bir istemin özelliği nedir?",
     "answers": [
       "Di daxwazê de mînakên çareserkirî yên karê tê xwestin nayên dayîn",
       "Model berê tu carî nehatiye hînkirin",
@@ -26116,8 +25912,8 @@
     "difficulty": 3,
     "id": "r15_teknoloji_B2_06",
     "category": "Teknolojî",
-    "prompt": "Di hilberandina nivîsê ya modelên zimanî de, bilindkirina nirxa 'temperature' bi gelemperî çi dike?",
-    "promptTr": "Dil modellerinde metin üretilirken 'temperature' değerinin yükseltilmesi genellikle ne yapar?",
+    "prompt": "Di hilberandina nivîsê ya modelên zimanî de, bilindkirina nirxa \"temperature\" bi gelemperî çi dike?",
+    "promptTr": "Dil modellerinde metin üretilirken \"temperature\" değerinin yükseltilmesi genellikle ne yapar?",
     "answers": [
       "Hejmara parametreyên modelê zêde dike",
       "Cihêrengiya hilbijartina tokenan zêde dike",
@@ -26150,8 +25946,8 @@
     "difficulty": 2,
     "id": "r15_teknoloji_B2_07",
     "category": "Teknolojî",
-    "prompt": "Di zanista daneyan de, taybetmendiya sereke ya 'rêza demî' (time series) çi ye?",
-    "promptTr": "Veri biliminde 'zaman serisi' (time series) verisinin temel özelliği nedir?",
+    "prompt": "Di zanista daneyan de, taybetmendiya sereke ya \"rêza demî\" (time series) çi ye?",
+    "promptTr": "Veri biliminde \"zaman serisi\" (time series) verisinin temel özelliği nedir?",
     "answers": [
       "Daneyên wê divê her dem ne-hejmarî bin",
       "Hemû nirxên wê divê wek hev bin",
@@ -26218,8 +26014,8 @@
     "difficulty": 2,
     "id": "r15_teknoloji_B2_11",
     "category": "Teknolojî",
-    "prompt": "Di polînkirina du-encamî de, 'false positive' tê çi wateyê?",
-    "promptTr": "İkili sınıflandırmada 'false positive' (yanlış pozitif) ne anlama gelir?",
+    "prompt": "Di polînkirina du-encamî de, \"false positive\" tê çi wateyê?",
+    "promptTr": "İkili sınıflandırmada \"false positive\" (yanlış pozitif) ne anlama gelir?",
     "answers": [
       "Nimûne bi rastî erênî ye û model jî wê erênî dibîne",
       "Nimûne bi rastî erênî ye, lê model wê neyînî dibîne",
@@ -26252,8 +26048,8 @@
     "difficulty": 3,
     "id": "r15_teknoloji_B2_12",
     "category": "Teknolojî",
-    "prompt": "Kîjan vektor mînakeke derbasdar a 'one-hot encoding' ji bo sê kategoriyan e?",
-    "promptTr": "Üç kategori için aşağıdaki vektörlerden hangisi geçerli bir 'one-hot encoding' örneğidir?",
+    "prompt": "Kîjan vektor mînakeke derbasdar a \"one-hot encoding\" ji bo sê kategoriyan e?",
+    "promptTr": "Üç kategori için aşağıdaki vektörlerden hangisi geçerli bir \"one-hot encoding\" örneğidir?",
     "answers": [
       "[1, 1, 0]",
       "[0, 1, 0]",
@@ -26388,8 +26184,8 @@
     "difficulty": 3,
     "id": "r15_teknoloji_B2_18",
     "category": "Teknolojî",
-    "prompt": "Di keştiyên fezayê de, 'reaction wheel' çawa arasteya keştiyê diguherîne?",
-    "promptTr": "Uzay araçlarındaki 'reaction wheel' (tepki tekerleği) aracın yönelimini nasıl değiştirir?",
+    "prompt": "Di keştiyên fezayê de, \"reaction wheel\" çawa arasteya keştiyê diguherîne?",
+    "promptTr": "Uzay araçlarındaki \"reaction wheel\" (tepki tekerleği) aracın yönelimini nasıl değiştirir?",
     "answers": [
       "Bi vekirina paraşûtê di fezayê de",
       "Bi guhertina leza zivirîna çerxê û veguheztina momentuma goşeyî",
@@ -26422,8 +26218,8 @@
     "difficulty": 2,
     "id": "r15_teknoloji_B2_19",
     "category": "Teknolojî",
-    "prompt": "Keştiyeke fezayê ya bi 'solar sail' ji bo pêşveçûnê ji kîjan bandorê sûd werdigire?",
-    "promptTr": "'Güneş yelkeni' (solar sail) kullanan bir uzay aracı ilerlemek için hangi etkiden yararlanır?",
+    "prompt": "Keştiyeke fezayê ya bi \"solar sail\" ji bo pêşveçûnê ji kîjan bandorê sûd werdigire?",
+    "promptTr": "\"Güneş yelkeni\" (solar sail) kullanan bir uzay aracı ilerlemek için hangi etkiden yararlanır?",
     "answers": [
       "Leza dengê di valahiyê de",
       "Hêza magnetîkî ya Heyvê",
@@ -26456,8 +26252,8 @@
     "difficulty": 2,
     "id": "r15_teknoloji_B2_24",
     "category": "Teknolojî",
-    "prompt": "Di rêyeke elîptîk a li dora Erdê de, 'apogee' çi ye?",
-    "promptTr": "Dünya çevresindeki eliptik bir yörüngede 'apogee' (yeröte) nedir?",
+    "prompt": "Di rêyeke elîptîk a li dora Erdê de, \"apogee\" çi ye?",
+    "promptTr": "Dünya çevresindeki eliptik bir yörüngede \"apogee\" (yeröte) nedir?",
     "answers": [
       "Xala ku leza satelîtê herî zêde ye",
       "Xala ku herî nêzîkî Erdê ye",
@@ -26626,8 +26422,8 @@
     "difficulty": 2,
     "id": "r15_teknoloji_B2_32",
     "category": "Teknolojî",
-    "prompt": "Di otomobîlan de, beşa ku jê re 'crumple zone' tê gotin ji bo çi tê sêwirandin?",
-    "promptTr": "Otomobillerde 'crumple zone' (ezilme bölgesi) ne amaçla tasarlanır?",
+    "prompt": "Di otomobîlan de, beşa ku jê re \"crumple zone\" tê gotin ji bo çi tê sêwirandin?",
+    "promptTr": "Otomobillerde \"crumple zone\" (ezilme bölgesi) ne amaçla tasarlanır?",
     "answers": [
       "Ji bo vemijandina enerjiya lêdanê bi guherîna şiklê ya kontrolkirî",
       "Ji bo zêdekirina dengê motorê",
@@ -26679,40 +26475,6 @@
     "explanation": "Dengeli üç fazlı sistemde üç faz, birbirinden 120 derecelik açılarla ayrılır.",
     "explanationKu": "Di pergaleke sê-fazî ya hevseng de, sê faz bi navberên goşeyî yên 120 dereceyî ji hev cuda ne.",
     "explanationTr": "Dengeli üç fazlı sistemde üç faz, birbirinden 120 derecelik açılarla ayrılır.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "kurmanci",
-      "sourceTitle": "Yeni sorular 3 (2026-11-14, üç bağımsız jüri)",
-      "qualityVersion": 2,
-      "reviewedBy": "Taslak: ChatGPT (GPT-6 Extra High); jüri: Gemini 4 Argon (Yüksek) + ChatGPT yeni sohbet / Copilot; derleme: Claude Opus 5.5",
-      "reviewedAt": "2026-11-14",
-      "lastContentCheckAt": "2026-11-14"
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 1,
-    "id": "r15_teknoloji_B2_08",
-    "category": "Teknolojî",
-    "prompt": "Di nav hejmarên 2, 4, 9, 15 û 100 de, medyan (median) çend e?",
-    "promptTr": "2, 4, 9, 15 ve 100 sayılarının medyanı (ortanca değeri) kaçtır?",
-    "answers": [
-      "15",
-      "9",
-      "100",
-      "4"
-    ],
-    "answersTr": [
-      "15",
-      "9",
-      "100",
-      "4"
-    ],
-    "correctAnswer": "9",
-    "correctAnswerTr": "9",
-    "explanation": "Beş sayı sıralı olduğundan ortadaki üçüncü sayı olan 9 medyandır.",
-    "explanationKu": "Ji ber ku pênc hejmar bi rêz in, hejmara sêyemîn ango 9 medyan e.",
-    "explanationTr": "Beş sayı sıralı olduğundan ortadaki üçüncü sayı olan 9 medyandır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "kurmanci",

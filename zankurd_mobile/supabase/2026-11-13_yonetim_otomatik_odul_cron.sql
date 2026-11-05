@@ -1,4 +1,4 @@
--- ZanKurd 2.2 — Yönetim: dönem sonu otomatik ödül işi (CANLIYA UYGULANMADI).
+-- ZanKurd 2.2 — Yönetim: dönem sonu otomatik ödül işi (CANLIDA: 2026-11-05 uygulandı, bkz. applied.md).
 --
 -- Niçin: panelde "otomatik ödül" anahtarı vardı ama onu okuyan hiçbir şey yoktu
 -- (11-12 taslağında "cron yok" yazılıydı). Bu iş her gece 00:10'da (İstanbul =

@@ -222,6 +222,11 @@ class QuizQuestion {
     final translated = answersTr;
     if (translated == null || translated.length != answers.length) return false;
     if (translated.any((option) => option.trim().isEmpty)) return false;
+    // Cevabı henüz gizli sunucu sorusu (rekabetçi modlar, 2026-11-17): doğru
+    // şık bilinmediğinden çevrilmiş doğru cevap aranamaz; şıklar konumsal
+    // olarak hizalıdır (A..D) ve cevap açılınca [withRevealedAnswer]
+    // `correctAnswerTr`'yi doldurur.
+    if (hasHiddenAnswer) return true;
     final translatedCorrect = correctAnswerTr?.trim();
     if (translatedCorrect == null || translatedCorrect.isEmpty) return false;
     return translated.map((o) => o.trim()).contains(translatedCorrect);
@@ -239,7 +244,12 @@ class QuizQuestion {
   /// gelir; ikisi birlikte düşer ya da birlikte çevrilir.
   String correctAnswerFor({required bool isKu}) {
     if (isKu || !_hasConsistentTurkishAnswers) return correctAnswer;
-    return correctAnswerTr!.trim();
+    final translated = correctAnswerTr?.trim();
+    // Gizli cevapta (bkz. _hasConsistentTurkishAnswers) çevrilmiş doğru cevap
+    // yoktur; boş kalır ve [hasHiddenAnswer] doğru kalmaya devam eder.
+    return translated == null || translated.isEmpty
+        ? correctAnswer
+        : translated;
   }
 
   /// Seçili dilde kabul edilen açık serbest-metin alternatifleri.
@@ -372,7 +382,8 @@ class QuizQuestion {
     final localizedAnswerLanguage =
         _hasConsistentTurkishAnswers &&
             (answerLanguage == AnswerLanguage.turkish ||
-                correctAnswerFor(isKu: false) != correctAnswer)
+                correctAnswerFor(isKu: false) != correctAnswer ||
+                (hasHiddenAnswer && !identical(localizedAnswers, answers)))
         ? AnswerLanguage.turkish
         : AnswerLanguage.kurmanji;
     if (identical(localizedAnswers, answers) &&
@@ -568,7 +579,8 @@ class QuizQuestion {
       answerOrder: answerOrder,
       promptTr: promptTr,
       answersTr: answersTr,
-      correctAnswerTr: correctAnswerTr,
+      correctAnswerTr:
+          correctAnswerTr ?? _translatedCorrectAnswer(correctAnswer),
       imageAltKu: imageAltKu,
       imageAltTr: imageAltTr,
       acceptedAnswers: acceptedAnswers,
@@ -585,6 +597,20 @@ class QuizQuestion {
       difficulty: difficulty,
       metadata: metadata,
     );
+  }
+
+  /// Sunucu sorusunda cevap açılınca doğru şıkkın Türkçesi (konumsal hizalı
+  /// [answersTr]'den). Çevirisi yoksa ya da hizalı değilse `null`.
+  String? _translatedCorrectAnswer(String revealed) {
+    final translated = answersTr;
+    if (translated == null || translated.length != answers.length) return null;
+    final index = answers.indexOf(revealed);
+    if (index < 0) {
+      final byTr = translated.indexOf(revealed);
+      return byTr < 0 ? null : translated[byTr];
+    }
+    final text = translated[index].trim();
+    return text.isEmpty ? null : text;
   }
 
   int _stableAnswerOffset(int length) {
@@ -710,12 +736,17 @@ class QuizQuestion {
   /// yer birbirinden sessizce sapmasın; oda kodu artık bu factory'ye
   /// devrediyor.
   factory QuizQuestion.fromServerRow(Map<String, dynamic> row) {
-    final answers = <String>[
+    final rawAnswers = <String>[
       row['option_a'] as String? ?? '',
       row['option_b'] as String? ?? '',
       row['option_c'] as String? ?? '',
       row['option_d'] as String? ?? '',
-    ].where((answer) => answer.trim().isNotEmpty && answer != '-').toList();
+    ];
+    final keptIndexes = <int>[
+      for (var i = 0; i < rawAnswers.length; i++)
+        if (rawAnswers[i].trim().isNotEmpty && rawAnswers[i] != '-') i,
+    ];
+    final answers = [for (final i in keptIndexes) rawAnswers[i]];
 
     return QuizQuestion(
       id: row['id'] as String,
@@ -724,11 +755,38 @@ class QuizQuestion {
       answers: answers,
       correctAnswer: _revealedServerCorrectAnswer(row, answers),
       explanation: '',
+      promptTr: row['content_hidden'] == true
+          ? null
+          : _serverPromptTr(row['prompt_tr']),
+      answersTr: _serverAnswersTr(row['options_tr'], keptIndexes),
       type: _questionTypeFromServerRow(row),
       imageUrl: row['image_url'] as String?,
       difficulty: row['difficulty'] as int? ?? 2,
       metadata: _serverSourceMetadata(row),
     );
+  }
+
+  /// Sunucu satırının Türkçe soru metni (`prompt_tr`); boşsa `null`
+  /// ([promptFallsBackToKurmanci] etiketi o zaman görünür).
+  static String? _serverPromptTr(Object? raw) {
+    if (raw is! String) return null;
+    final text = raw.trim();
+    return text.isEmpty ? null : text;
+  }
+
+  /// Sunucu satırının Türkçe şıkları (`options_tr`, A..D konumsal hizalı).
+  /// Kurmancî şıkla AYNI konumlar alınır; sayı uyuşmazsa ya da biri boşsa
+  /// bütün küme yok sayılır (yarım çevrilmiş şık listesi gösterilmez).
+  static List<String>? _serverAnswersTr(Object? raw, List<int> keptIndexes) {
+    if (raw is! List || keptIndexes.isEmpty) return null;
+    if (keptIndexes.any((i) => i >= raw.length)) return null;
+    final picked = <String>[];
+    for (final i in keptIndexes) {
+      final value = raw[i];
+      if (value is! String || value.trim().isEmpty) return null;
+      picked.add(value.trim());
+    }
+    return picked;
   }
 
   Map<String, dynamic> toJson() => {

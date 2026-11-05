@@ -286,9 +286,16 @@ class MockAdminRepository implements AdminRepository {
   }
 
   @override
-  Future<AdminRewardPeriod> loadRewardPeriod(AdminRewardPeriodKind kind) async {
+  Future<AdminRewardPeriod> loadRewardPeriod(
+    AdminRewardPeriodKind kind, {
+    String? periodKey,
+  }) async {
     final daily = kind == AdminRewardPeriodKind.daily;
-    final key = daily ? '2026-11-12' : '2026-11-09';
+    // Maket: son tamamlanan dönem + bir önceki (geçmiş dönem seçimini gösterir).
+    final lastKey = daily ? '2026-11-12' : '2026-11-09';
+    final prevOfLast = daily ? '2026-11-11' : '2026-11-02';
+    final key = periodKey ?? lastKey;
+    final isLast = key == lastKey;
     final names = daily
         ? const ['Berfin', 'Diyar', 'Rojîn']
         : const ['Rojda', 'Baran', 'Dilan'];
@@ -296,6 +303,8 @@ class MockAdminRepository implements AdminRepository {
     return AdminRewardPeriod(
       kind: kind,
       periodKey: key,
+      prevKey: isLast ? prevOfLast : null,
+      nextKey: isLast ? null : lastKey,
       suggestedCoins: daily ? const [500, 300, 100] : const [1000, 600, 300],
       candidates: empty
           ? const []
@@ -315,15 +324,17 @@ class MockAdminRepository implements AdminRepository {
   }
 
   @override
-  Future<void> grantReward(
+  Future<AdminGrantOutcome> grantReward(
     AdminRewardPeriodKind kind,
     String periodKey, {
     required String userId,
     required int coins,
   }) async {
     final key = '${kind.name}:$periodKey:$userId';
-    if (!_rewardedKeys.add(key)) return; // sunucu da ikinci kez vermez
+    // Sunucu da ikinci kez vermez ve nedeni açıkça döndürür.
+    if (!_rewardedKeys.add(key)) return AdminGrantOutcome.alreadyRewarded;
     _log(AdminAuditAction.reward, userId.replaceFirst('u-', ''));
+    return AdminGrantOutcome.granted;
   }
 
   @override

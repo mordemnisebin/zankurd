@@ -148,21 +148,28 @@ class _StoryScreenState extends State<StoryScreen> {
         next.id,
         path: _pathKnown ? path : null,
       );
-      if (next.isEnding) {
-        await store.markCompleted(widget.story.id);
-        unawaited(StreakStore.recordActivity());
-        AnalyticsService.instance.logStoryComplete(
-          storyId: widget.story.id,
-          nodeId: next.id,
-        );
-      }
     } catch (error, stack) {
       // Kayıt yazılamasa da hikâye bellekte ilerler.
       ErrorReporter.record(error, stack, reason: 'story saveNode failed');
-    } finally {
-      if (mounted && _busy) {
-        setState(() => _busy = false);
+    }
+    if (next.isEnding) {
+      // Tamamlanma düğüm kaydından BAĞIMSIZ denenir: düğüm yazımı düşse de ✓
+      // işareti ayrıca yazılmaya çalışılır.
+      try {
+        final store = await StoryProgressStore.load();
+        await store.markCompleted(widget.story.id);
+      } catch (error, stack) {
+        ErrorReporter.record(
+          error,
+          stack,
+          reason: 'story markCompleted failed',
+        );
       }
+      unawaited(StreakStore.recordActivity());
+      AnalyticsService.instance.logStoryComplete(
+        storyId: widget.story.id,
+        nodeId: next.id,
+      );
     }
     if (!mounted) return;
     final current = _node!;

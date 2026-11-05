@@ -120,7 +120,7 @@ void main() {
   });
 
   test(
-    'runtime yükleyici aynı sıra ve kapsamla yirmi üç kaynağı birleştiriyor',
+    'runtime yükleyici aynı sıra ve kapsamla yirmi dört kaynağı birleştiriyor',
     () {
       final expected = [
         ...curatedQuestionBank,
@@ -174,6 +174,8 @@ void main() {
         ...fromJson('assets/data/yeni_2026_11_07_questions.json'),
         // 2026-11-10: yeni sorular 2.
         ...fromJson('assets/data/yeni2_2026_11_10_questions.json'),
+        // 2026-11-14: yeni sorular 3 (814; ilk 821'den 7'si elendi).
+        ...fromJson('assets/data/yeni3_2026_11_14_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;

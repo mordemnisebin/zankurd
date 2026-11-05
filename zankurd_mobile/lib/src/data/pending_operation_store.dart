@@ -34,6 +34,12 @@ class PendingOperationStore {
       ? '$_prefix$kind.$ownerId'
       : '$_prefix$kind.${Uri.encodeComponent(scope)}.$ownerId';
 
+  /// Varsayılan ömür: sunucunun 14 günlük saklamasından bir gün kısa.
+  static const defaultMaxAge = Duration(days: 13);
+
+  /// Günlük hak türleri (çark) için kısa ömür.
+  static const shortMaxAge = Duration(hours: 24);
+
   static final Map<String, Future<String>> _inFlight = {};
 
   /// [kind] + [ownerId] için bekleyen kimliği döndürür; yoksa, süresi
@@ -48,12 +54,13 @@ class PendingOperationStore {
     String kind,
     String ownerId, {
     String scope = '',
-    // Sunucu işlem kayıtlarını 14 gün tutar; kimlik yalnız KESİN yanıtta
-    // silinir. Kısa ömür (eskiden düello için 10 dk) gecikmiş yeniden
-    // denemeyi yeni kimliğe çevirip sunucuda çoktan açılmış düelloyu ikinci
-    // kez açtırıyordu (alan 4 #5); 24 saat ise belirsiz kalmış işlemi
-    // "unutmamak" için yeterince uzun.
-    Duration maxAge = const Duration(hours: 24),
+    // Sunucu işlem kayıtlarını 14 gün tutar (`idempotent_ops` temizliği);
+    // kimlik yalnız KESİN yanıtta silinir. Ömür sunucu saklamasından KISA
+    // kalmalı ama ödeme/oluşturma türünde ondan çok önce bitmemeli: 24 saat
+    // sonra yeni kimlikle gelen belirsiz alım çift tahsil ederdi (Copilot,
+    // W3 turu 2). Günlük hak gibi "dünkü sonucu bugüne taşımayan" türler
+    // kısa ömrü AÇIKÇA verir (bkz. `shortMaxAge`).
+    Duration maxAge = defaultMaxAge,
     DateTime? now,
   }) {
     final lockKey = _key(kind, ownerId, scope);
@@ -100,6 +107,35 @@ class PendingOperationStore {
         ErrorReporter.record(error, stack, reason: 'pending_op_read');
       }
     }
+    // Build 45'in KAPSAMSIZ anahtarı (`<tür>.<hesap>`): kapsam kaydın içinde
+    // durur. Aynı kapsamdaysa bekleyen kimlik yeni anahtara TAŞINIR; yoksa
+    // güncelleme sonrası yeniden deneme yeni kimlikle gidip çift düello
+    // açardı. Başka kapsama ait eski kayıt yerinde bırakılır.
+    if (scope.isNotEmpty) {
+      final legacyKey = _key(kind, ownerId);
+      final legacyRaw = preferences.getString(legacyKey);
+      if (legacyRaw != null) {
+        try {
+          final entry = jsonDecode(legacyRaw);
+          if (entry is Map &&
+              entry['id'] is String &&
+              isClientRoundId(entry['id'] as String) &&
+              entry['scope'] == scope &&
+              entry['at'] is int) {
+            final age = at.millisecondsSinceEpoch - (entry['at'] as int);
+            if (age >= 0 && age <= maxAge.inMilliseconds) {
+              if (await preferences.setString(key, legacyRaw) &&
+                  preferences.getString(key) == legacyRaw) {
+                await preferences.remove(legacyKey);
+                return entry['id'] as String;
+              }
+            }
+          }
+        } catch (error, stack) {
+          ErrorReporter.record(error, stack, reason: 'pending_op_legacy');
+        }
+      }
+    }
     final id = newClientRoundId();
     final encoded = jsonEncode({
       'id': id,
@@ -119,7 +155,7 @@ class PendingOperationStore {
     String kind,
     String ownerId, {
     String scope = '',
-    Duration maxAge = const Duration(hours: 24),
+    Duration maxAge = defaultMaxAge,
     DateTime? now,
   }) async {
     try {

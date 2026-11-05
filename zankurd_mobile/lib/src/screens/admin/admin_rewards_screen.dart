@@ -26,6 +26,10 @@ class AdminRewardsScreen extends StatefulWidget {
 class _AdminRewardsScreenState extends State<AdminRewardsScreen> {
   AdminRewardPeriodKind _kind = AdminRewardPeriodKind.daily;
 
+  /// Seçili geçmiş dönem anahtarı; `null` = son tamamlanan dönem. Yalnız
+  /// TAMAMLANMIŞ dönem ödüllenir (sunucu bitmemişi reddeder).
+  String? _periodKey;
+
   @override
   Widget build(BuildContext context) {
     return AdminPage(
@@ -38,22 +42,30 @@ class _AdminRewardsScreenState extends State<AdminRewardsScreen> {
               label: context.t(K.adminRewardDaily),
               selected: _kind == AdminRewardPeriodKind.daily,
               role: SahneRole.gold,
-              onTap: () => setState(() => _kind = AdminRewardPeriodKind.daily),
+              onTap: () => setState(() {
+                _kind = AdminRewardPeriodKind.daily;
+                _periodKey = null;
+              }),
             ),
             SahneRailChip(
               key: const ValueKey('admin-period-weekly'),
               label: context.t(K.adminRewardWeekly),
               selected: _kind == AdminRewardPeriodKind.weekly,
               role: SahneRole.gold,
-              onTap: () => setState(() => _kind = AdminRewardPeriodKind.weekly),
+              onTap: () => setState(() {
+                _kind = AdminRewardPeriodKind.weekly;
+                _periodKey = null;
+              }),
             ),
           ],
         ),
         SahneSectionHeader(title: context.t(K.adminTop3)),
         _PeriodView(
-          key: ValueKey('admin-period-${_kind.name}'),
+          key: ValueKey('admin-period-${_kind.name}-${_periodKey ?? 'last'}'),
           repository: widget.repository,
           kind: _kind,
+          periodKey: _periodKey,
+          onPeriod: (key) => setState(() => _periodKey = key),
         ),
         SahneSectionHeader(title: context.t(K.adminAutoReward)),
         _AutoRewardRow(repository: widget.repository),
@@ -63,25 +75,60 @@ class _AdminRewardsScreenState extends State<AdminRewardsScreen> {
 }
 
 class _PeriodView extends StatelessWidget {
-  const _PeriodView({super.key, required this.repository, required this.kind});
+  const _PeriodView({
+    super.key,
+    required this.repository,
+    required this.kind,
+    required this.periodKey,
+    required this.onPeriod,
+  });
 
   final AdminRepository repository;
   final AdminRewardPeriodKind kind;
+  final String? periodKey;
+  final ValueChanged<String?> onPeriod;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     return AdminLoader<AdminRewardPeriod>(
-      load: () => repository.loadRewardPeriod(kind),
+      load: () => repository.loadRewardPeriod(kind, periodKey: periodKey),
       builder: (context, period, reload) {
+        final nav = Row(
+          children: [
+            if (period.prevKey != null)
+              SahneButton.text(
+                key: const ValueKey('admin-period-prev'),
+                label: context.t(K.adminPeriodPrev),
+                arrow: false,
+                onPressed: () => onPeriod(period.prevKey),
+              ),
+            const Spacer(),
+            if (period.nextKey != null)
+              SahneButton.text(
+                key: const ValueKey('admin-period-next'),
+                label: context.t(K.adminPeriodNext),
+                arrow: false,
+                onPressed: () => onPeriod(period.nextKey),
+              ),
+          ],
+        );
         if (period.candidates.isEmpty) {
-          return AdminEmpty(context.t(K.adminEmptyRewards));
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              AdminNote(period.periodKey),
+              nav,
+              AdminEmpty(context.t(K.adminEmptyRewards)),
+            ],
+          );
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             AdminNote(period.periodKey),
-            const SizedBox(height: SahneSpace.x3),
+            nav,
+            const SizedBox(height: SahneSpace.x2),
             for (final c in period.candidates) ...[
               SahneSurfaceCard(
                 child: Column(
@@ -165,16 +212,22 @@ class _PeriodView extends StatelessWidget {
       }),
     );
     if (!ok || !context.mounted) return;
-    await runAdminAction(
-      context,
-      () => repository.grantReward(
+    final already = context.t(K.adminRewardAlready);
+    final taken = context.t(K.adminRewardRankTaken);
+    await runAdminAction(context, () async {
+      final outcome = await repository.grantReward(
         kind,
         period.periodKey,
         userId: c.userId,
         coins: coins,
-      ),
-      reload,
-    );
+      );
+      // Sunucu ödül VERMEDİYSE "Kaydedildi" denmez: neden söylenir.
+      return switch (outcome) {
+        AdminGrantOutcome.granted => null,
+        AdminGrantOutcome.alreadyRewarded => already,
+        AdminGrantOutcome.rankTaken => taken,
+      };
+    }, reload);
   }
 }
 

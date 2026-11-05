@@ -83,12 +83,30 @@ void main() {
   // kullanır, yani 21'lik fark oyunda doğru cevabı tahmin ettirmez. Kural:
   // yeni2 dışındaki bankalarda yayılım ≤ 1 (eski sıkılık aynen), yeni2'de bankanın
   // %5'i.
+  //
+  // 2026-11-18: `yeni3_2026_11_14_questions.json` (814 soru; 821'den 7'si elendi)
+  // da CANLI ve aynı gerekçeyle DONDURULDU: yerelde şık sırasını değiştirmek
+  // sunucudaki option_a..d / correct_option ile ayrıştırırdı. Her dondurulmuş
+  // banka KENDİ büyüklüğünün %5'iyle ölçülür (ikisini toplamak yayılım
+  // sınırını bankalar arası telafiye açardı). Ölçüm (tura bağlanmamış görünüm):
+  //
+  //     yeni2 (696)  [177, 185, 170, 164]  yayılım 21  (%3,0)
+  //     yeni3 (814)  [181, 215, 220, 198]  yayılım 39  (%4,8; sınır 40)
+  //
+  // Katı kural (≤ 1) iki dondurulmuş banka hariç bankalara uygulanır.
   test('displayed correct-answer positions are balanced', () {
-    final frozen = <int>[0, 0, 0, 0];
+    // Dondurulmuş (canlıda şık sırası sabit) bankalar; her biri ayrı ölçülür.
+    const frozenSuffixes = <String>[
+      'yeni2_2026_11_10_questions.json',
+      'yeni3_2026_11_14_questions.json',
+    ];
+    final frozenCounts = {
+      for (final suffix in frozenSuffixes) suffix: <int>[0, 0, 0, 0],
+    };
+    final frozenSizes = {for (final suffix in frozenSuffixes) suffix: 0};
     final counts = List<int>.filled(4, 0);
-    var frozenSize = 0;
     final all = <QuizQuestion>[];
-    final isFrozen = <bool>[];
+    final frozenOf = <String?>[];
     for (final asset in questionBankAssets) {
       if (!File(asset).existsSync()) continue;
       final rows = (jsonDecode(File(asset).readAsStringSync()) as List).map(
@@ -96,7 +114,11 @@ void main() {
       );
       for (final question in rows) {
         all.add(question);
-        isFrozen.add(asset.endsWith('yeni2_2026_11_10_questions.json'));
+        String? owner;
+        for (final suffix in frozenSuffixes) {
+          if (asset.endsWith(suffix)) owner = suffix;
+        }
+        frozenOf.add(owner);
       }
     }
     expect(
@@ -111,9 +133,10 @@ void main() {
         continue;
       }
       final position = question.displayAnswers.indexOf(question.correctAnswer);
-      if (isFrozen[i]) {
-        frozen[position]++;
-        frozenSize++;
+      final owner = frozenOf[i];
+      if (owner != null) {
+        frozenCounts[owner]![position]++;
+        frozenSizes[owner] = frozenSizes[owner]! + 1;
       } else {
         counts[position]++;
       }
@@ -123,25 +146,31 @@ void main() {
         values.reduce((a, b) => a > b ? a : b) -
         values.reduce((a, b) => a < b ? a : b);
 
-    expect(
-      frozenSize,
-      greaterThan(0),
-      reason: 'Dondurulmuş banka yüklenmediyse bu ayrım kör kalır.',
-    );
+    for (final suffix in frozenSuffixes) {
+      expect(
+        frozenSizes[suffix],
+        greaterThan(0),
+        reason: '$suffix yüklenmediyse bu ayrım kör kalır.',
+      );
+    }
     expect(
       spreadOf(counts),
       lessThanOrEqualTo(1),
       reason:
-          'Dağılım (yeni2 hariç): $counts — dengelemek için '
+          'Dağılım (dondurulmuş bankalar hariç): $counts — dengelemek için '
           '`python3 tool/rebalance_answer_positions.py offline_curated`',
     );
-    expect(
-      spreadOf(frozen),
-      lessThanOrEqualTo((frozenSize * 0.05).floor()),
-      reason:
-          'yeni2 dağılımı: $frozen. Canlıda olan banka; şık sırasını '
-          'değiştirmek correct_option ile yerel kopyayı ayrıştırır.',
-    );
+    for (final suffix in frozenSuffixes) {
+      final size = frozenSizes[suffix]!;
+      expect(
+        spreadOf(frozenCounts[suffix]!),
+        lessThanOrEqualTo((size * 0.05).floor()),
+        reason:
+            '$suffix dağılımı: ${frozenCounts[suffix]} (n=$size). Canlıda '
+            'olan banka; şık sırasını değiştirmek correct_option ile yerel '
+            'kopyayı ayrıştırır.',
+      );
+    }
   });
 
   test('every correct answer exists among its options', () {
