@@ -3776,7 +3776,11 @@ class SupabaseZanKurdRepository
   Future<int?> _awardSpinOnce() async {
     final owner = currentUserId;
     if (!_spinOnceSupported || owner == null) return null;
-    final key = await PendingOperationStore.idFor('spin', owner);
+    final key = await PendingOperationStore.idFor(
+      'spin',
+      owner,
+      maxAge: PendingOperationStore.shortMaxAge,
+    );
     final dynamic response;
     try {
       response = await client.rpc<dynamic>(

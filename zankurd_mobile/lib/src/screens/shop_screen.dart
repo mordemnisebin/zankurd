@@ -835,10 +835,17 @@ class _ShopScreenState extends State<ShopScreen> {
   Future<void> _recoverPaidFreeze() async {
     final owner = widget.repository.currentUserId;
     if (owner == null) return;
+    final scope = LocalProgressScope.activeUserId;
+    // Sahip her beklemeden sonra doğrulanır: A'nın ödediği hak B'ye eklenmez
+    // (Copilot incelemesi, W3 turu 2).
+    bool sameOwner() =>
+        widget.repository.currentUserId == owner &&
+        LocalProgressScope.activeUserId == scope;
     try {
       final paid = await PendingOperationStore.peek(_freezePaidKind, owner);
-      if (paid == null) return;
+      if (paid == null || !sameOwner()) return;
       final store = await StreakStore.load();
+      if (!sameOwner()) return;
       final count = await store.addFreeze();
       await PendingOperationStore.clear(_freezePaidKind, owner);
       await PendingOperationStore.clear(_freezeKeyKind, owner);
@@ -871,6 +878,10 @@ class _ShopScreenState extends State<ShopScreen> {
       _retryPurchaseItem = item;
     });
     final owner = widget.repository.currentUserId ?? 'local';
+    final scope = LocalProgressScope.activeUserId;
+    bool sameOwner() =>
+        (widget.repository.currentUserId ?? 'local') == owner &&
+        LocalProgressScope.activeUserId == scope;
     try {
       // Anahtar belirsiz bir hatadan sonra AYNEN yeniden kullanılır: yanıtı
       // kaybolan tahsilatın tekrarı yeni bir -50 satırı yazmasın (Codex
@@ -880,6 +891,9 @@ class _ShopScreenState extends State<ShopScreen> {
         owner,
       );
       final key = '$shopFreezeKeyPrefix$pendingId';
+      // Bekleyen kimlik BU hesabındır; beklerken oturum değiştiyse RPC hiç
+      // çağrılmaz.
+      if (!sameOwner()) return;
       final charge = await widget.repository.spendStreakFreeze(
         idempotencyKey: key,
       );
@@ -902,6 +916,16 @@ class _ShopScreenState extends State<ShopScreen> {
         }
         return;
       }
+      // Tahsilat beklenirken hesap değiştiyse hak B'ye eklenmez: "ödendi"
+      // işareti A'nın kaydında kalır, A dönünce mağaza açılışında teslim edilir.
+      if (!sameOwner()) {
+        try {
+          await PendingOperationStore.idFor(_freezePaidKind, owner);
+        } catch (error, stack) {
+          ErrorReporter.record(error, stack, reason: 'shop_freeze_paid_mark');
+        }
+        return;
+      }
       // Ücret alındı: "ödendi" işareti kalıcı yazılır; teslim kapanırsa bile
       // açılışta tamamlanır. İşaret yazılamazsa anahtar kalır (yukarıya bak).
       try {
@@ -914,6 +938,7 @@ class _ShopScreenState extends State<ShopScreen> {
       // bırakılır: teslim hata verirse aynı anahtarla yeniden deneme yeniden
       // tahsil etmez, yalnız hakkı teslim eder.
       final store = await StreakStore.load();
+      if (!sameOwner()) return;
       final count = await store.addFreeze();
       await PendingOperationStore.clear(_freezePaidKind, owner);
       await PendingOperationStore.clear(_freezeKeyKind, owner);

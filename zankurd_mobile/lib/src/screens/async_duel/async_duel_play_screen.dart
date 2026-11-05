@@ -20,6 +20,7 @@ import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/player_identity.dart';
 import '../../data/daily_mission_store.dart';
+import '../../data/local_progress_scope.dart';
 import '../../data/streak_store.dart';
 import '../../utils/error_reporter.dart';
 import '../../widgets/player_avatar.dart';
@@ -624,10 +625,31 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   /// tamamlayan kullanıcı "yarış tamamla" ve "doğru cevap" görevlerini
   /// ilerletemiyordu (Codex denetimi 2026-10-29). XP burada verilmez: ödül
   /// ana ekranda "Ödülü al" ile tek kez yazılır.
+  /// Görev kaydını BAŞLATAN hesap: yeniden denemeler ve gecikmiş `load()` başka
+  /// hesaba (A'nın görevi B'nin günlüğüne) yazmasın (Copilot incelemesi,
+  /// W3 turu 2). Hesap değişirse deneme bırakılır.
+  String? _missionOwner;
+  bool _missionOwnerBound = false;
+  bool _missionAbandoned = false;
+
   Future<void> _reportMissionProgress(int myCorrect) async {
-    if (_missionReported) return;
+    if (_missionReported || _missionAbandoned) return;
+    if (!_missionOwnerBound) {
+      _missionOwner = LocalProgressScope.activeUserId;
+      _missionOwnerBound = true;
+    }
+    final owner = _missionOwner;
+    if (LocalProgressScope.activeUserId != owner) {
+      _missionAbandoned = true;
+      return;
+    }
     try {
       final store = await DailyMissionStore.load();
+      // `load()` beklerken hesap değiştiyse bu depo artık sahibinin değil.
+      if (LocalProgressScope.activeUserId != owner) {
+        _missionAbandoned = true;
+        return;
+      }
       await store.reportQuizCompleted(
         completionId:
             '${_isTournament ? 'tournament' : 'async-duel'}:${_duel!.duelId}',
@@ -651,7 +673,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       Duration(seconds: 30),
     ]) {
       await Future<void>.delayed(delay);
-      if (_missionReported) return;
+      if (_missionReported || _missionAbandoned) return;
       try {
         await _reportMissionProgress(myCorrect);
         return;
