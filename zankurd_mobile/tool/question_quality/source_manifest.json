@@ -3119,6 +3119,65 @@
    "expectedRecordCount": null,
    "notes": "Validates and discovers image references; contains no question records.",
    "columns": {}
+  },
+  {
+   "id": "yeni_sorular_3_sql",
+   "description": "2026-11-14 yeni sorular 3 göçü (yerel eşi assets/data/yeni3_2026_11_14_questions.json taranır)",
+   "glob": "supabase/2026-11-14_yeni_sorular_3.sql",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 100,
+   "expectedRecordCount": null,
+   "notes": "Sunucu göçü; yerel kopyası assets/data altında taranır, burada ikinci kez sayılmaz",
+   "columns": {}
+  },
+  {
+   "id": "yeni_sorular_3_geri_sql",
+   "description": "2026-11-14 yeni sorular 3 göçü (yerel eşi assets/data/yeni3_2026_11_14_questions.json taranır)",
+   "glob": "supabase/geri_al/2026-11-14_yeni_sorular_3_geri.sql",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 100,
+   "expectedRecordCount": null,
+   "notes": "Sunucu göçü; yerel kopyası assets/data altında taranır, burada ikinci kez sayılmaz",
+   "columns": {}
+  },
+  {
+   "id": "yeni3_2026_11_14",
+   "description": "2026-11-14: yeni sorular 3 (536); ChatGPT taslağı, Gemini 4 Argon + ChatGPT/Copilot jürisi",
+   "path": "assets/data/yeni3_2026_11_14_questions.json",
+   "role": "runtime_secondary",
+   "parser": "json",
+   "canonicalGroup": "runtime_questions",
+   "reportIncluded": true,
+   "gateIncluded": true,
+   "productionLike": true,
+   "precedence": 992,
+   "expectedRecordCount": 536,
+   "notes": "Taslak ChatGPT; jüri Gemini 4 Argon + ChatGPT yeni sohbet/Copilot; dedupe, şık taraması.",
+   "columns": {
+    "id": "id",
+    "category": "category",
+    "prompt": "prompt",
+    "options": "answers",
+    "correct": "correctAnswer",
+    "explanation": "explanationKu",
+    "difficulty": "difficulty",
+    "type": "type",
+    "dialect": "metadata.dialect",
+    "sourceTitle": "metadata.sourceTitle",
+    "sourceUrl": "metadata.sourceReference",
+    "reviewedAt": "metadata.reviewedAt",
+    "locale": "ku-kmr"
+   }
   }
  ]
 }
