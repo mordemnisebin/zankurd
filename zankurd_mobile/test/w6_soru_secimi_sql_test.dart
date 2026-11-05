@@ -38,7 +38,7 @@ void main() {
     expect(strip(geriRaw).trimRight(), endsWith('commit;'));
     expect(raw, isNot(contains('COMMIT')));
     expect(geriRaw, isNot(contains('COMMIT')));
-    expect(applied, contains('2026-11-18_w6_soru_secimi.sql | ⏳'));
+    expect(applied, contains('2026-11-18_w6_soru_secimi.sql | ✅'));
     // Yeni nesne yok.
     expect(code, isNot(contains('create table if not exists')));
     expect(code, contains('add column if not exists server_only'));
