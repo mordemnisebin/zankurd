@@ -153,7 +153,9 @@ void main() {
       ),
     );
 
-    expect(manager.pendingCount, 1);
+    // H5 (2026-11-06): yazılamayan kayıt bellekten de geri alınır; yoksa
+    // çağıranın yeniden denemesi aynı ödülü kuyruğa ikinci kez eklerdi.
+    expect(manager.pendingCount, 0);
     expect(connectivity.checkCount, 0, reason: 'Yazılmayan kayıt gönderildi.');
   });
 
@@ -186,7 +188,9 @@ void main() {
       throwsA(isA<StateError>()),
     );
 
-    expect(manager.pendingCount, 1);
+    // H5 (2026-11-06): yazılamayan kayıt bellekten de geri alınır; yoksa
+    // çağıranın yeniden denemesi aynı ödülü kuyruğa ikinci kez eklerdi.
+    expect(manager.pendingCount, 0);
     expect(connectivity.checkCount, 0, reason: 'Yazılmayan kayıt gönderildi.');
   });
 
