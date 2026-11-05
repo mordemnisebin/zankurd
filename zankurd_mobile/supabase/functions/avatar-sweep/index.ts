@@ -27,11 +27,23 @@ import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 import {
   AVATAR_BUCKET,
   chunk,
-  folderNames,
+  folderEntries,
+  nextSweepOffset,
   objectPaths,
-  orphanFolders,
+  sanitizeOffset,
   timingSafeEqual,
 } from "./lib.ts";
+
+// 2026-11-16 (W4, GPT-6 Pro ALAN 4 #7 #17 #18):
+//  - İMLEÇ: `avatar_sweep_state.next_offset` (2026-11-16 göçü) kök listede
+//    kaldığımız yeri saklar; her çalıştırma oradan başlar, liste bitince başa
+//    döner. Eskiden her saat aynı ilk MAX_FOLDER_PAGES×PAGE_SIZE (20.000)
+//    girdi taranıyor, sonrası hiç görülmüyordu. Tablo yoksa (göç uygulanmamış)
+//    0'dan başlanır ve uyarı günlüğe yazılır.
+//  - KISMİ BAŞARISIZLIK: atlanan sayfa/silinemeyen paket varsa yanıt 500
+//    `sweep_partial` (pg_net yanıt tablosunda ve izlemede görünür); eskiden
+//    sessizce 200 dönüyordu.
+//  - BÜYÜK HARFLİ klasör adları orijinal adlarıyla listelenir/silinir.
 
 const PAGE_SIZE = 100;
 const REMOVE_BATCH = 100;
@@ -78,32 +90,54 @@ Deno.serve(async (request: Request): Promise<Response> => {
   let scanned = 0, orphans = 0, removed = 0, skippedPages = 0;
   let capped = false;
 
+  // İmleç: kaldığımız kök liste kaydırması (tablo yoksa 0).
+  let startOffset = 0;
+  let cursorUsable = true;
+  {
+    const { data, error } = await db.from("avatar_sweep_state")
+      .select("next_offset").eq("id", 1).maybeSingle();
+    if (error) {
+      cursorUsable = false;
+      console.error("avatar-sweep: imleç okunamadı (göç uygulanmamış olabilir)", error.code);
+    } else {
+      startOffset = sanitizeOffset((data as { next_offset?: unknown } | null)?.next_offset);
+    }
+  }
+  let reachedEnd = false;
+  let stoppedAt: number | null = null;
+  let scannedUntil = startOffset;
+
   try {
     for (let page = 0; page < MAX_FOLDER_PAGES && !capped; page++) {
+      const offset = startOffset + page * PAGE_SIZE;
       const { data: root, error } = await bucket.list("", {
         limit: PAGE_SIZE,
-        offset: page * PAGE_SIZE,
+        offset,
         sortBy: { column: "name", order: "asc" },
       });
       if (error) throw new Error("list_failed");
-      if (!root || root.length === 0) break;
-      const folders = folderNames(root);
+      if (!root || root.length === 0) {
+        reachedEnd = true;
+        break;
+      }
+      const folders = folderEntries(root);
       scanned += folders.length;
       if (folders.length > 0) {
-        const existing = await existingUserIds(db, folders);
+        const existing = await existingUserIds(db, folders.map((f) => f.id));
         if (existing === null) {
           skippedPages++;
         } else {
-          for (const folder of orphanFolders(folders, existing)) {
+          for (const folder of folders.filter((f) => !existing.has(f.id))) {
             orphans++;
-            const { data: files, error: fe } = await bucket.list(folder, {
+            // Orijinal ad: büyük harfli klasör küçük harfle listelenemez (#18).
+            const { data: files, error: fe } = await bucket.list(folder.name, {
               limit: 1000,
             });
             if (fe) {
               skippedPages++;
               continue;
             }
-            for (const batch of chunk(objectPaths(folder, files ?? []), REMOVE_BATCH)) {
+            for (const batch of chunk(objectPaths(folder.name, files ?? []), REMOVE_BATCH)) {
               if (removed >= MAX_OBJECTS_PER_RUN) {
                 capped = true;
                 break;
@@ -116,12 +150,36 @@ Deno.serve(async (request: Request): Promise<Response> => {
           }
         }
       }
-      if (root.length < PAGE_SIZE) break;
+      if (capped) {
+        stoppedAt = offset;
+        break;
+      }
+      scannedUntil = offset + PAGE_SIZE;
+      if (root.length < PAGE_SIZE) {
+        reachedEnd = true;
+        break;
+      }
     }
   } catch (_) {
     console.error("avatar-sweep: hata", { scanned, orphans, removed });
     return json({ error: "sweep_failed", scanned, orphans, removed }, 500);
   }
-  console.log("avatar-sweep", { scanned, orphans, removed, skippedPages, capped });
-  return json({ scanned, orphans, removed, skippedPages, capped });
+
+  const nextOffset = nextSweepOffset({ reachedEnd, stoppedAt, scannedUntil });
+  if (cursorUsable) {
+    const { error } = await db.from("avatar_sweep_state").upsert({
+      id: 1,
+      next_offset: nextOffset,
+      updated_at: new Date().toISOString(),
+    });
+    if (error) console.error("avatar-sweep: imleç yazılamadı", error.code);
+  }
+  const result = { scanned, orphans, removed, skippedPages, capped, startOffset, nextOffset };
+  console.log("avatar-sweep", result);
+  // Kısmi başarısızlık 200 ile gizlenmez (#17).
+  return json(
+    skippedPages > 0 ? { error: "sweep_partial", ...result } : result,
+    skippedPages > 0 ? 500 : 200,
+  );
 });
+

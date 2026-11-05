@@ -30,7 +30,8 @@ for arac in \
   test_olcek_tur5_local test_olcek_tur6_local test_push_delivery_v2_local \
   test_room_duel_guards_local verified_quiz_sql_smoke \
   test_yonetim_paneli_local test_yonetim_moderasyon_local \
-  test_rekabet_sunum_local test_rekabet_sunum_guard_local; do
+  test_rekabet_sunum_local test_rekabet_sunum_guard_local \
+  test_w4_apple_hesap_silme_local test_w4_push_cihazlar_local; do
   echo "-- $arac"
   # verified_quiz_sql_smoke yolu ortam değişkeninden, ötekiler argümandan okur.
   PGLITE_MODULE="$MODUL" node "tool/${arac}.mjs" "$MODUL"

@@ -16,8 +16,14 @@ silme zincirinin güncel işleyişi ve açık işlerdir.
    `room_result_snapshots` JSON'larında silinen kullanıcının kimliği/adı
    anonimleştirilir** (`anonymize_deleted_user_in_snapshots`, göç
    `supabase/2026-11-08_hesap_silme_yasal.sql`); veriler silinir; `auth.users`
-   satırı silinir. RPC içindeki doğrudan `DELETE FROM storage.objects` YEDEK yoldur
-   (fiziksel dosyayı silmez; hata verirse artık hesap silmeyi geri almaz).
+   satırı silinir. (2026-11-16, W4 göçü `2026-11-16_w4_apple_hesap_silme.sql`:
+   RPC içindeki doğrudan `DELETE FROM storage.objects` KALDIRILDI; yalnız meta
+   satırını siler, fiziksel dosya kalır ve satır gidince süpürücü dosyayı bir daha
+   göremezdi. Yeni istemci klasörün gerçek içeriğini Storage API'siyle listeleyip
+   siler; kalanı süpürücü siler.)
+   **Apple iptali:** Apple ile girişli hesapta jeton silmeden ÖNCE iptal edilir;
+   Apple başarısız olursa jeton hesapla birlikte silinmez (FK kaldırıldı), yetim
+   kalır ve apple-revoke `sweep` eylemi (pg_cron, 15 dk) iptali yeniden dener.
 
 ## Avatar kalıntıları: saatlik sunucu süpürmesi (2026-11-04)
 

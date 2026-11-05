@@ -135,6 +135,32 @@ export function pushCollapseId(jobId: string): string {
   return `zk-${jobId}`.slice(0, 64);
 }
 
+/// Android bildirim kanalı (GPT-6 Pro ALAN 4 #19): eskiden hiçbir `channel_id`
+/// gönderilmediği için bütün uzak bildirimler manifestteki varsayılan
+/// `zankurd_friend_requests` kanalına düşüyordu (kullanıcı düello bildirimini
+/// arkadaşlık kanalı adı altında görüyor, ayrı yönetemiyordu). Kimlikler
+/// `NotificationService`teki kanallarla AYNI olmalı (bekçi:
+/// test/w4_bildirim_kanal_test.dart). Cihazda kanal yoksa (eski uygulama)
+/// Android/FCM manifestteki varsayılan kanala düşer, bildirim kaybolmaz.
+export function androidChannelId(kind: string | null | undefined): string | null {
+  switch (kind) {
+    case "friend_request":
+    case "friend_accept":
+      return "zankurd_friend_requests";
+    case "async_duel_invite":
+    case "async_duel_turn":
+    case "async_duel_result":
+      return "zankurd_duels";
+    case "room_invite":
+      return "zankurd_rooms";
+    case "admin_suggestion":
+    case "admin_report":
+      return "zankurd_admin";
+    default:
+      return null;
+  }
+}
+
 /// FCM v1 verileri yalnız dize; kimlik ve tür kuyruktaki güvenilir alandan gelir.
 export function buildFcmMessage(
   job: PushJob,
@@ -164,6 +190,7 @@ export function buildFcmMessage(
     job.kind === "room_invite" ? 300 : 86400,
     expiresAt - nowSeconds,
   );
+  const channelId = androidChannelId(job.kind);
   return {
     message: {
       token,
@@ -172,7 +199,10 @@ export function buildFcmMessage(
       android: {
         priority: urgent ? "HIGH" : "NORMAL",
         ttl: `${ttl}s`,
-        notification: { tag: pushCollapseId(job.job_id) },
+        notification: {
+          tag: pushCollapseId(job.job_id),
+          ...(channelId ? { channel_id: channelId } : {}),
+        },
       },
       apns: {
         headers: {
@@ -274,8 +304,90 @@ export interface DeliveryDependencies {
   ) => Promise<Response>;
   finish: (job: PushJob, completion: PushCompletion) => Promise<boolean>;
   clearToken: (job: PushJob, token: string) => Promise<boolean>;
+  /// Kullanıcının DİĞER cihaz jetonları (GPT-6 Pro ALAN 4 #23: tek
+  /// `profiles.fcm_token` yalnız son cihaza gönderiyordu). Verilmezse ya da
+  /// hata verirse yalnız claim'in verdiği `job.fcm_token` kullanılır.
+  listTokens?: (job: PushJob) => Promise<string[]>;
   random?: () => number;
   nowSeconds?: () => number;
+}
+
+/// Bir kullanıcının en çok bu kadar cihazına gönderilir.
+export const MAX_DEVICES_PER_JOB = 10;
+
+/// Tek jetona gönderim sonucu (ack'e çevrilmeden önce).
+async function sendToToken(
+  job: PushJob,
+  token: string,
+  deps: DeliveryDependencies,
+  nowSeconds: number,
+): Promise<PushCompletion> {
+  try {
+    const response = await deps.send(
+      job,
+      token,
+      buildFcmMessage(job, token, nowSeconds),
+    );
+    if (response.ok) {
+      try {
+        await response.body?.cancel();
+      } catch (_) { /* FCM kabul etti */ }
+      return { outcome: "sent" };
+    }
+    let body: unknown = null;
+    try {
+      body = await response.json();
+    } catch (_) { /* boş gövde */ }
+    const delay = retryAfterSeconds(
+      response.status,
+      body,
+      job.attempt_count ?? 1,
+      response.headers.get("retry-after"),
+      Date.now(),
+      deps.random?.() ?? Math.random(),
+    );
+    const completion: PushCompletion = delay === null
+      ? { outcome: "failed", errorCode: fcmErrorCode(body) }
+      : {
+        outcome: "retry",
+        errorCode: fcmErrorCode(body),
+        retryAfterSeconds: delay,
+      };
+    if (isUnregistered(response.status, body)) {
+      try {
+        await deps.clearToken(job, token);
+      } catch (_) { /* ack yine yazılmalı */ }
+    }
+    return completion;
+  } catch (_) {
+    return {
+      outcome: "retry",
+      errorCode: "network_error",
+      retryAfterSeconds: retryAfterSeconds(
+        503,
+        null,
+        job.attempt_count ?? 1,
+        null,
+        Date.now(),
+        deps.random?.() ?? Math.random(),
+      )!,
+    };
+  }
+}
+
+/// Birden çok cihazın sonuçlarını tek ack'e indirger: BİR cihaz bile aldıysa
+/// `sent` (iş yeniden kuyruğa girip aldığı cihaza ikinci kez gitmez; geçici
+/// hatalı öteki cihaz o bildirimi kaçırabilir: en iyi çaba); hiçbiri almadıysa
+/// geçici hata varsa `retry` (en uzun bekleme), yoksa `failed`.
+export function mergeDeviceCompletions(list: PushCompletion[]): PushCompletion {
+  if (list.some((c) => c.outcome === "sent")) return { outcome: "sent" };
+  const retries = list.filter((c) => c.outcome === "retry");
+  if (retries.length > 0) {
+    return retries.reduce((a, b) =>
+      (b.retryAfterSeconds ?? 0) > (a.retryAfterSeconds ?? 0) ? b : a
+    );
+  }
+  return list[0] ?? { outcome: "skipped", errorCode: "no_token" };
 }
 
 /// Ağ çağrıları enjekte edilir; başarılı FCM sonrası DB hatası asla retry'ye
@@ -297,57 +409,27 @@ export async function deliverPushJob(
     completion = { outcome: "skipped", errorCode: "invalid_expiry" };
   } else if (expiresAt <= nowSeconds) {
     completion = { outcome: "skipped", errorCode: "expired" };
-  } else if (job.fcm_token) {
-    try {
-      const response = await deps.send(
-        job,
-        job.fcm_token,
-        buildFcmMessage(job, job.fcm_token, nowSeconds),
-      );
-      if (response.ok) {
-        completion = { outcome: "sent" };
-        try {
-          await response.body?.cancel();
-        } catch (_) { /* FCM kabul etti */ }
-      } else {
-        let body: unknown = null;
-        try {
-          body = await response.json();
-        } catch (_) { /* boş gövde */ }
-        const delay = retryAfterSeconds(
-          response.status,
-          body,
-          job.attempt_count ?? 1,
-          response.headers.get("retry-after"),
-          Date.now(),
-          deps.random?.() ?? Math.random(),
-        );
-        completion = delay === null
-          ? { outcome: "failed", errorCode: fcmErrorCode(body) }
-          : {
-            outcome: "retry",
-            errorCode: fcmErrorCode(body),
-            retryAfterSeconds: delay,
-          };
-        if (isUnregistered(response.status, body)) {
-          try {
-            await deps.clearToken(job, job.fcm_token);
-          } catch (_) { /* ack yine yazılmalı */ }
-        }
+  } else {
+    // Hedef jetonlar: claim'in jetonu (profil, son cihaz) + öteki cihazlar.
+    const tokens: string[] = [];
+    const add = (t: unknown) => {
+      if (typeof t === "string" && t.trim() && !tokens.includes(t.trim())) {
+        tokens.push(t.trim());
       }
-    } catch (_) {
-      completion = {
-        outcome: "retry",
-        errorCode: "network_error",
-        retryAfterSeconds: retryAfterSeconds(
-          503,
-          null,
-          job.attempt_count ?? 1,
-          null,
-          Date.now(),
-          deps.random?.() ?? Math.random(),
-        )!,
-      };
+    };
+    add(job.fcm_token);
+    if (deps.listTokens) {
+      try {
+        for (const t of await deps.listTokens(job)) add(t);
+      } catch (_) { /* yalnız claim'in jetonu */ }
+    }
+    const targets = tokens.slice(0, MAX_DEVICES_PER_JOB);
+    if (targets.length > 0) {
+      const results: PushCompletion[] = [];
+      for (const token of targets) {
+        results.push(await sendToToken(job, token, deps, nowSeconds));
+      }
+      completion = mergeDeviceCompletions(results);
     }
   }
   for (let attempt = 0; attempt < 3; attempt++) {

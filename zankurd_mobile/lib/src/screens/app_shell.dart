@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/admin_repository.dart';
 import '../data/sync_manager.dart';
 import '../data/local_progress_scope.dart';
 import '../data/zankurd_repository.dart';
@@ -47,6 +48,7 @@ import '../services/push_token_sync.dart';
 import '../services/paid_freeze_recovery_service.dart';
 import 'async_duel/async_duel_inbox.dart';
 import 'async_duel/async_duel_play_screen.dart';
+import 'admin/admin_home_screen.dart';
 import 'friends_screen.dart';
 import 'home/room_invite_card.dart';
 import 'password_recovery_screen.dart';
@@ -1138,6 +1140,20 @@ class _AppShellState extends State<AppShell>
             context,
           ).push(AppRoute.to(FriendsScreen(repository: _repository))),
         );
+      case PushTapTarget.admin:
+        // Yönetici bildirimi (GPT-6 Pro ALAN 4 #6): dokunuş Yönetim ana
+        // ekranını açar. Yönetici deposu yoksa (üretimde yalnız sahip
+        // hesabında kayıtlıdır) Ana ekrana düşer; sunucu yetkiyi ayrıca denetler.
+        final adminRepository = AdminRepository.maybeOf(context);
+        if (adminRepository == null) {
+          _selectTab(0);
+        } else {
+          unawaited(
+            Navigator.of(
+              context,
+            ).push(AppRoute.to(AdminHomeScreen(repository: adminRepository))),
+          );
+        }
     }
   }
 

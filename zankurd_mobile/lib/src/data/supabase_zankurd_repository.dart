@@ -704,6 +704,22 @@ class SupabaseZanKurdRepository
       } catch (error, stack) {
         _recordError(error, stack, reason: 'avatar url read before delete');
       }
+      // Klasörün GERÇEK içeriği (GPT-6 Pro ALAN 4 #9): sabit yollar + profildeki
+      // tek URL, eski zaman damgalı yüklemeleri kaçırıyordu; sunucu da artık
+      // nesne satırlarını silmediğinden (2026-11-16) kalan her dosya süpürücüye
+      // kalır. Listeleme başarısızsa yukarıdaki bilinen yollarla sürülür.
+      try {
+        final listed = await client.storage.from('avatars').list(path: user.id);
+        for (final entry in listed) {
+          final name = entry.name;
+          if (name.isEmpty || name.contains('/') || name.contains('..')) {
+            continue;
+          }
+          paths.add('${user.id}/$name');
+        }
+      } catch (error, stack) {
+        _recordError(error, stack, reason: 'avatar folder list before delete');
+      }
       await client.storage.from('avatars').remove(paths.toList());
       return true;
     } catch (error, stack) {
@@ -722,7 +738,8 @@ class SupabaseZanKurdRepository
       // Apple ile girilmiş hesapta ÖNCE Apple bağlantısı iptal edilir
       // (Kılavuz 5.1.1(v)); hesap silindikten sonra kullanıcının JWT'si
       // geçersiz olur ve iptal edilemez. İptal başarısız olursa silme
-      // YİNE DE sürer (`revokeAppleAuthorization` hiç fırlatmaz).
+      // YİNE DE sürer; tek istisna `AppleRevokeUnsavedException`: iptal yapılamadı
+      // VE yeniden denenecek kayıt yok → silme durur, kullanıcı tekrar dener.
       if (hasAppleIdentity) {
         await revokeAppleAuthorization(client);
       }

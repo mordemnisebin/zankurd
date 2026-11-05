@@ -173,6 +173,8 @@ Deno.serve(async (request: Request): Promise<Response> => {
     `https://fcm.googleapis.com/v1/projects/${account.project_id}/messages:send`;
   const claimDeadline = Date.now() + CLAIM_BUDGET_MS;
   let lastClaimed: number | null = null;
+  // #11: ilk paketten SONRAKİ bir claim hatası eskiden sessizce 200 dönüyordu.
+  let claimFailed = false;
 
   while (
     shouldClaimNextBatch({
@@ -192,11 +194,13 @@ Deno.serve(async (request: Request): Promise<Response> => {
         console.error("claim_push_outbox_v2 failed", result.error.code);
         // Önceki paketler işlendi; yalnız bu talep başarısız.
         if (counts.batches === 0) return json({ error: "claim_failed" }, 500);
+        claimFailed = true;
         break;
       }
       data = result.data;
     } catch (_) {
       if (counts.batches === 0) return json({ error: "claim_failed" }, 500);
+      claimFailed = true;
       break;
     }
     // Uyumsuz RPC yanıtında FCM'ye dokunma; lease sona erince güvenle yeniden alınır.
@@ -259,13 +263,36 @@ Deno.serve(async (request: Request): Promise<Response> => {
             }
             return !result.error && result.data === true;
           },
+          // #23: kullanıcının öteki cihaz jetonları (2026-11-16 göçü). RPC yoksa
+          // (göç uygulanmamış: PGRST202) yalnız claim'in tek jetonu kullanılır.
+          listTokens: async (_job) => {
+            const result = await admin.rpc("get_push_device_tokens", {
+              p_user_id: _job.to_user_id,
+            });
+            if (result.error) {
+              if (result.error.code !== "PGRST202") {
+                console.error("get_push_device_tokens failed", result.error.code);
+              }
+              return [];
+            }
+            return ((result.data ?? []) as Array<{ token?: unknown }>)
+              .map((r) => r.token)
+              .filter((t): t is string => typeof t === "string");
+          },
           clearToken: async (_job, token) => {
-            const result = await admin.rpc("clear_fcm_token", {
+            // Önce cihaz tablosu + profil (2026-11-16); işlev yoksa eski profil temizliği.
+            let result = await admin.rpc("clear_push_device", {
               p_user_id: _job.to_user_id,
               p_token: token,
             });
+            if (result.error?.code === "PGRST202") {
+              result = await admin.rpc("clear_fcm_token", {
+                p_user_id: _job.to_user_id,
+                p_token: token,
+              });
+            }
             if (result.error) {
-              console.error("clear_fcm_token failed", result.error.code);
+              console.error("clear push token failed", result.error.code);
             } else counts.cleared++;
             return !result.error;
           },
@@ -279,6 +306,9 @@ Deno.serve(async (request: Request): Promise<Response> => {
     await Promise.all(
       Array.from({ length: Math.min(CONCURRENCY, jobs.length) }, worker),
     );
+  }
+  if (claimFailed) {
+    return json({ ...counts, error: "claim_failed_partial" }, 502);
   }
   return json(counts, counts.unsettled > 0 ? 502 : 200);
 });

@@ -16,3 +16,10 @@ verify_jwt = false
 # avatar-sweep de aynı paylaşılan sırla korunur (saatlik pg_cron çağırır).
 [functions.avatar-sweep]
 verify_jwt = false
+
+# apple-revoke iki yoldan çağrılır: kullanıcı oturumuyla (register/revoke) ve
+# pg_cron ile `x-cron-secret` başlığıyla (yetim jeton süpürmesi). Platform
+# kapısı JWT'siz cron'u keserdi; kullanıcı yolunda işlev `auth.getUser` ile
+# JWT'yi kendisi doğrular (yoksa 401), yani kapıyı kapatmak güvenliği azaltmaz.
+[functions.apple-revoke]
+verify_jwt = false

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../utils/error_reporter.dart';
@@ -47,16 +48,52 @@ bool _isRetryableRegisterError(Object error) {
   return true;
 }
 
+/// Hesap silme, süren bir kayıt çağrısını en çok bu kadar bekler (GPT-6 Pro
+/// ALAN 4 #10: kayıt `unawaited` idi; hızlı silmede iptal, henüz yazılmamış
+/// jetonu görmeden `no_token` dönüyordu). Silme hakkı bekleyişe bağlı kalmaz.
+const Duration kAppleRevokeWaitForRegister = Duration(seconds: 15);
+
+/// Süren kayıt çağrıları ve henüz sunucuya KAYDEDİLMEMİŞ tek kullanımlık kod.
+/// Kod yalnız bellektedir (diske yazılmaz; ~5 dk geçerli); kayıt başarılı
+/// olunca ya da kalıcı reddedilince (4xx) silinir. Silme anında kayıt hâlâ
+/// bitmediyse kod `revoke` çağrısına eklenir, sunucu takas edip iptal eder.
+final Set<Future<bool>> _inFlightRegistrations = <Future<bool>>{};
+String? _unregisteredCode;
+
+@visibleForTesting
+void resetAppleRegistrationStateForTest() {
+  _inFlightRegistrations.clear();
+  _unregisteredCode = null;
+}
+
 /// Girişten hemen sonra çağrılır; yanıt beklenmez/hata yutulur. Geçici
 /// hatada kod geçerliyken sınırlı sayıda yeniden denenir; `true` yalnız
-/// sunucunun kaydı onayladığını söyler.
+/// sunucunun kaydı onayladığını söyler. Süren çağrı [revokeAppleAuthorization]
+/// tarafından beklenir.
 Future<bool> registerAppleAuthorization(
   SupabaseClient client,
   String authorizationCode, {
   List<Duration> retryDelays = kAppleRegisterRetryDelays,
-}) async {
+}) {
   final code = authorizationCode.trim();
-  if (code.isEmpty) return false;
+  if (code.isEmpty) return Future<bool>.value(false);
+  _unregisteredCode = code;
+  late final Future<bool> tracked;
+  tracked = _registerWithRetry(client, code, retryDelays)
+      .then((ok) {
+        if (ok && _unregisteredCode == code) _unregisteredCode = null;
+        return ok;
+      })
+      .whenComplete(() => _inFlightRegistrations.remove(tracked));
+  _inFlightRegistrations.add(tracked);
+  return tracked;
+}
+
+Future<bool> _registerWithRetry(
+  SupabaseClient client,
+  String code,
+  List<Duration> retryDelays,
+) async {
   for (var attempt = 0; ; attempt++) {
     try {
       await client.functions
@@ -76,22 +113,76 @@ Future<bool> registerAppleAuthorization(
             ? 'apple-revoke register failed (retrying)'
             : 'apple-revoke register failed (sign-in continues)',
       );
-      if (!retry) return false;
+      if (!retry) {
+        // Kalıcı ret (4xx; ör. apple_subject_mismatch): kod bir daha kullanılamaz.
+        if (error is FunctionException && error.status < 500) {
+          if (_unregisteredCode == code) _unregisteredCode = null;
+        }
+        return false;
+      }
       await Future<void>.delayed(retryDelays[attempt]);
     }
   }
 }
 
-/// Hesap silmeden ÖNCE çağrılır. Başarısızlık yutulur; `true` yalnız
-/// çağrının hatasız tamamlandığını söyler (Apple'ın iptali kabul ettiğini
-/// değil: saklı jeton yoksa sunucu `no_token` döner).
+/// Apple iptali başarısız VE jeton kalıcı saklanamadı (`revoke_failed_unsaved`):
+/// sunucuda yeniden denenecek kayıt yok. Hesap silme DURDURULUR; kullanıcıya
+/// "tekrar dene" gösterilir (hesap silinirse Apple bağlantısı bir daha
+/// iptal edilemez).
+class AppleRevokeUnsavedException implements Exception {
+  const AppleRevokeUnsavedException();
+
+  @override
+  String toString() => 'AppleRevokeUnsavedException';
+}
+
+/// Hesap silmeden ÖNCE çağrılır. Tek istisna dışında hiç fırlatmaz (iptal hesap silmeyi
+/// ENGELLEMEZ). `true` YALNIZ sunucu `revoked: true` döndüyse: saklı jeton
+/// yoksa (`no_token`, HTTP 200) ya da Apple reddettiyse `false` (GPT-6 Pro
+/// ALAN 4 #1: eskiden çağrının hatasız bitmesi başarı sayılıyordu). Apple
+/// hatasında sunucu jetonu hesap silmeden bağımsız bir kuyrukta tutar ve
+/// yeniden dener (apple_auth_tokens yetim satırları).
 Future<bool> revokeAppleAuthorization(SupabaseClient client) async {
   try {
-    await client.functions
-        .invoke(kAppleRevokeFunction, body: {'action': 'revoke'})
+    if (_inFlightRegistrations.isNotEmpty) {
+      await Future.wait(
+        _inFlightRegistrations.toList(),
+      ).timeout(kAppleRevokeWaitForRegister);
+    }
+  } catch (_) {
+    // Bekleme sınırı doldu ya da kayıt başarısız: silme sürer.
+  }
+  try {
+    final pending = _unregisteredCode;
+    final response = await client.functions
+        .invoke(
+          kAppleRevokeFunction,
+          body: {'action': 'revoke', 'authorization_code': ?pending},
+        )
         .timeout(kAppleRevokeTimeout);
-    return true;
+    final data = response.data;
+    final revoked = data is Map && data['revoked'] == true;
+    if (revoked) {
+      _unregisteredCode = null;
+    } else {
+      final reason = data is Map ? data['reason'] : null;
+      ErrorReporter.record(
+        StateError('apple-revoke: bağlantı iptal edilmedi (reason: $reason)'),
+        StackTrace.current,
+        reason: 'apple-revoke revoke not revoked (account deletion continues)',
+      );
+    }
+    return revoked;
   } catch (error, stack) {
+    final details = error is FunctionException ? error.details : null;
+    if (details is Map && details['error'] == 'revoke_failed_unsaved') {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'apple-revoke revoke failed, token unsaved (deletion stops)',
+      );
+      throw const AppleRevokeUnsavedException();
+    }
     ErrorReporter.record(
       error,
       stack,
@@ -102,6 +193,19 @@ Future<bool> revokeAppleAuthorization(SupabaseClient client) async {
 }
 
 /// Oturumdaki kullanıcının Apple kimliği var mı? Apple dışı hesaplarda
-/// fonksiyon hiç çağrılmaz.
-bool userHasAppleIdentity(User? user) =>
-    user?.identities?.any((identity) => identity.provider == 'apple') ?? false;
+/// fonksiyon hiç çağrılmaz. Ölçüt Edge'dekiyle (`hasAppleIdentity`,
+/// apple-revoke/lib.ts) AYNI: `identities`te apple, yoksa
+/// `app_metadata.provider` / `providers` (GPT-6 Pro ALAN 4 #20: istemci yalnız
+/// `identities`e bakıyordu, Edge ikisine de; tutarsızlıkta Apple hesabı için
+/// iptal hiç çağrılmayabiliyordu).
+bool userHasAppleIdentity(User? user) {
+  if (user == null) return false;
+  if (user.identities?.any((identity) => identity.provider == 'apple') ??
+      false) {
+    return true;
+  }
+  final meta = user.appMetadata;
+  if (meta['provider'] == 'apple') return true;
+  final providers = meta['providers'];
+  return providers is List && providers.contains('apple');
+}
