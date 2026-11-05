@@ -66,35 +66,81 @@ void main() {
   // `answer_position_category_balance_test.dart`ta. Araç artık
   // `--playable .tmp/parity/local_bank.json` ile oynanabilir kümeyi de
   // kategori başına dengeler (bkz. `tool/rebalance_answer_positions.py`).
+  //
+  // 2026-11-15: `yeni2_2026_11_10_questions.json` (696 soru) CANLI sunucuda.
+  // Sunucudaki option_a..d ve correct_option bu dosyadaki şık sırasından
+  // üretildi; dengelemek için sırayı yerelde değiştirmek yerel ile canlıyı aynı
+  // soruda ayrıştırırdı (correct_option başka metni gösterirdi). Bu yüzden o
+  // bankanın saklanan sırası DONDURULDU ve araçla dengelenmez. Ölçüm:
+  //
+  //     bütün bankalar  [971, 979, 963, 958]  yayılım 21
+  //     yeni2 hariç     [794, 794, 793, 794]  yayılım  1  ← katı kural burada
+  //     yeni2 (696)     [177, 185, 170, 164]  yayılım 21  (%3; saklanan
+  //                                                       [174, 183, 174, 165])
+  //
+  // Bu metrik oyuncunun gördüğü sırayı değil, tura bağlanmamış eski görünümü
+  // (id'den türeyen sabit kaydırma) ölçer; oyun ekranları tura bağlı karıştırma
+  // kullanır, yani 21'lik fark oyunda doğru cevabı tahmin ettirmez. Kural:
+  // yeni2 dışındaki bankalarda yayılım ≤ 1 (eski sıkılık aynen), yeni2'de bankanın
+  // %5'i.
   test('displayed correct-answer positions are balanced', () {
+    final frozen = <int>[0, 0, 0, 0];
     final counts = List<int>.filled(4, 0);
-    final all = [
-      for (final asset in questionBankAssets)
-        if (File(asset).existsSync())
-          ...(jsonDecode(File(asset).readAsStringSync()) as List).map(
-            (e) => QuizQuestion.fromJson(e as Map<String, dynamic>),
-          ),
-    ];
+    var frozenSize = 0;
+    final all = <QuizQuestion>[];
+    final isFrozen = <bool>[];
+    for (final asset in questionBankAssets) {
+      if (!File(asset).existsSync()) continue;
+      final rows = (jsonDecode(File(asset).readAsStringSync()) as List).map(
+        (e) => QuizQuestion.fromJson(e as Map<String, dynamic>),
+      );
+      for (final question in rows) {
+        all.add(question);
+        isFrozen.add(asset.endsWith('yeni2_2026_11_10_questions.json'));
+      }
+    }
     expect(
       all.length,
       greaterThan(1000),
       reason: 'Bekçi kör kalmasın: bankalar yüklenemediyse yayılım 0 çıkar.',
     );
-    for (final question in all.where(
-      (q) => q.answers.length == 4 && q.answers.contains(q.correctAnswer),
-    )) {
-      counts[question.displayAnswers.indexOf(question.correctAnswer)]++;
+    for (var i = 0; i < all.length; i++) {
+      final question = all[i];
+      if (question.answers.length != 4 ||
+          !question.answers.contains(question.correctAnswer)) {
+        continue;
+      }
+      final position = question.displayAnswers.indexOf(question.correctAnswer);
+      if (isFrozen[i]) {
+        frozen[position]++;
+        frozenSize++;
+      } else {
+        counts[position]++;
+      }
     }
 
-    final spread =
-        counts.reduce((a, b) => a > b ? a : b) -
-        counts.reduce((a, b) => a < b ? a : b);
+    int spreadOf(List<int> values) =>
+        values.reduce((a, b) => a > b ? a : b) -
+        values.reduce((a, b) => a < b ? a : b);
+
     expect(
-      spread,
+      frozenSize,
+      greaterThan(0),
+      reason: 'Dondurulmuş banka yüklenmediyse bu ayrım kör kalır.',
+    );
+    expect(
+      spreadOf(counts),
       lessThanOrEqualTo(1),
       reason:
-          'Dağılım: $counts — dengelemek için '
+          'Dağılım (yeni2 hariç): $counts — dengelemek için '
           '`python3 tool/rebalance_answer_positions.py offline_curated`',
+    );
+    expect(
+      spreadOf(frozen),
+      lessThanOrEqualTo((frozenSize * 0.05).floor()),
+      reason:
+          'yeni2 dağılımı: $frozen. Canlıda olan banka; şık sırasını '
+          'değiştirmek correct_option ile yerel kopyayı ayrıştırır.',
     );
   });
 

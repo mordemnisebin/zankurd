@@ -16,6 +16,12 @@ kategori `categories.name` ile aranır, kategori OLUŞTURULMAZ,
 `on conflict (id) do nothing`, doğrulama bloğu sayı tutmazsa işlemi geri alır.
 Doğru/yanlış (`trueFalse`) sorular da çoktan seçmeli gibi taşınır.
 
+UYARI (2026-11-15): `2026-11-10_yeni_sorular_2.sql` canlıya UYGULANDI; dosya canlıdaki
+hâli tutar, YENİDEN ÜRETİLMEZ. Yerel JSON'daki alıntı tırnakları sonradan düz çift
+tırnağa çevrildi (21 soru); bu betik şimdi çalıştırılırsa SQL yeni tırnaklarla çıkar ve
+uygulanmış göçten sapar. Sunucuyu yerelle eşitleyen göç
+`supabase/2026-11-15_yeni_sorular_2_tirnak.sql`dir. `--check` yine güvenle çalışır.
+
 Kullanım (proje kökü zankurd_mobile/ içinden):
   python3 tool/sync_yeni_sorular_2_to_server.py            # SQL'i yazar
   python3 tool/sync_yeni_sorular_2_to_server.py --check    # yalnız sayar/doğrular

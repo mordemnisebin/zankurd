@@ -583,7 +583,7 @@
   "id": "r14_sinema_020",
   "category": "Sînema",
   "prompt": "Kîjan derhênerê kurd ê ji Çewlîgê bi fîlmên xwe yên dirêj ên bi zaravayê kirmanckî (zazakî) yên bi navê \"Xewna Bêreng\" (2018) û \"Govenda Elî û Dayka Zîneb\" (2020) gelek xelat wergirtine?",
-  "promptTr": "Bingöllü hangi Kürt yönetmen, Kırmançki (Zazaca) lehçesiyle çektiği \"Renksiz Rüya\" (Xewna Bêreng, 2018) ve 'Ali'nin Tabiatı / Ceviz Ağacı' (Govenda Elî û Dayka Zîneb, 2020) adlı uzun metrajlı filmleriyle birçok ödül kazanmıştır?",
+  "promptTr": "Bingöllü hangi Kürt yönetmen, Kırmançki (Zazaca) lehçesiyle çektiği \"Renksiz Rüya\" (Xewna Bêreng, 2018) ve \"Ali'nin Tabiatı / Ceviz Ağacı\" (Govenda Elî û Dayka Zîneb, 2020) adlı uzun metrajlı filmleriyle birçok ödül kazanmıştır?",
   "answers": [
    "Kazim Oz",
    "Orhan Eskîkoy",
@@ -1467,7 +1467,7 @@
   "id": "r14_sinema_232",
   "category": "Sînema",
   "prompt": "Di rêzefîlma anîmasyonê ya navdar \"Toy Story\" (Çîroka Pêlîstokan) de, navê pêlîstoka kowboy a ku pêlîstoka herî bijarte ya Andy ye çi ye?",
-  "promptTr": "Ünlü animasyon serisi 'Toy Story'de (Oyuncak Hikayesi), Andy'nin en sevdiği oyuncak olan kovboy bebeğin adı nedir?",
+  "promptTr": "Ünlü animasyon serisi \"Toy Story\"de (Oyuncak Hikayesi), Andy'nin en sevdiği oyuncak olan kovboy bebeğin adı nedir?",
   "answers": [
    "Şerîf Woody",
    "Buzz Lightyear",
@@ -1637,7 +1637,7 @@
   "id": "r14_sinema_046",
   "category": "Sînema",
   "prompt": "Di fîlma epîk a sala 1962an a bi navê \"Lawrence of Arabia\" de derhênerê fîlmê kî ye?",
-  "promptTr": "Başrolünde Peter O'Toole'un yer aldığı 1962 yapımı epik film 'Lawrence of Arabia'nın yönetmeni kimdir?",
+  "promptTr": "Başrolünde Peter O'Toole'un yer aldığı 1962 yapımı epik film \"Lawrence of Arabia\"nın yönetmeni kimdir?",
   "answers": [
    "Carol Reed",
    "Anthony Mann",
@@ -1992,9 +1992,9 @@
   ],
   "correctAnswer": "Şaplînê Çiyayan",
   "correctAnswerTr": "Dağların Chaplin'i (Chaplin of the Mountains)",
-  "explanation": "'Dağların Chaplin'i' (Chaplin of the Mountains, 2013) filmi Jano Rosebiani tarafından Kürtçe ve İngilizce olarak çekilmiştir.",
+  "explanation": "\"Dağların Chaplin'i\" (Chaplin of the Mountains, 2013) filmi Jano Rosebiani tarafından Kürtçe ve İngilizce olarak çekilmiştir.",
   "explanationKu": "Fîlma \"Şaplînê Çiyayan\" (Chaplin of the Mountains, 2013) ji aliyê Cano Rojbeyanî ve bi kurdî û îngilîzî hatiye kişandin.",
-  "explanationTr": "'Dağların Chaplin'i' (Chaplin of the Mountains, 2013) filmi Jano Rosebiani tarafından Kürtçe ve İngilizce olarak çekilmiştir.",
+  "explanationTr": "\"Dağların Chaplin'i\" (Chaplin of the Mountains, 2013) filmi Jano Rosebiani tarafından Kürtçe ve İngilizce olarak çekilmiştir.",
   "metadata": {
    "reviewStatus": "approved",
    "dialect": "kurmanci",
@@ -2011,7 +2011,7 @@
   "id": "r14_sinema_249",
   "category": "Sînema",
   "prompt": "Mijara sereke ya fîlmê destanî yê Hayao Miyazaki \"Princess Mononoke\" (1997) li ser kîjan nakokiya bingehîn hatiye avakirin?",
-  "promptTr": "Hayao Miyazaki'nin destansı animasyon filmi 'Princess Mononoke'nin (Prenses Mononoke, 1997) ana teması hangi temel çatışma üzerine kuruludur?",
+  "promptTr": "Hayao Miyazaki'nin destansı animasyon filmi \"Princess Mononoke\"nin (Prenses Mononoke, 1997) ana teması hangi temel çatışma üzerine kuruludur?",
   "answers": [
    "Şerê desthilatdariyê yê di navbera du xanedanên samûrayan de",
    "Rêwîtiya keçeke sêrbaz a ji bo rizgarkirina bajarê di bin avê de",
@@ -2366,9 +2366,9 @@
   ],
   "correctAnswer": "Fritz Lang",
   "correctAnswerTr": "Fritz Lang",
-  "explanation": "Fritz Lang, 'Metropolis'te sınıflara bölünmüş fütüristik bir şehri ve sinema tarihini derinden etkileyen robot Maria karakterini beyaz perdeye taşımıştır.",
+  "explanation": "Fritz Lang, \"Metropolis\"te sınıflara bölünmüş fütüristik bir şehri ve sinema tarihini derinden etkileyen robot Maria karakterini beyaz perdeye taşımıştır.",
   "explanationKu": "Fritz Lang di \"Metropolis\" de bajarekî paşerojê yê dabeşbûyî û robota mê ya bi navê Maria nîşan da ku bandoreke mezin li sînemaya cîhanê kir.",
-  "explanationTr": "Fritz Lang, 'Metropolis'te sınıflara bölünmüş fütüristik bir şehri ve sinema tarihini derinden etkileyen robot Maria karakterini beyaz perdeye taşımıştır.",
+  "explanationTr": "Fritz Lang, \"Metropolis\"te sınıflara bölünmüş fütüristik bir şehri ve sinema tarihini derinden etkileyen robot Maria karakterini beyaz perdeye taşımıştır.",
   "metadata": {
    "reviewStatus": "approved",
    "dialect": "kurmanci",
@@ -2690,8 +2690,8 @@
   "difficulty": 1,
   "id": "r14_sinema_280",
   "category": "Sînema",
-  "prompt": "Lîstikvana navdar a amerîkî ya ku bi zêdetirî 20 caran bûye berendama Xelata Oscarê û bi fîlmên wekî 'Sophie's Choice' û \"The Iron Lady\" xelat wergirtiye kî ye?",
-  "promptTr": "20'den fazla kez Oscar'a aday gösterilen ve 'Sophie's Choice' ile \"The Iron Lady\" gibi filmlerle bu ödülü kazanan ünlü Amerikalı kadın oyuncu kimdir?",
+  "prompt": "Lîstikvana navdar a amerîkî ya ku bi zêdetirî 20 caran bûye berendama Xelata Oscarê û bi fîlmên wekî \"Sophie's Choice\" û \"The Iron Lady\" xelat wergirtiye kî ye?",
+  "promptTr": "20'den fazla kez Oscar'a aday gösterilen ve \"Sophie's Choice\" ile \"The Iron Lady\" gibi filmlerle bu ödülü kazanan ünlü Amerikalı kadın oyuncu kimdir?",
   "answers": [
    "Cate Blanchett",
    "Meryl Streep",
@@ -2827,7 +2827,7 @@
   "id": "r14_sinema_236",
   "category": "Sînema",
   "prompt": "Di fîlmê klasîk ê Disneyê \"Pinocchio\" (1940) de, navê darbir û hosteyê kal ê ku bûka darîn Pinocchio çêdike çi ye?",
-  "promptTr": "Disney'in klasik filmi 'Pinocchio'da (Pinokyo, 1940), tahta kukla Pinokyo'yu yapan yaşlı ahşap ustasının adı nedir?",
+  "promptTr": "Disney'in klasik filmi \"Pinocchio\"da (Pinokyo, 1940), tahta kukla Pinokyo'yu yapan yaşlı ahşap ustasının adı nedir?",
   "answers": [
    "Stromboli",
    "Geppetto",
@@ -3200,7 +3200,7 @@
   "difficulty": 2,
   "id": "r14_sinema_273",
   "category": "Sînema",
-  "prompt": "Lîstikvanê hosta yê ku di fîlmê \"Kis Uykusu\" de rola Aydin lîst û bi rêzefîlma 'Sahsiyet'ê Xelata Emmy ya Navneteweyî wergirt kî ye?",
+  "prompt": "Lîstikvanê hosta yê ku di fîlmê \"Kis Uykusu\" de rola Aydin lîst û bi rêzefîlma \"Sahsiyet\"ê Xelata Emmy ya Navneteweyî wergirt kî ye?",
   "promptTr": "\"Kış Uykusu\" filminde Aydın rolünü oynayan ve \"Şahsiyet\" dizisindeki performansıyla Uluslararası Emmy ödülü kazanan usta aktör kimdir?",
   "answers": [
    "Ugur Yucel",
@@ -3235,7 +3235,7 @@
   "id": "r14_sinema_051",
   "category": "Sînema",
   "prompt": "Di fîlma Western a sala 1952an a \"High Noon\" de lîstikvanê ku rola şerîf Will Kane lîst û xelata Oscarê wergirt kî ye?",
-  "promptTr": "Neredeyse gerçek zamanlı ilerleyen 1952 yapımı ünlü Western filmi 'High Noon'da şerif Will Kane'i canlandıran aktör kimdir?",
+  "promptTr": "Neredeyse gerçek zamanlı ilerleyen 1952 yapımı ünlü Western filmi \"High Noon\"da şerif Will Kane'i canlandıran aktör kimdir?",
   "answers": [
    "Gary Cooper",
    "John Wayne",
@@ -3371,7 +3371,7 @@
   "id": "r14_sinema_202",
   "category": "Sînema",
   "prompt": "Di fîlmê post-apokalîptîk \"Mad Max: Fury Road\" (2015) ê George Miller de, karaktera şervan Imperator Furiosa ji aliyê kîjan lîstikvanê ve hate lîstin?",
-  "promptTr": "George Miller'ın kıyamet sonrası filmi 'Mad Max: Fury Road'da (2015) savaşçı Imperator Furiosa karakterini hangi oyuncu canlandırmıştır?",
+  "promptTr": "George Miller'ın kıyamet sonrası filmi \"Mad Max: Fury Road\"da (2015) savaşçı Imperator Furiosa karakterini hangi oyuncu canlandırmıştır?",
   "answers": [
    "Emily Blunt",
    "Charlize Theron",
@@ -3847,7 +3847,7 @@
   "id": "r14_sinema_059",
   "category": "Sînema",
   "prompt": "Di fîlma şahkar a Western a bi navê \"The Searchers\" (1956) de lîstikvanê ku rola lehengê şer Ethan Edwards lîstiye kî ye?",
-  "promptTr": "John Ford'un yönettiği 1956 yapımı ünlü Western şaheseri 'The Searchers'ta Ethan Edwards rolünü oynayan aktör kimdir?",
+  "promptTr": "John Ford'un yönettiği 1956 yapımı ünlü Western şaheseri \"The Searchers\"ta Ethan Edwards rolünü oynayan aktör kimdir?",
   "answers": [
    "John Wayne",
    "Henry Fonda",
@@ -4119,7 +4119,7 @@
   "id": "r14_sinema_181",
   "category": "Sînema",
   "prompt": "Di rêzefîlma fantezî ya \"Harry Potter\" de, navê dibistana sêrbaziyê ya ku Harry û hevalên wî lê dixwînin çi ye?",
-  "promptTr": "Fantastik film serisi 'Harry Potter'da Harry ve arkadaşlarının eğitim gördüğü büyücülük okulunun adı nedir?",
+  "promptTr": "Fantastik film serisi \"Harry Potter\"da Harry ve arkadaşlarının eğitim gördüğü büyücülük okulunun adı nedir?",
   "answers": [
    "Beauxbatons",
    "Durmstrang",
@@ -4594,8 +4594,8 @@
   "difficulty": 3,
   "id": "r14_sinema_250",
   "category": "Sînema",
-  "prompt": "Fîlmê navdar ê Hayao Miyazaki 'Howl's Moving Castle' (Kela Gerok a Howl, 2004) ji romana fantastîk a bi heman navî ya kîjan nivîskara brîtanî hatiye guncandin?",
-  "promptTr": "Hayao Miyazaki'nin ünlü filmi 'Howl's Moving Castle' (Yürüyen Şato, 2004), hangi Britanyalı yazarın aynı adlı fantastik romanından uyarlanmıştır?",
+  "prompt": "Fîlmê navdar ê Hayao Miyazaki \"Howl's Moving Castle\" (Kela Gerok a Howl, 2004) ji romana fantastîk a bi heman navî ya kîjan nivîskara brîtanî hatiye guncandin?",
+  "promptTr": "Hayao Miyazaki'nin ünlü filmi \"Howl's Moving Castle\" (Yürüyen Şato, 2004), hangi Britanyalı yazarın aynı adlı fantastik romanından uyarlanmıştır?",
   "answers": [
    "Diana Wynne Jones",
    "Ursula K. Le Guin",
@@ -5309,7 +5309,7 @@
   "id": "r14_sinema_204",
   "category": "Sînema",
   "prompt": "Fîlmê felsefî û zanistî-xeyalî \"Stalker\" (1979) ê li ser rêwîtiya ber bi \"Herêmê\" (Zone) ve, ji romana \"Piknik na obochine\" (Seyrana li Qeraxa Rê) ya kîjan nivîskaran hatiye guncandin?",
-  "promptTr": "Gizemli 'Bölge'ye (Zone) yapılan yolculuğu anlatan felsefi bilim kurgu filmi \"Stalker\" (1979), hangi yazarların \"Uzayda Piknik\" (Piknik na obochine) romanından uyarlanmıştır?",
+  "promptTr": "Gizemli \"Bölge\"ye (Zone) yapılan yolculuğu anlatan felsefi bilim kurgu filmi \"Stalker\" (1979), hangi yazarların \"Uzayda Piknik\" (Piknik na obochine) romanından uyarlanmıştır?",
   "answers": [
    "Yevgeny Zamyatin û Mikhail Bulgakov",
    "Stanislaw Lem û Karel Capek",
@@ -5785,7 +5785,7 @@
   "id": "r14_sinema_184",
   "category": "Sînema",
   "prompt": "Di rêzefîlma zanistî-xeyalî û tirsê ya \"Alien\" de, karaktera leheng Ellen Ripley ji aliyê kîjan lîstikvanê ve hatiye lîstin?",
-  "promptTr": "Bilim kurgu ve korku serisi 'Alien'da başkahraman Ellen Ripley karakterini hangi oyuncu canlandırmıştır?",
+  "promptTr": "Bilim kurgu ve korku serisi \"Alien\"da başkahraman Ellen Ripley karakterini hangi oyuncu canlandırmıştır?",
   "answers": [
    "Linda Hamilton",
    "Carrie Fisher",
@@ -5954,8 +5954,8 @@
   "difficulty": 3,
   "id": "r14_sinema_248",
   "category": "Sînema",
-  "prompt": "Muzîkên efsûnî yên hema bêje hemû fîlmên Hayao Miyazaki yên wekî \"Spirited Away\", \"Princess Mononoke\" û 'Howl's Moving Castle' ji aliyê kîjan bestekarî ve hatine çêkirin?",
-  "promptTr": "Hayao Miyazaki'nin \"Spirited Away\", \"Princess Mononoke\" ve 'Howl's Moving Castle' gibi neredeyse tüm filmlerinin büyüleyici müzikleri hangi besteciye aittir?",
+  "prompt": "Muzîkên efsûnî yên hema bêje hemû fîlmên Hayao Miyazaki yên wekî \"Spirited Away\", \"Princess Mononoke\" û \"Howl's Moving Castle\" ji aliyê kîjan bestekarî ve hatine çêkirin?",
+  "promptTr": "Hayao Miyazaki'nin \"Spirited Away\", \"Princess Mononoke\" ve \"Howl's Moving Castle\" gibi neredeyse tüm filmlerinin büyüleyici müzikleri hangi besteciye aittir?",
   "answers": [
    "Ryuichi Sakamoto",
    "Nobuo Uematsu",
@@ -9899,7 +9899,7 @@
   "id": "r14_paradigma_261",
   "category": "Paradigma",
   "prompt": "Berhema Xwarizmî ya bi navê \"Kitab Sûret el-Erd\", ku tê de koordînatên bi sedan bajar, çiya û deryayan hatine rêzkirin, di kîjan qada zanistê de hatiye nivîsandin?",
-  "promptTr": "Harezmi'nin yüzlerce şehir, dağ ve denizin koordinatlarını sıraladığı 'Kitab Sureti'l-Arz' adlı eseri hangi bilim dalında yazılmıştır?",
+  "promptTr": "Harezmi'nin yüzlerce şehir, dağ ve denizin koordinatlarını sıraladığı \"Kitab Sureti'l-Arz\" adlı eseri hangi bilim dalında yazılmıştır?",
   "answers": [
    "Erdnîgarî û nexşekêşî",
    "Bijîşkî û dermannasî",
@@ -10545,7 +10545,7 @@
   "id": "r14_paradigma_263",
   "category": "Paradigma",
   "prompt": "Kîjan zanyarê sedsala 14an di berhema xwe ya \"Tenqîh el-Menazir\" de bi şikandin û vegerîna ronahiyê ya di dilopên baranê de çêbûna keskesorê bi awayekî matematîkî rave kiriye?",
-  "promptTr": "14. yüzyılda yaşayan hangi bilgin, 'Tenkihu'l-Menazır' adlı eserinde yağmur damlalarındaki ışık kırılması ve yansımasıyla gökkuşağının oluşumunu matematiksel olarak açıklamıştır?",
+  "promptTr": "14. yüzyılda yaşayan hangi bilgin, \"Tenkihu'l-Menazır\" adlı eserinde yağmur damlalarındaki ışık kırılması ve yansımasıyla gökkuşağının oluşumunu matematiksel olarak açıklamıştır?",
   "answers": [
    "Îbn Şatir",
    "Elî Quşçî",
@@ -13026,8 +13026,8 @@
   "difficulty": 2,
   "id": "r14_siyaset_151",
   "category": "Siyaset",
-  "prompt": "Rêbaza matematîkî ya parvekirina kursiyên parlamentoyê ya bi navê 'D'Hondt' navê xwe ji hiqûqnasê kîjan welatî girtiye?",
-  "promptTr": "Parlamento sandalyelerinin dağıtımında kullanılan 'D'Hondt' matematiksel yöntemi adını hangi ülkenin hukukçusundan almıştır?",
+  "prompt": "Rêbaza matematîkî ya parvekirina kursiyên parlamentoyê ya bi navê \"D'Hondt\" navê xwe ji hiqûqnasê kîjan welatî girtiye?",
+  "promptTr": "Parlamento sandalyelerinin dağıtımında kullanılan \"D'Hondt\" matematiksel yöntemi adını hangi ülkenin hukukçusundan almıştır?",
   "answers": [
    "Swêd",
    "Hollanda",
@@ -13094,7 +13094,7 @@
   "difficulty": 1,
   "id": "r14_siyaset_064",
   "category": "Siyaset",
-  "prompt": "Celadet Elî Bedirxan kovara 'Hawar'ê ya ku alfabeya kurdî ya latînî tê de da nasîn, di sala 1932an de li kîjan bajarî derxist?",
+  "prompt": "Celadet Elî Bedirxan kovara \"Hawar\"ê ya ku alfabeya kurdî ya latînî tê de da nasîn, di sala 1932an de li kîjan bajarî derxist?",
   "promptTr": "Celadet Ali Bedirhan, Latin harfli Kürt alfabesini tanıttığı \"Hawar\" dergisini 1932 yılında hangi şehirde çıkarmıştır?",
   "answers": [
    "Şam",
@@ -14878,9 +14878,9 @@
   ],
   "correctAnswer": "Gotarên li ser Livius",
   "correctAnswerTr": "Livius Üzerine Söylevler",
-  "explanation": "Machiavelli, 'Titus Livius'un İlk On Kitabı Üzerine Söylevler' adlı eserinde sivil özgürlüğü, halk katılımını ve cumhuriyetçi yönetimi en kalıcı rejim biçimi olarak değerlendirir.",
+  "explanation": "Machiavelli, \"Titus Livius'un İlk On Kitabı Üzerine Söylevler\" adlı eserinde sivil özgürlüğü, halk katılımını ve cumhuriyetçi yönetimi en kalıcı rejim biçimi olarak değerlendirir.",
   "explanationKu": "Machiavelli di berhema xwe ya \"Gotarên li ser Deh Pirtûkên Yekem ên Titus Livius\" de azadiya sivîl, beşdariya gel û rêveberiya komarî wekî pergala herî domdar dinirxîne.",
-  "explanationTr": "Machiavelli, 'Titus Livius'un İlk On Kitabı Üzerine Söylevler' adlı eserinde sivil özgürlüğü, halk katılımını ve cumhuriyetçi yönetimi en kalıcı rejim biçimi olarak değerlendirir.",
+  "explanationTr": "Machiavelli, \"Titus Livius'un İlk On Kitabı Üzerine Söylevler\" adlı eserinde sivil özgürlüğü, halk katılımını ve cumhuriyetçi yönetimi en kalıcı rejim biçimi olarak değerlendirir.",
   "metadata": {
    "reviewStatus": "approved",
    "dialect": "kurmanci",
@@ -15781,7 +15781,7 @@
   "id": "r14_siyaset_243",
   "category": "Siyaset",
   "prompt": "Siyasetmedar û ramanwerê Îrlandî-Brîtanî Edmund Burke, ku di sala 1790î de pirtûka \"Ramanên li ser Şoreşa li Fransayê\" nivîsandiye, wekî damezrînerê kîjan îdeolojiya siyasî tê nasîn?",
-  "promptTr": "1790 yılında 'Fransa'daki Devrim Üzerine Düşünceler' adlı kitabı yazan İrlandalı-Britanyalı siyasetçi ve düşünür Edmund Burke, hangi siyasi ideolojinin kurucusu kabul edilir?",
+  "promptTr": "1790 yılında \"Fransa'daki Devrim Üzerine Düşünceler\" adlı kitabı yazan İrlandalı-Britanyalı siyasetçi ve düşünür Edmund Burke, hangi siyasi ideolojinin kurucusu kabul edilir?",
   "answers": [
    "Sindîkalîzm",
    "Narodnîzm",
@@ -16223,7 +16223,7 @@
   "id": "r14_siyaset_239",
   "category": "Siyaset",
   "prompt": "Cilda yekem a berhema aborî û siyasî ya mezin a Karl Marx a bi navê \"Das Kapital\" (Sermaye) di kîjan salê de hatiye weşandin?",
-  "promptTr": "Karl Marx'ın büyük ekonomi-politik eseri 'Das Kapital'in (Sermaye) birinci cildi hangi yılda yayımlanmıştır?",
+  "promptTr": "Karl Marx'ın büyük ekonomi-politik eseri \"Das Kapital\"in (Sermaye) birinci cildi hangi yılda yayımlanmıştır?",
   "answers": [
    "1845",
    "1852",
@@ -16238,9 +16238,9 @@
   ],
   "correctAnswer": "1867",
   "correctAnswerTr": "1867",
-  "explanation": "'Das Kapital'in birinci cildi Marx hayattayken 1867 yılında yayımlanmış; ikinci ve üçüncü ciltler ise ölümünden sonra Friedrich Engels tarafından yayına hazırlanmıştır.",
+  "explanation": "\"Das Kapital\"in birinci cildi Marx hayattayken 1867 yılında yayımlanmış; ikinci ve üçüncü ciltler ise ölümünden sonra Friedrich Engels tarafından yayına hazırlanmıştır.",
   "explanationKu": "Cilda yekem a \"Das Kapital\" di sala 1867an de dema ku Marx li jiyanê bû hat weşandin; cildên duyem û sêyem piştî mirina wî ji aliyê Friedrich Engels ve hatin amadekirin.",
-  "explanationTr": "'Das Kapital'in birinci cildi Marx hayattayken 1867 yılında yayımlanmış; ikinci ve üçüncü ciltler ise ölümünden sonra Friedrich Engels tarafından yayına hazırlanmıştır.",
+  "explanationTr": "\"Das Kapital\"in birinci cildi Marx hayattayken 1867 yılında yayımlanmış; ikinci ve üçüncü ciltler ise ölümünden sonra Friedrich Engels tarafından yayına hazırlanmıştır.",
   "metadata": {
    "reviewStatus": "approved",
    "dialect": "kurmanci",
@@ -16494,7 +16494,7 @@
   "difficulty": 2,
   "id": "r14_siyaset_071",
   "category": "Siyaset",
-  "prompt": "Serokê yekem ê rêxistina nihênî ya 'Azadî'yê (Komîteya Îstîqlala Kurdistanê) ya ku beriya serhildana 1925an li Erziromê hatibû avakirin kî bû?",
+  "prompt": "Serokê yekem ê rêxistina nihênî ya \"Azadî\"yê (Komîteya Îstîqlala Kurdistanê) ya ku beriya serhildana 1925an li Erziromê hatibû avakirin kî bû?",
   "promptTr": "1925 ayaklanması öncesinde Erzurum'da kurulan gizli \"Azadi\" (Kürdistan İstiklal Komitesi) örgütünün ilk başkanı kimdi?",
   "answers": [
    "Îhsan Nûrî Paşa",
@@ -18177,7 +18177,7 @@
   "correctAnswer": "Ska",
   "correctAnswerTr": "Ska",
   "explanation": "Reggae, hareketli \"Ska\" ve ardından \"Rocksteady\" türlerinin ritminin yavaşlatılmasıyla ortaya çıkmıştır.",
-  "explanationKu": "Reggae pêşî ji muzîka bilez a 'Ska'yê û piştre ji 'Rocksteady'yê ber bi rîtmeke girantir ve veguherî.",
+  "explanationKu": "Reggae pêşî ji muzîka bilez a \"Ska\"yê û piştre ji \"Rocksteady\"yê ber bi rîtmeke girantir ve veguherî.",
   "explanationTr": "Reggae, hareketli \"Ska\" ve ardından \"Rocksteady\" türlerinin ritminin yavaşlatılmasıyla ortaya çıkmıştır.",
   "metadata": {
    "reviewStatus": "approved",
@@ -19248,8 +19248,8 @@
   "difficulty": 2,
   "id": "r14_muzik_099",
   "category": "Muzîk",
-  "prompt": "Muzîkjenê ku bi strana \"Johnny B. Goode\" (1958) û teknîka xwe ya gîtarê wek yek ji pêşengên muzîka 'Rock and Roll'ê tê naskirin kî ye?",
-  "promptTr": "1958 tarihli \"Johnny B. Goode\" şarkısı ve gitar tekniğiyle 'Rock and Roll'un öncülerinden kabul edilen müzisyen kimdir?",
+  "prompt": "Muzîkjenê ku bi strana \"Johnny B. Goode\" (1958) û teknîka xwe ya gîtarê wek yek ji pêşengên muzîka \"Rock and Roll\"ê tê naskirin kî ye?",
+  "promptTr": "1958 tarihli \"Johnny B. Goode\" şarkısı ve gitar tekniğiyle \"Rock and Roll\"un öncülerinden kabul edilen müzisyen kimdir?",
   "answers": [
    "Chuck Berry",
    "Buddy Holly",
@@ -19570,9 +19570,9 @@
   ],
   "correctAnswer": "Syd Barrett",
   "correctAnswerTr": "Syd Barrett",
-  "explanation": "Syd Barrett, Pink Floyd'a adını vermiş ve ilk albüm 'The Piper at the Gates of Dawn'a liderlik etmiş, ancak ruh sağlığı sorunları nedeniyle 1968'de gruptan ayrılmıştır.",
+  "explanation": "Syd Barrett, Pink Floyd'a adını vermiş ve ilk albüm \"The Piper at the Gates of Dawn\"a liderlik etmiş, ancak ruh sağlığı sorunları nedeniyle 1968'de gruptan ayrılmıştır.",
   "explanationKu": "Syd Barrett navê Pink Floyd danî û albuma yekem \"The Piper at the Gates of Dawn\" rêve bir, lê ji ber pirsgirêkên tenduristiya derûnî di sala 1968an de ji komê dûr ket.",
-  "explanationTr": "Syd Barrett, Pink Floyd'a adını vermiş ve ilk albüm 'The Piper at the Gates of Dawn'a liderlik etmiş, ancak ruh sağlığı sorunları nedeniyle 1968'de gruptan ayrılmıştır.",
+  "explanationTr": "Syd Barrett, Pink Floyd'a adını vermiş ve ilk albüm \"The Piper at the Gates of Dawn\"a liderlik etmiş, ancak ruh sağlığı sorunları nedeniyle 1968'de gruptan ayrılmıştır.",
   "metadata": {
    "reviewStatus": "approved",
    "dialect": "kurmanci",
@@ -19622,7 +19622,7 @@
   "difficulty": 2,
   "id": "r14_muzik_105",
   "category": "Muzîk",
-  "prompt": "Albûma \"The Dark Side of the Moon\" (1973) ku wek şahesera 'progressive rock'ê tê dîtin, berhema kîjan komê ye?",
+  "prompt": "Albûma \"The Dark Side of the Moon\" (1973) ku wek şahesera \"progressive rock\"ê tê dîtin, berhema kîjan komê ye?",
   "promptTr": "1973 çıkışlı \"The Dark Side of the Moon\" albümüyle progressive rock tarihine damga vuran grup hangisidir?",
   "answers": [
    "The Who",
@@ -19962,8 +19962,8 @@
   "difficulty": 1,
   "id": "r14_muzik_096",
   "category": "Muzîk",
-  "prompt": "Hunermendê navdar ê ku muzîka reggae li seranserê cîhanê da naskirin û wek 'qralê reggae'yê tê naskirin kî ye?",
-  "promptTr": "Reggae müziğini tüm dünyaya tanıtan ve 'reggae'nin kralı' olarak anılan sanatçı kimdir?",
+  "prompt": "Hunermendê navdar ê ku muzîka reggae li seranserê cîhanê da naskirin û wek \"qralê reggae\"yê tê naskirin kî ye?",
+  "promptTr": "Reggae müziğini tüm dünyaya tanıtan ve \"reggae'nin kralı\" olarak anılan sanatçı kimdir?",
   "answers": [
    "Bob Marley",
    "Peter Tosh",
@@ -20046,9 +20046,9 @@
   ],
   "correctAnswer": "Rapper's Delight",
   "correctAnswerTr": "Rapper's Delight",
-  "explanation": "The Sugarhill Gang'in 'Rapper's Delight' şarkısı, hip-hop kültürünü geniş kitlelere ulaştıran ilk büyük hit olmuştur.",
-  "explanationKu": "Strana 'Rapper's Delight' a koma The Sugarhill Gang hip-hop ji kolanan gihand raya giştî ya cîhanê.",
-  "explanationTr": "The Sugarhill Gang'in 'Rapper's Delight' şarkısı, hip-hop kültürünü geniş kitlelere ulaştıran ilk büyük hit olmuştur.",
+  "explanation": "The Sugarhill Gang'in \"Rapper's Delight\" şarkısı, hip-hop kültürünü geniş kitlelere ulaştıran ilk büyük hit olmuştur.",
+  "explanationKu": "Strana \"Rapper's Delight\" a koma The Sugarhill Gang hip-hop ji kolanan gihand raya giştî ya cîhanê.",
+  "explanationTr": "The Sugarhill Gang'in \"Rapper's Delight\" şarkısı, hip-hop kültürünü geniş kitlelere ulaştıran ilk büyük hit olmuştur.",
   "metadata": {
    "reviewStatus": "approved",
    "dialect": "kurmanci",
@@ -20302,7 +20302,7 @@
   "difficulty": 3,
   "id": "r14_muzik_091",
   "category": "Muzîk",
-  "prompt": "Stranbêj û gîtarîstê navdar ê 'Delta Blues'ê ku bi strana \"Cross Road Blues\" tê naskirin kî ye?",
+  "prompt": "Stranbêj û gîtarîstê navdar ê \"Delta Blues\"ê ku bi strana \"Cross Road Blues\" tê naskirin kî ye?",
   "promptTr": "\"Cross Road Blues\" şarkısıyla tanınan efsanevi Delta Blues şarkıcısı ve gitaristi kimdir?",
   "answers": [
    "John Lee Hooker",
@@ -20983,7 +20983,7 @@
   "id": "r14_muzik_128",
   "category": "Muzîk",
   "prompt": "Stranbêjê sereke yê koma rockê ya îngilîzî \"The Rolling Stones\" kî ye ku ji sala 1962yan ve pêşengiya komê dike?",
-  "promptTr": "1962 yılından bu yana İngiliz rock grubu 'The Rolling Stones'un öncülüğünü yapan solist kimdir?",
+  "promptTr": "1962 yılından bu yana İngiliz rock grubu \"The Rolling Stones\"un öncülüğünü yapan solist kimdir?",
   "answers": [
    "Mick Jagger",
    "Rod Stewart",
@@ -21289,7 +21289,7 @@
   "id": "r14_muzik_145",
   "category": "Muzîk",
   "prompt": "Albuma Madonna ya sala 1984an \"Like a Virgin\" ku ew kir stêrkeke cîhanî, ji aliyê kîjan hilberîner û gîtarjenê damezrîner ê koma dîsko-funkê \"Chic\" ve hate amadekirin?",
-  "promptTr": "Madonna'yı dünya yıldızı yapan 1984 tarihli \"Like a Virgin\" albümünün yapımcılığını, disko-funk grubu 'Chic'in kurucu gitaristi olan hangi prodüktör üstlenmiştir?",
+  "promptTr": "Madonna'yı dünya yıldızı yapan 1984 tarihli \"Like a Virgin\" albümünün yapımcılığını, disko-funk grubu \"Chic\"in kurucu gitaristi olan hangi prodüktör üstlenmiştir?",
   "answers": [
    "Trevor Horn",
    "Nile Rodgers",
@@ -21304,9 +21304,9 @@
   ],
   "correctAnswer": "Nile Rodgers",
   "correctAnswerTr": "Nile Rodgers",
-  "explanation": "Nile Rodgers, Madonna'nın \"Like a Virgin\" ve David Bowie'nin 'Let's Dance' albümlerinin yapımcısı olarak 1980'ler pop müziğinde kilit bir rol oynamıştır.",
-  "explanationKu": "Nile Rodgers wekî hilberînerê albuma \"Like a Virgin\" a Madonna û 'Let's Dance' a David Bowie di muzîka popê ya salên 1980yî de roleke sereke lîst.",
-  "explanationTr": "Nile Rodgers, Madonna'nın \"Like a Virgin\" ve David Bowie'nin 'Let's Dance' albümlerinin yapımcısı olarak 1980'ler pop müziğinde kilit bir rol oynamıştır.",
+  "explanation": "Nile Rodgers, Madonna'nın \"Like a Virgin\" ve David Bowie'nin \"Let's Dance\" albümlerinin yapımcısı olarak 1980'ler pop müziğinde kilit bir rol oynamıştır.",
+  "explanationKu": "Nile Rodgers wekî hilberînerê albuma \"Like a Virgin\" a Madonna û \"Let's Dance\" a David Bowie di muzîka popê ya salên 1980yî de roleke sereke lîst.",
+  "explanationTr": "Nile Rodgers, Madonna'nın \"Like a Virgin\" ve David Bowie'nin \"Let's Dance\" albümlerinin yapımcısı olarak 1980'ler pop müziğinde kilit bir rol oynamıştır.",
   "metadata": {
    "reviewStatus": "approved",
    "dialect": "kurmanci",
@@ -21662,7 +21662,7 @@
   "difficulty": 3,
   "id": "r14_edebiyat_025",
   "category": "Edebiyat",
-  "prompt": "Yekem şanoya nûjen a çapkirî ya kurdî ku di sala 1919an de ji aliyê Evdirehîm Rehmî Hekarî ve di kovara 'Jîn'ê de hatiye weşandin kîjan e?",
+  "prompt": "Yekem şanoya nûjen a çapkirî ya kurdî ku di sala 1919an de ji aliyê Evdirehîm Rehmî Hekarî ve di kovara \"Jîn\"ê de hatiye weşandin kîjan e?",
   "promptTr": "1919 yılında Evdirehîm Rehmî Hekarî tarafından \"Jîn\" dergisinde yayımlanan ilk basılı modern Kürtçe tiyatro eseri hangisidir?",
   "answers": [
    "Memê Alan",
@@ -22343,7 +22343,7 @@
   "id": "r14_edebiyat_084",
   "category": "Edebiyat",
   "prompt": "Kîjan helbestvanê klasîk ê sedsala 13an nivîskarê her du berhemên dîdaktîk û navdar ên bi navê \"Bostan\" û \"Gulîstan\" e?",
-  "promptTr": "13. yüzyılda yaşamış hangi klasik şair, dünyaca ünlü öğretici eserler olan \"Bostan\" ve 'Gülistan'ın yazarıdır?",
+  "promptTr": "13. yüzyılda yaşamış hangi klasik şair, dünyaca ünlü öğretici eserler olan \"Bostan\" ve \"Gülistan\"ın yazarıdır?",
   "answers": [
    "Se'dîyê Şîrazî",
    "Enwerîyê Ebîwerdî",
@@ -23124,7 +23124,7 @@
   "difficulty": 1,
   "id": "r14_edebiyat_003",
   "category": "Edebiyat",
-  "prompt": "Hejmara yekem a kovara 'Hawar'ê di kîjan dîrokê de derketiye ku îro wekî Cejna Zimanê Kurdî tê pîrozkirin?",
+  "prompt": "Hejmara yekem a kovara \"Hawar\"ê di kîjan dîrokê de derketiye ku îro wekî Cejna Zimanê Kurdî tê pîrozkirin?",
   "promptTr": "Günümüzde Kürt Dil Bayramı olarak da kutlanan \"Hawar\" dergisinin ilk sayısı hangi tarihte yayımlanmıştır?",
   "answers": [
    "22yê Nîsana 1898an",

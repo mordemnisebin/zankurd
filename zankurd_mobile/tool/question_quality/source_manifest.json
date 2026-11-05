@@ -817,6 +817,36 @@
    "columns": {}
   },
   {
+   "id": "yeni_sorular_2_tirnak_sql",
+   "description": "2026-11-15 yeni sorular 2 tırnak göçü (yalnız 21 sorunun alıntı tırnağı; yerel eşi assets/data/yeni2_2026_11_10_questions.json taranır)",
+   "glob": "supabase/2026-11-15_yeni_sorular_2_tirnak.sql",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 100,
+   "expectedRecordCount": null,
+   "notes": "Sunucu göçü; soru eklemez, yalnız mevcut satırların tırnak karakterini değiştirir",
+   "columns": {}
+  },
+  {
+   "id": "yeni_sorular_2_tirnak_geri_sql",
+   "description": "2026-11-15 yeni sorular 2 tırnak göçü (yalnız 21 sorunun alıntı tırnağı; yerel eşi assets/data/yeni2_2026_11_10_questions.json taranır)",
+   "glob": "supabase/geri_al/2026-11-15_yeni_sorular_2_tirnak_geri.sql",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 100,
+   "expectedRecordCount": null,
+   "notes": "Sunucu göçü; soru eklemez, yalnız mevcut satırların tırnak karakterini değiştirir",
+   "columns": {}
+  },
+  {
    "id": "historical_question_sql",
    "description": "Historical question SQL snapshots",
    "glob": "supabase/*question*.sql",
@@ -3078,7 +3108,7 @@
   },
   {
    "id": "yeni2_2026_11_10",
-   "description": "2026-11-10: Sînema, Paradigma, Siyaset, Muzîk, Edebiyat, Teknolojî yeni sorular 2 (697); agy Argon/Flash taslağı, yazar olmayan iki model jürisi",
+   "description": "2026-11-10: Sînema, Paradigma, Siyaset, Muzîk, Edebiyat, Teknolojî yeni sorular 2 (696; ilk sayım 697 yanlıştı, ajan bir tekrarı JSON'dan çıkarmıştı); agy Argon/Flash taslağı, yazar olmayan iki model jürisi",
    "path": "assets/data/yeni2_2026_11_10_questions.json",
    "role": "runtime_secondary",
    "parser": "json",
@@ -3087,7 +3117,7 @@
    "gateIncluded": true,
    "productionLike": true,
    "precedence": 991,
-   "expectedRecordCount": 697,
+   "expectedRecordCount": 696,
    "notes": "Taslak agy Gemini 4 Argon / Gemini 3.8 Flash; jüri yazar olmayan iki model; dedupe, şık taraması.",
    "columns": {
     "id": "id",
