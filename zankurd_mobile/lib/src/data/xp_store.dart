@@ -144,8 +144,14 @@ class XPStore {
         _refreshTotal();
         if (total <= _totalXP) return false;
         final levelBefore = currentLevel;
+        final previous = _totalXP;
         _totalXP = total;
-        await _preferences?.setInt(_totalXPKey, _totalXP);
+        // Yazım reddedilirse önbellek diskle ayrışmasın (alan 3 #22).
+        if (await _preferences?.setInt(_totalXPKey, _totalXP) == false) {
+          _totalXP = previous;
+          await _preferences?.reload();
+          return false;
+        }
         return currentLevel > levelBefore;
       });
 
@@ -175,8 +181,18 @@ class XPStore {
           return result['leveledUp'] == true;
         }
         final levelBefore = currentLevel;
+        final previousTotal = _totalXP;
         _totalXP += amount;
-        await _preferences?.setInt(_totalXPKey, _totalXP);
+        // Kimliksiz yol da yazım sonucunu denetler (alan 3 #22): kimlikli yol
+        // zaten reddedilen yazımda fırlatıyor; burada `false` sessizce
+        // geçiyor, bellekte artmış XP yeniden açılışta kayboluyordu.
+        if (await _preferences?.setInt(_totalXPKey, _totalXP) == false) {
+          _totalXP = previousTotal;
+          // SharedPreferences başarısız yazımda bile önbelleği değiştirir:
+          // diskteki gerçeğe dön, yoksa sonraki okuma reddedilen değeri görür.
+          await _preferences?.reload();
+          throw StateError('XP was not persisted.');
+        }
         final levelAfter = currentLevel;
         return levelAfter > levelBefore;
       });

@@ -30,6 +30,12 @@ part 'repository_ports.dart';
 /// [charged] ile [alreadyCharged] ayrı tutulur çünkü çağıranın kararı
 /// buna bağlıdır: idempotent yolda cevabı kaybolan bir istek güvenle
 /// tekrarlanabilir, eski yolda tekrarlanamaz.
+/// Mağaza seri dondurma alımlarının idempotency anahtarı öneki: sunucu bu
+/// önekli anahtarı ÜST SINIRLI işlevle (`spend_streak_freeze_capped`) tahsil
+/// eder. Arayüz imzasını (çok sayıda sahte depo `implements` eder) değiştirmeden
+/// "elde tutulan jeton" niyetini taşır.
+const shopFreezeKeyPrefix = 'shop_freeze_';
+
 enum StreakFreezeChargeOutcome {
   /// Ücret bu çağrıda tahsil edildi.
   charged,
@@ -39,6 +45,12 @@ enum StreakFreezeChargeOutcome {
 
   /// Bakiye yetersiz.
   insufficient,
+
+  /// Sunucu, hesabın bulutta bilinen dondurma jetonlarını (eşitlenmemiş
+  /// alımlar dahil) üst sınırda gördü: ÜCRET ALINMADI (kesin ret). İkinci
+  /// cihazdan eşzamanlı alım iki ücret/tek hak üretmesin diye sınır yalnız
+  /// istemcide değil sunucuda, tahsilatla aynı işlemde denetlenir.
+  full,
 
   /// Çağrı başarısız oldu (ağ/sunucu). Tahsil edilip edilmediği BİLİNMİYOR.
   failed,

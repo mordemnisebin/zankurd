@@ -273,7 +273,9 @@ class DailyMissionStore {
       streakAlive: streakAlive,
       countsAsRace: countsAsRace,
     );
-    await _persist();
+    if (!await _persist()) {
+      throw StateError('Mission progress was not persisted.');
+    }
     return completed;
   }
 
@@ -387,7 +389,13 @@ class DailyMissionStore {
         return false;
       }
       mission.claimed = true;
-      await _persist();
+      // Yazım reddedilirse "alındı" başarı SAYILMAZ (alan 3 #23): bayrak
+      // geri alınır, kullanıcı yeniden dener. XP çift verilmez çünkü ödül
+      // kalıcı işlem kimliğiyle verilir (`claimOperationId`).
+      if (!await _persist()) {
+        mission.claimed = false;
+        return false;
+      }
       return true;
     } finally {
       _claimsInFlight.remove(flightKey);
@@ -398,7 +406,10 @@ class DailyMissionStore {
     await _recoverPending();
     if (!mission.completed || mission.claimed) return false;
     mission.claimed = true;
-    await _persist();
+    if (!await _persist()) {
+      mission.claimed = false;
+      return false;
+    }
     return true;
   }
 
@@ -451,18 +462,31 @@ class DailyMissionStore {
     _correctAnswersToday = prefs.getInt('$_physicalPrefix.answeredToday') ?? 0;
   }
 
-  Future<void> _persist() async {
+  /// Her yazımın sonucu denetlenir; biri reddedilirse `false` (alan 3 #23).
+  Future<bool> _persist() async {
     final prefs = _prefs;
-    if (prefs == null) return;
+    if (prefs == null) return true;
+    var allSaved = true;
     for (final entry in _progressValues().entries) {
       final value = entry.value;
+      final bool saved;
       if (value is String) {
-        await prefs.setString(entry.key, value);
+        saved = await prefs.setString(entry.key, value);
       } else if (value is int) {
-        await prefs.setInt(entry.key, value);
+        saved = await prefs.setInt(entry.key, value);
       } else {
-        await prefs.setStringList(entry.key, value as List<String>);
+        saved = await prefs.setStringList(entry.key, value as List<String>);
+      }
+      if (!saved) allSaved = false;
+    }
+    if (!allSaved) {
+      try {
+        await prefs.reload();
+        _reloadProgress();
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'mission_persist_reload');
       }
     }
+    return allSaved;
   }
 }

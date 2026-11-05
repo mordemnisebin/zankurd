@@ -12,13 +12,16 @@ import '../utils/error_reporter.dart';
 class StoryProgressStore {
   StoryProgressStore._(
     this._preferences,
+    this._prefix,
+    this._metaKey,
     this._nodes,
     this._at,
     this._done,
     this._paths,
   );
 
-  static String get _prefix => LocalProgressScope.physical('zankurd.story.');
+  static String get _activePrefix =>
+      LocalProgressScope.physical('zankurd.story.');
 
   /// Zaman damgaları ve "bitirildi" kümesi tek JSON anahtarında:
   /// `{"at": {hikâye: ms}, "done": [hikâye, ...]}`. İsteğe bağlı `"path":
@@ -32,6 +35,13 @@ class StoryProgressStore {
   static int _loadGeneration = 0;
 
   final SharedPreferences? _preferences;
+
+  /// Örneğin KENDİ anahtarları: yüklendiği anda sabitlenir. Eskiden
+  /// düğüm/üst veri anahtarı her yazımda etkin hesaptan yeniden türetiliyor,
+  /// iki yazım arasında hesap değişirse düğüm bir hesaba, üst veri ötekine
+  /// yazılıyordu (alan 3 #19).
+  final String _prefix;
+  final String _metaKey;
   final Map<String, String> _nodes;
   final Map<String, int> _at;
   final Set<String> _done;
@@ -59,6 +69,8 @@ class StoryProgressStore {
   }
 
   static Future<StoryProgressStore> _loadFresh() async {
+    final prefix = _activePrefix;
+    final metaKeyAtLoad = metaKey;
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
@@ -69,16 +81,16 @@ class StoryProgressStore {
     final map = <String, String>{};
     if (preferences != null) {
       for (final key in preferences.getKeys()) {
-        if (key.startsWith(_prefix)) {
+        if (key.startsWith(prefix)) {
           final v = preferences.getString(key);
-          if (v != null) map[key.substring(_prefix.length)] = v;
+          if (v != null) map[key.substring(prefix.length)] = v;
         }
       }
     }
     final at = <String, int>{};
     final done = <String>{};
     final paths = <String, List<int>>{};
-    final rawMeta = preferences?.getString(metaKey);
+    final rawMeta = preferences?.getString(metaKeyAtLoad);
     if (rawMeta != null) {
       try {
         final decoded = jsonDecode(rawMeta);
@@ -106,7 +118,15 @@ class StoryProgressStore {
         ErrorReporter.record(error, stack, reason: 'story_progress_meta');
       }
     }
-    return StoryProgressStore._(preferences, map, at, done, paths);
+    return StoryProgressStore._(
+      preferences,
+      prefix,
+      metaKeyAtLoad,
+      map,
+      at,
+      done,
+      paths,
+    );
   }
 
   static void resetInstance() {
@@ -128,16 +148,19 @@ class StoryProgressStore {
   /// Kayıt en son ne zaman yazıldı (ms); eski kayıtlarda null.
   int? updatedAt(String storyId) => _at[storyId];
 
-  Future<void> _writeMeta() async {
-    await _preferences?.setString(
-      metaKey,
+  Future<bool> _writeMeta() async {
+    final preferences = _preferences;
+    if (preferences == null) return true;
+    final saved = await preferences.setString(
+      _metaKey,
       jsonEncode({
         'at': _at,
         'done': _done.toList()..sort(),
         if (_paths.isNotEmpty) 'path': _paths,
       }),
     );
-    ProgressSyncService.markDirty();
+    if (saved) ProgressSyncService.markDirty();
+    return saved;
   }
 
   /// [path] verilmezse o hikâyenin yolu bilinmez sayılır (silinir).
@@ -160,7 +183,16 @@ class StoryProgressStore {
   /// Hikâyenin sonuna ulaşıldığını kalıcı işaretler (katalogdaki ✓).
   Future<void> markCompleted(String storyId) async {
     if (!_done.add(storyId)) return;
-    await _writeMeta();
+    // Yazım reddedilirse işaret bellekte KALMAZ: eskiden `add` true dönüp
+    // yazım başarısız olunca aynı oturumda yeniden deneme `return`e
+    // takılıyor, tamamlanma yalnız bellekte yaşayıp yeniden açılışta
+    // kayboluyordu (alan 3 #20).
+    var saved = false;
+    try {
+      saved = await _writeMeta();
+    } finally {
+      if (!saved) _done.remove(storyId);
+    }
   }
 
   /// Hikâyeyi yeniden başlatır: ilerleme [startNodeId]'ye döner.
@@ -180,7 +212,7 @@ class StoryProgressStore {
       storyIds.map((storyId) => '$_prefix$storyId'),
     );
     _nodes.clear();
-    await removePersistedPreferenceKeys(_preferences, [metaKey]);
+    await removePersistedPreferenceKeys(_preferences, [_metaKey]);
     _at.clear();
     _done.clear();
     _paths.clear();

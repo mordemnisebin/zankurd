@@ -644,6 +644,23 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     }
   }
 
+  Future<void> _retryMissionReport(int myCorrect) async {
+    for (final delay in const [
+      Duration(seconds: 2),
+      Duration(seconds: 10),
+      Duration(seconds: 30),
+    ]) {
+      await Future<void>.delayed(delay);
+      if (_missionReported) return;
+      try {
+        await _reportMissionProgress(myCorrect);
+        return;
+      } catch (_) {
+        // Hata `_reportMissionProgress` içinde raporlandı; sıradaki deneme.
+      }
+    }
+  }
+
   Future<bool> _goToResult(AsyncDuelResult? result) async {
     final duel = _duel!;
     AsyncDuelSummary? recovered;
@@ -666,10 +683,14 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     }
     final myCorrect = result?.myCorrect ?? recovered?.myCorrect;
     if (myCorrect != null) {
+      // Görev kaydı sonuç ekranını ENGELLEMEZ (alan 2 #7): yerel yazım hatası
+      // (SharedPreferences) eskiden biten düelloyu/puanlı turnuva maçını
+      // sonuç ekranına geçirmiyor, kupa dönüşünü de tutuyordu. Görev ilerlemesi
+      // aynı `completionId` ile (idempotent günlük) arka planda yeniden denenir.
       try {
         await _reportMissionProgress(myCorrect);
       } catch (_) {
-        return false;
+        unawaited(_retryMissionReport(myCorrect));
       }
     }
     if (!mounted || _exitInFlight) return false;

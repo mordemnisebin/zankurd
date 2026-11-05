@@ -336,14 +336,17 @@ void main() {
     });
 
     test('silme, eski kopyayı kaldırır (iki yönde de) ve işaret kalır', () {
-      final silen = const ProgressSnapshot(wordsRemoved: {'k': 500});
-      final eski = ProgressSnapshot(words: {'k': w(added: 100)});
+      // Damgalar GÜNCEL olmalı: bulut birleşimi 180 günden eski silme
+      // işaretlerini budar (alan 3 #21).
+      final t = DateTime.now().millisecondsSinceEpoch;
+      final silen = ProgressSnapshot(wordsRemoved: {'k': t});
+      final eski = ProgressSnapshot(words: {'k': w(added: t - 400)});
       for (final m in [
         ProgressSnapshot.merge(silen, eski),
         ProgressSnapshot.merge(eski, silen),
       ]) {
         expect(m.words, isEmpty);
-        expect(m.wordsRemoved, {'k': 500});
+        expect(m.wordsRemoved, {'k': t});
       }
     });
 
@@ -397,11 +400,14 @@ void main() {
       final id = LearnerLexicon.entries.first.id;
       final prefs = await SharedPreferences.getInstance();
       final list = await WordListStore.load();
-      await list.add(id, now: DateTime(2026, 1, 1));
+      final added = DateTime.now().subtract(const Duration(days: 60));
+      await list.add(id, now: added);
       final local = LocalProgressSnapshot.read(prefs);
       expect(local.words.containsKey(id), isTrue);
       final cloud = ProgressSnapshot(
-        wordsRemoved: {id: DateTime(2026, 3, 1).millisecondsSinceEpoch},
+        wordsRemoved: {
+          id: added.add(const Duration(days: 30)).millisecondsSinceEpoch,
+        },
       );
       expect(
         await LocalProgressSnapshot.write(

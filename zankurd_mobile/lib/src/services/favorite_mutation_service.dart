@@ -23,7 +23,10 @@ class FavoriteMutationService {
         favorite,
       );
       try {
-        await SyncManager.maybeInstance?.supersedeQueuedFavorite(question.id);
+        await SyncManager.maybeInstance?.supersedeQueuedFavorite(
+          question.id,
+          favorite: favorite,
+        );
       } catch (error, stack) {
         ErrorReporter.record(error, stack, reason: 'favorite queue supersede');
       }
