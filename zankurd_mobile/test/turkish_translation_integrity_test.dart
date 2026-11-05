@@ -96,7 +96,10 @@ void main() {
       // 4060 -> 4756 (+696): 2026-11-10 `yeni2_2026_11_10` (yeni sorular 2). İlk
       // sayım 697 yazılmıştı: ajan son anda bir tekrarı JSON'dan çıkarmış, sayı
       // geri çekilmemişti. Gerçek ölçüm 696 kayıt (JSON ile yükleyici uyuşuyor).
-      4756,
+      // 4756 -> 5570 (+814): 2026-11-14 `yeni3_2026_11_14` (yeni sorular 3).
+      // Paket 821 soruydu; 7'si (6 cevap-sızıntısı, 1 tekrar) yerel JSON'dan
+      // çıkarıldı ve sunucuda `2026-11-18_yeni_sorular_3_eleme.sql` ile elendi.
+      5570,
       reason:
           'Türkçe metin taşıyan soru sayısı değişti (yükleyicinin verdiği sayı). Yeni parti geldiyse bu '
           'sayı bilerek güncellenmeli; kendiliğinden düştüyse bir bankanın '
