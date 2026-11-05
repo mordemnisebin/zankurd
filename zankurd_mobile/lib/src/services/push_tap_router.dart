@@ -18,7 +18,12 @@ import '../utils/error_reporter.dart';
 ///
 /// [home] yerel bildirimlerden gelir (günlük hatırlatıcı, seri uyarısı):
 /// Öğren sekmesi, günün dersi kartı en üstte.
-enum PushTapTarget { playTab, duelInbox, friends, home, roomInvite }
+///
+/// `admin_suggestion` / `admin_report` (yönetici bildirimi, 2.2) → [admin]:
+/// Yönetim ana ekranı (bekleyen öneri/şikâyet sayaçları orada). Yönetici
+/// değilse ya da yönetici deposu kayıtlı değilse Ana ekrana döner; yetkiyi
+/// zaten sunucu her çağrıda denetler.
+enum PushTapTarget { playTab, duelInbox, friends, home, roomInvite, admin }
 
 typedef PushTapIntent = ({PushTapTarget target, String? inviteId});
 
@@ -44,6 +49,7 @@ class PushTapRouter {
       // `friend_accept` (2026-10-23): isteğim kabul edildi → arkadaş listesi.
       'friend_request' || 'friend_accept' => PushTapTarget.friends,
       'room_invite' => PushTapTarget.roomInvite,
+      'admin_suggestion' || 'admin_report' => PushTapTarget.admin,
       _ => null,
     };
   }

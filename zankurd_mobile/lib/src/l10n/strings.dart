@@ -1087,6 +1087,30 @@ class Tr {
       'ku': 'Daxwazên hevaltiyê yên nû',
       'tr': 'Yeni arkadaşlık istekleri',
     },
+    K.notifChannelDuelName: {
+      'ku': 'ZanKurd Dueloyên Hevalan',
+      'tr': 'ZanKurd Düellolar',
+    },
+    K.notifChannelDuelDesc: {
+      'ku': 'Vexwendin û rêzên dueloyê',
+      'tr': 'Düello davetleri ve sıra bildirimleri',
+    },
+    K.notifChannelRoomName: {
+      'ku': 'ZanKurd Vexwendinên Odeyê',
+      'tr': 'ZanKurd Oda Davetleri',
+    },
+    K.notifChannelRoomDesc: {
+      'ku': 'Vexwendinên ji bo odeyên hevalan',
+      'tr': 'Arkadaşlarından gelen oda davetleri',
+    },
+    K.notifChannelAdminName: {
+      'ku': 'ZanKurd Rêvebirî',
+      'tr': 'ZanKurd Yönetim',
+    },
+    K.notifChannelAdminDesc: {
+      'ku': 'Pêşniyar û ragihandinên nû ji bo rêvebir',
+      'tr': 'Yönetici için yeni öneri ve şikâyet bildirimleri',
+    },
     K.notifChannelStreakName: {
       'ku': 'ZanKurd Bîrxistina Zincîrê',
       'tr': 'ZanKurd Seri Hatırlatıcısı',
@@ -5554,6 +5578,12 @@ class K {
   static const notifChannelDailyDesc = 'notif.channel.daily.desc';
   static const notifChannelFriendName = 'notif.channel.friend.name';
   static const notifChannelFriendDesc = 'notif.channel.friend.desc';
+  static const notifChannelDuelName = 'notif.channel.duel.name';
+  static const notifChannelDuelDesc = 'notif.channel.duel.desc';
+  static const notifChannelRoomName = 'notif.channel.room.name';
+  static const notifChannelRoomDesc = 'notif.channel.room.desc';
+  static const notifChannelAdminName = 'notif.channel.admin.name';
+  static const notifChannelAdminDesc = 'notif.channel.admin.desc';
   static const notifChannelStreakName = 'notif.channel.streak.name';
   static const notifChannelStreakDesc = 'notif.channel.streak.desc';
   static const notifContestSub = 'settings.notif.contest.sub';

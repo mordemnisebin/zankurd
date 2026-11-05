@@ -128,6 +128,16 @@ class NotificationService {
   /// "Miscellaneous" kanalına düşerdi.
   static const pushChannelId = 'zankurd_friend_requests';
 
+  /// Tür başına ek uzak-push kanalları (GPT-6 Pro ALAN 4 #19: sunucu kanal
+  /// göndermediği için düello/oda/yönetim bildirimleri de "arkadaşlık
+  /// istekleri" kanalı altında görünüyordu). `send-push` `androidChannelId`
+  /// (supabase/functions/send-push/lib.ts) bu kimlikleri `kind`a göre yollar;
+  /// eşleşmeyi `test/w4_bildirim_kanal_test.dart` korur. Cihazda kanal yoksa
+  /// (eski uygulama sürümü) Android manifestteki varsayılana düşer.
+  static const duelChannelId = 'zankurd_duels';
+  static const roomChannelId = 'zankurd_rooms';
+  static const adminChannelId = 'zankurd_admin';
+
   NotificationService._(
     this._preferences,
     this._enabled,
@@ -389,20 +399,27 @@ class NotificationService {
   Future<void> _ensurePushChannel() async {
     if (kIsWeb) return;
     try {
-      await _localNotificationsPlugin
+      final android = _localNotificationsPlugin
           .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin
-          >()
-          ?.createNotificationChannel(
-            // Kanal adı Android ayarlarında görünür; sabit Kurmancî yazılınca
-            // Türkçe arayüzde de öyle görünüyordu (2026-10-24).
-            AndroidNotificationChannel(
-              pushChannelId,
-              Tr.forKu(K.notifChannelFriendName, _isKu),
-              description: Tr.forKu(K.notifChannelFriendDesc, _isKu),
-              importance: Importance.high,
-            ),
-          );
+          >();
+      // Kanal adı Android ayarlarında görünür; sabit Kurmancî yazılınca
+      // Türkçe arayüzde de öyle görünüyordu (2026-10-24).
+      for (final (id, name, desc) in <(String, String, String)>[
+        (pushChannelId, K.notifChannelFriendName, K.notifChannelFriendDesc),
+        (duelChannelId, K.notifChannelDuelName, K.notifChannelDuelDesc),
+        (roomChannelId, K.notifChannelRoomName, K.notifChannelRoomDesc),
+        (adminChannelId, K.notifChannelAdminName, K.notifChannelAdminDesc),
+      ]) {
+        await android?.createNotificationChannel(
+          AndroidNotificationChannel(
+            id,
+            Tr.forKu(name, _isKu),
+            description: Tr.forKu(desc, _isKu),
+            importance: Importance.high,
+          ),
+        );
+      }
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService push channel');
     }

@@ -1,10 +1,12 @@
 // deno test supabase/functions/send-push/lib_test.ts
 import {
+  androidChannelId,
   base64UrlEncode,
   buildFcmMessage,
   deliverPushJob,
   fcmErrorCode,
   isUnregistered,
+  mergeDeviceCompletions,
   parseServiceAccount,
   pemToDer,
   retryAfterSeconds,
@@ -534,4 +536,118 @@ Deno.test("buildFcmMessage: aynı iş aynı Android tag ve APNs collapse-id'yi t
   const other = buildFcmMessage({ ...job, job_id: "other" }, "t1")
     .message as Record<string, any>;
   assert(other.android.notification.tag !== a.android.notification.tag, "iş başına farklı");
+});
+
+// ── 2026-11-16 (W4, GPT-6 Pro ALAN 4 #19 #23) ───────────────────────────────
+// #19 kusuru: Android `channel_id` hiç gönderilmiyordu; bütün uzak bildirimler
+// manifestteki varsayılan "arkadaşlık istekleri" kanalına düşüyordu. Niçin
+// sessiz: bildirim yine gelir, yalnız yanlış kanal adıyla görünür.
+Deno.test("Android kanalı bildirim türüne göre seçilir; bilinmeyen tür kanal göndermez", () => {
+  assert(androidChannelId("friend_request") === "zankurd_friend_requests", "arkadaş");
+  assert(androidChannelId("friend_accept") === "zankurd_friend_requests", "kabul");
+  assert(androidChannelId("async_duel_turn") === "zankurd_duels", "düello");
+  assert(androidChannelId("async_duel_result") === "zankurd_duels", "düello sonucu");
+  assert(androidChannelId("room_invite") === "zankurd_rooms", "oda");
+  assert(androidChannelId("admin_report") === "zankurd_admin", "yönetim");
+  assert(androidChannelId("tuhaf") === null && androidChannelId(null) === null, "bilinmeyen");
+  const job = {
+    job_id: "j",
+    kind: "room_invite",
+    title: "t",
+    body: "b",
+    fcm_token: "t",
+    expires_at: "2100-01-01T00:00:00Z",
+    data: {},
+  } as unknown as Parameters<typeof buildFcmMessage>[0];
+  const m = buildFcmMessage(job, "t").message as Record<string, any>;
+  assert(m.android.notification.channel_id === "zankurd_rooms", "iletide kanal");
+  const none = buildFcmMessage({ ...job, kind: "tuhaf" }, "t").message as Record<string, any>;
+  assert(!("channel_id" in none.android.notification), "bilinmeyen türde kanal yok");
+});
+
+// #23 kusuru: tek profiles.fcm_token yalnız son cihaza gönderiyordu.
+Deno.test("çok cihaz: her cihaza bir gönderim; biri alırsa sent; hatalı cihaz temizlenir", async () => {
+  const job = {
+    job_id: "j", claim_token: "c", attempt_count: 1, to_user_id: "u",
+    kind: "friend_request", title: "t", body: "b",
+    fcm_token: "T2", expires_at: "2100-01-01T00:00:00Z",
+  };
+  const sent: string[] = [];
+  const cleared: string[] = [];
+  const done: Array<Record<string, unknown>> = [];
+  const unregistered = new Response(
+    JSON.stringify({
+      error: {
+        status: "NOT_FOUND",
+        details: [{
+          "@type": "type.googleapis.com/google.firebase.fcm.v1.FcmError",
+          errorCode: "UNREGISTERED",
+        }],
+      },
+    }),
+    { status: 404 },
+  );
+  const outcome = await deliverPushJob(job, {
+    send: async (_j, token) => {
+      sent.push(token);
+      return token === "T-OLD" ? unregistered.clone() : new Response("{}", { status: 200 });
+    },
+    finish: async (_j, c) => { done.push(c); return true; },
+    clearToken: async (_j, token) => { cleared.push(token); return true; },
+    // claim'in jetonu (T2) listede de var: yinelenmez; T1 ve T-OLD ek cihazlar.
+    listTokens: async () => ["T2", "T1", "T-OLD", " "],
+    random: () => 0,
+  });
+  assert(outcome === "sent", "bir cihaz aldı → sent");
+  assert(sent.length === 3 && sent[0] === "T2" && new Set(sent).size === 3, "üç cihaz, yinelenme yok: " + sent);
+  assert(cleared.length === 1 && cleared[0] === "T-OLD", "yalnız UNREGISTERED cihaz temizlenir");
+  assert(done.length === 1 && done[0].outcome === "sent", "tek ack");
+});
+
+Deno.test("çok cihaz: liste hatası claim'in tek jetonuna düşer; hiç jeton yoksa skipped", async () => {
+  const base = {
+    job_id: "j", claim_token: "c", attempt_count: 1, to_user_id: "u",
+    kind: "friend_request", title: "t", body: "b",
+    expires_at: "2100-01-01T00:00:00Z",
+  };
+  const sent: string[] = [];
+  const deps = {
+    send: async (_j: unknown, token: string) => { sent.push(token); return new Response("{}", { status: 200 }); },
+    finish: async () => true,
+    clearToken: async () => true,
+    random: () => 0,
+  };
+  assert(
+    await deliverPushJob({ ...base, fcm_token: "T1" }, {
+      ...deps,
+      listTokens: async () => { throw new Error("rpc yok"); },
+    }) === "sent" && sent.join() === "T1",
+    "liste hatasında tek jeton",
+  );
+  const done: Array<Record<string, unknown>> = [];
+  const none = await deliverPushJob({ ...base, fcm_token: null }, {
+    ...deps,
+    finish: async (_j: unknown, c: Record<string, unknown>) => { done.push(c); return true; },
+    listTokens: async () => [],
+  });
+  assert(none === "skipped" && done[0].errorCode === "no_token", "jeton yok");
+  // Profil jetonu boş ama cihaz tablosunda jeton var: gönderilir.
+  sent.length = 0;
+  assert(
+    await deliverPushJob({ ...base, fcm_token: null }, { ...deps, listTokens: async () => ["T9"] }) === "sent" &&
+      sent.join() === "T9",
+    "yalnız cihaz tablosunda jeton",
+  );
+});
+
+Deno.test("cihaz sonuçları birleşimi: sent > en uzun retry > failed", () => {
+  assert(mergeDeviceCompletions([{ outcome: "retry", retryAfterSeconds: 30 }, { outcome: "sent" }]).outcome === "sent", "sent kazanır");
+  const r = mergeDeviceCompletions([
+    { outcome: "retry", retryAfterSeconds: 30 },
+    { outcome: "failed", errorCode: "X" },
+    { outcome: "retry", retryAfterSeconds: 90 },
+  ]);
+  assert(r.outcome === "retry" && r.retryAfterSeconds === 90, "en uzun bekleme");
+  assert(mergeDeviceCompletions([{ outcome: "failed", errorCode: "A" }]).outcome === "failed", "failed");
+  assert(mergeDeviceCompletions([]).errorCode === "no_token", "boş");
 });

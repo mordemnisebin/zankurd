@@ -158,10 +158,8 @@ void main() {
 
     test('send-push: aynı iş aynı Android tag + APNs collapse-id', () {
       final lib = read('supabase/functions/send-push/lib.ts');
-      expect(
-        lib,
-        contains('notification: { tag: pushCollapseId(job.job_id) }'),
-      );
+      // 2026-11-16: aynı nesneye türe göre `channel_id` da eklenir (W4 #19).
+      expect(lib, contains('tag: pushCollapseId(job.job_id)'));
       expect(lib, contains('"apns-collapse-id": pushCollapseId(job.job_id)'));
       final py = read('tool/send_push_outbox.py');
       expect(py, contains('"apns-collapse-id": collapse_id(job["job_id"])'));
