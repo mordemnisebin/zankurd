@@ -3208,6 +3208,51 @@
     "reviewedAt": "metadata.reviewedAt",
     "locale": "ku-kmr"
    }
+  },
+  {
+   "id": "yeni_sorular_4_sql",
+   "description": "2026-11-17 yeni sorular 4 göçü (server_only; yerel eşi YOK, kaynak tool/data/yeni4_2026_11_17_server_only.json)",
+   "glob": "supabase/2026-11-17_yeni_sorular_4.sql",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 100,
+   "expectedRecordCount": null,
+   "notes": "Sunucu göçü; yerel kopyası assets/data altında taranır, burada ikinci kez sayılmaz",
+   "columns": {}
+  },
+  {
+   "id": "yeni_sorular_4_geri_sql",
+   "description": "2026-11-17 yeni sorular 4 geri alma (server_only)",
+   "glob": "supabase/geri_al/2026-11-17_yeni_sorular_4_geri.sql",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 100,
+   "expectedRecordCount": null,
+   "notes": "Sunucu göçü; yerel kopyası assets/data altında taranır, burada ikinci kez sayılmaz",
+   "columns": {}
+  },
+  {
+   "id": "yeni4_2026_11_17_server_only",
+   "description": "2026-11-17 yeni sorular 4: SUNUCU-YALNIZ kaynak (uygulamaya paketlenmez, server_only = true); yerel banka/kalite sayımına girmez",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 100,
+   "expectedRecordCount": null,
+   "notes": "Kalite denetimi y4 hattı (qa4.py) ve test/yeni_sorular_4_2026_11_17_test.dart bekçisinde; yerel sayımlar değişmez.",
+   "columns": {},
+   "path": "tool/data/yeni4_2026_11_17_server_only.json"
   }
  ]
 }
