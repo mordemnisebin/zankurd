@@ -360,7 +360,10 @@ Future<Widget> _bootApp() async {
     // harcanmış olan bir başlatma, 6 sn daha sürebilir.
     probeTimeout: const Duration(seconds: 8),
   );
-  if (!remoteReady) remoteAvailability.startRetries();
+  // `startRetries()` ve `verifyInBackground()` AŞAĞIDA, kurtarma kancaları
+  // bağlandıktan sonra çağrılır (G-01): ilk yoklama kanca atanmadan
+  // başarılı olursa kurtarma hiç istenmez, oturum boyunca çevrimdışı
+  // depoda kalınırdı.
 
   await bootStepVoid(SyncManager.initialize(repository), reason: 'sync init');
   await bootStepVoid(
@@ -474,24 +477,39 @@ Future<Widget> _bootApp() async {
   // açıkkken kök değişmez; kurtarma, kabuğa dönüldüğünde ya da
   // uygulama ön plana çıktığında uygulanır (bkz. AppShell).
   if (!remoteReady && supabaseInit != null) {
+    remoteAvailability.isUpgradeSafe = () =>
+        !(_navigatorKey.currentState?.canPop() ?? false);
     remoteAvailability.onUpgradeRequest = () {
       unawaited(
         _upgradeToRemote(
-          authProvider: authProvider,
-          repositoryHolder: repositoryHolder,
-        ).then((applied) {
-          if (applied) {
-            remoteAvailability.completeUpgrade();
-          } else {
-            // Uzak oturum yoksa kurtarma VAZGEÇER: karar geri alınır,
-            // bant yerinde kalır ve geri çekilmeli deneme sürer.
-            remoteAvailability.upgradeDeclined();
-          }
-        }),
+              authProvider: authProvider,
+              repositoryHolder: repositoryHolder,
+            )
+            // Beklenmedik istisna da "vazgeçti" sayılır: kurtarma
+            // "sürüyor" durumunda takılı kalmasın.
+            .catchError((Object error, StackTrace stack) {
+              ErrorReporter.record(error, stack, reason: 'remote upgrade');
+              return false;
+            })
+            .then((applied) {
+              if (applied) {
+                remoteAvailability.completeUpgrade();
+              } else {
+                // Uzak oturum yoksa kurtarma VAZGEÇER: karar geri alınır,
+                // bant yerinde kalır ve geri çekilmeli deneme sürer.
+                remoteAvailability.upgradeDeclined();
+              }
+            }),
       );
     };
-    remoteAvailability.isUpgradeSafe = () =>
-        !(_navigatorKey.currentState?.canPop() ?? false);
+    // Kancalar hazır: geri çekilmeli denemeler artık güvenle başlayabilir.
+    remoteAvailability.startRetries();
+  } else if (remoteReady) {
+    // G-05: `Supabase.initialize` ağ olmadan da biter; ulaşılabilirlik
+    // ayrıca doğrulanır (ilk kareyi bekletmeden, arka planda).
+    unawaited(remoteAvailability.verifyInBackground());
+  } else {
+    remoteAvailability.startRetries();
   }
 
   _bootMark('gerçek kök hazır');

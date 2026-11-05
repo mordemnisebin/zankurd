@@ -22,8 +22,10 @@ import '../utils/error_reporter.dart';
 /// ## Sözleşme
 ///
 /// 1. **Yeni anonim oturum AÇILMAZ.** [AuthProvider.attachSupabase]
-///    yalnız cihazda ZATEN kayıtlı kalıcı oturum varsa bağlanır; yoksa
-///    hiçbir şey yapmaz ve `false` döner. Böylece kurtarma, çevrimdışı
+///    cihazda ZATEN kayıtlı kalıcı oturum varsa bağlanır; kayıtlı oturum
+///    yoksa yalnız kullanıcı çevrimdışı misafir OLMAMIŞSA oturumsuz
+///    bağlanır (G-06: yeni kullanıcı hesap açabilsin); aksi halde hiçbir
+///    şey yapmaz ve `false` döner. Böylece kurtarma, çevrimdışı
 ///    misafiri kendi ilerlemesinden etmez ve `SharedPreferences`
 ///    silinmez.
 /// 2. **Tek takas.** Depo [RepositoryHolder] üzerinden değişir; rota
@@ -39,10 +41,13 @@ Future<bool> upgradeOfflineBootToRemote({
   required ZanKurdRepository Function(SupabaseClient client) createRepository,
   Future<void> Function(ZanKurdRepository repository)? onRepositoryReady,
 }) async {
-  // 1. Oturum yoksa KURTARMA YOK — bkz. sözleşmenin 1. maddesi.
-  if (!await authProvider.attachSupabase(client)) return false;
+  // 1. Bağlanılamayacaksa (kayıtlı oturum yok VE çevrimdışı misafir var)
+  //    KURTARMA YOK — hiçbir şey kurulmaz, bkz. sözleşmenin 1. maddesi.
+  if (!authProvider.canAttachSupabase(client)) return false;
 
-  // 2. Yeni depo örneği.
+  // 2. Yeni depo örneği — kimlik sağlayıcısı değiştirilmeden ÖNCE.
+  //    (2026-11-06, G-04: depo kurulamazsa sağlayıcı yarı geçmiş
+  //    [`_offlineMode=false`, istemci bağlı] kalıyordu.)
   final ZanKurdRepository repository;
   try {
     repository = createRepository(client);
@@ -51,30 +56,52 @@ Future<bool> upgradeOfflineBootToRemote({
     return false;
   }
 
-  // 3. Kuyruk yeni depoya aksın (SyncManager aynı örnekte erken döner,
-  //    farklıysa eskisini kapatıp yeniden kurar).
+  // 3. Kimlik sağlayıcısını bağla.
+  if (!await authProvider.attachSupabase(client)) return false;
+
+  // Bundan sonraki her başarısızlık bağlamayı GERİ ALIR: yarım geçiş
+  // (sağlayıcı uzak, depo/senkron çevrimdışı) hiçbir zaman kalmaz.
+  Future<bool> rollBack(Object error, StackTrace stack, String reason) async {
+    ErrorReporter.record(error, stack, reason: reason);
+    authProvider.detachSupabase(client);
+    if (onRepositoryReady != null) {
+      try {
+        // Senkron yöneticisi başarısız kurulumda boşalmış olabilir:
+        // çevrimdışı depoya yeniden bağla.
+        await onRepositoryReady(repositoryHolder.repository);
+      } catch (restoreError, restoreStack) {
+        ErrorReporter.record(
+          restoreError,
+          restoreStack,
+          reason: 'remote upgrade rollback sync',
+        );
+      }
+    }
+    return false;
+  }
+
+  // 4. Kuyruk yeni depoya aksın (SyncManager aynı örnekte erken döner,
+  //    farklıysa eskisini kapatıp yeniden kurar). Kurulamazsa geçiş
+  //    BAŞARILI SAYILMAZ (G-07): ödül/ders kuyruğu uzak depoyla
+  //    boşalmayacak, kullanıcının ilerlemesi sessizce birikecekti.
   if (onRepositoryReady != null) {
     try {
       await onRepositoryReady(repository);
     } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'remote upgrade sync init');
+      return rollBack(error, stack, 'remote upgrade sync init');
     }
   }
 
-  // 4. Yerel ilerleme kapsamını yeni oturuma bağla. Bu çağrı
+  // 5. Yerel ilerleme kapsamını yeni oturuma bağla. Bu çağrı
   //    YALNIZ mevcut oturumun kullanıcısını bağlar; silme yapmaz
   //    (bkz. `AuthProvider._resetLocalProgressIfForeignUser`).
   try {
     await authProvider.bindLocalProgressScope();
   } catch (error, stack) {
-    ErrorReporter.record(
-      error,
-      stack,
-      reason: 'remote upgrade local progress scope',
-    );
+    return rollBack(error, stack, 'remote upgrade local progress scope');
   }
 
-  // 5. Tek takas — dinleyiciler (AppShell) bir sonraki çizimde okur.
+  // 6. Tek takas — dinleyiciler (AppShell) bir sonraki çizimde okur.
   repositoryHolder.switchTo(repository);
   return true;
 }

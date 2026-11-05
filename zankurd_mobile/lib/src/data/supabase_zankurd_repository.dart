@@ -52,6 +52,14 @@ class _ManagedRoomChannel {
 
   final RealtimeChannel channel;
   int listenerCount = 0;
+
+  /// Kanala TEK `onBroadcast` geri çağrısı bağlanır; gelen yük buradaki
+  /// açık akışlara dağıtılır (H6, 2026-11-06). Eskiden her abonelik kendi
+  /// geri çağrısını kanala ekliyordu ve realtime istemcisi geri çağrı
+  /// SİLMEYİ bilmediği için, kanal başka dinleyicilerle yaşadıkça iptal
+  /// edilmiş aboneliklerin geri çağrıları birikiyordu.
+  final Set<void Function(Map<String, dynamic>)> sinks = {};
+  bool broadcastBound = false;
 }
 
 RoomStatus _roomStatusFromValue(Object? value) {
@@ -354,6 +362,7 @@ class SupabaseZanKurdRepository
       'avatar_color': ?avatarColor,
     });
     _profileCache.remove(user.id);
+    _ownChatIdentity = null;
   }
 
   /// Profil satırı yoksa oluşturur; varsa adı EZMEZ.
@@ -516,6 +525,7 @@ class SupabaseZanKurdRepository
           })
           .eq('id', pinnedOwner);
       _profileCache.remove(pinnedOwner);
+      _ownChatIdentity = null;
       await _clearAvatarDirtyIfSent(identity, pinnedKey);
       return true;
     } on PostgrestException catch (error, stack) {
@@ -2182,16 +2192,64 @@ class SupabaseZanKurdRepository
   }) async {
     final user = client.auth.currentUser;
     if (user == null) return;
-    final name = await getProfileName();
-    final identity = await loadAvatarIdentity();
+    final (name, avatarColor) = await _chatIdentity(user.id);
     await client.from('room_messages').insert({
       'room_id': roomId,
       'sender_id': user.id,
       'sender_name': name,
-      'sender_avatar_color': identity.colorHex,
+      'sender_avatar_color': avatarColor,
       'text': text.trim(),
       'created_at': DateTime.now().toUtc().toIso8601String(),
     });
+  }
+
+  /// Gönderenin sohbet satırındaki adı/rengi. Eskiden HER mesajdan önce iki
+  /// ayrı profil okuması (`getProfileName` + `loadAvatarIdentity`) yapılıyordu
+  /// (2026-11-06, alan 9 #8); kalabalık odada her tuş vuruşu 3 istek demekti.
+  /// Artık tek okuma ve kısa süreli önbellek; ad/avatar yazımları önbelleği
+  /// siler. Bekleyen (gönderilmemiş) yerel avatar değişikliği varsa sunucu
+  /// satırı değil yerel kopya geçerlidir: eski iki çağrılı yol aynen kullanılır.
+  ({String userId, String name, String? color, DateTime at})? _ownChatIdentity;
+  static const _ownChatIdentityTtl = Duration(minutes: 2);
+
+  Future<(String, String?)> _chatIdentity(String userId) async {
+    final cached = _ownChatIdentity;
+    if (cached != null &&
+        cached.userId == userId &&
+        DateTime.now().difference(cached.at) < _ownChatIdentityTtl &&
+        !await _avatarIdentityDirty()) {
+      return (cached.name, cached.color);
+    }
+    if (await _avatarIdentityDirty()) {
+      final name = await getProfileName();
+      final identity = await loadAvatarIdentity();
+      return (name, identity.colorHex);
+    }
+    try {
+      final row = await client
+          .from('profiles')
+          .select('display_name, avatar_color')
+          .eq('id', userId)
+          .maybeSingle();
+      final name = row?['display_name'];
+      final color = row?['avatar_color'];
+      final resolvedName = name is String && name.isNotEmpty
+          ? name
+          : 'ZanKurd Oyuncusu';
+      final resolvedColor = color is String ? color : null;
+      if (client.auth.currentUser?.id == userId) {
+        _ownChatIdentity = (
+          userId: userId,
+          name: resolvedName,
+          color: resolvedColor,
+          at: DateTime.now(),
+        );
+      }
+      return (resolvedName, resolvedColor);
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'chat identity failed');
+      return ('ZanKurd Oyuncusu', null);
+    }
   }
 
   @override
@@ -2221,6 +2279,20 @@ class SupabaseZanKurdRepository
   /// sorulmaz (oda ömrü boyunca önbellek).
   final Map<String, PublicProfile> _chatProfiles = {};
 
+  /// Profil önbellekleri oturum boyunca SINIRSIZ büyüyordu (alan 9 #13):
+  /// kalabalık odalar/liderlik/arkadaş listeleri her yeni oyuncuyu ekliyor,
+  /// hiçbiri atılmıyordu. Sınırı aşınca en eski girişler (ekleme sırası)
+  /// atılır; atılan profil bir sonraki ihtiyaçta yeniden okunur.
+  static const _profileCacheLimit = 400;
+
+  void _boundCache(Map<String, Object?> cache) {
+    final extra = cache.length - _profileCacheLimit;
+    if (extra <= 0) return;
+    for (final key in cache.keys.take(extra).toList()) {
+      cache.remove(key);
+    }
+  }
+
   Future<List<RoomMessage>> _withSenderProfiles(
     List<RoomMessage> messages,
   ) async {
@@ -2230,6 +2302,7 @@ class SupabaseZanKurdRepository
     };
     if (missing.isNotEmpty) {
       _chatProfiles.addAll(await _publicProfilesById(missing));
+      _boundCache(_chatProfiles);
     }
     return [for (final m in messages) m.withProfile(_chatProfiles[m.senderId])];
   }
@@ -2420,6 +2493,7 @@ class SupabaseZanKurdRepository
               for (final p in profiles) {
                 final id = p['id'] as String;
                 _profileCache[id] = p;
+                _boundCache(_profileCache);
               }
             } catch (e, s) {
               _recordError(e, s, reason: 'Failed to fetch missing profiles');
@@ -3187,6 +3261,18 @@ class SupabaseZanKurdRepository
   }) async {
     final owner = currentUserId;
     if (owner == null || _verifiedRounds.containsKey(clientRoundId)) return;
+    // Alan 9 #12: teslimi biten (başladı + kuyruk boş) ama hiç ödenmemiş
+    // (oyuncu sonuç ekranına varmadan çıktı) turlar kalıcı birikmesin.
+    // Ekleme sırasıyla gezilir; en çok 16 tur tutulur.
+    if (_verifiedRounds.length >= 16) {
+      final done = [
+        for (final entry in _verifiedRounds.entries)
+          if (entry.value.started && entry.value.queue.isEmpty) entry.key,
+      ];
+      for (final key in done.take(_verifiedRounds.length - 15)) {
+        _verifiedRounds.remove(key);
+      }
+    }
     final selection = _verifiedSelections.remove(
       _verifiedQuestionKey(questions),
     );
@@ -3291,10 +3377,15 @@ class SupabaseZanKurdRepository
     if (clientRoundId == null) return {'amount': 0};
     try {
       await _waitVerifiedRound(clientRoundId);
-      return await client.rpc(
+      final claimed = await client.rpc(
         'claim_verified_solo_reward',
         params: {'p_client_round_id': clientRoundId},
       );
+      // Sunucu hükmünü verdi: tur bellekte tutulmaz (alan 9 #12). Yeniden
+      // deneme olursa tur bulunamaz ve `_waitVerifiedRound` sunucuya bırakır
+      // (kalıcı kuyruktaki tur gibi; ödeme sunucuda tur kimliğiyle idempotent).
+      _verifiedRounds.remove(clientRoundId);
+      return claimed;
     } on PostgrestException catch (error, stack) {
       _recordError(error, stack, reason: 'verified solo reward unavailable');
       if (error.code != 'PGRST202' && error.code != '42883') rethrow;
@@ -3321,6 +3412,7 @@ class SupabaseZanKurdRepository
             )
             .timeout(const Duration(seconds: 8));
         _verifiedDailyMissing = false;
+        _verifiedRounds.remove(clientRoundId); // alan 9 #12
         return result == true;
       } catch (error, stack) {
         _recordError(error, stack, reason: 'verified daily result unavailable');
@@ -3972,7 +4064,10 @@ class SupabaseZanKurdRepository
       try {
         for (final profile in await _fetchPublicProfiles(missing)) {
           final id = profile['id'] as String?;
-          if (id != null) _profileCache[id] = profile;
+          if (id != null) {
+            _profileCache[id] = profile;
+            _boundCache(_profileCache);
+          }
         }
       } catch (error, stack) {
         _recordError(error, stack, reason: 'room players public profiles');
@@ -3984,6 +4079,7 @@ class SupabaseZanKurdRepository
       final rawProfile = row['profiles'] as Map<String, dynamic>?;
       if (rawProfile != null) {
         _profileCache[playerId] = rawProfile;
+        _boundCache(_profileCache);
       }
 
       final profile = _profileCache[playerId] ?? rawProfile;
@@ -4059,16 +4155,37 @@ class SupabaseZanKurdRepository
   @override
   Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId) {
     final controller = StreamController<Map<String, dynamic>>();
-    _retainRoomChannel(roomId).onBroadcast(
-      event: 'game_event',
-      callback: (payload) {
-        if (!controller.isClosed) {
-          controller.add(decodeRoomBroadcast(payload));
-        }
-      },
-    );
+    final channel = _retainRoomChannel(roomId);
+    final managed = _roomChannels[roomId]!;
+    void sink(Map<String, dynamic> decoded) {
+      if (!controller.isClosed) controller.add(decoded);
+    }
+
+    managed.sinks.add(sink);
+    if (!managed.broadcastBound) {
+      managed.broadcastBound = true;
+      channel.onBroadcast(
+        event: 'game_event',
+        callback: (payload) {
+          // H2: bozuk yük (tür uyumsuz alan, iç içe garip harita) dinleyici
+          // callback'inde TypeError doğurur; `listen(onError:)` veri
+          // callback'indeki hatayı YAKALAMAZ, yakalanmamış istisna olurdu.
+          final Map<String, dynamic> decoded;
+          try {
+            decoded = decodeRoomBroadcast(payload);
+          } catch (error, stack) {
+            _recordError(error, stack, reason: 'decodeRoomBroadcast failed');
+            return;
+          }
+          for (final deliver in managed.sinks.toList()) {
+            deliver(decoded);
+          }
+        },
+      );
+    }
 
     controller.onCancel = () async {
+      managed.sinks.remove(sink);
       await _releaseRoomChannel(roomId);
       await controller.close();
     };
@@ -5893,11 +6010,49 @@ Map<String, dynamic> decodeRoomBroadcast(Map<String, dynamic> raw) {
   final out = Map<String, dynamic>.of(raw);
   final inner = raw['payload'];
   if (inner is Map) {
-    out.addAll(Map<String, dynamic>.from(inner));
+    for (final entry in inner.entries) {
+      final key = entry.key;
+      if (key is String) out[key] = entry.value;
+    }
   }
   final kind = out['kind'];
   if (kind != null) out['type'] = kind;
+  _sanitizeRoomBroadcast(out);
   return out;
+}
+
+/// Alıcı ekranların `as String?` / `as num?` / `as int?` ile okuduğu
+/// alanlar. Telden gelen yük GÜVENİLMEZ girdidir (kötü niyetli ya da
+/// sürümü farklı bir istemci): türü uymayan alan DÜŞÜRÜLÜR, böylece
+/// ekrandaki dönüşüm TypeError atmaz (2026-11-06, H2).
+const _broadcastStringFields = {
+  'sender_id',
+  'sender',
+  'selected_answer',
+  'type',
+  'kind',
+};
+const _broadcastNumFields = {'score', 'streak'};
+
+void _sanitizeRoomBroadcast(Map<String, dynamic> out) {
+  for (final key in _broadcastStringFields) {
+    final value = out[key];
+    if (value != null && value is! String) out.remove(key);
+  }
+  for (final key in _broadcastNumFields) {
+    final value = out[key];
+    if (value != null && value is! num) out.remove(key);
+  }
+  final index = out['question_index'];
+  if (index != null) {
+    if (index is int) {
+      // olduğu gibi
+    } else if (index is double && index.isFinite && index == index.truncate()) {
+      out['question_index'] = index.toInt();
+    } else {
+      out.remove('question_index');
+    }
+  }
 }
 
 /// Bracket'teki maçlardan sıralama türetir. Final oynandıysa kazanan

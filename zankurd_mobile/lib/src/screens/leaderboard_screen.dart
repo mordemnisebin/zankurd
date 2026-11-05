@@ -511,8 +511,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.resumed:
-        // Dönüşte bir kez tazele, sonra döngüyü yeniden kur.
-        _loadData();
+        // Dönüşte bir kez tazele, sonra döngüyü yeniden kur. Sıralama sekmesi
+        // ÖNDE DEĞİLSE tazelenmez (alan 9 #10): gizli sekme her ön plana
+        // dönüşte ağ/RPC yiyordu; sekme açılınca `refreshSignal` zaten
+        // tazeler (AppShell `_selectTab`).
+        if (widget.isVisible?.call() ?? true) _loadData();
         _startAutoRefresh();
       case AppLifecycleState.paused:
       case AppLifecycleState.inactive:

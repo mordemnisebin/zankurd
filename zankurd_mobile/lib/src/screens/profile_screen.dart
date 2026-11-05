@@ -241,40 +241,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // sessizce tazeler.
     if (!_loadedOnce) setState(() => _loading = true);
     try {
-      final name = await widget.repository.getProfileName();
-      final stats = await widget.repository.getPlayerStats();
-      LeaderboardEntry? weekly;
-      try {
-        weekly = await widget.repository.getMyLeaderboardRank(
-          LeaderboardPeriod.weekly,
-        );
-      } catch (_) {
-        weekly = null; // sıra yoksa karo çizilmez
-      }
-      int? leagueTier;
-      if (widget.repository.leagueSupported) {
+      // Alan 9 #7 (2026-11-06): sekiz bağımsız sunucu isteği ARDIŞIK
+      // bekleniyordu (her biri tam bir ağ turu); hepsi birlikte başlatılır,
+      // toplam gecikme en yavaşının gecikmesi olur. Kayıt `.wait`i hiçbir
+      // vadeyi sahipsiz bırakmaz: biri hata verirse diğerleri bitene dek
+      // beklenir, yakalanmamış istisna doğmaz. Eskiden "okunamazsa karo
+      // çizilmez" diye yutulan istekler aynı biçimde kendi içinde yutulur.
+      Future<T?> optional<T>(Future<T> Function() read) async {
         try {
-          leagueTier = (await widget.repository.getMyLeague())?.tier;
+          return await read();
         } catch (_) {
-          leagueTier = null; // okunamadı: rozet çizilmez / eski yol
+          return null;
         }
       }
-      final tag = await widget.repository.getPlayerTag();
-      final avatarIdentity = await widget.repository.loadAvatarIdentity();
+
+      Future<(({int correct, int wrong})?, bool)> onlineAnswersRead() async {
+        try {
+          return (await widget.repository.loadOnlineAnswerStats(), false);
+        } catch (_) {
+          return (null, true);
+        }
+      }
+
+      final (
+        name,
+        stats,
+        weekly,
+        leagueTier,
+        tag,
+        avatarIdentity,
+        onlineRead,
+        coins,
+      ) = await (
+        widget.repository.getProfileName(),
+        widget.repository.getPlayerStats(),
+        // sıra yoksa karo çizilmez
+        optional(
+          () =>
+              widget.repository.getMyLeaderboardRank(LeaderboardPeriod.weekly),
+        ),
+        // okunamadı: rozet çizilmez / eski yol
+        widget.repository.leagueSupported
+            ? optional(
+                () async => (await widget.repository.getMyLeague())?.tier,
+              )
+            : Future<int?>.value(null),
+        widget.repository.getPlayerTag(),
+        widget.repository.loadAvatarIdentity(),
+        // Diğer profil bölümleri erişilebilir kalır; eksik toplam
+        // gösterilmez (okunamazsa `null`).
+        onlineAnswersRead(),
+        // bakiye yoksa jeton satırı çizilmez
+        optional(() => widget.repository.loadCoinBalance()),
+      ).wait;
+      final onlineAnswers = onlineRead.$1;
+      final answerStatsFailed = onlineRead.$2;
       final achievementStore = await AchievementStore.load();
       final masteryStore = await MasteryStore.load();
       final xpStore = await XPStore.load();
       // Doğruluk oranı istatistik kartı için (UI-only). Coin bakiyesi artık
       // profil gridinde gösterilmiyor, quiz üst barında görünüyor.
       final mistakeStore = await MistakeStore.load();
-      ({int correct, int wrong})? onlineAnswers;
-      var answerStatsFailed = false;
-      try {
-        onlineAnswers = await widget.repository.loadOnlineAnswerStats();
-      } catch (_) {
-        answerStatsFailed = true;
-        // Diğer profil bölümleri erişilebilir kalır; eksik toplam gösterilmez.
-      }
       final weeklyHistory = await _loadWeeklyHistory(mistakeStore);
       final correct = mistakeStore.totalCorrect + (onlineAnswers?.correct ?? 0);
       final wrong = mistakeStore.totalWrong + (onlineAnswers?.wrong ?? 0);
@@ -291,12 +318,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         achievements: achievementStore,
         badges: badgeService,
       );
-      int? coins;
-      try {
-        coins = await widget.repository.loadCoinBalance();
-      } catch (_) {
-        coins = null; // bakiye yoksa jeton satırı çizilmez
-      }
       // Kimlik kartındaki seri (vay 2B). Okunamazsa 0 — kart yine çizilir.
       var streak = 0;
       try {

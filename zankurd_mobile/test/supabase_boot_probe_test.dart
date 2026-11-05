@@ -16,6 +16,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/providers/remote_availability.dart';
 import 'package:zankurd_mobile/src/utils/supabase_boot.dart';
 
+class _FakeSupabase implements Supabase {
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
 void main() {
   group('SupabaseBoot — başlatma tek sefer', () {
     test('hatalı başlatma ikinci kez denenmez, ping yine atılır', () async {
@@ -44,16 +49,23 @@ void main() {
 
       failing.completeError(StateError('already initialized'));
 
-      expect(await first, isTrue, reason: 'başlatma hatası ping\'i engellemez');
-      expect(await second, isTrue);
-      expect(starts, 1, reason: 'Supabase.initialize ikinci kez çağrılmamalı');
+      // G-03: ping atılır; başlatma hâlâ patlak olduğundan sonuç `false`,
+      // ama TEK yolculukta tek yeniden başlatma denenir (eşzamanlı
+      // çağrılar çoğaltmaz).
+      expect(await first, isFalse, reason: 'istemci kurulamadı');
+      expect(await second, isFalse);
+      expect(
+        starts,
+        2,
+        reason: 'ilk başlatma + ping sonrası TEK yeniden deneme',
+      );
       expect(pings, 1, reason: 'başlatma bitince sunucuya TEK bir ping gider');
       expect(identical(boot.boot, boot.boot), isTrue);
 
       // Yolculuk bitti: sonraki probe kendi turunu atar.
-      expect(await boot.probe(), isTrue);
+      expect(await boot.probe(), isFalse);
       expect(pings, 2, reason: 'yeni probe yeni tur atmalı');
-      expect(starts, 1, reason: 'başlatma yine tek');
+      expect(starts, 3, reason: 'her başarılı ping bir yeniden deneme açar');
     });
 
     test('senkron fırlatma dâhil başlatma tek kalır', () async {
@@ -69,15 +81,59 @@ void main() {
       await expectLater(boot.boot, throwsA(isA<StateError>()));
       await expectLater(boot.boot, throwsA(isA<StateError>()));
       expect(starts, 1, reason: 'senkron hata da yeniden başlatma doğurmamalı');
-      expect(await boot.probe(), isTrue, reason: 'ping yine denenir');
+      // G-03 (2026-11-06): başlatma patlak kaldıkça probe `true` DÖNMEZ —
+      // eskiden ping geçince `true` dönüyor, `Supabase.instance.client`
+      // alınamadığı için kurtarma ömür boyu "vazgeçti" döngüsünde kalıyordu.
+      expect(await boot.probe(), isFalse, reason: 'istemci yok → ulaşılamadı');
+      expect(
+        starts,
+        2,
+        reason: 'başarılı ping sonrası yeniden başlatma denenir',
+      );
+    });
+
+    test('G-03: ilk başlatma patlar, ping geçince yeniden başlatma '
+        'kurtarır', () async {
+      var starts = 0;
+      final boot = SupabaseBoot(
+        start: () async {
+          starts += 1;
+          if (starts == 1) throw StateError('ilk başlatma ağsız patladı');
+          return _FakeSupabase();
+        },
+        ping: () async => true,
+      );
+      await expectLater(boot.boot, throwsA(isA<StateError>()));
+      expect(
+        await boot.probe(),
+        isTrue,
+        reason: 'istemci artık kullanılabilir',
+      );
+      expect(starts, 2);
+      expect(await boot.boot, isA<_FakeSupabase>(), reason: 'yeni başlatma');
+    });
+
+    test('G-03: ping başarısızsa başlatma yeniden denenmez', () async {
+      var starts = 0;
+      final boot = SupabaseBoot(
+        start: () async {
+          starts += 1;
+          throw StateError('patlak');
+        },
+        ping: () async => false,
+      );
+      await expectLater(boot.boot, throwsA(isA<StateError>()));
+      expect(await boot.probe(), isFalse);
       expect(starts, 1);
     });
 
     test('başlatma sürerken probe onu bekler, ping erken atılmaz', () async {
       var pings = 0;
       final hanging = Completer<Supabase>();
+      var starts = 0;
       final boot = SupabaseBoot(
-        start: () => hanging.future,
+        start: () =>
+            ++starts == 1 ? hanging.future : Future.value(_FakeSupabase()),
         ping: () async {
           pings += 1;
           return true;
@@ -100,8 +156,10 @@ void main() {
       // bittiğinde ONLARCA istek aynı anda çıkıyordu.
       var pings = 0;
       final hangingBoot = Completer<Supabase>();
+      var starts = 0;
       final boot = SupabaseBoot(
-        start: () => hangingBoot.future,
+        start: () =>
+            ++starts == 1 ? hangingBoot.future : Future.value(_FakeSupabase()),
         ping: () async {
           pings += 1;
           await Future<void>.delayed(const Duration(milliseconds: 50));

@@ -819,6 +819,22 @@ class SyncManager {
     }
   }
 
+  /// Eklenen kaydı kalıcı yazar; yazım reddedilirse kaydı BELLEKTEN de geri
+  /// alır ve hatayı yükseltir (H5, 2026-11-06). Eskiden kayıt bellekte
+  /// kalıyor, çağıran "kaydedilemedi" hatası görüp yeniden deneyince aynı
+  /// ödül/ders kuyruğa İKİ kez giriyordu (kimliksiz kayıtlarda çift
+  /// gönderim). Kimlikle bulunur: eşitleme turu arada kuyruğu değiştirmiş
+  /// olabilir, anlık görüntü geri yüklenmez.
+  Future<void> _saveQueueOrRollBack(Map<String, dynamic> added) async {
+    try {
+      await _saveQueue(propagateFailure: true);
+    } catch (_) {
+      _queue.removeWhere((item) => identical(item, added));
+      _notifyNotifiers();
+      rethrow;
+    }
+  }
+
   Future<bool> _saveFailedQueue() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -865,7 +881,7 @@ class SyncManager {
         'Sync queue owner does not match the authenticated user.',
       );
     }
-    _queue.add({
+    final queued = <String, dynamic>{
       'queueId': '${DateTime.now().microsecondsSinceEpoch}-${_queueSequence++}',
       'type': 'sync_quiz_reward',
       // Solo turun değişmez kimliği: yeniden gönderim sunucuda aynı kimlikle
@@ -880,9 +896,10 @@ class SyncManager {
       'playerId': _ownerUserId,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
       'retries': 0,
-    });
+    };
+    _queue.add(queued);
     _notifyNotifiers();
-    await _saveQueue(propagateFailure: true);
+    await _saveQueueOrRollBack(queued);
     unawaited(sync());
   }
 
@@ -900,16 +917,17 @@ class SyncManager {
     }
     final room = roomId?.trim() ?? '';
     if (room.isEmpty) return;
-    _queue.add({
+    final queued = <String, dynamic>{
       'queueId': '${DateTime.now().microsecondsSinceEpoch}-${_queueSequence++}',
       'type': 'sync_xp',
       'roomId': room,
       'playerId': _ownerUserId,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
       'retries': 0,
-    });
+    };
+    _queue.add(queued);
     _notifyNotifiers();
-    await _saveQueue(propagateFailure: true);
+    await _saveQueueOrRollBack(queued);
     unawaited(sync());
   }
 
@@ -949,16 +967,17 @@ class SyncManager {
       (item) => item['type'] == 'sync_lesson' && item['lessonId'] == id,
     );
     if (alreadyQueued) return;
-    _queue.add({
+    final queued = <String, dynamic>{
       'queueId': '${DateTime.now().microsecondsSinceEpoch}-${_queueSequence++}',
       'type': 'sync_lesson',
       'lessonId': id,
       'playerId': _ownerUserId,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
       'retries': 0,
-    });
+    };
+    _queue.add(queued);
     _notifyNotifiers();
-    await _saveQueue(propagateFailure: true);
+    await _saveQueueOrRollBack(queued);
     unawaited(sync());
   }
 
@@ -1031,7 +1050,7 @@ class SyncManager {
     _queue.removeWhere(
       (item) => item['type'] == 'sync_favorite' && item['questionId'] == id,
     );
-    _queue.add({
+    final queued = <String, dynamic>{
       'queueId': '${DateTime.now().microsecondsSinceEpoch}-${_queueSequence++}',
       'type': 'sync_favorite',
       'questionId': id,
@@ -1039,9 +1058,10 @@ class SyncManager {
       'playerId': _ownerUserId,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
       'retries': 0,
-    });
+    };
+    _queue.add(queued);
     _notifyNotifiers();
-    await _saveQueue(propagateFailure: true);
+    await _saveQueueOrRollBack(queued);
     unawaited(sync());
   }
 
@@ -1096,7 +1116,7 @@ class SyncManager {
       (item) => item['type'] == 'sync_coin' && item['idempotencyKey'] == key,
     );
     if (alreadyQueued) return;
-    _queue.add({
+    final queued = <String, dynamic>{
       'queueId': '${DateTime.now().microsecondsSinceEpoch}-${_queueSequence++}',
       'type': 'sync_coin',
       'amount': amount,
@@ -1105,9 +1125,10 @@ class SyncManager {
       'playerId': _ownerUserId,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
       'retries': 0,
-    });
+    };
+    _queue.add(queued);
     _notifyNotifiers();
-    await _saveQueue(propagateFailure: true);
+    await _saveQueueOrRollBack(queued);
     unawaited(sync());
   }
 

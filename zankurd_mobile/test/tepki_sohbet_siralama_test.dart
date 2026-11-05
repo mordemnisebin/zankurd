@@ -75,12 +75,48 @@ void main() {
     expect(decodeRoomBroadcast(enc)['ready'], true);
   });
 
+  test('H2: bozuk yük tür dönüşümünü patlatmaz — uyumsuz alanlar düşer', () {
+    final received = decodeRoomBroadcast({
+      'type': 'broadcast',
+      'sender_id': 42,
+      'sender': ['x'],
+      'selected_answer': {'a': 1},
+      'score': 'yüz',
+      'streak': true,
+      'question_index': 'üç',
+      'payload': {1: 'sayı anahtar', 'text': 'x'},
+      'ready': true,
+    });
+    // Ekranların kullandığı dönüşümler fırlatmamalı:
+    expect(received['sender_id'] as String?, isNull);
+    expect(received['sender'] as String?, isNull);
+    expect(received['selected_answer'] as String?, isNull);
+    expect((received['score'] as num?)?.toInt(), isNull);
+    expect((received['streak'] as num?)?.toInt(), isNull);
+    expect(received['question_index'] as int?, isNull);
+    expect(received['text'], 'x');
+    expect(received['ready'], true);
+  });
+
+  test('H2: tam sayı değerli double question_index int olur', () {
+    expect(
+      decodeRoomBroadcast({'question_index': 3.0})['question_index'] as int?,
+      3,
+    );
+    expect(
+      decodeRoomBroadcast({'question_index': 3.5})['question_index'],
+      isNull,
+    );
+    expect(decodeRoomBroadcast({'score': 7.5})['score'], 7.5);
+  });
+
   test('depo yayını kodlayıp çözüyor, akış sırası artan', () {
     final src = File(
       'lib/src/data/supabase_zankurd_repository.dart',
     ).readAsStringSync();
     expect(src, contains('payload: encodeRoomBroadcast(payload)'));
-    expect(src, contains('controller.add(decodeRoomBroadcast(payload))'));
+    expect(src, contains('decoded = decodeRoomBroadcast(payload)'));
+    expect(src, contains('deliver(decoded)'));
     // Akış son 50 mesajı azalan sırada seçer, sonra çevirir (yük denetimi
     // 2026-11-03): ekranda yine eski üstte/yeni altta.
     expect(src, contains(".order('created_at', ascending: false)"));

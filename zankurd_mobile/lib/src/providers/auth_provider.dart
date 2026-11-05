@@ -168,13 +168,46 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
   Future<bool> attachSupabase(SupabaseClient client) async {
     final existing = _client;
     if (existing != null) return identical(existing, client);
-    if (client.auth.currentSession == null) return false;
+    if (!canAttachSupabase(client)) return false;
     _client = client;
     _offlineMode = false;
     _nativeAuth = PlatformNativeAuthService(supabaseClient: client);
     _wireAuth(client);
     notifyListeners();
     return true;
+  }
+
+  /// [attachSupabase] bu istemciye bağlanır mıydı? (Yan etkisiz.)
+  ///
+  /// Bağlanır: (a) cihazda kayıtlı oturum varsa; (b) kayıtlı oturum
+  /// YOKSA ama kullanıcı henüz çevrimdışı misafir olmayı SEÇMEMİŞSE
+  /// (2026-11-06, G-06). (b) olmadan çevrimdışı açılan YENİ kullanıcı,
+  /// internet geldikten sonra da hesap açamıyordu: e-posta kaydı/girişi
+  /// istemcisiz kipte "ağ yok" hatası veriyordu ve çıkış yolu yalnız
+  /// uygulamayı yeniden başlatmaktı. Bağlanınca oturum YOK kalır
+  /// (anonim oturum AÇILMAZ); kullanıcı kimlik ekranından kendi
+  /// seçimini yapar. Çevrimdışı misafir olarak yerel ilerleme biriktiren
+  /// kullanıcı (b)'ye girmez: ilerlemesi başka bir kimliğe taşınmasın.
+  bool canAttachSupabase(SupabaseClient client) {
+    final existing = _client;
+    if (existing != null) return identical(existing, client);
+    if (client.auth.currentSession != null) return true;
+    return !_mockAuthenticated;
+  }
+
+  /// [attachSupabase]i geri alır — yarım kalan kurtarmayı (depo/senkron
+  /// kurulamadı) çevrimdışı kipe döndürür. Çevrimdışı misafir durumu
+  /// (`_mockAuthenticated`) hiç değişmediği için aynen sürer.
+  void detachSupabase(SupabaseClient client) {
+    if (!identical(_client, client)) return;
+    unawaited(_authSub?.cancel());
+    _authSub = null;
+    _client = null;
+    _offlineMode = true;
+    _currentUser = null;
+    _nativeAuth = PlatformNativeAuthService();
+    presence.updateSession(null);
+    notifyListeners();
   }
 
   /// Mevcut oturumu okur ve auth olaylarını dinlemeye başlar.

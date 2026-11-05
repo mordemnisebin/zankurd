@@ -2415,7 +2415,11 @@ void main() {
     expect(source, contains('managed.listenerCount++'));
     expect(source, contains('managed.listenerCount--'));
     expect(source, contains('_disposeUnretainedRoomChannel'));
-    expect(source, contains('_retainRoomChannel(roomId).onBroadcast('));
+    // H6: kanala TEK geri çağrı bağlanır, yük açık akışlara dağıtılır;
+    // iptal edilen abonelik kanalda ölü geri çağrı bırakmaz.
+    expect(source, contains('managed.broadcastBound'));
+    expect(source, contains('managed.sinks.remove(sink)'));
+    expect(source, contains('channel.onBroadcast('));
   });
 
   test(
