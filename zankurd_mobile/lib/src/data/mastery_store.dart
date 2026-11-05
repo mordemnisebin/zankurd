@@ -164,7 +164,11 @@ class MasteryStore {
     }
     final before = levelFor(category);
     final newCount = correctCount(category) + count;
-    await _preferences?.setInt('$_keyPrefix$category', newCount);
+    // Kimliksiz yolda da yazım sonucu denetlenir (alan 3 #22).
+    if (await _preferences?.setInt('$_keyPrefix$category', newCount) == false) {
+      await _preferences?.reload();
+      throw StateError('Mastery correct count was not persisted.');
+    }
     final after = MasteryLevelDetails.fromCorrectCount(newCount);
     return after != before && after != MasteryLevel.none ? after : null;
   });
@@ -215,7 +219,17 @@ class MasteryStore {
     final nextCorrect =
         (prefs.getInt('$_evidenceCorrectKeyPrefix$category') ?? 0) +
         correct.clamp(0, count);
-    await prefs.setInt('$_answeredKeyPrefix$category', nextAnswered);
-    await prefs.setInt('$_evidenceCorrectKeyPrefix$category', nextCorrect);
+    final answeredSaved = await prefs.setInt(
+      '$_answeredKeyPrefix$category',
+      nextAnswered,
+    );
+    final correctSaved = await prefs.setInt(
+      '$_evidenceCorrectKeyPrefix$category',
+      nextCorrect,
+    );
+    if (!answeredSaved || !correctSaved) {
+      await prefs.reload();
+      throw StateError('Mastery answer evidence was not persisted.');
+    }
   });
 }

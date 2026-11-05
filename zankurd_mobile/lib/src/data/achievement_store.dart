@@ -569,18 +569,30 @@ class AchievementStore {
   };
 
   Future<void> _persist() async {
-    await _preferences?.setStringList(_unlockedKey, _unlockedIds.toList());
-    await _preferences?.setInt(_answeredKey, _answeredQuestions);
-    await _preferences?.setStringList(
-      _categoriesKey,
-      _playedCategories.toList(),
-    );
-    await _preferences?.setInt(_dailyQuizKey, _dailyQuizCompletions);
-    await _preferences?.setInt(_bestRoundStreakKey, _bestRoundStreak);
-    await _preferences?.setString(_unlockedAtKey, jsonEncode(_unlockedAt));
+    final preferences = _preferences;
+    if (preferences == null) return;
     final lastDay = _dailyQuizLastDay;
-    if (lastDay != null) {
-      await _preferences?.setString(_dailyQuizDayKey, lastDay);
+    // Her yazımın SONUCU denetlenir (alan 3 #22): kimliksiz yolda reddedilen
+    // yazım başarı sanılıp rozet/ilerleme yeniden açılışta kayboluyordu.
+    final results = <bool>[
+      await preferences.setStringList(_unlockedKey, _unlockedIds.toList()),
+      await preferences.setInt(_answeredKey, _answeredQuestions),
+      await preferences.setStringList(
+        _categoriesKey,
+        _playedCategories.toList(),
+      ),
+      await preferences.setInt(_dailyQuizKey, _dailyQuizCompletions),
+      await preferences.setInt(_bestRoundStreakKey, _bestRoundStreak),
+      await preferences.setString(_unlockedAtKey, jsonEncode(_unlockedAt)),
+      if (lastDay != null)
+        await preferences.setString(_dailyQuizDayKey, lastDay),
+    ];
+    if (results.any((saved) => !saved)) {
+      try {
+        await preferences.reload();
+        _restore(preferences);
+      } catch (_) {}
+      throw StateError('Achievement progress was not persisted.');
     }
   }
 }

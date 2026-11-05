@@ -24,7 +24,15 @@ class PendingOperationStore {
 
   static const _prefix = 'zankurd.pendingOp.';
 
-  static String _key(String kind, String ownerId) => '$_prefix$kind.$ownerId';
+  /// Anahtar KAPSAMI da taşır (`<tür>.<kapsam>.<hesap>`; kapsam boşsa eski
+  /// `<tür>.<hesap>`). Eskiden yalnız tür+hesap vardı: farklı kategoride
+  /// ikinci düello aynı yuvadaki kimliği eziyor, birincinin yeniden denemesi
+  /// yeni kimlikle gidip çift düello açıyordu (alan 3 #13). Hesap kimliği
+  /// SONDA kalır: hesap silme süpürmesi (`LocalProgressScope`) soneke bakar.
+  static String _key(String kind, String ownerId, [String scope = '']) =>
+      scope.isEmpty
+      ? '$_prefix$kind.$ownerId'
+      : '$_prefix$kind.${Uri.encodeComponent(scope)}.$ownerId';
 
   static final Map<String, Future<String>> _inFlight = {};
 
@@ -40,10 +48,15 @@ class PendingOperationStore {
     String kind,
     String ownerId, {
     String scope = '',
+    // Sunucu işlem kayıtlarını 14 gün tutar; kimlik yalnız KESİN yanıtta
+    // silinir. Kısa ömür (eskiden düello için 10 dk) gecikmiş yeniden
+    // denemeyi yeni kimliğe çevirip sunucuda çoktan açılmış düelloyu ikinci
+    // kez açtırıyordu (alan 4 #5); 24 saat ise belirsiz kalmış işlemi
+    // "unutmamak" için yeterince uzun.
     Duration maxAge = const Duration(hours: 24),
     DateTime? now,
   }) {
-    final lockKey = _key(kind, ownerId);
+    final lockKey = _key(kind, ownerId, scope);
     final previous = _inFlight[lockKey];
     final Future<String> run;
     if (previous == null) {
@@ -67,7 +80,7 @@ class PendingOperationStore {
     DateTime? now,
   ) async {
     final at = now ?? DateTime.now();
-    final key = _key(kind, ownerId);
+    final key = _key(kind, ownerId, scope);
     final preferences = await SharedPreferences.getInstance();
     final raw = preferences.getString(key);
     if (raw != null) {
@@ -100,13 +113,69 @@ class PendingOperationStore {
     return id;
   }
 
-  /// Kesin yanıt (başarı ya da kesin ret) alındı: kimliği bırak.
-  static Future<void> clear(String kind, String ownerId) async {
+  /// Bekleyen kimlik VARSA (geçerli, süresi dolmamış) döndürür; YOKSA üretmez.
+  /// Açılış kurtarması "yarım kalmış bir işlem var mı" diye bakar.
+  static Future<String?> peek(
+    String kind,
+    String ownerId, {
+    String scope = '',
+    Duration maxAge = const Duration(hours: 24),
+    DateTime? now,
+  }) async {
     try {
       final preferences = await SharedPreferences.getInstance();
-      await preferences.remove(_key(kind, ownerId));
+      final raw = preferences.getString(_key(kind, ownerId, scope));
+      if (raw == null) return null;
+      final entry = jsonDecode(raw);
+      if (entry is Map &&
+          entry['id'] is String &&
+          isClientRoundId(entry['id'] as String) &&
+          entry['scope'] == scope &&
+          entry['at'] is int) {
+        final age =
+            (now ?? DateTime.now()).millisecondsSinceEpoch -
+            (entry['at'] as int);
+        if (age >= 0 && age <= maxAge.inMilliseconds) {
+          return entry['id'] as String;
+        }
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'pending_op_peek');
+    }
+    return null;
+  }
+
+  /// Kesin yanıt (başarı ya da kesin ret) alındı: kimliği bırak. Silme
+  /// kabul edilmediyse (disk yazım hatası) kimlik ÖLÜ işaretle ezilir; eskiden
+  /// sonuç denetlenmiyor, silinmiş sanılan kimlik 24 saat içinde aynı
+  /// kategoride yeniden kullanılıp tamamlanmış işlemi geri getiriyordu
+  /// (alan 3 #14). Döner: kimlik artık kullanılamaz mı.
+  static Future<bool> clear(
+    String kind,
+    String ownerId, {
+    String scope = '',
+  }) async {
+    try {
+      final preferences = await SharedPreferences.getInstance();
+      final key = _key(kind, ownerId, scope);
+      if (await preferences.remove(key)) return true;
+      await preferences.reload();
+      if (await preferences.remove(key)) return true;
+      final dead = await preferences.setString(
+        key,
+        jsonEncode({'cleared': true}),
+      );
+      if (!dead) {
+        ErrorReporter.record(
+          StateError('Pending operation id could not be cleared.'),
+          StackTrace.current,
+          reason: 'pending_op_clear',
+        );
+      }
+      return dead;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'pending_op_clear');
+      return false;
     }
   }
 }

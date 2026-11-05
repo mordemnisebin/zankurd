@@ -469,8 +469,9 @@ class SnapshotWord {
     Map<String, SnapshotWord> aWords,
     Map<String, int> aGone,
     Map<String, SnapshotWord> bWords,
-    Map<String, int> bGone,
-  ) {
+    Map<String, int> bGone, {
+    int? nowMs,
+  }) {
     final words = Map<String, SnapshotWord>.of(mergeAll(aWords, bWords));
     final gone = <String, int>{};
     for (final id in {...aGone.keys, ...bGone.keys}) {
@@ -491,7 +492,30 @@ class SnapshotWord {
         gone[id] = at;
       }
     }
-    return (words, gone);
+    return (words, _pruneTombstones(gone, nowMs));
+  }
+
+  /// Yerel sınırın (`WordListStore.removedRetention` 180 gün /
+  /// `removedCap` 500) bulut birleşiminde de uygulanması: eskiden yalnız
+  /// yerel depo budanıyor, birleşim sınırsız işaret taşıyıp yedeği şişiriyor,
+  /// yerel yükleme de sonra bunları sessizce atıyordu (alan 3 #21). Değerler
+  /// `word_list_store_test`te depodakilerle eşitliği için bekçilenir.
+  static const tombstoneRetentionMs = 180 * 24 * 60 * 60 * 1000;
+  static const tombstoneCap = 500;
+
+  static Map<String, int> _pruneTombstones(Map<String, int> gone, int? nowMs) {
+    final cutoff =
+        (nowMs ?? DateTime.now().millisecondsSinceEpoch) - tombstoneRetentionMs;
+    final kept = <String, int>{
+      for (final entry in gone.entries)
+        if (entry.value >= cutoff) entry.key: entry.value,
+    };
+    if (kept.length <= tombstoneCap) return kept;
+    final newest = kept.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+    return {
+      for (final entry in newest.take(tombstoneCap)) entry.key: entry.value,
+    };
   }
 }
 

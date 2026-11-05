@@ -145,11 +145,16 @@ class WordListStore extends ChangeNotifier {
 
   static Future<WordListStore> load({LocalDataStorage? storage}) async {
     final key = LocalProgressScope.physical(logicalKey);
+    // İşaret anahtarı da AYNI anda (await öncesi) türetilir: eskiden
+    // `_loadFresh` içinde `getInstance()` beklemesinden SONRA hesaplanıyor,
+    // hesap o aralıkta değişirse liste A'dan, silme işaretleri B'den
+    // okunuyordu (alan 3 #6).
+    final removedKey = LocalProgressScope.physical(removedLogicalKey);
     final cached = _instance;
     if (cached != null && cached._key == key) return cached;
     final inFlight = _loading;
     if (inFlight != null && _loadingKey == key) return inFlight;
-    final loading = _loadFresh(storage, key).then((store) {
+    final loading = _loadFresh(storage, key, removedKey).then((store) {
       if (_loadingKey == key) _instance = store;
       return store;
     });
@@ -168,6 +173,7 @@ class WordListStore extends ChangeNotifier {
   static Future<WordListStore> _loadFresh(
     LocalDataStorage? storage,
     String key,
+    String removedKey,
   ) async {
     var effective = storage;
     if (effective == null) {
@@ -209,7 +215,6 @@ class WordListStore extends ChangeNotifier {
       }
     }
     final removed = <String, int>{};
-    final removedKey = LocalProgressScope.physical(removedLogicalKey);
     final rawRemoved = effective?.getString(removedKey);
     if (rawRemoved != null) {
       try {
@@ -279,27 +284,57 @@ class WordListStore extends ChangeNotifier {
   List<SavedWord> sessionWords({DateTime? now}) =>
       dueWords(now: now).take(sessionCap).toList(growable: false);
 
+  /// Uçuştaki ekleme işlemleri (kimlik -> sonuç). Aynı kelimeyi ikinci kez
+  /// ekleyen çağrı, bellekte "var" görünen ama henüz diske yazılmamış kaydı
+  /// başarı sanıp `true` dönüyordu; ilk yazma reddedilip geri alınınca ikinci
+  /// çağrının "başarılı" sonucu yalan kalıyor ve kelime siliniyordu (alan 3
+  /// #11). İkinci çağrı ilk işlemin SONUCUNU bekler; ilk başarısızsa kendisi
+  /// yeniden dener.
+  final Map<String, Future<bool>> _adds = <String, Future<bool>>{};
+
   /// Listeye ekler (zaten varsa dokunmaz). Yeni kelime 1. kutuda ve hemen
   /// tekrar edilebilir durumdadır.
   Future<bool> add(String entryId, {DateTime? now}) async {
-    if (_words.containsKey(entryId)) return true;
-    if (LearnerLexicon.byId(entryId) == null) return false;
-    final at = (now ?? DateTime.now()).millisecondsSinceEpoch;
+    while (true) {
+      final inFlight = _adds[entryId];
+      if (inFlight != null) {
+        if (await inFlight) return true;
+        continue;
+      }
+      if (_words.containsKey(entryId)) return true;
+      if (LearnerLexicon.byId(entryId) == null) return false;
+      final operation = _addNew(entryId, now);
+      _adds[entryId] = operation;
+      try {
+        return await operation;
+      } finally {
+        if (identical(_adds[entryId], operation)) _adds.remove(entryId);
+      }
+    }
+  }
+
+  Future<bool> _addNew(String entryId, DateTime? now) async {
+    final wall = (now ?? DateTime.now()).millisecondsSinceEpoch;
     final tombstone = _removed.remove(entryId);
-    _words[entryId] = SavedWord(
+    // Mantıksal damga: eklenme anı, bu kelimenin silme işaretinden her zaman
+    // SONRA olur; cihaz saati geride kalsa da bulut birleşiminde yeni ekleme
+    // eski silmeye yenilmez (alan 3 #12).
+    final at = tombstone != null && tombstone >= wall ? tombstone + 1 : wall;
+    final word = SavedWord(
       entryId: entryId,
       box: 1,
       dueAtMs: at,
       addedAtMs: at,
     );
+    _words[entryId] = word;
     notifyListeners();
     final saved = await _persist();
     if (!saved) {
       if (tombstone != null) _removed.putIfAbsent(entryId, () => tombstone);
       // Kalıcı yazım reddedildi: bellekte "kaydedildi" görünüp yeniden
-      // açılışta geri gelmesin (2026-11-04 denetimi). Aynı kelimeyi başka
-      // bir işlem değiştirmediyse geri al.
-      _words.remove(entryId);
+      // açılışta geri gelmesin (2026-11-04 denetimi). Yalnız BU işlemin
+      // eklediği kayıt geri alınır.
+      if (identical(_words[entryId], word)) _words.remove(entryId);
       notifyListeners();
       return false;
     }
@@ -318,7 +353,12 @@ class WordListStore extends ChangeNotifier {
         ? removed.reviewedAtMs
         : removed.addedAtMs;
     final previousMark = _removed[entryId];
-    _removed[entryId] = nowMs > activity ? nowMs : activity + 1;
+    // Mantıksal damga: bu cihazda bilinen (buluttan birleşmiş olanlar dahil)
+    // en yeni damganın ötesinde; geriye alınmış ya da ileri saatli bir
+    // cihazın kaydı yüzünden silme daha yeni bir eklemeyi ezmesin ya da
+    // eski kalıp geri gelmesin (alan 3 #12).
+    final floor = math.max(activity, _highestKnownStamp());
+    _removed[entryId] = nowMs > floor ? nowMs : floor + 1;
     _pruneRemoved(nowMs);
     notifyListeners();
     final saved = await _persist();
@@ -373,6 +413,17 @@ class WordListStore extends ChangeNotifier {
     final saved = await _persist();
     if (saved) ProgressSyncService.markDirty();
     return saved;
+  }
+
+  int _highestKnownStamp() {
+    var highest = 0;
+    for (final word in _words.values) {
+      highest = math.max(highest, math.max(word.addedAtMs, word.reviewedAtMs));
+    }
+    for (final mark in _removed.values) {
+      highest = math.max(highest, mark);
+    }
+    return highest;
   }
 
   /// Süresi dolan ve sayı sınırını aşan silme işaretlerini atar.

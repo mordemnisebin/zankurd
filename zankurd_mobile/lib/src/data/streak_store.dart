@@ -780,35 +780,64 @@ class StreakStore {
   Future<void> _persist() async {
     final preferences = _preferences;
     if (preferences == null) return;
-    await preferences.setInt(_currentKey, _current);
-    await preferences.setInt(_bestKey, _best);
-    await preferences.setInt(_freezeKey, _freeze);
+    // Anahtarlar await öncesi sabitlenir: yazımlar arasında hesap değişse de
+    // bu örnek yalnız kendi hesabına yazar (alan 3 #5/#19 ile aynı sınıf).
+    _requireOwner();
+    final currentKey = _currentKey;
+    final bestKey = _bestKey;
+    final freezeKey = _freezeKey;
+    final lastDayKey = _lastDayKey;
+    final playedDaysKey = _playedDaysKey;
+    final frozenDaysKey = _frozenDaysKey;
+    final repairMonthKey = _repairMonthKey;
+    final lostLastDayKey = _lostLastDayKey;
+    final offerSeenKey = _offerSeenKey;
+    final firstSeenKey = _firstSeenKey;
+    final rescueDayKey = _rescueDayKey;
+    final lostValueKey = _lostValueKey;
+    // Her yazımın SONUCU denetlenir (alan 3 #2): `setInt` false dönerse eskiden
+    // yine de `markDirty()` çağrılıp yeni seri dönüyor, yeniden açılışta seri
+    // geriliyordu. Başarısızlıkta bellek diskteki gerçeğe döner ve çağıran
+    // hata alır; "seri kaydedildi" yalan söylenmez.
+    final results = <bool>[
+      await preferences.setInt(currentKey, _current),
+      await preferences.setInt(bestKey, _best),
+      await preferences.setInt(freezeKey, _freeze),
+    ];
     final lastDay = _lastDay;
     if (lastDay != null) {
-      await preferences.setString(_lastDayKey, lastDay);
+      results.add(await preferences.setString(lastDayKey, lastDay));
     }
-    await preferences.setStringList(_playedDaysKey, _trimmed(_playedDays));
-    await preferences.setStringList(_frozenDaysKey, _trimmed(_frozenDays));
-    await _setOrRemove(preferences, _repairMonthKey, _repairMonth);
-    await _setOrRemove(preferences, _lostLastDayKey, _lostLastDay);
-    await _setOrRemove(preferences, _offerSeenKey, _offerSeenFor);
-    await _setOrRemove(preferences, _firstSeenKey, _firstSeen);
-    await _setOrRemove(preferences, _rescueDayKey, _rescueDay);
-    await preferences.setInt(_lostValueKey, _lostValue);
+    results
+      ..add(
+        await preferences.setStringList(playedDaysKey, _trimmed(_playedDays)),
+      )
+      ..add(
+        await preferences.setStringList(frozenDaysKey, _trimmed(_frozenDays)),
+      )
+      ..add(await _setOrRemove(preferences, repairMonthKey, _repairMonth))
+      ..add(await _setOrRemove(preferences, lostLastDayKey, _lostLastDay))
+      ..add(await _setOrRemove(preferences, offerSeenKey, _offerSeenFor))
+      ..add(await _setOrRemove(preferences, firstSeenKey, _firstSeen))
+      ..add(await _setOrRemove(preferences, rescueDayKey, _rescueDay))
+      ..add(await preferences.setInt(lostValueKey, _lostValue));
+    if (results.any((saved) => !saved)) {
+      try {
+        await preferences.reload();
+        _readPaidFreezeState(preferences);
+      } catch (_) {}
+      throw StateError('Streak progress was not persisted.');
+    }
     ProgressSyncService.markDirty();
   }
 
-  static Future<void> _setOrRemove(
+  static Future<bool> _setOrRemove(
     SharedPreferences preferences,
     String key,
     String? value,
-  ) async {
-    if (value == null) {
-      await preferences.remove(key);
-    } else {
-      await preferences.setString(key, value);
-    }
-  }
+  ) => value == null
+      ? preferences.remove(key)
+      : preferences.setString(key, value);
 
   /// En yeni [maxHistoryDays] gün, sıralı (anahtarlar `yyyy-MM-dd`).
   static List<String> _trimmed(Set<String> days) {

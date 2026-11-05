@@ -228,6 +228,7 @@ class SyncManager {
       rethrow;
     }
     _instance = manager;
+    unawaited(manager.importScopedOfflineState());
     unawaited(manager.sync());
     return manager;
   }
@@ -796,6 +797,12 @@ class SyncManager {
     throw StateError('Sync queue could not be durably removed.');
   }
 
+  /// Son kuyruk yazımı reddedildi: bellekteki kuyruk diskten FARKLI. Bir sonraki
+  /// eşitleme turunun başında (kuyruk boş olsa da) yeniden yazılır; yoksa
+  /// bellekte silinmiş bir kayıt yeniden başlatmada diskten geri gelirdi
+  /// (alan 3 #10: favori `supersede` yazım hatası yutuluyordu).
+  bool _queueSaveDirty = false;
+
   Future<void> _saveQueue({bool propagateFailure = false}) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -803,7 +810,9 @@ class SyncManager {
       if (!saved) {
         throw StateError('Sync queue was not persisted.');
       }
+      _queueSaveDirty = false;
     } catch (e, stack) {
+      _queueSaveDirty = true;
       ErrorReporter.record(e, stack, reason: 'SyncManager save queue');
       developer.log('Failed to save sync queue: $e', name: 'SyncManager');
       if (propagateFailure) rethrow;
@@ -999,6 +1008,11 @@ class SyncManager {
   ///
   /// Toggle yeniden oynatılmaz. `true` upsert, `false` silme; ikisi de
   /// tekrarlanabilir. Dönüş değeri başarı değil, “şimdi favori mi”dir.
+  /// Soru başına SON bilinen favori kararı (kuyruğa alınan ya da doğrudan
+  /// yazılan). Gönderimi başlamış eski bir isteğin sonradan verilen kararı
+  /// geri almasını yakalamak için (alan 3 #9).
+  final Map<String, bool> _favoriteLatest = <String, bool>{};
+
   Future<void> retainFavorite({
     required String questionId,
     required bool favorite,
@@ -1013,6 +1027,7 @@ class SyncManager {
     }
     final id = questionId.trim();
     if (id.isEmpty) return;
+    _favoriteLatest[id] = favorite;
     _queue.removeWhere(
       (item) => item['type'] == 'sync_favorite' && item['questionId'] == id,
     );
@@ -1033,17 +1048,23 @@ class SyncManager {
   /// Doğrudan yazım BAŞARILI olduysa aynı sorunun bekleyen eski favori kaydı
   /// düşer: yoksa sonraki kuyruk gönderimi kullanıcının sonradan verdiği
   /// kararı ezip kaldırdığı favoriyi yeniden ekleyebiliyordu (2026-11-04).
-  Future<void> supersedeQueuedFavorite(String questionId) async {
+  Future<void> supersedeQueuedFavorite(
+    String questionId, {
+    bool? favorite,
+  }) async {
     final id = questionId.trim();
     if (id.isEmpty) return;
     final currentUserId = _normalizedUserId(_repository.currentUserId);
     if (_ownerUserId == null || currentUserId != _ownerUserId) return;
+    if (favorite != null) _favoriteLatest[id] = favorite;
     final before = _queue.length;
     _queue.removeWhere(
       (item) => item['type'] == 'sync_favorite' && item['questionId'] == id,
     );
     if (_queue.length == before) return;
     _notifyNotifiers();
+    // Yazım hatası yutulmaz: `_saveQueue` kirli bayrağı kaldırır, sonraki
+    // eşitleme turu yeniden yazar (alan 3 #10).
     await _saveQueue(propagateFailure: false);
   }
 
@@ -1088,6 +1109,40 @@ class SyncManager {
     _notifyNotifiers();
     await _saveQueue(propagateFailure: true);
     unawaited(sync());
+  }
+
+  Future<void>? _offlineImport;
+
+  /// Çevrimdışı yazılmış ders ve favorileri bu hesabın kuyruğuna aktarır.
+  ///
+  /// Eskiden yalnız ders aktarımı vardı ve hesap değişiminde, kuyruk bu
+  /// hesap için KURULMADAN (eski örnek, sahip uyuşmazlığı) çağrılıp sessizce
+  /// boşa gidiyordu; favori aktarımı hiçbir açılış akışında çağrılmıyordu
+  /// (alan 3 #7/#8). Şimdi örnek kurulunca ve oturum hazırlığı (kapsam
+  /// bağlama) bitince çağrılır; eşzamanlı çağrılar tek işe birleşir, sahip ya
+  /// da kapsam uyuşmuyorsa sessizce durur.
+  Future<void> importScopedOfflineState() {
+    final running = _offlineImport;
+    if (running != null) return running;
+    late final Future<void> future;
+    future = _importScopedOfflineState().whenComplete(() {
+      if (identical(_offlineImport, future)) _offlineImport = null;
+    });
+    _offlineImport = future;
+    return future;
+  }
+
+  Future<void> _importScopedOfflineState() async {
+    try {
+      await queueScopedOfflineLessons();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'offline lessons import');
+    }
+    try {
+      await queueScopedOfflineFavorites();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'offline favorites import');
+    }
   }
 
   /// Aynı kullanıcının çevrimdışı ders sluglarını sunucu kuyruğuna alır.
@@ -1214,6 +1269,7 @@ class SyncManager {
   }
 
   Future<void> _syncOnce() async {
+    if (_queueSaveDirty) await _saveQueue();
     if (_queue.isEmpty) return;
     final ownerUserId = _ownerUserId;
     final currentUserId = _normalizedUserId(_repository.currentUserId);
@@ -1425,6 +1481,11 @@ class SyncManager {
             );
           } else {
             final desired = item['favorite'] == true;
+            // Tur başladıktan sonra doğrudan yazımla geçersiz kılınmış (kuyruktan
+            // çıkarılmış) kayıt GÖNDERİLMEZ: eski karar yenisini ezerdi.
+            if (!_queue.any((queued) => identical(queued, item))) {
+              continue;
+            }
             await repo.toggleFavoriteQuestion(
               QuizQuestion(
                 id: questionId,
@@ -1439,6 +1500,25 @@ class SyncManager {
             if (_normalizedUserId(repo.currentUserId) != ownerUserId) {
               failedItems.addAll(batch.skip(index));
               break;
+            }
+            // Gönderim SIRASINDA kullanıcı kararını değiştirdiyse (kayıt
+            // kuyruktan çıkarıldı, son karar farklı) son karar yeniden
+            // bildirilir: uçuştaki eski istek yenisini geri alamaz.
+            final latest = _favoriteLatest[questionId];
+            if (latest != null &&
+                latest != desired &&
+                !_queue.any((queued) => identical(queued, item))) {
+              await repo.toggleFavoriteQuestion(
+                QuizQuestion(
+                  id: questionId,
+                  category: 'Ziman',
+                  prompt: questionId,
+                  answers: const ['A'],
+                  correctAnswer: 'A',
+                  explanation: '',
+                ),
+                latest,
+              );
             }
           }
         } else if (type == 'sync_coin') {

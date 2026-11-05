@@ -7,7 +7,12 @@ import '../models/learning_goal.dart';
 import '../utils/error_reporter.dart';
 
 class LearningGoalStore {
-  LearningGoalStore._(this._preferences, this._goal);
+  LearningGoalStore._(
+    this._preferences,
+    this._goal,
+    this._goalKey,
+    this._stampKey,
+  );
 
   static String get _key =>
       LocalProgressScope.physical('zankurd.learning_goal.v1');
@@ -22,6 +27,12 @@ class LearningGoalStore {
 
   final SharedPreferences? _preferences;
   LearningGoal? _goal;
+
+  /// Örneğin KENDİ anahtarları, yüklendiği anda sabitlenir. `_key`/`_atKey`
+  /// her çağrıda etkin hesaptan türetildiği için iki `await` arasında hesap
+  /// değişirse hedef B'nin alanına yazılabiliyordu (alan 3 #5).
+  final String _goalKey;
+  final String _stampKey;
 
   static Future<LearningGoalStore> load() async {
     final cached = _instance;
@@ -45,6 +56,8 @@ class LearningGoalStore {
   }
 
   static Future<LearningGoalStore> _loadFresh() async {
+    final goalKey = _key;
+    final stampKey = _atKey;
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
@@ -53,7 +66,9 @@ class LearningGoalStore {
     }
     return LearningGoalStore._(
       preferences,
-      LearningGoal.fromStorageKey(preferences?.getString(_key)),
+      LearningGoal.fromStorageKey(preferences?.getString(goalKey)),
+      goalKey,
+      stampKey,
     );
   }
 
@@ -67,24 +82,41 @@ class LearningGoalStore {
 
   /// Kayıtlı hedefi siler; hesap değişiminde yabancının hedefi devralınmaz.
   Future<void> clear() async {
-    await removePersistedPreferenceKeys(_preferences, [_key, _atKey]);
+    await removePersistedPreferenceKeys(_preferences, [_goalKey, _stampKey]);
     _goal = null;
   }
 
   Future<bool> save(LearningGoal goal) async {
     final preferences = _preferences;
     if (preferences == null) return false;
+    final goalKey = _goalKey;
+    final stampKey = _stampKey;
+    // Önceki damga: hedef yazılamazsa geri konur. Eskiden damga yeni, hedef
+    // eski kalıyor ve bulut birleşimi eski hedefi "yeni seçim" diye öbür
+    // cihaza yayıyordu (alan 3 #18).
+    final previousStamp = preferences.getInt(stampKey);
+    Future<void> restoreStamp() async {
+      try {
+        if (previousStamp == null) {
+          await preferences.remove(stampKey);
+        } else {
+          await preferences.setInt(stampKey, previousStamp);
+        }
+      } catch (_) {}
+    }
+
     try {
       // Zaman damgası hedeften ÖNCE yazılır: damga yazılamazsa eski damga
       // yeni seçimi "eski" gösterip öbür cihazın hedefine yenik düşürürdü;
       // bu durumda damga kaldırılır (damgasız = eski veri kuralı).
       final stamped = await preferences.setInt(
-        _atKey,
+        stampKey,
         DateTime.now().millisecondsSinceEpoch,
       );
-      if (!stamped) await preferences.remove(_atKey);
-      final saved = await preferences.setString(_key, goal.storageKey);
+      if (!stamped) await preferences.remove(stampKey);
+      final saved = await preferences.setString(goalKey, goal.storageKey);
       if (!saved) {
+        await restoreStamp();
         await preferences.reload();
         return false;
       }
@@ -92,6 +124,7 @@ class LearningGoalStore {
       ProgressSyncService.markDirty();
       return true;
     } catch (error, stack) {
+      await restoreStamp();
       try {
         await preferences.reload();
       } catch (_) {}

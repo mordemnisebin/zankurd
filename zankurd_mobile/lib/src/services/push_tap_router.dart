@@ -60,7 +60,8 @@ class PushTapRouter {
   static final ValueNotifier<PushTapIntent?> pending =
       ValueNotifier<PushTapIntent?>(null);
 
-  static bool _firebaseWired = false;
+  static bool _listenerWired = false;
+  static bool _initialChecked = false;
 
   /// [data] (bir `RemoteMessage.data`) bilinen bir `kind` taşıyorsa hedefi
   /// [pending]e yazar ve `true` döner; değilse `false`.
@@ -107,16 +108,33 @@ class PushTapRouter {
   /// engellenir — aksi halde her çağrı `onMessageOpenedApp`e yeniden abone
   /// olur ve tek dokunuş [offer]i birden çok kez tetikler.
   static Future<void> wireFirebase() async {
-    if (kIsWeb || Firebase.apps.isEmpty || _firebaseWired) return;
-    _firebaseWired = true;
-    try {
-      FirebaseMessaging.onMessageOpenedApp.listen((message) {
-        offer(message.data);
-      });
-      final initial = await FirebaseMessaging.instance.getInitialMessage();
-      if (initial != null) offer(initial.data);
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'push tap wiring failed');
+    if (kIsWeb || Firebase.apps.isEmpty) return;
+    // Dinleyici ve ilk-mesaj okuması AYRI bayraklıdır ve bayrak yalnız işin
+    // kendisi başarılı olunca kalıcı olur: eskiden bayrak abonelikten ÖNCE
+    // true yapılıyordu, ilk kurulum hatası sonrası sonraki çağrılar (geç
+    // Firebase hazırlığı, yeniden bağlanma) hiçbir şey yapmıyor ve dokunma
+    // dinleyicisi oturum boyunca ölü kalıyordu (alan 4 #12).
+    if (!_listenerWired) {
+      try {
+        FirebaseMessaging.onMessageOpenedApp.listen((message) {
+          offer(message.data);
+        });
+        _listenerWired = true;
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'push tap wiring failed');
+      }
+    }
+    if (!_initialChecked) {
+      // Eşzamanlı ikinci çağrı aynı mesajı iki kez sunmasın: bayrak
+      // beklemeden ÖNCE kalkar, hata olursa geri indirilir.
+      _initialChecked = true;
+      try {
+        final initial = await FirebaseMessaging.instance.getInitialMessage();
+        if (initial != null) offer(initial.data);
+      } catch (error, stack) {
+        _initialChecked = false;
+        ErrorReporter.record(error, stack, reason: 'push initial message');
+      }
     }
   }
 
@@ -124,6 +142,7 @@ class PushTapRouter {
   @visibleForTesting
   static void resetForTest() {
     pending.value = null;
-    _firebaseWired = false;
+    _listenerWired = false;
+    _initialChecked = false;
   }
 }

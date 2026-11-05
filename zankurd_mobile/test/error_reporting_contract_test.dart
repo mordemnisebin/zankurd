@@ -230,9 +230,10 @@ void main() {
         'daily_mission_load_preferences',
         'daily_mission_test_preferences',
         'mission_claim_grant',
+        'mission_persist_reload',
       }),
     );
-    expect(missionCatches, hasLength(3));
+    expect(missionCatches, hasLength(4));
 
     expect(
       repository,

@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/durable_write.dart';
 import '../data/local_progress_scope.dart';
+import '../data/pending_operation_store.dart';
+import '../data/progress_sync.dart';
 import '../data/sync_manager.dart';
 import '../data/zankurd_repository.dart';
 import '../data/supabase_zankurd_repository.dart';
@@ -456,6 +460,7 @@ class _ShopScreenState extends State<ShopScreen> {
   void initState() {
     super.initState();
     _loadBalance();
+    unawaited(_recoverPaidFreeze());
   }
 
   Future<void> _loadBalance() async {
@@ -813,7 +818,36 @@ class _ShopScreenState extends State<ShopScreen> {
   /// Seri dondurma satın alma: `spendStreakFreeze` (idempotent, bozulma
   /// anındaki teklifle aynı sunucu yolu) → [StreakStore.addFreeze].
   /// Üst sınır ([StreakStore.maxFreeze]) doluysa jeton hiç harcanmaz.
-  static String? _pendingFreezeKey;
+  ///
+  /// ## Kalıcı kurtarma (alan 3 #3)
+  ///
+  /// İşlem anahtarı ve "ücret alındı" işareti eskiden yalnız statik bellekteydi:
+  /// 50 jeton düşüp [StreakStore.addFreeze]'den önce uygulama kapanırsa hak
+  /// hiç verilmez, tekrar basınca yeni anahtarla İKİNCİ tahsilat yapılırdı.
+  /// Şimdi anahtar çağrıdan ÖNCE kalıcı yazılır ([PendingOperationStore]),
+  /// tahsilat sonrası ayrı bir "ödendi" işareti yazılır; açılışta işaret
+  /// varsa hak teslim edilir ([_recoverPaidFreeze]). İşaret yazılamadan
+  /// kapanma olursa aynı anahtarla yeniden basış sunucuda `already_charged`
+  /// döner: yalnız hak teslim edilir, ikinci ücret kesilmez.
+  static const _freezeKeyKind = 'shop_freeze';
+  static const _freezePaidKind = 'shop_freeze_paid';
+
+  Future<void> _recoverPaidFreeze() async {
+    final owner = widget.repository.currentUserId;
+    if (owner == null) return;
+    try {
+      final paid = await PendingOperationStore.peek(_freezePaidKind, owner);
+      if (paid == null) return;
+      final store = await StreakStore.load();
+      final count = await store.addFreeze();
+      await PendingOperationStore.clear(_freezePaidKind, owner);
+      await PendingOperationStore.clear(_freezeKeyKind, owner);
+      if (!mounted) return;
+      setState(() => _freezeCount = count);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'shop_freeze_recover');
+    }
+  }
 
   Future<void> _purchaseFreeze(ShopItem item) async {
     if (_freezeCount >= StreakStore.maxFreeze) {
@@ -836,29 +870,44 @@ class _ShopScreenState extends State<ShopScreen> {
       // işlem anahtarıyla) tekrarlasın.
       _retryPurchaseItem = item;
     });
-    // Anahtar belirsiz bir hatadan sonra AYNEN yeniden kullanılır: yanıtı
-    // kaybolan tahsilatın tekrarı yeni bir -50 satırı yazmasın (Codex
-    // denetimi 2026-10-29). Kesin sonuçta (başarı/ret) anahtar bırakılır.
-    final key =
-        _pendingFreezeKey ??
-        'shop_freeze_${DateTime.now().microsecondsSinceEpoch}';
-    _pendingFreezeKey = key;
+    final owner = widget.repository.currentUserId ?? 'local';
     try {
+      // Anahtar belirsiz bir hatadan sonra AYNEN yeniden kullanılır: yanıtı
+      // kaybolan tahsilatın tekrarı yeni bir -50 satırı yazmasın (Codex
+      // denetimi 2026-10-29). Kalıcı yazılamazsa tahsilat HİÇ başlamaz.
+      final pendingId = await PendingOperationStore.idFor(
+        _freezeKeyKind,
+        owner,
+      );
+      final key = '$shopFreezeKeyPrefix$pendingId';
       final charge = await widget.repository.spendStreakFreeze(
         idempotencyKey: key,
       );
       if (!charge.succeeded) {
-        // Yalnız KESİN ret (bakiye yetmiyor) anahtarı bırakır. `failed`
-        // taşıma hatasıdır: sunucu 50 jetonu çekmiş, yanıt kaybolmuş olabilir;
-        // anahtar silinirse yeniden deneme ikinci kez tahsil ederdi (RPC
-        // aynı anahtarda `already_charged` döner, tekrar güvenlidir).
+        // Yalnız KESİN ret (bakiye yetmiyor / sunucuda sınır dolu) anahtarı
+        // bırakır. `failed` taşıma hatasıdır: sunucu 50 jetonu çekmiş, yanıt
+        // kaybolmuş olabilir; anahtar silinirse yeniden deneme ikinci kez
+        // tahsil ederdi (RPC aynı anahtarda `already_charged` döner).
         if (charge.outcome != StreakFreezeChargeOutcome.failed) {
-          _pendingFreezeKey = null;
+          await PendingOperationStore.clear(_freezeKeyKind, owner);
         }
         if (!mounted) return;
         AppHaptics.vibrate();
-        setState(() => _purchaseErrorMessage = context.t(K.purchaseFailed));
+        if (charge.outcome == StreakFreezeChargeOutcome.full) {
+          // Öbür cihazdaki alım henüz bu cihaza inmemiş olabilir: eşitle.
+          unawaited(ProgressSyncService.maybeInstance?.syncNow());
+          setState(() => _purchaseErrorMessage = context.t(K.shopFreezeFull));
+        } else {
+          setState(() => _purchaseErrorMessage = context.t(K.purchaseFailed));
+        }
         return;
+      }
+      // Ücret alındı: "ödendi" işareti kalıcı yazılır; teslim kapanırsa bile
+      // açılışta tamamlanır. İşaret yazılamazsa anahtar kalır (yukarıya bak).
+      try {
+        await PendingOperationStore.idFor(_freezePaidKind, owner);
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'shop_freeze_paid_mark');
       }
       // Hak, ekrandan bağımsız teslim edilir: tahsilat beklenirken ekrandan
       // çıkılırsa jeton gidip dondurma gelmemesin. Anahtar teslimden SONRA
@@ -866,7 +915,8 @@ class _ShopScreenState extends State<ShopScreen> {
       // tahsil etmez, yalnız hakkı teslim eder.
       final store = await StreakStore.load();
       final count = await store.addFreeze();
-      _pendingFreezeKey = null;
+      await PendingOperationStore.clear(_freezePaidKind, owner);
+      await PendingOperationStore.clear(_freezeKeyKind, owner);
       _retryPurchaseItem = null;
       if (!mounted) return;
       setState(() => _freezeCount = count);

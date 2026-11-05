@@ -10,6 +10,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../data/age_gate_store.dart';
 import '../services/home_widget_sync.dart';
+import '../data/checked_preferences_removal.dart';
 import '../data/chat_mute_store.dart';
 import '../data/local_progress_scope.dart';
 import '../data/local_progress_write_lock.dart';
@@ -299,6 +300,12 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
       } catch (e, s) {
         ErrorReporter.record(e, s, reason: 'SyncManager restart');
       }
+      // Çevrimdışı ders/favori aktarımı kuyruk BU hesap için kurulduktan
+      // sonra: önceden `restart`tan önce çağrılıp eski örneğin sahip
+      // uyuşmazlığıyla sessizce boşa gidiyordu (alan 3 #7/#8).
+      if (_isCurrentAuthGeneration(generation, user.id)) {
+        unawaited(SyncManager.maybeInstance?.importScopedOfflineState());
+      }
     }
     _bindProgressSync(user, localProgressReady: localProgressReady);
   }
@@ -352,7 +359,6 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
       LocalProgressScope.bind(user.id);
       if (previousScope != user.id) _dropProgressMemory();
       await SyncManager.maybeInstance?.reconcileXpCache();
-      await SyncManager.maybeInstance?.queueScopedOfflineLessons();
       return true;
     } catch (_) {
       _failClosedLocalScope(user, previousScope);
@@ -1174,6 +1180,43 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
         }
       }
     }
+    // Misafir çıkışı: elle sıralı depo temizliği kelime listesini, ders
+    // kümelerini ve çevrimdışı favorileri kapsamaz; cihaz sahibi de misafir
+    // kimliğinde kalırsa `activateOffline()` onu "insan sahip" sayıp o
+    // kapsamı sonraki çevrimdışı oturuma açardı (ChatGPT Pro 2.1.2 alan 3
+    // #1). Misafirin bütün kapsamlı kayıtları silinir, sahip sentinel'e
+    // çekilir; yazılamazsa bu süreçte sahipsiz kapsam zorlanır.
+    if (!keepLocalProgress && !discardPendingRewards) {
+      final guestId = departingUserId?.trim();
+      if (guestId != null && guestId.isNotEmpty) {
+        try {
+          final prefs = await SharedPreferences.getInstance();
+          await LocalProgressScope.clearUserOwnedKeys(prefs, guestId);
+          await AgeGate.forgetUser(guestId);
+        } catch (e, s) {
+          localProgressCleared = false;
+          ErrorReporter.record(e, s, reason: 'guest account key sweep');
+        }
+      }
+      var ownerReset = false;
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        ownerReset = await prefs.setString(
+          _deviceOwnerUserIdKey,
+          LocalProgressScope.offlineUserId,
+        );
+        if (!ownerReset) {
+          await prefs.reload();
+          ownerReset = await prefs.setString(
+            _deviceOwnerUserIdKey,
+            LocalProgressScope.offlineUserId,
+          );
+        }
+      } catch (e, s) {
+        ErrorReporter.record(e, s, reason: 'deviceOwner reset on guest exit');
+      }
+      if (!ownerReset) LocalProgressScope.forceOfflineScope();
+    }
     if (discardPendingRewards && !localProgressCleared) {
       accountCleanupFailed = true;
     }
@@ -1184,7 +1227,10 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
     if (discardPendingRewards && localProgressCleared) {
       try {
         final prefs = await SharedPreferences.getInstance();
-        await prefs.remove(_deviceOwnerUserIdKey);
+        // Silme kabul edilmediyse sahiplik anahtarı diskte kalır ve silinen
+        // hesabın kapsamını sonraki çevrimdışı oturuma bağlar; sessiz
+        // geçmek yerine temizlik başarısız sayılır (alan 3 #24).
+        await removePersistedPreferenceKeys(prefs, [_deviceOwnerUserIdKey]);
       } catch (e, s) {
         ErrorReporter.record(e, s, reason: 'deviceOwner key removal failed');
         accountCleanupFailed = true;
@@ -1213,8 +1259,8 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
       try {
         // Çıkan cihazın jetonu verilirse yalnız o silinir: aynı hesabın ikinci
         // cihazı çıkış yapmadığı halde bildirim almaz olmazdı (GPT-6 Pro
-        // ALAN 4). Jeton bilinmiyorsa ya da sunucu henüz tek parametreli
-        // sürümü taşımıyorsa (PGRST202) eski, koşulsuz temizliğe düşülür.
+        // ALAN 4). Sunucu henüz tek parametreli sürümü taşımıyorsa (PGRST202)
+        // eski temizliğe düşülür; jeton bilinmiyorsa HİÇBİR temizlik yapılmaz.
         if (deviceToken != null) {
           try {
             await client
@@ -1229,12 +1275,14 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
                 .rpc<void>('clear_my_fcm_token')
                 .timeout(const Duration(seconds: 3));
           }
-        } else {
-          await client
-              .rpc<void>('clear_my_fcm_token')
-              .timeout(const Duration(seconds: 3));
+          cleared = true;
         }
-        cleared = true;
+        // Jeton bilinmiyorsa (bu süreçte henüz yazılmadı) parametresiz,
+        // KOŞULSUZ temizlik ÇAĞRILMAZ: aynı hesabın öbür cihazının jetonunu
+        // da silerdi (alan 4 #4). `cleared=false` kalır; bu cihazın jetonu
+        // aşağıda Firebase'de geçersiz kılınır, sunucudaki satır başka
+        // cihazın jetonuna dokunulmadan bayat kalır ve ilk başarısız
+        // gönderimde temizlenir.
       } catch (error, stack) {
         if (!isMissingRpcError(error)) {
           ErrorReporter.record(error, stack, reason: 'clear fcm token failed');

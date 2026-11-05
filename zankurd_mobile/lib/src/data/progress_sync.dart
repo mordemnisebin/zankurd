@@ -863,13 +863,20 @@ class ProgressSyncService with WidgetsBindingObserver {
           oversized = true;
         }
         if (saved) {
-          confirmed = true;
+          // Boyut yüzünden EKSİLTİLMİŞ görüntü (yanlış cevap geçmişi ya da
+          // mezun üst veri çıkarıldı, defter sunucudakiyle değiştirildi)
+          // "tam eşitlendi" DEĞİLDİR: çip "bulutla senkronize" demez, yerel
+          // kopya tam olduğu için bir sonraki eşitleme yeniden dener
+          // (alan 3 #16).
+          confirmed = !oversized && !_isReduced(json, merged);
           return;
         }
       }
     } on ProgressRemoteMissing {
+      // Sunucuda ilerleme RPC'si yok: eşitleme bu oturumda KAPANIR ama
+      // bulut yedeği alınmadı; "senkronize" gösterilmez (alan 3 #17).
       _disabled = true;
-      confirmed = true;
+      confirmed = false;
     } catch (error, stack) {
       if (!_isNetwork(error)) {
         ErrorReporter.record(error, stack, reason: 'progress_sync');
@@ -946,6 +953,11 @@ class ProgressSyncService with WidgetsBindingObserver {
     );
     return core;
   }
+
+  /// Gönderilen JSON yerel görüntünün tamamı mı, yoksa boyut için kırpılmış
+  /// bir alt küme mi.
+  static bool _isReduced(Map<String, dynamic> sent, ProgressSnapshot full) =>
+      jsonEncode(sent) != jsonEncode(full.toJson());
 
   /// Son yükleme boyut nedeniyle gönderilemedi (görünür durum; bir sonraki
   /// başarılı eşitlemede düşer).

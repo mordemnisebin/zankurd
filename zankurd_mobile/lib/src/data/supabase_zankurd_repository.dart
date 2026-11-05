@@ -2780,7 +2780,27 @@ class SupabaseZanKurdRepository
       if (currentUserId != expectedOwnerId) {
         throw StateError('Streak freeze owner changed before RPC.');
       }
-      final response = await client.rpc(
+      // Mağaza alımı (anahtar öneki `shop_freeze_`) SUNUCU üst sınırıyla
+      // tahsil edilir: ikinci cihaz bulutta zaten dolu/eşitlenmemiş jetonu
+      // görüp ücret kesmeden reddedilir (alan 3 #4). Bozulma anı teklifi
+      // jeton ELDE TUTMAZ (anında uygular), sınırsız eski yoldan gider.
+      // Sınırlı işlev canlıda yoksa (PGRST202) eski yola düşülür.
+      final capped = idempotencyKey.startsWith(shopFreezeKeyPrefix);
+      dynamic response;
+      if (capped) {
+        try {
+          response = await client.rpc(
+            'spend_streak_freeze_capped',
+            params: {'p_idempotency_key': idempotencyKey},
+          );
+        } catch (error, stack) {
+          if (!_isMissingFunction(error)) {
+            _recordError(error, stack, reason: 'spendStreakFreezeCapped');
+            rethrow;
+          }
+        }
+      }
+      response ??= await client.rpc(
         'spend_streak_freeze',
         params: {'p_idempotency_key': idempotencyKey},
       );
@@ -2788,6 +2808,12 @@ class SupabaseZanKurdRepository
         throw StateError('Streak freeze owner changed during RPC.');
       }
       if (response is Map<String, dynamic>) {
+        if (response['error'] == 'freeze_full') {
+          return const StreakFreezeChargeResult(
+            outcome: StreakFreezeChargeOutcome.full,
+            idempotent: true,
+          );
+        }
         if (response['success'] == true) {
           return StreakFreezeChargeResult(
             outcome: response['already_charged'] == true
@@ -5156,8 +5182,8 @@ class SupabaseZanKurdRepository
   /// Düello oluşturan RPC'yi KALICI istek kimliğiyle çağırır. Kimlik çağrıdan
   /// önce yazılır; yanıtı kaybolan çağrının yeniden denemesi sunucuda önceki
   /// düelloyu bulur (yeni düello açmaz). Başarıyla ayrıştırılan yanıtta
-  /// silinir; taşıma hatasında ve sunucu hatasında kalır (en çok 10 dakika,
-  /// kapsam değişirse yenilenir).
+  /// silinir; taşıma hatasında ve sunucu hatasında kalır (en çok 24 saat; her
+  /// kapsamın kendi yuvası vardır, başka kategori ötekini ezmez).
   Future<AsyncDuelStart> _createDuelOnce({
     required String kind,
     required String scope,
@@ -5173,7 +5199,6 @@ class SupabaseZanKurdRepository
         kind,
         owner,
         scope: scope,
-        maxAge: const Duration(minutes: 10),
       );
       try {
         response = await _duelRpc(maskedRpc, legacyRpc, {
@@ -5187,7 +5212,7 @@ class SupabaseZanKurdRepository
           rethrow; // Kimlik KALIR.
         }
         _duelRequestIdSupported = false;
-        await PendingOperationStore.clear(kind, owner);
+        await PendingOperationStore.clear(kind, owner, scope: scope);
       }
     }
     if (!usedKey) {
@@ -5197,7 +5222,7 @@ class SupabaseZanKurdRepository
       AsyncDuelStart.fromJson(_requiredJsonObject(response, legacyRpc)),
     );
     if (usedKey && owner != null) {
-      await PendingOperationStore.clear(kind, owner);
+      await PendingOperationStore.clear(kind, owner, scope: scope);
     }
     return start;
   }
