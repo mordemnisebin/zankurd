@@ -97,6 +97,53 @@ http.Response _error(int status, String code) => http.Response(
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  group('katkı ödülü istek kimliği (2.1.2 W1 #6)', () {
+    test(
+      'başarısız deneme AYNI kimlikle yeniden gider, başarıdan sonra yenilenir',
+      () async {
+        final f = _fixture();
+        f.replies['admin_reward_contributor'] = _error(500, 'XX000');
+        await expectLater(
+          f.repo.rewardContributor('u1', coins: 100),
+          throwsA(isA<PostgrestException>()),
+        );
+        final first = f.calls.last.body['p_request_id'] as String;
+        await expectLater(
+          f.repo.rewardContributor('u1', coins: 100),
+          throwsA(isA<PostgrestException>()),
+        );
+        expect(
+          f.calls.last.body['p_request_id'],
+          first,
+          reason:
+              'yanıtı kaybolan istek yeniden gönderilince sunucu çift ödemesin',
+        );
+        // Başka tutar ayrı bir istek: ayrı kimlik.
+        f.replies['admin_reward_contributor'] = null;
+        await f.repo.rewardContributor('u1', coins: 200);
+        expect(f.calls.last.body['p_request_id'], isNot(first));
+        // Aynı (kullanıcı, tutar) başarıdan sonra: yeni bilinçli ödül, yeni kimlik.
+        await f.repo.rewardContributor('u1', coins: 100);
+        final ok1 = f.calls.last.body['p_request_id'];
+        await f.repo.rewardContributor('u1', coins: 100);
+        expect(f.calls.last.body['p_request_id'], isNot(ok1));
+      },
+    );
+
+    test('4 bağımsız değişkenli imza yoksa eski imzaya düşer', () async {
+      final f = _fixture();
+      // Fixture aynı adın iki çağrısına da hata döner: yalnız İKİNCİ (eski
+      // imza) çağrının yapıldığını ve gövdesini sınarız.
+      f.replies['admin_reward_contributor'] = _error(404, 'PGRST202');
+      await expectLater(
+        f.repo.rewardContributor('u1', coins: 100),
+        throwsA(isA<PostgrestException>()),
+      );
+      expect(f.calls.length, 2);
+      expect(f.calls.last.body, {'p_user_id': 'u1', 'p_coins': 100});
+    });
+  });
+
   test('gerçek depo maket notu göstermez (isSample=false)', () {
     expect(_fixture().repo.isSample, isFalse);
   });
@@ -392,7 +439,17 @@ void main() {
         'p_coins': 500,
       });
       await f.repo.rewardContributor('u1', coins: 100);
-      expect(f.calls.last.body, {'p_user_id': 'u1', 'p_coins': 100});
+      expect(f.calls.last.name, 'admin_reward_contributor');
+      expect(f.calls.last.body['p_user_id'], 'u1');
+      expect(f.calls.last.body['p_coins'], 100);
+      expect(
+        f.calls.last.body['p_request_id'],
+        matches(
+          RegExp(
+            r'^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$',
+          ),
+        ),
+      );
       f.replies['admin_get_auto_reward'] = true;
       expect(await f.repo.loadAutoReward(), isTrue);
       await f.repo.setAutoReward(false);

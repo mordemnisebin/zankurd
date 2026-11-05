@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/admin.dart';
@@ -278,12 +280,50 @@ class SupabaseAdminRepository implements AdminRepository {
     ];
   }
 
+  /// Başarısız (ya da yanıtı kaybolmuş) katkı ödülü istekleri için kalıcı
+  /// istek kimliği: AYNI kullanıcı + tutar yeniden denendiğinde AYNI kimlik
+  /// gider, sunucu (`admin_reward_contributor/4`, request_id benzersiz) ikinci
+  /// kez ödemez ve önceki sonucu döner. Başarıdan sonra kimlik silinir; bilinçli
+  /// ikinci ödül yeni kimlikle yeni bir istektir.
+  final Map<String, String> _pendingRewardRequests = <String, String>{};
+
+  static String _newRequestId() {
+    final random = Random.secure();
+    final bytes = List<int>.generate(16, (_) => random.nextInt(256));
+    bytes[6] = (bytes[6] & 0x0f) | 0x40;
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
+    final hex = [
+      for (final b in bytes) b.toRadixString(16).padLeft(2, '0'),
+    ].join();
+    return '${hex.substring(0, 8)}-${hex.substring(8, 12)}-'
+        '${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}';
+  }
+
   @override
   Future<void> rewardContributor(String userId, {required int coins}) async {
-    await client.rpc<dynamic>(
-      'admin_reward_contributor',
-      params: {'p_user_id': userId, 'p_coins': coins},
-    );
+    final key = '$userId|$coins';
+    final requestId = _pendingRewardRequests.putIfAbsent(key, _newRequestId);
+    try {
+      await client.rpc<dynamic>(
+        'admin_reward_contributor',
+        params: {
+          'p_user_id': userId,
+          'p_coins': coins,
+          'p_note': null,
+          'p_request_id': requestId,
+        },
+      );
+    } on PostgrestException catch (error) {
+      // Sunucuda 4 bağımsız değişkenli imza yoksa (göç henüz uygulanmadı)
+      // eski imzaya düş: sunucu aynı yönetici+kullanıcı+tutar için 10 dk'lık
+      // dilimde zaten tek ödeme yapar.
+      if (error.code != 'PGRST202' && error.code != '42883') rethrow;
+      await client.rpc<dynamic>(
+        'admin_reward_contributor',
+        params: {'p_user_id': userId, 'p_coins': coins},
+      );
+    }
+    _pendingRewardRequests.remove(key);
   }
 
   // ── Ödüller ────────────────────────────────────────────────────────
