@@ -653,8 +653,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
 
     try {
-      // Soru havuzunu ısıt (home doğrudan quiz açmaz; matchmaking/oda/quiz ayrı).
-      await repo.loadQuestions(limit: 10);
+      // Soru havuzu burada ISITILMAZ (alan 9 #2). Eskiden `loadQuestions`
+      // çağrılıyor, sonuç atılıyordu; çevrimiçi depoda bu çağrı
+      // `prepare_verified_solo_questions` RPC'si demek: her ana ekran
+      // açılışında sunucuda bir seçim + `verified_solo_selections` bileti
+      // (günlük 100 bilet sınırından da yiyor). Banka zaten `main()`de
+      // yükleniyor; tur başlayınca gerçek seçim yapılır.
       final coins = await repo.loadCoinBalance();
       if (!mounted) return;
       setState(() => _coinBalance = coins);
