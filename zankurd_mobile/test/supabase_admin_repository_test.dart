@@ -17,6 +17,7 @@ import 'package:http/testing.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/supabase_admin_repository.dart';
 import 'package:zankurd_mobile/src/models/admin.dart';
+import 'package:zankurd_mobile/src/providers/analytics_consent_provider.dart';
 import 'package:zankurd_mobile/src/services/activity_ping.dart';
 
 class _Call {
@@ -568,7 +569,45 @@ void main() {
   });
 
   group('ActivityPing', () {
-    setUp(ActivityPing.resetForTest);
+    setUp(() {
+      ActivityPing.resetForTest();
+      AnalyticsConsentProvider.isEnabled = true;
+    });
+    tearDown(() => AnalyticsConsentProvider.isEnabled = false);
+
+    test('analitik kapalıyken hiçbir şey gitmez (bulgu 1.4)', () async {
+      AnalyticsConsentProvider.isEnabled = false;
+      final sent = <bool>[];
+      ActivityPing.debugSender = (solo) async => sent.add(solo);
+      await ActivityPing.open(now: DateTime(2026, 11, 12, 10));
+      await ActivityPing.soloStarted();
+      expect(sent, isEmpty);
+    });
+
+    test(
+      'gün ya da hesap değişince seyreltme uygulanmaz; hata sayaç başlatmaz',
+      () async {
+        final sent = <bool>[];
+        ActivityPing.debugSender = (solo) async => sent.add(solo);
+        ActivityPing.debugUserId = 'a';
+        final t0 = DateTime(2026, 11, 12, 22);
+        await ActivityPing.open(now: t0);
+        ActivityPing.debugUserId = 'b';
+        await ActivityPing.open(now: t0.add(const Duration(minutes: 5)));
+        expect(sent.length, 2, reason: 'hesap değişti');
+        await ActivityPing.open(now: t0.add(const Duration(hours: 3)));
+        expect(sent.length, 3, reason: 'gün değişti (22:00 + 3 sa)');
+        ActivityPing.resetForTest();
+        ActivityPing.debugSender = (_) async => throw StateError('ağ yok');
+        await ActivityPing.open(now: t0);
+        final ok = <bool>[];
+        ActivityPing.debugSender = (solo) async => ok.add(solo);
+        await ActivityPing.open(now: t0.add(const Duration(minutes: 1)));
+        expect(ok, [
+          false,
+        ], reason: 'başarısız ilk deneme seyreltmeyi başlatmaz');
+      },
+    );
 
     test('açılış bildirimi seyreltilir; solo her seferinde gider', () async {
       final sent = <bool>[];

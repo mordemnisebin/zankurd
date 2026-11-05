@@ -734,7 +734,7 @@ class _QuizScreenState extends State<QuizScreen>
       mode: _quizModeLabel,
       roundId: _analyticsRoundId,
     );
-    // Yönetim panosu sayacı (rıza gerektirmez; bkz. ActivityPing).
+    // Yönetim panosu sayacı (yalnız kullanım analizi açıkken; bkz. ActivityPing).
     if (_quizModeLabel == 'solo') unawaited(ActivityPing.soloStarted());
     unawaited(
       widget.repository

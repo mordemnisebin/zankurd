@@ -39,6 +39,29 @@ yalnız sayılar yazılır. `pg_cron` işi `avatar-supurme` her saat 17. dakikad
 `send-push` ile aynı Vault desenini kullanır (`avatar_sweep_url` + `cron_secret`).
 Dağıtım sırası ve geri alma `supabase/applied.md` satırında. Silmeden sonra dosya
 genel URL'den bir sonraki süpürmeye dek (en çok ~1 saat) erişilebilir kalabilir.
+`web/privacy.html` ve `web/delete-account.html` bunu açıkça söyler: dosyalar silme
+sırasında uygulama tarafından kaldırılır, hata olursa en geç ~1 saat içinde süpürülür
+ve o zamana dek adresi bilen biri görebilir (koşulsuz "silindi" denmez).
+
+## Yönetim kayıtları (2026-11-18, W7 göçü)
+
+`delete_my_account` auth.users silinmeden önce `anonymize_deleted_user_in_admin_records`
+çağırır (göç `supabase/2026-11-18_w7_hesap_silme_yonetim.sql`; ⏳ = canlıda uygulanana
+dek geçerli değil, `applied.md`). `admin_audit_log` (hedef/yazan kimlik sıfır-UUID,
+`detail.note` atılır, `detail.label` 'Hesabê jêbirî'), `admin_reward_grants` ve
+`admin_contributor_rewards` (kimlik satır başına rastgele uuid; sayılar korunur),
+`user_moderation.updated_by`, `admin_settings.updated_by` anonimleşir. Pano sayaç
+tablosu `usage_daily_active` zaten auth.users CASCADE ile gider. Gizlilik metni bu
+davranışı söyler.
+
+## Analitik rızası ve etkinlik sayacı (2.1.2, W7)
+
+Rıza anahtarları cihaz geneli, yaş beyanı hesaba bağlı: yetişkin beyanı kaybolunca
+(başka hesaba geçiş, çocuk beyanı, hesap silme) `AgeGate.adultLost` tetiklenir,
+`AnalyticsConsentProvider` bellekteki rızayı, Firebase Analytics/Crashlytics SDK'sını
+ve diskteki seçimi sıfırlar. `ActivityPing` (kişi bazlı gün+hesap satırı) yalnız
+kullanım analizi açıkken yazılır; yönetim panosunun "aktif" sayıları bu yüzden
+"analizi açan hesaplar" üzerindendir.
 
 ## Açık iş 2: RevenueCat müşteri kaydı silme
 
@@ -55,9 +78,11 @@ istemci tarafında UYGULANMADI. Plan (TODO, sunucu fonksiyonu):
   varsa alias'larını) sil → sonucu doğrula → başarısızsa kalıcı bir
   `account_deletion_queue` satırı bırak ve yeniden dene → ardından RPC'yi çağır.
 - Saklanması gereken ödeme kayıtlarının istisnası ayrı tanımlanır (mağaza/yasal).
-- O zamana dek silme talebi, gizlilik sayfasında söylendiği gibi RevenueCat'e
-  İLETİLİR; bu elle yapılır (RevenueCat Dashboard → Customers → Delete) ve silme
-  talebi e-postasıyla (`iletisim@zankurd.com`) kayıt altına alınır.
+- O zamana dek RevenueCat kaydı hesap silinirken OTOMATİK silinmez. Gizlilik
+  sayfası bunu söyler (2026-11-18): Pro hiç sunulmadığından kayıt satın alma
+  bilgisi içermez; kullanıcı `iletisim@zankurd.com`'a yazarsa silme talebi elle
+  iletilir (RevenueCat Dashboard → Customers → Delete) ve e-postayla kayıt altına
+  alınır. Pro açılmadan önce yukarıdaki Edge Function yapılmalıdır.
 
 ## Harici silme sayfası (`web/delete-account.html`)
 

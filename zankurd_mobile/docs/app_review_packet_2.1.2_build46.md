@@ -69,9 +69,27 @@ User-visible:
   markers are synced, so a deleted word does not come back from another device.
 - Save-failure protections: a failed local or server write is no longer shown
   as saved, and queued rewards are kept for retry.
-- Owner-only management section: it appears only for the owner's administrator
-  account. It is not visible to reviewers or to any ordinary or guest account;
-  there is nothing in it to test for review.
+- Owner-only management section (statement for App Review; paste into Notes
+  for Review): "The app contains an owner-only management area (dashboard,
+  question moderation, reward grants, report handling) for the app owner's own
+  administrator account. It is NOT hidden by the client: every management
+  function is a server-side RPC that rejects any caller that is not in the
+  server's `admins` table, so a reviewer, a guest or any ordinary account can
+  neither see nor call it, and there is no demo credential for it. It does not
+  change how the app behaves for players and has nothing to test for review.
+  No feature is gated behind a hidden gesture or flag; everything a reviewer
+  can reach is described in these notes." (Verified in code: the entry row
+  appears only when the server answers `admin_is_admin()` with true; the RPCs
+  call `admin_assert()`. If App Review asks to see it, the owner can supply a
+  screen recording instead of an account.)
+- Privacy and age (2.1.2): usage analytics and crash reports stay off until the
+  user opts in and reset when the signed-in account changes; the daily activity
+  counter behind the dashboard is written only when usage analytics is on;
+  Settings has an age-declaration row to correct a mistaken answer; the privacy
+  policy, terms and delete-account page were updated to match this behavior
+  (the terms now say that no subscription is currently offered, and no longer
+  claim parental consent is verified). Account deletion now also anonymizes the
+  user's identity, name and notes in the management records.
 - Contact address for support and review notes: iletisim@zankurd.com.
 
 ## Server-side changes already live

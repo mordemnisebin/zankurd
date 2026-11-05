@@ -338,13 +338,22 @@ void main() {
   group('yaş şartı belgelerde', () {
     test('terms.html iki dilde 13 yaş maddesini taşır', () {
       final terms = File('web/terms.html').readAsStringSync();
-      expect(terms, contains('13 yaş ve üzerindeki kullanıcılar içindir'));
-      expect(terms, contains('ji bo bikarhênerên 13 salî û mezintir e'));
+      expect(
+        terms,
+        contains('13 yaş ve üzerindeki kullanıcılar için hazırlanmıştır'),
+      );
+      expect(
+        terms,
+        contains('ji bo bikarhênerên 13 salî û mezintir hatiye amadekirin'),
+      );
     });
     test('privacy.html iki dilde 13 yaş cümlesini taşır', () {
       final privacy = File('web/privacy.html').readAsStringSync();
-      expect(privacy, contains('13 yaş ve üzerindeki kullanıcılar içindir'));
-      expect(privacy, contains('13 salî û mezintir e'));
+      expect(
+        privacy,
+        contains('13 yaş ve üzerindeki kullanıcılar için hazırlanmıştır'),
+      );
+      expect(privacy, contains('13 salî û mezintir hatiye amadekirin'));
     });
   });
 }

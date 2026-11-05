@@ -177,11 +177,11 @@ void main() {
       expect(html, contains('konum iznini ya da GPS'));
       expect(html, contains('RevenueCat\'i başlatmaz'));
       expect(html, contains('RevenueCat nade destpêkirin'));
-      expect(html, contains('silme talebin RevenueCat\'e de iletilir'));
-      expect(
-        html,
-        contains('daxwaza te ya jêbirinê ji RevenueCat re jî tê şandin'),
-      );
+      // 2.1.2 W7 (alan 7 bulgu 1.5): uygulama RevenueCat'e silme talebi
+      // İLETMEZ; metin artık otomatik silme vaat etmez, talep üzerine der.
+      expect(html, contains('otomatik silmez'));
+      expect(html, contains('iletisim@zankurd.com'));
+      expect(html, contains('bi xweber ji RevenueCat jê nake'));
       final doc = File(
         'docs/app_privacy_reconciliation_1.9.2_build15.md',
       ).readAsStringSync();
