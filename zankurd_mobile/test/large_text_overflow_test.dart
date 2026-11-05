@@ -41,12 +41,16 @@ import 'support/widget_test_helpers.dart';
 
 /// Sistem yazısı büyütüldüğünde ekranlar taşmamalı.
 ///
+/// 2.1.2 (Pro denetimi 1.1): `main.dart` yazı ölçeği üst sınırı 2,0'dan 3,0'a
+/// çıkarıldı (iOS erişilebilirlik boyutları ≈3,1'e varır); bu test varsayılan
+/// olarak artık %300'de koşar.
+///
 /// iOS ve Android'de kullanıcı yazı boyutunu iki katına kadar çıkarabilir;
 /// erişilebilirlik ayarlarında bu sıra dışı değil, yaygın. Düzen varsayılan
 /// ölçeğe göre kurulduğunda fazlalık sessizce kırpılır ya da satır taşar —
 /// yayında hata görünmez, yalnız yarım kalmış bir arayüz kalır.
 ///
-/// Test her ekranı %200 ölçekte açar ve `takeException` ile taşma olup
+/// Test her ekranı %300 ölçekte açar ve `takeException` ile taşma olup
 /// olmadığına bakar; Flutter taşmayı hata olarak bildirir. Ekranlar tek tek
 /// açılır, çünkü `takeException` yalnız ilk hatayı verir — hepsini tek
 /// testte toplamak ikinci taşmayı gizlerdi.
@@ -73,7 +77,7 @@ void main() {
     WidgetTester tester,
     Widget screen, {
     Size size = const Size(390, 844),
-    double textScale = 2.0,
+    double textScale = 3.0,
   }) async {
     tester.view.devicePixelRatio = 3.0;
     tester.view.physicalSize = size * 3;

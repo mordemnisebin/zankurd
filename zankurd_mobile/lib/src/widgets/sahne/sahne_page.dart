@@ -488,7 +488,20 @@ class _BrandMark extends StatelessWidget {
             children: [
               BrandMark(color: t.act, height: 22),
               const SizedBox(width: SahneSpace.x2),
-              Text(name, style: SahneType.button.copyWith(color: t.tx)),
+              // 1.1: marka yazısı kimlik öğesidir, gövde metni değil; %300
+              // yazıda satırı taşırıyordu (358 px'te 12 px). 1,5 ile sınırlı
+              // ve sığmazsa küçülür.
+              Flexible(
+                child: Text(
+                  name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textScaler: MediaQuery.textScalerOf(
+                    context,
+                  ).clamp(maxScaleFactor: 1.5),
+                  style: SahneType.button.copyWith(color: t.tx),
+                ),
+              ),
             ],
           ),
         ),
@@ -810,10 +823,19 @@ class SahneBottomDock extends StatelessWidget {
             // Yuva içeriği sınırsız yükseklik alır (gövdedeki `Column`da
             // olduğu gibi): `Center` gibi genişleyen bir çocuk bütün ekranı
             // kaplamasın.
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [child],
+            //
+            // 1.1: %300 yazıda yuva ekranı yutabilir (eşleştirme: bot notu +
+            // düğme 3×; çubuk + yuva 844 px'i 133 px aşıyordu). Yuva içeriği
+            // en çok %200'e kadar büyür (önceki sınır, düzenler orada
+            // doğrulanmış); gövde ve çubuk %300'e çıkar. Kaydırıcı eklenmez:
+            // ekranda ikinci bir `Scrollable` sonuç ekranı gezintisini bozar.
+            child: MediaQuery.withClampedTextScaling(
+              maxScaleFactor: 2.0,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [child],
+              ),
             ),
           ),
         ),

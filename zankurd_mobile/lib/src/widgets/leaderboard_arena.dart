@@ -90,7 +90,9 @@ class LeaderboardArenaHeader extends StatelessWidget {
           style: SahneType.captionStrong.copyWith(color: t.goldTx),
         ),
         const SizedBox(height: 2),
-        Text(
+        // 1.1: %300 yazıda "sıradasın" harf harf bölünüyordu (320 px);
+        // sözcük sığana kadar küçülür.
+        SahneUnbrokenText(
           title,
           key: const ValueKey('leaderboard-league-title'),
           style: (rank == null ? SahneType.bodyStrong : SahneType.headline)
