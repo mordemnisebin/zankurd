@@ -204,6 +204,12 @@ void main() {
         final f = _fixture();
         f.replies['admin_list_audit'] = [
           {
+            'action': 'notify_pref_set',
+            'target_id': 'report',
+            'label': 'report',
+            'created_at': '2026-11-12T10:30:00Z',
+          },
+          {
             'action': 'auto_reward_set',
             'target_id': 'auto_reward',
             'label': null,
@@ -228,15 +234,18 @@ void main() {
             'created_at': '2026-11-11T08:00:00Z',
           },
         ];
-        final list = await f.repo.loadRecentActions(limit: 3);
-        expect(f.calls.single.body['p_limit'], 9);
+        final list = await f.repo.loadRecentActions(limit: 4);
+        expect(f.calls.single.body['p_limit'], 12);
+        // `notify_pref_set` bilinmiyor -> süzülür; `auto_reward_set` artık
+        // "Son işlemler"de görünür (W8, alan 8 #20).
         expect(list.map((e) => e.action), [
+          AdminAuditAction.autoReward,
           AdminAuditAction.approve,
           AdminAuditAction.suspend,
           AdminAuditAction.reward,
         ]);
-        expect(list.first.target, 'Şerefname kê…');
-        expect(list[1].target, 'u1', reason: 'etiket yoksa kimlik');
+        expect(list[1].target, 'Şerefname kê…');
+        expect(list[2].target, 'u1', reason: 'etiket yoksa kimlik');
       },
     );
 
@@ -309,6 +318,69 @@ void main() {
       expect(p.candidates.first.rewarded, isTrue);
       expect(p.candidates[1].score, 4980);
     });
+
+    test(
+      'ödül dönemi: geçmiş dönem anahtarı gider, prev/next okunur',
+      () async {
+        final f = _fixture();
+        f.replies['admin_list_reward_candidates'] = {
+          'kind': 'daily',
+          'period_key': '2026-11-10',
+          'prev_key': '2026-11-09',
+          'next_key': '2026-11-11',
+          'suggested_coins': [500, 300, 100],
+          'candidates': <dynamic>[],
+        };
+        final p = await f.repo.loadRewardPeriod(
+          AdminRewardPeriodKind.daily,
+          periodKey: '2026-11-10',
+        );
+        expect(f.calls.single.body, {
+          'p_kind': 'daily',
+          'p_period_key': '2026-11-10',
+        });
+        expect((p.prevKey, p.nextKey), ('2026-11-09', '2026-11-11'));
+        f.replies['admin_list_reward_candidates'] = {
+          'kind': 'daily',
+          'period_key': '2026-11-12',
+          'prev_key': '2026-11-11',
+          'next_key': null,
+          'suggested_coins': [500, 300, 100],
+          'candidates': <dynamic>[],
+        };
+        final last = await f.repo.loadRewardPeriod(AdminRewardPeriodKind.daily);
+        expect(
+          last.nextKey,
+          isNull,
+          reason: 'son tamamlanan dönemden ileri yok',
+        );
+      },
+    );
+
+    test(
+      'ödül sonucu: verildi / zaten verilmişti / derece dolu ayrılır',
+      () async {
+        final f = _fixture();
+        Future<AdminGrantOutcome> grant() => f.repo.grantReward(
+          AdminRewardPeriodKind.daily,
+          '2026-11-12',
+          userId: 'u1',
+          coins: 500,
+        );
+        f.replies['admin_grant_reward'] = {'granted': true, 'rank': 1};
+        expect(await grant(), AdminGrantOutcome.granted);
+        f.replies['admin_grant_reward'] = {
+          'granted': false,
+          'reason': 'already_rewarded',
+        };
+        expect(await grant(), AdminGrantOutcome.alreadyRewarded);
+        f.replies['admin_grant_reward'] = {
+          'granted': false,
+          'reason': 'rank_already_rewarded',
+        };
+        expect(await grant(), AdminGrantOutcome.rankTaken);
+      },
+    );
 
     test('kullanıcı şikâyetleri: durum ve kalan askı günü', () async {
       final f = _fixture();

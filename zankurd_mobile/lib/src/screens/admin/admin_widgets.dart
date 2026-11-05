@@ -134,17 +134,22 @@ class _AdminLoaderState<T> extends State<AdminLoader<T>> {
 
 /// Bir yönetim işlemini koşturur: başarıda "Kaydedildi", hatada "Yapılamadı"
 /// bildirimi; ardından [reload]. Hata yutulmaz, rapora yazılır.
+///
+/// [action] bir `String` döndürürse işlem hata vermedi ama bir şey KAYDEDİLMEDİ
+/// (ör. ödül zaten verilmişti): "Kaydedildi" yerine o metin gösterilir.
 Future<void> runAdminAction(
   BuildContext context,
-  Future<void> Function() action,
+  Future<Object?> Function() action,
   Future<void> Function() reload,
 ) async {
   final messenger = ScaffoldMessenger.of(context);
   final done = context.t(K.adminDone);
   final failed = context.t(K.adminFailed);
   try {
-    await action();
-    messenger.showSnackBar(SnackBar(content: Text(done)));
+    final result = await action();
+    messenger.showSnackBar(
+      SnackBar(content: Text(result is String ? result : done)),
+    );
   } catch (error, stack) {
     ErrorReporter.record(error, stack, reason: 'admin action failed');
     messenger.showSnackBar(SnackBar(content: Text(failed)));

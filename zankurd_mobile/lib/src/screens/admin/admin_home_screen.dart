@@ -47,6 +47,10 @@ class AdminHomeScreen extends StatelessWidget {
               const SizedBox(height: SahneSpace.cardGap),
               _ModeUsageCard(usage: data.stats.modeUsage),
               const SizedBox(height: SahneSpace.x2),
+              // Satırlar FARKLI olayları sayar (solo başlatma, kurulan oda...):
+              // karşılaştırılabilir "oyuncu sayısı" gibi okunmasın (W8, alan 8 #24).
+              AdminNote(context.t(K.adminModeUsageNote)),
+              const SizedBox(height: SahneSpace.x2),
               AdminNote(context.t(K.adminTotalsNote)),
               SahneSectionHeader(title: context.t(K.adminWaiting)),
               SahneListGroup(
@@ -162,6 +166,8 @@ String _actionLabel(BuildContext context, AdminAuditAction action) =>
       AdminAuditAction.block => K.adminActBlock,
       AdminAuditAction.suspend => K.adminActSuspend,
       AdminAuditAction.lift => K.adminActLift,
+      AdminAuditAction.autoReward => K.adminActAutoReward,
+      AdminAuditAction.autoRewardError => K.adminActAutoRewardError,
     });
 
 class _StatGrid extends StatelessWidget {

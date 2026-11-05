@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../data/admin_repository.dart';
+import '../../providers/auth_provider.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../theme/app_icons.dart';
@@ -24,13 +26,27 @@ class AdminEntryRow extends StatefulWidget {
 class _AdminEntryRowState extends State<AdminEntryRow> {
   AdminRepository? _repository;
   Future<bool>? _isAdmin;
+  String? _userId;
+
+  /// Oturumdaki hesabın kimliği; oturum sağlayıcısı yoksa (izole widget
+  /// testi) `null`. Dinlenir: hesap değişince yetki YENİDEN sorulur, önceki
+  /// hesabın "yönetici" cevabı yeni hesaba kalmaz (W8, alan 8 #27).
+  String? _sessionUserId() {
+    try {
+      return Provider.of<AuthProvider>(context).currentUser?.id;
+    } on ProviderNotFoundException {
+      return null;
+    }
+  }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     final repository = AdminRepository.maybeOf(context);
-    if (!identical(repository, _repository)) {
+    final userId = _sessionUserId();
+    if (!identical(repository, _repository) || userId != _userId) {
       _repository = repository;
+      _userId = userId;
       _isAdmin = repository?.isAdmin().catchError((Object _) => false);
     }
   }

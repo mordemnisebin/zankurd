@@ -1,4 +1,4 @@
--- ZanKurd 2.2 — Yönetim: moderasyonun OYUNDA uygulanması (CANLIYA UYGULANMADI).
+-- ZanKurd 2.2 — Yönetim: moderasyonun OYUNDA uygulanması (CANLIDA: 2026-11-05 uygulandı, bkz. applied.md).
 --
 -- Niçin: 2026-11-12_yonetim_paneli.sql sahibe "engelle / askıya al" düğmesi
 -- verir ve durumu `user_moderation`a yazar; ama oyun yolları o tabloyu hiç
