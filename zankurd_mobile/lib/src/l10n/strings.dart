@@ -5135,7 +5135,7 @@ class Tr {
     K.adminPeriodNext: {'ku': 'Dema paşê', 'tr': 'Sonraki dönem'},
     K.adminModeUsageNote: {
       'ku':
-          'Her rêz bûyera xwe dihejmêre: lîstika solo ya destpêkirî, odeya avakirî, duela vekirî, turnuvaya avakirî û beşdariya pêşbirka rojê.',
+          'Her rêz bûyera xwe dihejmêre: lîstika solo ya destpêkirî, odeya avakirî, duela vekirî, kûpaya avakirî û beşdariya pêşbirka rojê.',
       'tr':
           'Her satır kendi olayını sayar: başlatılan solo oyun, kurulan oda, açılan düello, kurulan turnuva ve günün yarışmasına katılım.',
     },
