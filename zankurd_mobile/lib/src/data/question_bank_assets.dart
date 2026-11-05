@@ -180,4 +180,8 @@ const questionBankAssets = <String>[
   // Teknolojî havuzlarını ~400'e taşır; taslak Argon/Flash, jüri yazar
   // olmayan iki model. Sunucu eşi: `supabase/2026-11-10_yeni_sorular_2.sql`.
   'assets/data/yeni2_2026_11_10_questions.json',
+  // 2026-11-14: YENİ SORULAR 3. On kategoriyi ~700'e taşır; taslak ChatGPT,
+  // jüri Gemini 4 Argon + ChatGPT/Copilot. Sunucu eşi:
+  // `supabase/2026-11-14_yeni_sorular_3.sql`.
+  'assets/data/yeni3_2026_11_14_questions.json',
 ];
