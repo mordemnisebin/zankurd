@@ -32,8 +32,28 @@
 //
 // Hata ayıklama günlüğüne jeton, kod ya da anahtar ASLA yazılmaz.
 
-import { createClient } from "npm:@supabase/supabase-js@2";
-import { hasAppleIdentity, registerRecentlyDone } from "./lib.ts";
+import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
+import {
+  appleSubjectMatches,
+  appleSubjectOf,
+  hasAppleIdentity,
+  registerRecentlyDone,
+  revokeOutcome,
+  timingSafeEqual,
+} from "./lib.ts";
+
+// 2026-11-16 (W4, GPT-6 Pro ALAN 4 #1 #3 #16): DEĞİŞENLER
+//  - `register`/`revoke` kodu takas ederken Apple'ın `id_token.sub`ı oturumdaki
+//    kullanıcının Apple kimliğinin `sub`ıyla eşleşmezse 403 `apple_subject_mismatch`
+//    döner ve hiçbir şey saklanmaz (başka Apple hesabının kodu bu kullanıcının
+//    altında saklanıp yanlış hesap iptal edilemez).
+//  - İptal başarısızsa jeton SİLİNMEZ. `apple_auth_tokens.user_id` FK'si
+//    2026-11-16 göçüyle kalktığı için hesap silinse de satır kalır ("yetim") ve
+//    `sweep` eylemi (cron, `x-cron-secret`) yetimleri yeniden dener; başarıda
+//    satır silinir. Jeton yalnız Apple iptali başarılı olunca yok edilir.
+//  - Yanıtlar: iptal edildi → `revoked: true`; saklı jeton yok → `revoked: false`
+//    ve no_token nedeni (istemci bunu BAŞARI saymaz); Apple hatası → 502
+//    `revoke_failed` + `queued: true` (jeton kuyrukta kalır).
 
 const APPLE_TOKEN_URL = "https://appleid.apple.com/auth/token";
 const APPLE_REVOKE_URL = "https://appleid.apple.com/auth/revoke";
@@ -137,8 +157,10 @@ async function appleForm(
   return { status: response.status, body };
 }
 
-/// Yetkilendirme kodunu Apple'a takas eder; refresh_token döner.
-async function exchangeCode(code: string): Promise<string | null> {
+/// Yetkilendirme kodunu Apple'a takas eder; refresh_token ve id_token döner.
+async function exchangeCode(
+  code: string,
+): Promise<{ refresh: string; idToken: unknown } | null> {
   const result = await appleForm(APPLE_TOKEN_URL, {
     client_id: requiredEnv("APPLE_CLIENT_ID"),
     client_secret: await appleClientSecret(),
@@ -150,17 +172,91 @@ async function exchangeCode(code: string): Promise<string | null> {
     return null;
   }
   const refresh = result.body.refresh_token;
-  return typeof refresh === "string" && refresh.length > 0 ? refresh : null;
+  return typeof refresh === "string" && refresh.length > 0
+    ? { refresh, idToken: result.body.id_token }
+    : null;
+}
+
+/// Refresh token'ı Apple'da iptal eder: true = amaç gerçekleşti.
+async function revokeAtApple(refreshToken: string): Promise<boolean> {
+  const result = await appleForm(APPLE_REVOKE_URL, {
+    client_id: requiredEnv("APPLE_CLIENT_ID"),
+    client_secret: await appleClientSecret(),
+    token: refreshToken,
+    token_type_hint: "refresh_token",
+  });
+  const outcome = revokeOutcome(result.status, result.body.error);
+  if (outcome === "failed") {
+    console.error("apple /auth/revoke failed", result.status, result.body.error);
+  }
+  return outcome === "revoked";
+}
+
+/// Hesabı silinmiş kullanıcıların (user_id artık auth.users'ta yok) iptal
+/// edilememiş jetonlarını yeniden dener. Başarıda satır silinir.
+async function sweepOrphans(
+  admin: SupabaseClient,
+  limit: number,
+): Promise<{ checked: number; revoked: number; failed: number }> {
+  const out = { checked: 0, revoked: 0, failed: 0 };
+  const { data, error } = await admin.rpc("apple_orphan_tokens", { p_limit: limit });
+  if (error) {
+    console.error("apple_orphan_tokens failed", error.code);
+    throw new Error("orphan_list_failed");
+  }
+  for (const row of (data ?? []) as Array<{ user_id: string; refresh_token: string }>) {
+    out.checked++;
+    let ok = false;
+    try {
+      ok = await revokeAtApple(row.refresh_token);
+    } catch (_) {
+      ok = false;
+    }
+    if (ok) {
+      const { error: delError } = await admin.from("apple_auth_tokens")
+        .delete().eq("user_id", row.user_id);
+      if (delError) console.error("orphan delete failed", delError.code);
+      out.revoked++;
+    } else {
+      out.failed++;
+      const { error: upError } = await admin.rpc("apple_orphan_failed", {
+        p_user_id: row.user_id,
+      });
+      if (upError) console.error("apple_orphan_failed rpc", upError.code);
+    }
+  }
+  return out;
 }
 
 Deno.serve(async (request: Request): Promise<Response> => {
   if (request.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (request.method !== "POST") return json({ error: "method_not_allowed" }, 405);
 
+  // cron: yetim jeton yeniden denemesi (JWT DEĞİL, paylaşılan sır).
+  const cronSecret = request.headers.get("x-cron-secret");
+  if (cronSecret !== null) {
+    const expected = Deno.env.get("CRON_SECRET") ?? "";
+    if (!expected) return json({ error: "server_misconfigured" }, 500);
+    if (!timingSafeEqual(cronSecret, expected)) return json({ error: "unauthorized" }, 401);
+    try {
+      const adminCron = createClient(
+        requiredEnv("SUPABASE_URL"),
+        requiredEnv("SUPABASE_SERVICE_ROLE_KEY"),
+        { auth: { persistSession: false, autoRefreshToken: false } },
+      );
+      const counts = await sweepOrphans(adminCron, 20);
+      console.log("apple-revoke sweep", counts);
+      return json(counts, counts.failed > 0 ? 502 : 200);
+    } catch (error) {
+      console.error("apple-revoke sweep error", error instanceof Error ? error.message : "unknown");
+      return json({ error: "sweep_failed" }, 500);
+    }
+  }
+
   const jwt = (request.headers.get("Authorization") ?? "").replace(/^Bearer\s+/i, "");
   if (!jwt) return json({ error: "unauthenticated" }, 401);
 
-  let admin: ReturnType<typeof createClient>;
+  let admin: SupabaseClient;
   try {
     admin = createClient(
       requiredEnv("SUPABASE_URL"),
@@ -210,11 +306,16 @@ Deno.serve(async (request: Request): Promise<Response> => {
         )) {
         return json({ registered: true, coalesced: true });
       }
-      const refreshToken = await exchangeCode(code);
-      if (!refreshToken) return json({ registered: false, error: "exchange_failed" }, 502);
+      const exchanged = await exchangeCode(code);
+      if (!exchanged) return json({ registered: false, error: "exchange_failed" }, 502);
+      // #16: kod bu kullanıcının Apple hesabına mı ait? Değilse saklanmaz.
+      if (!appleSubjectMatches(exchanged.idToken, appleSubjectOf(user))) {
+        console.error("apple register: subject mismatch or unknown");
+        return json({ registered: false, error: "apple_subject_mismatch" }, 403);
+      }
       const { error } = await admin.from("apple_auth_tokens").upsert({
         user_id: user.id,
-        refresh_token: refreshToken,
+        refresh_token: exchanged.refresh,
         updated_at: new Date().toISOString(),
       });
       if (error) {
@@ -231,33 +332,42 @@ Deno.serve(async (request: Request): Promise<Response> => {
         .eq("user_id", user.id)
         .maybeSingle();
       // Okuma hatası "jeton yok" değildir: yanlışlıkla 200 `no_token` dönmek
-      // istemciyi hesabı silmeye ve (ON DELETE CASCADE) jetonu yok etmeye iter.
-      // 5xx dönülür; istemci yine kullanıcının silme hakkını bloklamaz ama
-      // sonucu doğru (başarısız) görür ve kaydeder.
+      // istemciyi "iptal edecek bir şey yok" sanmaya iter. 5xx dönülür; istemci
+      // yine kullanıcının silme hakkını bloklamaz ama sonucu doğru (başarısız)
+      // görür ve kaydeder.
       if (readError) {
         console.error("apple_auth_tokens read failed", readError.code);
         return json({ revoked: false, error: "token_read_failed" }, 500);
       }
 
       let refreshToken: string | null = row?.refresh_token ?? null;
-      if (!refreshToken && body.authorization_code?.trim()) {
-        refreshToken = await exchangeCode(body.authorization_code.trim());
+      const code = body.authorization_code?.trim();
+      if (!refreshToken && code) {
+        // Girişten hemen sonra silme: kod henüz saklanmamış. #16: sahibi bu
+        // kullanıcı değilse reddedilir; geçerliyse jeton ÖNCE saklanır, iptal
+        // başarısız olursa yetim kuyruğunda yeniden denenir.
+        const exchanged = await exchangeCode(code);
+        if (exchanged) {
+          if (!appleSubjectMatches(exchanged.idToken, appleSubjectOf(user))) {
+            console.error("apple revoke: subject mismatch or unknown");
+            return json({ revoked: false, error: "apple_subject_mismatch" }, 403);
+          }
+          refreshToken = exchanged.refresh;
+          const { error: saveError } = await admin.from("apple_auth_tokens").upsert({
+            user_id: user.id,
+            refresh_token: refreshToken,
+            updated_at: new Date().toISOString(),
+          });
+          if (saveError) console.error("apple_auth_tokens upsert failed", saveError.code);
+        }
       }
       if (!refreshToken) return json({ revoked: false, reason: "no_token" });
 
-      const result = await appleForm(APPLE_REVOKE_URL, {
-        client_id: requiredEnv("APPLE_CLIENT_ID"),
-        client_secret: await appleClientSecret(),
-        token: refreshToken,
-        token_type_hint: "refresh_token",
-      });
-      // 200 = iptal edildi. `invalid_grant` = jeton zaten geçersiz/iptal
-      // (kullanıcı Apple ayarlarından kendisi kaldırmış olabilir): amaç
-      // gerçekleşmiş sayılır, satır silinir.
-      const alreadyGone = result.status === 400 && result.body.error === "invalid_grant";
-      if (result.status !== 200 && !alreadyGone) {
-        console.error("apple /auth/revoke failed", result.status, result.body.error);
-        return json({ revoked: false, error: "revoke_failed" }, 502);
+      // 200 ya da `invalid_grant` (zaten geçersiz) = amaç gerçekleşti, satır
+      // silinir. Başarısızlıkta satır KALIR: hesap silinse bile (FK yok) yetim
+      // olarak cron tarafından yeniden denenir.
+      if (!(await revokeAtApple(refreshToken))) {
+        return json({ revoked: false, error: "revoke_failed", queued: true }, 502);
       }
       const { error: deleteError } = await admin
         .from("apple_auth_tokens")

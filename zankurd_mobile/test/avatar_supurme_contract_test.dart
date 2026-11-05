@@ -34,7 +34,11 @@ void main() {
       expect(index, contains('SUPABASE_SERVICE_ROLE_KEY'));
       expect(index, contains('MAX_OBJECTS_PER_RUN'));
       expect(index, contains('existingUserIds'));
-      expect(index, contains('orphanFolders'));
+      // 2026-11-16: sahipsiz süzme folderEntries (orijinal harf büyüklüğü) +
+      // existing kümesiyle yapılır; orphanFolders yardımcısı lib'de durur.
+      expect(index, contains('folderEntries'));
+      expect(index, contains('!existing.has('));
+      expect(lib, contains('orphanFolders'));
       expect(lib, contains('isUserFolder'));
       expect(
         File('supabase/functions/avatar-sweep/lib_test.ts').existsSync(),

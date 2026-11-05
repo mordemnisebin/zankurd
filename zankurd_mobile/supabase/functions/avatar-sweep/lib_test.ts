@@ -1,7 +1,10 @@
 // deno test supabase/functions/avatar-sweep/lib_test.ts
 import {
   chunk,
+  folderEntries,
   folderNames,
+  nextSweepOffset,
+  sanitizeOffset,
   isUserFolder,
   objectPaths,
   orphanFolders,
@@ -52,4 +55,27 @@ Deno.test("chunk paketleri sınırlar; timingSafeEqual sırrı karşılaştırı
   const parts = chunk([1, 2, 3, 4, 5], 2);
   assert(parts.length === 3 && parts[2].length === 1, "3 paket");
   assert(timingSafeEqual("s", "s") && !timingSafeEqual("s", "t") && !timingSafeEqual("s", ""), "sır");
+});
+
+// ── 2026-11-16 (W4, GPT-6 Pro ALAN 4 #7 #18) ────────────────────────────────
+// #18 kusuru: folderNames adı küçük harfe çevirip döndürüyordu; Storage'da
+// BÜYÜK harfle duran klasör `list(küçükHarf)` ile bulunamıyor, sessizce hiç
+// süpürülmüyordu. folderEntries orijinal adı korur, varlık sorgusu için ayrı
+// küçük harfli kimlik verir.
+Deno.test("büyük harfli klasör orijinal adıyla listelenir, kimliği küçük harfli", () => {
+  const L = "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee";
+  const entries = folderEntries([{ name: L.toUpperCase() }, { name: L }, { name: "x.txt" }]);
+  assert(entries.length === 2, "iki ayrı klasör adı (ikisi de süpürülmeli)");
+  const upper = entries.find((e) => e.name === L.toUpperCase());
+  assert(upper !== undefined && upper.id === L, "orijinal ad + küçük harfli id");
+  assert(folderNames([{ name: L.toUpperCase() }])[0] === L, "eski API değişmedi");
+});
+
+// #7 kusuru: imleç yoktu; her saat aynı ilk 20.000 girdi taranıyordu.
+Deno.test("süpürme imleci: kaldığı yerden sürer, bitince başa döner", () => {
+  assert(nextSweepOffset({ reachedEnd: true, stoppedAt: null, scannedUntil: 500 }) === 0, "bitti → başa");
+  assert(nextSweepOffset({ reachedEnd: false, stoppedAt: null, scannedUntil: 20000 }) === 20000, "sayfa bütçesi → kaldığı yer");
+  assert(nextSweepOffset({ reachedEnd: false, stoppedAt: 300, scannedUntil: 400 }) === 300, "nesne bütçesi → aynı sayfa");
+  assert(sanitizeOffset(-5) === 0 && sanitizeOffset("7") === 0 && sanitizeOffset(null) === 0, "bozuk imleç 0");
+  assert(sanitizeOffset(1200) === 1200, "geçerli imleç");
 });
