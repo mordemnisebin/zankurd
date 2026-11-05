@@ -18,6 +18,14 @@ class ErrorReporter {
   static FlutterExceptionHandler? _installedFlutterHandler;
   static bool Function(Object, StackTrace)? _installedPlatformHandler;
 
+  /// Crashlytics çağrıları `Future` döndürür ve `try/catch` yalnız SENKRON
+  /// fırlatmayı yakalar. Beklenmeyen/atlanan Future'ın asenkron hatası
+  /// yakalanmamış istisna olup bu raporlayıcının kendi işleyicisine (hata
+  /// raporlayıcıyı raporlayan döngü) geri dönerdi (2026-11-06, G-09).
+  static void _swallowAsync(Future<void> pending) {
+    pending.catchError((Object _) {});
+  }
+
   static void _installFatalHandlers() {
     if (kIsWeb) return;
 
@@ -45,7 +53,9 @@ class ErrorReporter {
       previousFlutterHandler?.call(details);
       if (!crashlyticsEnabled) return;
       try {
-        FirebaseCrashlytics.instance.recordFlutterFatalError(details);
+        _swallowAsync(
+          FirebaseCrashlytics.instance.recordFlutterFatalError(details),
+        );
       } catch (_) {}
     }
 
@@ -54,7 +64,9 @@ class ErrorReporter {
           previousPlatformHandler?.call(error, stack) ?? false;
       if (!crashlyticsEnabled) return handledByPrevious;
       try {
-        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+        _swallowAsync(
+          FirebaseCrashlytics.instance.recordError(error, stack, fatal: true),
+        );
         return true;
       } catch (_) {
         return handledByPrevious;
@@ -101,7 +113,9 @@ class ErrorReporter {
   static void record(Object error, StackTrace stack, {String? reason}) {
     if (kIsWeb || !crashlyticsEnabled) return;
     try {
-      FirebaseCrashlytics.instance.recordError(error, stack, reason: reason);
+      _swallowAsync(
+        FirebaseCrashlytics.instance.recordError(error, stack, reason: reason),
+      );
     } catch (_) {
       // Crashlytics yapılandırılmamış olabilir (masaüstü/test ortamı).
     }

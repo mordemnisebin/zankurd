@@ -2245,6 +2245,20 @@ class SupabaseZanKurdRepository
   /// sorulmaz (oda ömrü boyunca önbellek).
   final Map<String, PublicProfile> _chatProfiles = {};
 
+  /// Profil önbellekleri oturum boyunca SINIRSIZ büyüyordu (alan 9 #13):
+  /// kalabalık odalar/liderlik/arkadaş listeleri her yeni oyuncuyu ekliyor,
+  /// hiçbiri atılmıyordu. Sınırı aşınca en eski girişler (ekleme sırası)
+  /// atılır; atılan profil bir sonraki ihtiyaçta yeniden okunur.
+  static const _profileCacheLimit = 400;
+
+  void _boundCache(Map<String, Object?> cache) {
+    final extra = cache.length - _profileCacheLimit;
+    if (extra <= 0) return;
+    for (final key in cache.keys.take(extra).toList()) {
+      cache.remove(key);
+    }
+  }
+
   Future<List<RoomMessage>> _withSenderProfiles(
     List<RoomMessage> messages,
   ) async {
@@ -2254,6 +2268,7 @@ class SupabaseZanKurdRepository
     };
     if (missing.isNotEmpty) {
       _chatProfiles.addAll(await _publicProfilesById(missing));
+      _boundCache(_chatProfiles);
     }
     return [for (final m in messages) m.withProfile(_chatProfiles[m.senderId])];
   }
@@ -2444,6 +2459,7 @@ class SupabaseZanKurdRepository
               for (final p in profiles) {
                 final id = p['id'] as String;
                 _profileCache[id] = p;
+                _boundCache(_profileCache);
               }
             } catch (e, s) {
               _recordError(e, s, reason: 'Failed to fetch missing profiles');
@@ -3199,6 +3215,18 @@ class SupabaseZanKurdRepository
   }) async {
     final owner = currentUserId;
     if (owner == null || _verifiedRounds.containsKey(clientRoundId)) return;
+    // Alan 9 #12: teslimi biten (başladı + kuyruk boş) ama hiç ödenmemiş
+    // (oyuncu sonuç ekranına varmadan çıktı) turlar kalıcı birikmesin.
+    // Ekleme sırasıyla gezilir; en çok 16 tur tutulur.
+    if (_verifiedRounds.length >= 16) {
+      final done = [
+        for (final entry in _verifiedRounds.entries)
+          if (entry.value.started && entry.value.queue.isEmpty) entry.key,
+      ];
+      for (final key in done.take(_verifiedRounds.length - 15)) {
+        _verifiedRounds.remove(key);
+      }
+    }
     final selection = _verifiedSelections.remove(
       _verifiedQuestionKey(questions),
     );
@@ -3301,10 +3329,15 @@ class SupabaseZanKurdRepository
     if (clientRoundId == null) return {'amount': 0};
     try {
       await _waitVerifiedRound(clientRoundId);
-      return await client.rpc(
+      final claimed = await client.rpc(
         'claim_verified_solo_reward',
         params: {'p_client_round_id': clientRoundId},
       );
+      // Sunucu hükmünü verdi: tur bellekte tutulmaz (alan 9 #12). Yeniden
+      // deneme olursa tur bulunamaz ve `_waitVerifiedRound` sunucuya bırakır
+      // (kalıcı kuyruktaki tur gibi; ödeme sunucuda tur kimliğiyle idempotent).
+      _verifiedRounds.remove(clientRoundId);
+      return claimed;
     } on PostgrestException catch (error, stack) {
       _recordError(error, stack, reason: 'verified solo reward unavailable');
       if (error.code != 'PGRST202' && error.code != '42883') rethrow;
@@ -3331,6 +3364,7 @@ class SupabaseZanKurdRepository
             )
             .timeout(const Duration(seconds: 8));
         _verifiedDailyMissing = false;
+        _verifiedRounds.remove(clientRoundId); // alan 9 #12
         return result == true;
       } catch (error, stack) {
         _recordError(error, stack, reason: 'verified daily result unavailable');
@@ -3978,7 +4012,10 @@ class SupabaseZanKurdRepository
       try {
         for (final profile in await _fetchPublicProfiles(missing)) {
           final id = profile['id'] as String?;
-          if (id != null) _profileCache[id] = profile;
+          if (id != null) {
+            _profileCache[id] = profile;
+            _boundCache(_profileCache);
+          }
         }
       } catch (error, stack) {
         _recordError(error, stack, reason: 'room players public profiles');
@@ -3990,6 +4027,7 @@ class SupabaseZanKurdRepository
       final rawProfile = row['profiles'] as Map<String, dynamic>?;
       if (rawProfile != null) {
         _profileCache[playerId] = rawProfile;
+        _boundCache(_profileCache);
       }
 
       final profile = _profileCache[playerId] ?? rawProfile;
