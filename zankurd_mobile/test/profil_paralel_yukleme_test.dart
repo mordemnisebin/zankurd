@@ -2,8 +2,6 @@
 // ARDIŞIK bekliyordu; açılış gecikmesi isteklerin toplamıydı. Bekçi: istekler
 // birlikte uçar (aynı anda en az 5 açık istek) ve biri hata verse de ekran
 // yine çizilir, yakalanmamış istisna doğmaz.
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
