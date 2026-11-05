@@ -4873,11 +4873,6 @@ class Tr {
     K.adminModeSolo: {'ku': 'Bi tenê', 'tr': 'Tek başına'},
     K.adminModeRoom: {'ku': 'Ode', 'tr': 'Oda'},
     K.adminWaiting: {'ku': 'Yên li bendê', 'tr': 'Bekleyenler'},
-    K.adminPendingSuggestions: {
-      'ku': 'Pêşniyarên li bendê',
-      'tr': 'Bekleyen öneri',
-    },
-    K.adminOpenReports: {'ku': 'Giliyên vekirî', 'tr': 'Açık bildirim'},
     K.adminRecentActions: {'ku': 'Çalakiyên dawî', 'tr': 'Son işlemler'},
     K.adminNoActions: {'ku': 'Hê çalakî tune.', 'tr': 'Henüz işlem yok.'},
     K.adminSecQuestionsSub: {
@@ -4913,16 +4908,11 @@ class Tr {
     K.adminSuggestedBy: {'ku': 'Pêşniyarker: {name}', 'tr': 'Öneren: {name}'},
     K.adminReportCount: {'ku': '{n} gilî', 'tr': '{n} bildirim'},
     K.adminReportReason: {'ku': 'Sedem: {reason}', 'tr': 'Neden: {reason}'},
-    K.adminCorrectAnswer: {
-      'ku': 'Bersiva rast: {answer}',
-      'tr': 'Doğru cevap: {answer}',
-    },
     K.adminApprove: {'ku': 'Bipejirîne', 'tr': 'Onayla'},
     K.adminReject: {'ku': 'Red bike', 'tr': 'Reddet'},
     K.adminFix: {'ku': 'Sererast bike', 'tr': 'Düzelt'},
     K.adminRetire: {'ku': 'Ji lîstikê rake', 'tr': 'Emekli et'},
     K.adminDismissReport: {'ku': 'Giliyê bigire', 'tr': 'Bildirimi kapat'},
-    K.adminNoteLabel: {'ku': 'Nîşe (vebijarkî)', 'tr': 'Not (isteğe bağlı)'},
     K.adminPromptLabel: {'ku': 'Nivîsa pirsê', 'tr': 'Soru metni'},
     K.adminOptionLabel: {'ku': 'Vebijark {letter}', 'tr': 'Seçenek {letter}'},
     K.adminCorrectOption: {'ku': 'Vebijarka rast', 'tr': 'Doğru seçenek'},
@@ -4933,7 +4923,7 @@ class Tr {
     K.adminConfirmTitle: {'ku': 'Tu piştrast î?', 'tr': 'Emin misin?'},
     K.adminConfirmApply: {'ku': 'Erê, pêk bîne', 'tr': 'Evet, uygula'},
     K.adminConfirmReject: {
-      'ku': 'Pêşniyar dê were red kirin.',
+      'ku': 'Pêşniyar dê were redkirin.',
       'tr': 'Öneri reddedilecek.',
     },
     K.adminConfirmRetire: {
@@ -4945,7 +4935,7 @@ class Tr {
       'ku': 'Çalakî pêk nehat. Dîsa biceribîne.',
       'tr': 'İşlem yapılamadı. Tekrar dene.',
     },
-    K.adminLoadFailed: {'ku': 'Nehat barkirin.', 'tr': 'Yüklenemedi.'},
+    K.adminLoadFailed: {'ku': 'Barkirin bi ser neket.', 'tr': 'Yüklenemedi.'},
     K.adminContribSummary: {
       'ku': '{n} pêşniyar · {m} pejirandî',
       'tr': '{n} öneri · {m} onaylı',
@@ -4954,9 +4944,7 @@ class Tr {
       'ku': '{coins} zêr hat dayîn',
       'tr': '{coins} jeton verildi',
     },
-    K.adminRewardPerson: {'ku': 'Xelat bide', 'tr': 'Ödüllendir'},
     K.adminGiveCoins: {'ku': '{coins} zêr bide', 'tr': '{coins} jeton ver'},
-    K.adminGiveBadge: {'ku': 'Rozetê bide', 'tr': 'Rozet ver'},
     K.adminRewardsTitle: {'ku': 'Xelat', 'tr': 'Ödüller'},
     K.adminRewardDaily: {'ku': 'Pêşbirka rojê', 'tr': 'Günün yarışması'},
     K.adminRewardWeekly: {
@@ -4975,15 +4963,33 @@ class Tr {
       'ku':
           'Gava vekirî be, di dawiya demê de ji 3 yên pêşîn re xweber tê dayîn; tu dikarî bi destê xwe jî bidî.',
       'tr':
-          'Açıkken dönem sonunda ilk 3’e kendiliğinden verilir; elle de verebilirsin.',
+          'Açıkken dönem sonunda ilk üçe kendiliğinden verilir; elle de verebilirsin.',
     },
     K.adminConfirmGrant: {
       'ku': '{coins} zêr ji {name} re bê dayîn?',
       'tr': '{name} için {coins} jeton verilsin mi?',
     },
-    K.adminConfirmBadge: {
-      'ku': 'Rozet ji {name} re bê dayîn?',
-      'tr': '{name} için rozet verilsin mi?',
+    K.adminNewQuestion: {'ku': 'Pirsa nû', 'tr': 'Yeni soru'},
+    K.adminNewQuestionHint: {
+      'ku': 'Pirs rasterast tê pejirandin û di lîstikê de xuya dibe.',
+      'tr': 'Soru doğrudan onaylanır ve oyunda görünür.',
+    },
+    K.adminCategoryLabel: {'ku': 'Kategorî', 'tr': 'Kategori'},
+    K.adminExplanationKuLabel: {
+      'ku': 'Şîrove (Kurmancî)',
+      'tr': 'Açıklama (Kurmancî)',
+    },
+    K.adminExplanationTrLabel: {
+      'ku': 'Şîrove (Tirkî)',
+      'tr': 'Açıklama (Türkçe)',
+    },
+    K.adminSaveNewQuestion: {
+      'ku': 'Pirsê tomar bike û biweşîne',
+      'tr': 'Soruyu kaydet ve yayınla',
+    },
+    K.adminConfirmNewQuestion: {
+      'ku': 'Pirs rasterast were pejirandin û di lîstikê de xuya bibe?',
+      'tr': 'Soru doğrudan onaylanıp oyunda görünsün mü?',
     },
     K.adminUsersTitle: {
       'ku': 'Bikarhêner û gilî',
@@ -5032,10 +5038,7 @@ class Tr {
       'ku': 'Pêşniyar hat pejirandin',
       'tr': 'Öneri onaylandı',
     },
-    K.adminActReject: {
-      'ku': 'Pêşniyar hat red kirin',
-      'tr': 'Öneri reddedildi',
-    },
+    K.adminActReject: {'ku': 'Pêşniyar hat redkirin', 'tr': 'Öneri reddedildi'},
     K.adminActFix: {'ku': 'Pirs hat sererastkirin', 'tr': 'Soru düzeltildi'},
     K.adminActRetire: {
       'ku': 'Pirs ji lîstikê hat rakirin',
@@ -6951,8 +6954,6 @@ class K {
   static const adminModeSolo = 'admin.ModeSolo';
   static const adminModeRoom = 'admin.ModeRoom';
   static const adminWaiting = 'admin.Waiting';
-  static const adminPendingSuggestions = 'admin.PendingSuggestions';
-  static const adminOpenReports = 'admin.OpenReports';
   static const adminRecentActions = 'admin.RecentActions';
   static const adminNoActions = 'admin.NoActions';
   static const adminSecQuestionsSub = 'admin.SecQuestionsSub';
@@ -6970,13 +6971,11 @@ class K {
   static const adminSuggestedBy = 'admin.SuggestedBy';
   static const adminReportCount = 'admin.ReportCount';
   static const adminReportReason = 'admin.ReportReason';
-  static const adminCorrectAnswer = 'admin.CorrectAnswer';
   static const adminApprove = 'admin.Approve';
   static const adminReject = 'admin.Reject';
   static const adminFix = 'admin.Fix';
   static const adminRetire = 'admin.Retire';
   static const adminDismissReport = 'admin.DismissReport';
-  static const adminNoteLabel = 'admin.NoteLabel';
   static const adminPromptLabel = 'admin.PromptLabel';
   static const adminOptionLabel = 'admin.OptionLabel';
   static const adminCorrectOption = 'admin.CorrectOption';
@@ -6990,9 +6989,7 @@ class K {
   static const adminLoadFailed = 'admin.LoadFailed';
   static const adminContribSummary = 'admin.ContribSummary';
   static const adminContribRewarded = 'admin.ContribRewarded';
-  static const adminRewardPerson = 'admin.RewardPerson';
   static const adminGiveCoins = 'admin.GiveCoins';
-  static const adminGiveBadge = 'admin.GiveBadge';
   static const adminRewardsTitle = 'admin.RewardsTitle';
   static const adminRewardDaily = 'admin.RewardDaily';
   static const adminRewardWeekly = 'admin.RewardWeekly';
@@ -7002,8 +6999,14 @@ class K {
   static const adminEmptyRewards = 'admin.EmptyRewards';
   static const adminAutoReward = 'admin.AutoReward';
   static const adminAutoRewardSub = 'admin.AutoRewardSub';
+  static const adminNewQuestion = 'admin.NewQuestion';
+  static const adminNewQuestionHint = 'admin.NewQuestionHint';
+  static const adminCategoryLabel = 'admin.CategoryLabel';
+  static const adminExplanationKuLabel = 'admin.ExplanationKuLabel';
+  static const adminExplanationTrLabel = 'admin.ExplanationTrLabel';
+  static const adminSaveNewQuestion = 'admin.SaveNewQuestion';
+  static const adminConfirmNewQuestion = 'admin.ConfirmNewQuestion';
   static const adminConfirmGrant = 'admin.ConfirmGrant';
-  static const adminConfirmBadge = 'admin.ConfirmBadge';
   static const adminUsersTitle = 'admin.UsersTitle';
   static const adminEmptyUsers = 'admin.EmptyUsers';
   static const adminReportsAbout = 'admin.ReportsAbout';

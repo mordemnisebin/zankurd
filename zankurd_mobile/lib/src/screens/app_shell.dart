@@ -19,6 +19,7 @@ import '../providers/remote_availability.dart';
 import '../providers/repository_holder.dart';
 import '../data/offline_zankurd_repository.dart';
 import '../widgets/sahne/sahne.dart';
+import '../services/activity_ping.dart';
 import '../services/notification_service.dart';
 import '../services/notification_sync.dart';
 import '../utils/app_route.dart';
@@ -206,6 +207,7 @@ class _AppShellState extends State<AppShell>
     unawaited(widget.pushTokenSync?.sync());
     unawaited(NotificationService.syncStreakWarning());
     unawaited(NotificationSync.run(_repository));
+    unawaited(ActivityPing.open());
   }
 
   @override
@@ -441,6 +443,7 @@ class _AppShellState extends State<AppShell>
       _wakeRoomResumeForCurrentUser();
       unawaited(_recoverPendingPaidFreezes());
       unawaited(widget.pushTokenSync?.sync());
+      unawaited(ActivityPing.open());
       // Seri uyarısı tek atıştır: öne gelişte bir sonraki akşama yeniden kurulur.
       // Önce saat dilimi tazelenir (seyahat): uyarı yeni dilimde kurulsun.
       unawaited(() async {

@@ -3549,6 +3549,32 @@ void main() {
           after: null,
         ),
         (
+          name: 'yeni_soru',
+          height: 1500,
+          build: () =>
+              AdminNewQuestionScreen(repository: MockAdminRepository()),
+          after: (t) async {
+            await t.tap(find.byKey(const ValueKey('admin-new-category-Dîrok')));
+            await t.enterText(
+              find.byKey(const ValueKey('admin-new-prompt')),
+              'Şerefname kê nivîsand?',
+            );
+            const options = [
+              'Şerefxanê Bidlîsî',
+              'Ehmedê Xanî',
+              'Melayê Cizîrî',
+              'Feqî',
+            ];
+            for (var i = 0; i < 4; i++) {
+              await t.enterText(
+                find.byKey(ValueKey('admin-new-option-$i')),
+                options[i],
+              );
+            }
+            await t.pumpAndSettle();
+          },
+        ),
+        (
           name: 'oduller_gunluk',
           height: 1000,
           build: () => AdminRewardsScreen(repository: MockAdminRepository()),

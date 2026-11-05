@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/number_format.dart';
+
 import '../../data/admin_repository.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
@@ -65,7 +67,7 @@ class _UserCard extends StatelessWidget {
     AdminUserState.warned => context.t(K.adminStateWarned),
     AdminUserState.blocked => context.t(K.adminStateBlocked),
     AdminUserState.suspended => context.t(K.adminStateSuspended, {
-      'days': '${report.suspendedDays}',
+      'days': '${groupThousands(report.suspendedDays)}',
     }),
   };
 
@@ -121,7 +123,7 @@ class _UserCard extends StatelessWidget {
                     ),
                     Text(
                       context.t(K.adminReportsAbout, {
-                        'n': '${report.reportCount}',
+                        'n': '${groupThousands(report.reportCount)}',
                       }),
                       style: SahneType.caption.copyWith(color: t.tx2),
                     ),

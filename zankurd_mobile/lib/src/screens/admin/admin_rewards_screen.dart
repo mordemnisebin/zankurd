@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/number_format.dart';
+
 import '../../data/admin_repository.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
@@ -88,7 +90,7 @@ class _PeriodView extends StatelessWidget {
                     Row(
                       children: [
                         SahneAvatar(
-                          initial: '${c.rank}',
+                          initial: '${groupThousands(c.rank)}',
                           color: c.rank == 1 ? t.goldTint : t.s3,
                           foreground: c.rank == 1 ? t.goldTx : t.tx,
                         ),
@@ -104,7 +106,9 @@ class _PeriodView extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                context.t(K.adminScorePts, {'n': '${c.score}'}),
+                                context.t(K.adminScorePts, {
+                                  'n': '${groupThousands(c.score)}',
+                                }),
                                 style: SahneType.caption.copyWith(color: t.tx2),
                               ),
                             ],
@@ -126,32 +130,12 @@ class _PeriodView extends StatelessWidget {
                           SahneButton.secondary(
                             key: ValueKey('admin-grant-coins-${c.userId}'),
                             label: context.t(K.adminGiveCoins, {
-                              'coins': '${period.suggestedCoins[c.rank - 1]}',
+                              'coins':
+                                  '${groupThousands(period.suggestedCoins[c.rank - 1])}',
                             }),
                             icon: AppIcons.coins,
-                            onPressed: () => _grant(
-                              context,
-                              period,
-                              c,
-                              reload,
-                              badge: false,
-                            ),
+                            onPressed: () => _grant(context, period, c, reload),
                           ),
-                          // Rozet yalnız günün yarışması için (sunucuda
-                          // `user_contest_badges.contest_id` zorunlu).
-                          if (kind == AdminRewardPeriodKind.daily)
-                            SahneButton.secondary(
-                              key: ValueKey('admin-grant-badge-${c.userId}'),
-                              label: context.t(K.adminGiveBadge),
-                              icon: AppIcons.medal,
-                              onPressed: () => _grant(
-                                context,
-                                period,
-                                c,
-                                reload,
-                                badge: true,
-                              ),
-                            ),
                         ],
                       ),
                     ],
@@ -170,15 +154,15 @@ class _PeriodView extends StatelessWidget {
     BuildContext context,
     AdminRewardPeriod period,
     AdminRewardCandidate c,
-    Future<void> Function() reload, {
-    required bool badge,
-  }) async {
-    final coins = badge ? 0 : period.suggestedCoins[c.rank - 1];
+    Future<void> Function() reload,
+  ) async {
+    final coins = period.suggestedCoins[c.rank - 1];
     final ok = await adminConfirm(
       context,
-      body: badge
-          ? context.t(K.adminConfirmBadge, {'name': c.name})
-          : context.t(K.adminConfirmGrant, {'name': c.name, 'coins': '$coins'}),
+      body: context.t(K.adminConfirmGrant, {
+        'name': c.name,
+        'coins': '${groupThousands(coins)}',
+      }),
     );
     if (!ok || !context.mounted) return;
     await runAdminAction(
@@ -188,7 +172,6 @@ class _PeriodView extends StatelessWidget {
         period.periodKey,
         userId: c.userId,
         coins: coins,
-        badge: badge,
       ),
       reload,
     );

@@ -14,10 +14,14 @@ import '../models/admin.dart';
 /// ARAYÜZÜN girişi göstermesi içindir; `true` döndürmek hiçbir şeyin
 /// kilidini açmaz — sunucu her işlemde yeniden sorar.
 ///
-/// Ekranlar yalnız bu arayüzü bilir; şimdilik tek uygulama
-/// `MockAdminRepository`dir (maket aşaması). Sunucu uygulaması, maket
-/// onaylandıktan sonra yazılır.
+/// Ekranlar yalnız bu arayüzü bilir. Üretimde uygulama
+/// `SupabaseAdminRepository`dir (sunucu RPC'leri); `MockAdminRepository`
+/// yalnız testte ve ekran turunda kullanılır.
 abstract class AdminRepository {
+  /// `true` = veri uydurmadır (maket/ekran turu); ekran "değişiklikler
+  /// sunucuya gitmez" notunu yalnız bu durumda gösterir.
+  bool get isSample;
+
   /// Oturumdaki hesap yönetici mi? (`admin_is_admin()`; yönetici
   /// olmayana hata değil `false` döner.)
   Future<bool> isAdmin();
@@ -26,6 +30,12 @@ abstract class AdminRepository {
   Future<List<AdminAuditEntry>> loadRecentActions({int limit = 5});
 
   Future<List<AdminQuestionItem>> loadQuestions(AdminQuestionKind kind);
+
+  /// Yeni soru formundaki kategori seçenekleri (kategori adları).
+  Future<List<String>> loadCategories();
+
+  /// Doğrudan onaylı yeni soru ekler; sunucu doğrular (`admin_add_question`).
+  Future<void> addQuestion(AdminNewQuestion question);
 
   /// [edits] verilirse öneri düzeltilmiş hâliyle onaylanır.
   Future<void> approveSuggestion(
@@ -47,7 +57,6 @@ abstract class AdminRepository {
     String periodKey, {
     required String userId,
     required int coins,
-    bool badge = false,
   });
   Future<bool> loadAutoReward();
   Future<void> setAutoReward(bool enabled);

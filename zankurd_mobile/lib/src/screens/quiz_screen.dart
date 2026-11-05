@@ -36,6 +36,7 @@ import '../models/room.dart';
 import '../models/wildcard.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../services/activity_ping.dart';
 import '../services/analytics_service.dart';
 import '../services/crowd_standings.dart';
 import '../services/favorite_mutation_service.dart';
@@ -701,6 +702,8 @@ class _QuizScreenState extends State<QuizScreen>
       mode: _quizModeLabel,
       roundId: _analyticsRoundId,
     );
+    // Yönetim panosu sayacı (rıza gerektirmez; bkz. ActivityPing).
+    if (_quizModeLabel == 'solo') unawaited(ActivityPing.soloStarted());
     unawaited(
       widget.repository
           .logAnalyticsEvent('quiz_start', {

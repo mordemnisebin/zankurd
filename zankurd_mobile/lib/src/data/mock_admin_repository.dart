@@ -22,7 +22,7 @@ class MockAdminRepository implements AdminRepository {
   final List<AdminUserReport> _userReports = [];
   final List<AdminAuditEntry> _audit = [];
   final Set<String> _rewardedKeys = {};
-  bool _autoReward = true;
+  bool _autoReward = false;
   final Map<AdminNotifyKind, bool> _notify = {
     AdminNotifyKind.suggestion: true,
     AdminNotifyKind.report: true,
@@ -154,6 +154,9 @@ class MockAdminRepository implements AdminRepository {
       text.length <= 24 ? text : '${text.substring(0, 22)}…';
 
   @override
+  bool get isSample => true;
+
+  @override
   Future<bool> isAdmin() async => admin;
 
   @override
@@ -163,7 +166,7 @@ class MockAdminRepository implements AdminRepository {
     activeWeek: empty ? 0 : 412,
     newToday: empty ? 0 : 7,
     newWeek: empty ? 0 : 63,
-    crashesWeek: 0,
+    crashesWeek: null,
     modeUsage: empty
         ? const {}
         : const {
@@ -186,6 +189,23 @@ class MockAdminRepository implements AdminRepository {
   @override
   Future<List<AdminQuestionItem>> loadQuestions(AdminQuestionKind kind) async =>
       List.of(kind == AdminQuestionKind.suggestion ? _suggestions : _reported);
+
+  @override
+  Future<List<String>> loadCategories() async => const [
+    'Dîrok',
+    'Ziman',
+    'Çand',
+    'Cografya',
+  ];
+
+  /// Testler için: eklenen yeni sorular.
+  final List<AdminNewQuestion> added = [];
+
+  @override
+  Future<void> addQuestion(AdminNewQuestion question) async {
+    added.add(question);
+    _log(AdminAuditAction.approve, _short(question.prompt));
+  }
 
   AdminQuestionItem _take(List<AdminQuestionItem> list, String id) {
     final index = list.indexWhere((q) => q.id == id);
@@ -293,7 +313,6 @@ class MockAdminRepository implements AdminRepository {
     String periodKey, {
     required String userId,
     required int coins,
-    bool badge = false,
   }) async {
     final key = '${kind.name}:$periodKey:$userId';
     if (!_rewardedKeys.add(key)) return; // sunucu da ikinci kez vermez

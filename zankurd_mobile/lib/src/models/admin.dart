@@ -25,7 +25,10 @@ class AdminStats {
   final int activeWeek;
   final int newToday;
   final int newWeek;
-  final int crashesWeek;
+
+  /// Haftalık çökme sayısı. Sunucuda çökme kaydı yoktur (Crashlytics); `null`
+  /// = bilinmiyor, arayüz "—" gösterir. Uydurma 0 YAZILMAZ.
+  final int? crashesWeek;
 
   /// Mod anahtarı (`solo`, `room`, `duel`, `tournament`, `contest`) → bu
   /// hafta oynanan oyun sayısı.
@@ -36,6 +39,28 @@ class AdminStats {
 
   /// Açık soru bildirimi + oyuncu şikâyeti sayısı.
   final int openReports;
+}
+
+/// Panelden eklenen yeni soru (sunucu `admin_add_question` doğrular).
+class AdminNewQuestion {
+  const AdminNewQuestion({
+    required this.category,
+    required this.prompt,
+    required this.options,
+    required this.correctIndex,
+    this.explanationKu,
+    this.explanationTr,
+  });
+
+  /// Var olan kategori adı (sunucu eşler; yoksa reddeder).
+  final String category;
+  final String prompt;
+
+  /// Dört dolu, birbirinden farklı şık (A–D).
+  final List<String> options;
+  final int correctIndex;
+  final String? explanationKu;
+  final String? explanationTr;
 }
 
 /// Soru kuyruğundaki kayıt: oyuncu önerisi ya da bildirilen soru.

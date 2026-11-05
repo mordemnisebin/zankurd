@@ -21,6 +21,7 @@ import 'package:zankurd_mobile/src/screens/admin/admin_rewards_screen.dart';
 import 'package:zankurd_mobile/src/screens/admin/admin_users_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -82,7 +83,7 @@ void main() {
       t,
     ) async {
       await _pump(t, AdminHomeScreen(repository: MockAdminRepository()));
-      for (final value in ['1284', '96', '412', '7', '63', '0']) {
+      for (final value in ['1284', '96', '412', '7', '63', '—']) {
         expect(find.text(value), findsWidgets, reason: value);
       }
       expect(
@@ -235,13 +236,10 @@ void main() {
       await t.pumpAndSettle();
       expect(find.text('Rojda'), findsOneWidget);
       expect(find.text('2026-11-09'), findsOneWidget);
-      expect(
-        find.byKey(const ValueKey('admin-grant-badge-u-rojda')),
-        findsNothing,
-      );
+      expect(await repo.loadAutoReward(), isFalse, reason: 'varsayılan KAPALI');
       await t.tap(find.byKey(const ValueKey('admin-auto-reward-switch')));
       await t.pumpAndSettle();
-      expect(await repo.loadAutoReward(), isFalse);
+      expect(await repo.loadAutoReward(), isTrue);
     });
 
     testWidgets('boş: katılan yok', (t) async {
@@ -300,6 +298,87 @@ void main() {
     });
   });
 
+  group('yeni soru formu', () {
+    testWidgets('boş form kaydedilemez; doldurunca depoya gider', (t) async {
+      final repo = MockAdminRepository();
+      await _pump(t, AdminQuestionsScreen(repository: repo));
+      await t.tap(find.byKey(const ValueKey('admin-new-question')));
+      await t.pumpAndSettle();
+      _Save save() => _Save(
+        t.widget<SahneButton>(find.byKey(const ValueKey('admin-new-save'))),
+      );
+      expect(save().enabled, isFalse);
+      await t.tap(find.byKey(const ValueKey('admin-new-category-Dîrok')));
+      await t.enterText(
+        find.byKey(const ValueKey('admin-new-prompt')),
+        'Şerefname kê nivîsand?',
+      );
+      for (var i = 0; i < 4; i++) {
+        await t.enterText(
+          find.byKey(ValueKey('admin-new-option-$i')),
+          'Şık $i',
+        );
+      }
+      await t.pump();
+      expect(save().enabled, isFalse, reason: 'açıklama yok');
+      await t.enterText(
+        find.byKey(const ValueKey('admin-new-explanation-ku')),
+        'Ravekirin',
+      );
+      await t.tap(find.byKey(const ValueKey('admin-new-correct-2')));
+      await t.pump();
+      expect(save().enabled, isTrue);
+      await t.ensureVisible(find.byKey(const ValueKey('admin-new-save')));
+      await t.tap(find.byKey(const ValueKey('admin-new-save')));
+      await t.pumpAndSettle();
+      await t.tap(find.byKey(const ValueKey('admin-confirm-ok')));
+      await t.pumpAndSettle();
+      expect(repo.added, hasLength(1));
+      final q = repo.added.single;
+      expect(q.category, 'Dîrok');
+      expect(q.correctIndex, 2);
+      expect(q.options, ['Şık 0', 'Şık 1', 'Şık 2', 'Şık 3']);
+      expect(q.explanationKu, 'Ravekirin');
+      expect(q.explanationTr, isNull);
+      // Form kapandı, soru ekranına dönüldü.
+      expect(find.byKey(const ValueKey('admin-new-save')), findsNothing);
+    });
+
+    testWidgets('aynı şık iki kez yazılırsa kaydedilemez', (t) async {
+      final repo = MockAdminRepository();
+      await _pump(t, AdminNewQuestionScreen(repository: repo));
+      await t.tap(find.byKey(const ValueKey('admin-new-category-Ziman')));
+      await t.enterText(
+        find.byKey(const ValueKey('admin-new-prompt')),
+        'Soru?',
+      );
+      for (var i = 0; i < 4; i++) {
+        await t.enterText(
+          find.byKey(ValueKey('admin-new-option-$i')),
+          i == 3 ? ' ABC' : (i == 0 ? 'abc' : 'x$i'),
+        );
+      }
+      await t.enterText(
+        find.byKey(const ValueKey('admin-new-explanation-tr')),
+        'Açıklama',
+      );
+      await t.pump();
+      expect(
+        t
+            .widget<SahneButton>(find.byKey(const ValueKey('admin-new-save')))
+            .onPressed,
+        isNull,
+      );
+    });
+  });
+
+  group('pano: çökme bilinmiyor', () {
+    testWidgets('çökme sayısı null ise "—" çizilir, 0 uydurulmaz', (t) async {
+      await _pump(t, AdminHomeScreen(repository: MockAdminRepository()));
+      expect(find.text('—'), findsOneWidget);
+    });
+  });
+
   group('anlık bildirimler', () {
     testWidgets('anahtar tercihi depoya yazar', (t) async {
       final repo = MockAdminRepository();
@@ -327,4 +406,10 @@ class _ThrowingAdminRepository extends MockAdminRepository {
 
   @override
   Future<AdminStats> loadStats() async => throw StateError('ağ yok');
+}
+
+class _Save {
+  _Save(this.button);
+  final SahneButton button;
+  bool get enabled => button.onPressed != null;
 }

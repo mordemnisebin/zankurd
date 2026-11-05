@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/number_format.dart';
+
 import '../../data/admin_repository.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
@@ -117,12 +119,17 @@ class AdminHomeScreen extends StatelessWidget {
                     for (final entry in data.recent)
                       SahneListRow.plain(
                         title: _actionLabel(context, entry.action),
-                        subtitle: '${entry.target} · ${adminTime(entry.at)}',
+                        subtitle: [
+                          entry.target,
+                          adminTime(entry.at),
+                        ].join(' · '),
                       ),
                   ],
                 ),
-              const SizedBox(height: SahneSpace.x4),
-              AdminNote(context.t(K.adminMockNote)),
+              if (repository.isSample) ...[
+                const SizedBox(height: SahneSpace.x4),
+                AdminNote(context.t(K.adminMockNote)),
+              ],
             ],
           ),
         ),
@@ -130,8 +137,9 @@ class AdminHomeScreen extends StatelessWidget {
     );
   }
 
-  static Widget? _countBadge(int count) =>
-      count > 0 ? SahneBadge(label: '$count', tone: SahneBadgeTone.gold) : null;
+  static Widget? _countBadge(int count) => count > 0
+      ? SahneBadge(label: '${groupThousands(count)}', tone: SahneBadgeTone.gold)
+      : null;
 }
 
 class _HomeData {
@@ -163,7 +171,7 @@ class _StatGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tiles = <(String, int)>[
+    final tiles = <(String, int?)>[
       (context.t(K.adminStatUsers), stats.totalUsers),
       (context.t(K.adminStatActiveToday), stats.activeToday),
       (context.t(K.adminStatActiveWeek), stats.activeWeek),
@@ -195,17 +203,22 @@ class _StatTile extends StatelessWidget {
   const _StatTile(this.label, this.value);
 
   final String label;
-  final int value;
+
+  /// `null` = bilinmiyor (sunucuda yok): "—" çizilir.
+  final int? value;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     return SahneSurfaceCard(
-      semanticLabel: '$label: $value',
+      semanticLabel: '$label: ${value ?? '—'}',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('$value', style: SahneType.title.copyWith(color: t.tx)),
+          Text(
+            value == null ? '—' : '$value',
+            style: SahneType.title.copyWith(color: t.tx),
+          ),
           const SizedBox(height: SahneSpace.x1),
           Text(label, style: SahneType.caption.copyWith(color: t.tx2)),
         ],

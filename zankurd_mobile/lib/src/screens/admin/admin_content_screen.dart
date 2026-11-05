@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/number_format.dart';
+
 import '../../data/admin_repository.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../models/admin.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
+import '../../utils/error_reporter.dart';
 import '../../widgets/sahne/sahne.dart';
 import '../../widgets/zk_back_button.dart';
 import 'admin_widgets.dart';
@@ -35,6 +38,22 @@ class _AdminQuestionsScreenState extends State<AdminQuestionsScreen> {
     return AdminPage(
       title: context.t(K.adminQuestionsTitle),
       children: [
+        SahneButton.secondary(
+          key: const ValueKey('admin-new-question'),
+          label: context.t(K.adminNewQuestion),
+          icon: AppIcons.circlePlus,
+          onPressed: () async {
+            final added = await Navigator.of(context).push<bool>(
+              AppRoute.to(AdminNewQuestionScreen(repository: _repo)),
+            );
+            if (added == true && context.mounted) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(context.t(K.adminDone))));
+            }
+          },
+        ),
+        const SizedBox(height: SahneSpace.x4),
         SahneRail.fit(
           children: [
             SahneRailChip(
@@ -254,7 +273,7 @@ class _QuestionCard extends StatelessWidget {
               else if (!suggestion)
                 SahneBadge(
                   label: context.t(K.adminReportCount, {
-                    'n': '${item.reportCount}',
+                    'n': '${groupThousands(item.reportCount)}',
                   }),
                   tone: SahneBadgeTone.gold,
                 ),
@@ -477,7 +496,7 @@ class _ContributorList extends StatelessWidget {
                       const SizedBox(height: SahneSpace.x2),
                       Text(
                         context.t(K.adminContribRewarded, {
-                          'coins': '${person.rewardedCoins}',
+                          'coins': '${groupThousands(person.rewardedCoins)}',
                         }),
                         style: SahneType.caption.copyWith(color: t.goldTx),
                       ),
@@ -488,7 +507,8 @@ class _ContributorList extends StatelessWidget {
                       child: SahneButton.secondary(
                         key: ValueKey('admin-reward-${person.userId}'),
                         label: context.t(K.adminGiveCoins, {
-                          'coins': '${AdminQuestionsScreen.contributorReward}',
+                          'coins':
+                              '${groupThousands(AdminQuestionsScreen.contributorReward)}',
                         }),
                         icon: AppIcons.coins,
                         onPressed: () async {
@@ -497,7 +517,7 @@ class _ContributorList extends StatelessWidget {
                             body: context.t(K.adminConfirmGrant, {
                               'name': person.name,
                               'coins':
-                                  '${AdminQuestionsScreen.contributorReward}',
+                                  '${groupThousands(AdminQuestionsScreen.contributorReward)}',
                             }),
                           );
                           if (!ok || !context.mounted) return;
@@ -520,6 +540,194 @@ class _ContributorList extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+/// Panelden yeni soru ekleme formu: kategori, metin, dört şık, doğru şık,
+/// Kurmancî/Türkçe açıklama (en az biri). Sunucu (`admin_add_question`) yine
+/// doğrular; buradaki denetim yalnız düğmeyi boşuna açmamak içindir. Soru
+/// doğrudan onaylı girer (sahip kendisi yazar), bu yüzden kaydetmeden önce
+/// onay sorulur.
+class AdminNewQuestionScreen extends StatefulWidget {
+  const AdminNewQuestionScreen({super.key, required this.repository});
+
+  final AdminRepository repository;
+
+  @override
+  State<AdminNewQuestionScreen> createState() => _AdminNewQuestionScreenState();
+}
+
+class _AdminNewQuestionScreenState extends State<AdminNewQuestionScreen> {
+  final _prompt = TextEditingController();
+  final _options = [for (var i = 0; i < 4; i++) TextEditingController()];
+  final _explanationKu = TextEditingController();
+  final _explanationTr = TextEditingController();
+  String? _category;
+  int _correct = 0;
+  bool _saving = false;
+
+  @override
+  void dispose() {
+    _prompt.dispose();
+    for (final c in _options) {
+      c.dispose();
+    }
+    _explanationKu.dispose();
+    _explanationTr.dispose();
+    super.dispose();
+  }
+
+  bool get _valid {
+    final options = [for (final c in _options) c.text.trim().toLowerCase()];
+    return _category != null &&
+        _prompt.text.trim().isNotEmpty &&
+        options.every((o) => o.isNotEmpty) &&
+        options.toSet().length == 4 &&
+        (_explanationKu.text.trim().isNotEmpty ||
+            _explanationTr.text.trim().isNotEmpty);
+  }
+
+  Future<void> _save() async {
+    if (!_valid || _saving) return;
+    final ok = await adminConfirm(
+      context,
+      body: context.t(K.adminConfirmNewQuestion),
+      confirmLabel: context.t(K.adminSaveNewQuestion),
+    );
+    if (!ok || !mounted) return;
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    final failed = context.t(K.adminFailed);
+    setState(() => _saving = true);
+    try {
+      await widget.repository.addQuestion(
+        AdminNewQuestion(
+          category: _category!,
+          prompt: _prompt.text.trim(),
+          options: [for (final c in _options) c.text.trim()],
+          correctIndex: _correct,
+          explanationKu: _explanationKu.text.trim().isEmpty
+              ? null
+              : _explanationKu.text.trim(),
+          explanationTr: _explanationTr.text.trim().isEmpty
+              ? null
+              : _explanationTr.text.trim(),
+        ),
+      );
+      navigator.pop(true);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'admin add question failed');
+      messenger.showSnackBar(SnackBar(content: Text(failed)));
+      if (mounted) setState(() => _saving = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    const letters = ['A', 'B', 'C', 'D'];
+    return Scaffold(
+      backgroundColor: t.bg,
+      appBar: zkAppBar(context, title: Text(context.t(K.adminNewQuestion))),
+      body: SafeArea(
+        top: false,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(
+            SahneSpace.page,
+            SahneSpace.x2,
+            SahneSpace.page,
+            SahneSpace.x8,
+          ),
+          children: [
+            Text(
+              context.t(K.adminNewQuestionHint),
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+            const SizedBox(height: SahneSpace.x4),
+            Text(
+              context.t(K.adminCategoryLabel),
+              style: SahneType.captionStrong.copyWith(color: t.tx2),
+            ),
+            const SizedBox(height: SahneSpace.x2),
+            AdminLoader<List<String>>(
+              load: widget.repository.loadCategories,
+              builder: (context, categories, _) => SahneRail.fit(
+                children: [
+                  for (final name in categories)
+                    SahneRailChip(
+                      key: ValueKey('admin-new-category-$name'),
+                      label: name,
+                      selected: _category == name,
+                      onTap: () => setState(() => _category = name),
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: SahneSpace.x4),
+            SahneField(
+              key: const ValueKey('admin-new-prompt'),
+              label: context.t(K.adminPromptLabel),
+              controller: _prompt,
+              minLines: 2,
+              maxLines: 4,
+              onChanged: (_) => setState(() {}),
+            ),
+            for (var i = 0; i < 4; i++) ...[
+              const SizedBox(height: SahneSpace.x3),
+              SahneField(
+                key: ValueKey('admin-new-option-$i'),
+                label: context.t(K.adminOptionLabel, {'letter': letters[i]}),
+                controller: _options[i],
+                onChanged: (_) => setState(() {}),
+              ),
+            ],
+            const SizedBox(height: SahneSpace.x4),
+            Text(
+              context.t(K.adminCorrectOption),
+              style: SahneType.captionStrong.copyWith(color: t.tx2),
+            ),
+            const SizedBox(height: SahneSpace.x2),
+            SahneRail.fit(
+              children: [
+                for (var i = 0; i < 4; i++)
+                  SahneRailChip(
+                    key: ValueKey('admin-new-correct-$i'),
+                    label: letters[i],
+                    selected: _correct == i,
+                    onTap: () => setState(() => _correct = i),
+                  ),
+              ],
+            ),
+            const SizedBox(height: SahneSpace.x4),
+            SahneField(
+              key: const ValueKey('admin-new-explanation-ku'),
+              label: context.t(K.adminExplanationKuLabel),
+              controller: _explanationKu,
+              minLines: 2,
+              maxLines: 4,
+              onChanged: (_) => setState(() {}),
+            ),
+            const SizedBox(height: SahneSpace.x3),
+            SahneField(
+              key: const ValueKey('admin-new-explanation-tr'),
+              label: context.t(K.adminExplanationTrLabel),
+              controller: _explanationTr,
+              minLines: 2,
+              maxLines: 4,
+              onChanged: (_) => setState(() {}),
+            ),
+            const SizedBox(height: SahneSpace.x6),
+            SahneButton.primary(
+              key: const ValueKey('admin-new-save'),
+              label: context.t(K.adminSaveNewQuestion),
+              arrow: false,
+              expand: true,
+              onPressed: _valid && !_saving ? _save : null,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

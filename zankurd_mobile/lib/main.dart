@@ -18,8 +18,10 @@ import 'src/utils/bundled_font_licenses.dart';
 import 'src/config/app_config.dart';
 import 'src/config/feature_flags.dart';
 import 'src/config/runtime_config.dart';
+import 'src/data/admin_repository.dart';
 import 'src/data/offline_zankurd_repository.dart';
 import 'src/data/question_bank_loader.dart';
+import 'src/data/supabase_admin_repository.dart';
 import 'src/data/supabase_zankurd_repository.dart';
 import 'src/data/sync_manager.dart';
 import 'src/data/timeout_http_client.dart';
@@ -495,6 +497,11 @@ Future<Widget> _bootApp() async {
   _bootMark('gerçek kök hazır');
   return ZanKurdApp(
     repository: repository,
+    // Yönetim deposu yalnız uzak oturumda kurulur; yönetici olup olmadığına
+    // SUNUCU karar verir (admin_is_admin), giriş yalnız `true` dönünce görünür.
+    adminRepository: remoteReady
+        ? SupabaseAdminRepository(Supabase.instance.client)
+        : null,
     repositoryHolder: repositoryHolder,
     authProvider: authProvider,
     languageProvider: languageProvider,
@@ -664,6 +671,7 @@ class ZanKurdApp extends StatelessWidget {
     RuntimeConfigService? runtimeConfigService,
     RemoteAvailability? remoteAvailability,
     PremiumService? premiumService,
+    this.adminRepository,
     super.key,
   }) : repositoryHolder = repositoryHolder ?? RepositoryHolder(repository),
        authProvider = authProvider ?? AuthProvider.test(),
@@ -698,10 +706,16 @@ class ZanKurdApp extends StatelessWidget {
   final RemoteAvailability remoteAvailability;
   final PremiumService premiumService;
 
+  /// Yönetim bölümü deposu (2.2). `null` → sağlayıcı kayıtlanmaz, Ayarlar'da
+  /// "Yönetim" girişi hiç görünmez. Testlerde `MockAdminRepository` verilir.
+  final AdminRepository? adminRepository;
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        if (adminRepository != null)
+          Provider<AdminRepository>.value(value: adminRepository!),
         // Depo kaynağı: AYNI nesne açılışta bir kez kurulur, geç kurtarmada
         // yalnız bu nesne değişir. `ZanKurdRepository` okuyan herkes bunu
         // alttaki ProxyProvider üzerinden görür; ekranların constructor'ından
