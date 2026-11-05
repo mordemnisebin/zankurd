@@ -131,18 +131,18 @@ void main() {
     for (final q in bank) {
       counts.update(q['category'] as String, (n) => n + 1, ifAbsent: () => 1);
     }
-    expect(bank.length, 536);
+    expect(bank.length, 821);
     expect(counts, {
-      'Cografya': 60,
-      'Cîhan': 21,
-      'Dîrok': 90,
-      'Edebiyat': 45,
-      'Muzîk': 51,
-      'Paradigma': 70,
-      'Siyaset': 28,
-      'Sînema': 50,
-      'Teknolojî': 96,
-      'Çand': 25,
+      'Cografya': 81,
+      'Cîhan': 51,
+      'Dîrok': 122,
+      'Edebiyat': 67,
+      'Muzîk': 77,
+      'Paradigma': 102,
+      'Siyaset': 63,
+      'Sînema': 82,
+      'Teknolojî': 123,
+      'Çand': 53,
     });
   });
 

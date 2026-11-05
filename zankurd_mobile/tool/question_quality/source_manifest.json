@@ -3152,7 +3152,7 @@
   },
   {
    "id": "yeni3_2026_11_14",
-   "description": "2026-11-14: yeni sorular 3 (536); ChatGPT taslağı, Gemini 4 Argon + ChatGPT/Copilot jürisi",
+   "description": "2026-11-14: yeni sorular 3 (821); ChatGPT taslağı, Gemini 4 Argon + ChatGPT/Copilot jürisi",
    "path": "assets/data/yeni3_2026_11_14_questions.json",
    "role": "runtime_secondary",
    "parser": "json",
@@ -3161,7 +3161,7 @@
    "gateIncluded": true,
    "productionLike": true,
    "precedence": 992,
-   "expectedRecordCount": 536,
+   "expectedRecordCount": 821,
    "notes": "Taslak ChatGPT; jüri Gemini 4 Argon + ChatGPT yeni sohbet/Copilot; dedupe, şık taraması.",
    "columns": {
     "id": "id",
