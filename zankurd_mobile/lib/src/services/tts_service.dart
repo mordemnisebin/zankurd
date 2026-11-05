@@ -68,10 +68,24 @@ class TtsService {
 
   /// Servisi başlat. Web'de TTS çalışmaz — [FlutterTts] yine de güvenli
   /// şekilde instantiate olur ama konuşma sessizce başarısız olur.
-  static Future<TtsService> load() async {
+  static Future<TtsService> load() {
     final cached = _instance;
-    if (cached != null) return cached;
+    if (cached != null) return Future<TtsService>.value(cached);
+    // H4 (Pro denetimi 2026-11-05): devam eden başlatma paylaşılmıyordu;
+    // iki eşzamanlı `load()` (ör. ana ekran + alıştırma) `_instance`
+    // atanmadan ikisi de geçip iki `FlutterTts` ve iki işleyici kümesi
+    // kuruyordu, ikinci atama ilkini sahipsiz bırakıp çifte konuşmaya yol
+    // açabiliyordu. Aynı Future'ı paylaşırız; hata olursa sonraki çağrı
+    // yeniden denesin diye temizlenir.
+    final pending = _loading ??= _loadOnce().whenComplete(
+      () => _loading = null,
+    );
+    return pending;
+  }
 
+  static Future<TtsService>? _loading;
+
+  static Future<TtsService> _loadOnce() async {
     SharedPreferences? prefs;
     try {
       prefs = await SharedPreferences.getInstance();
@@ -86,6 +100,7 @@ class TtsService {
   }
 
   static void resetInstance() {
+    _loading = null;
     _instance?._dispose();
     _instance?.speakingNotifier.dispose();
     _instance = null;

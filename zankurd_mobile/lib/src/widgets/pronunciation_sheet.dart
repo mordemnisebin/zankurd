@@ -104,6 +104,10 @@ class _PronunciationSheetState extends State<PronunciationSheet> {
   bool _permissionDenied = false;
   bool _startFailed = false;
   String? _path;
+
+  /// Başlatılmış ama henüz tamamlanmamış kaydın dosyası (H3: sayfa bu sırada
+  /// kapanırsa silinebilsin).
+  String? _pendingPath;
   Timer? _autoStop;
 
   static const _filePrefix = 'zankurd_telaffuz_';
@@ -142,14 +146,40 @@ class _PronunciationSheetState extends State<PronunciationSheet> {
   @override
   void dispose() {
     _autoStop?.cancel();
-    if (_recording) {
-      unawaited(_recorder.stop().then(_deletePath));
-    } else {
-      _deletePath(_path);
-    }
-    unawaited(_recorder.dispose());
-    unawaited(_playback.dispose());
+    // H3 (Pro denetimi 2026-11-05): eskiden `stop().then(_deletePath)` hatayı
+    // yakalamıyordu (kayıt durdurma hata verirse yakalanmamış istisna) ve
+    // aynı anda `dispose()` çağrısı durdurmayı beklemeden kayıt cihazını
+    // kapatıyordu; ayrıca başlatma sürerken kapanan sayfanın dosyası
+    // (`pending`) hiç silinmiyordu. Artık tek sıralı kapanış zinciri var.
+    unawaited(_teardown(wasRecording: _recording, path: _path));
+    unawaited(
+      _playback.dispose().catchError((Object error, StackTrace stack) {
+        ErrorReporter.record(error, stack, reason: 'pronunciation_dispose');
+      }),
+    );
     super.dispose();
+  }
+
+  /// Sayfa kapanırken: kayıt sürüyorsa durdur ve dosyasını sil, bekleyen
+  /// (başlatılan ama tamamlanmamış) dosyayı sil, SONRA kayıt cihazını kapat.
+  Future<void> _teardown({required bool wasRecording, String? path}) async {
+    try {
+      if (wasRecording) {
+        final stopped = await _recorder.stop().timeout(
+          const Duration(seconds: 2),
+        );
+        _deletePath(stopped);
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'pronunciation_teardown');
+    }
+    _deletePath(path);
+    _deletePath(_pendingPath);
+    try {
+      await _recorder.dispose();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'pronunciation_dispose');
+    }
   }
 
   /// Kayıt dosyasını siler. Küçük geçici dosya: eşzamanlı silme, sayfa
@@ -193,9 +223,16 @@ class _PronunciationSheetState extends State<PronunciationSheet> {
           '${_tmp.path}/$_filePrefix'
           '${DateTime.now().microsecondsSinceEpoch}.m4a';
       pending = path;
+      _pendingPath = path;
       await _recorder.start(path).timeout(PronunciationSheet.startTimeout);
       pending = null;
-      if (!mounted) return;
+      _pendingPath = null;
+      if (!mounted) {
+        // Başlatma sürerken sayfa kapandı: kayıt başlamış olabilir, dosyası
+        // kimsede kalmasın (kayıt cihazını `_teardown` zaten kapattı).
+        _deletePath(path);
+        return;
+      }
       setState(() {
         _permissionDenied = false;
         _startFailed = false;
@@ -206,6 +243,7 @@ class _PronunciationSheetState extends State<PronunciationSheet> {
       _autoStop = Timer(PronunciationSheet.maxRecording, _stop);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'pronunciation_record');
+      _pendingPath = null;
       // Yarım başlamış kayıt dosyası bırakmasın (simülatörde 2026-10-27
       // zaman aşımından sonra tmp'de 57 KB'lık dosya kaldı).
       if (pending != null) {
