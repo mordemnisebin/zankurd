@@ -3360,8 +3360,11 @@ class _QuizScreenState extends State<QuizScreen>
   /// Solo turun değişmez ödül kimliği: ilk denemede, kuyruğa alınan yeniden
   /// gönderimde ve `_settleCoins`in tekrar çağrılarında AYNI kimlik gider;
   /// sunucu (`claim_solo_reward`) ikinci talepte ödemez.
-  late final String _soloRoundId =
-      widget.serverDaily?.roundId ?? newClientRoundId();
+  final String _soloRoundId = newClientRoundId();
+
+  // Sunucu-yetkili günlük turda ödül/sonuç kimliği SUNUCUNUN tur kimliğidir
+  // (`claim_verified_solo_reward` ve günlük sonuç o oturumu bulur): aşağıdaki
+  // `clientRoundId:` kullanımları `widget.serverDaily?.roundId ?? _soloRoundId`.
 
   // İlk model bağlanırken hesaplanır; rebuild/resume yeni tohum üretmez.
   late final String _answerOrderRoundId =
@@ -3376,7 +3379,7 @@ class _QuizScreenState extends State<QuizScreen>
   String get _analyticsRoundId {
     final roomId = widget.room.id?.trim();
     if (roomId != null && roomId.isNotEmpty) return roomId;
-    return _soloRoundId;
+    return widget.serverDaily?.roundId ?? _soloRoundId;
   }
 
   /// Son turun sıfır jetonu, günlük tavana varıldığı İÇİN müydü?
@@ -3436,7 +3439,7 @@ class _QuizScreenState extends State<QuizScreen>
               correctCount: correctCount,
               bestStreak: bestStreak,
               totalQuestions: totalQuestions,
-              clientRoundId: _soloRoundId,
+              clientRoundId: widget.serverDaily?.roundId ?? _soloRoundId,
             )
           : await widget.repository.awardQuizCoins(
               score: score,
@@ -3482,7 +3485,9 @@ class _QuizScreenState extends State<QuizScreen>
             bestStreak: bestStreak,
             totalQuestions: totalQuestions,
             roomId: widget.room.id,
-            clientRoundId: widget.room.id == null ? _soloRoundId : null,
+            clientRoundId: widget.room.id == null
+                ? (widget.serverDaily?.roundId ?? _soloRoundId)
+                : null,
           );
           rewardQueued = true;
           durable = true;

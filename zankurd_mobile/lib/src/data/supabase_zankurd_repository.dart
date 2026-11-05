@@ -1063,8 +1063,11 @@ class SupabaseZanKurdRepository
             'get_room_questions_v2',
             params: {'p_room_id': roomId},
           );
-        } catch (error) {
-          if (!isMissingRpcError(error)) rethrow;
+        } catch (error, stack) {
+          _recordError(error, stack, reason: 'get_room_questions_v2 failed');
+          if (!isMissingRpcError(error)) {
+            Error.throwWithStackTrace(error, stack);
+          }
           _roomQuestionsV2Supported = false;
         }
       }
@@ -3289,8 +3292,11 @@ class SupabaseZanKurdRepository
     for (var attempt = 0; ; attempt++) {
       try {
         return await action();
-      } catch (error) {
-        if (attempt >= 2 || !_isTransientRpcError(error)) rethrow;
+      } catch (error, stack) {
+        _recordError(error, stack, reason: 'daily rpc retry');
+        if (attempt >= 2 || !_isTransientRpcError(error)) {
+          Error.throwWithStackTrace(error, stack);
+        }
         if (!isFlutterTestEnvironment) {
           await Future<void>.delayed(
             Duration(milliseconds: 500 * (attempt + 1)),
@@ -5119,8 +5125,11 @@ class SupabaseZanKurdRepository
     if (_duelMaskedSupported) {
       try {
         return await client.rpc(maskedRpc, params: params);
-      } catch (error) {
-        if (!isMissingRpcError(error)) rethrow;
+      } catch (error, stack) {
+        _recordError(error, stack, reason: 'masked duel rpc failed');
+        if (!isMissingRpcError(error)) {
+          Error.throwWithStackTrace(error, stack);
+        }
         _duelMaskedSupported = false;
       }
     }
