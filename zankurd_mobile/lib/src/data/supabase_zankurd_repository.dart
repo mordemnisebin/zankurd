@@ -51,6 +51,14 @@ class _ManagedRoomChannel {
 
   final RealtimeChannel channel;
   int listenerCount = 0;
+
+  /// Kanala TEK `onBroadcast` geri çağrısı bağlanır; gelen yük buradaki
+  /// açık akışlara dağıtılır (H6, 2026-11-06). Eskiden her abonelik kendi
+  /// geri çağrısını kanala ekliyordu ve realtime istemcisi geri çağrı
+  /// SİLMEYİ bilmediği için, kanal başka dinleyicilerle yaşadıkça iptal
+  /// edilmiş aboneliklerin geri çağrıları birikiyordu.
+  final Set<void Function(Map<String, dynamic>)> sinks = {};
+  bool broadcastBound = false;
 }
 
 RoomStatus _roomStatusFromValue(Object? value) {
@@ -4007,16 +4015,37 @@ class SupabaseZanKurdRepository
   @override
   Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId) {
     final controller = StreamController<Map<String, dynamic>>();
-    _retainRoomChannel(roomId).onBroadcast(
-      event: 'game_event',
-      callback: (payload) {
-        if (!controller.isClosed) {
-          controller.add(decodeRoomBroadcast(payload));
-        }
-      },
-    );
+    final channel = _retainRoomChannel(roomId);
+    final managed = _roomChannels[roomId]!;
+    void sink(Map<String, dynamic> decoded) {
+      if (!controller.isClosed) controller.add(decoded);
+    }
+
+    managed.sinks.add(sink);
+    if (!managed.broadcastBound) {
+      managed.broadcastBound = true;
+      channel.onBroadcast(
+        event: 'game_event',
+        callback: (payload) {
+          // H2: bozuk yük (tür uyumsuz alan, iç içe garip harita) dinleyici
+          // callback'inde TypeError doğurur; `listen(onError:)` veri
+          // callback'indeki hatayı YAKALAMAZ, yakalanmamış istisna olurdu.
+          final Map<String, dynamic> decoded;
+          try {
+            decoded = decodeRoomBroadcast(payload);
+          } catch (error, stack) {
+            _recordError(error, stack, reason: 'decodeRoomBroadcast failed');
+            return;
+          }
+          for (final deliver in managed.sinks.toList()) {
+            deliver(decoded);
+          }
+        },
+      );
+    }
 
     controller.onCancel = () async {
+      managed.sinks.remove(sink);
       await _releaseRoomChannel(roomId);
       await controller.close();
     };
@@ -5841,11 +5870,49 @@ Map<String, dynamic> decodeRoomBroadcast(Map<String, dynamic> raw) {
   final out = Map<String, dynamic>.of(raw);
   final inner = raw['payload'];
   if (inner is Map) {
-    out.addAll(Map<String, dynamic>.from(inner));
+    for (final entry in inner.entries) {
+      final key = entry.key;
+      if (key is String) out[key] = entry.value;
+    }
   }
   final kind = out['kind'];
   if (kind != null) out['type'] = kind;
+  _sanitizeRoomBroadcast(out);
   return out;
+}
+
+/// Alıcı ekranların `as String?` / `as num?` / `as int?` ile okuduğu
+/// alanlar. Telden gelen yük GÜVENİLMEZ girdidir (kötü niyetli ya da
+/// sürümü farklı bir istemci): türü uymayan alan DÜŞÜRÜLÜR, böylece
+/// ekrandaki dönüşüm TypeError atmaz (2026-11-06, H2).
+const _broadcastStringFields = {
+  'sender_id',
+  'sender',
+  'selected_answer',
+  'type',
+  'kind',
+};
+const _broadcastNumFields = {'score', 'streak'};
+
+void _sanitizeRoomBroadcast(Map<String, dynamic> out) {
+  for (final key in _broadcastStringFields) {
+    final value = out[key];
+    if (value != null && value is! String) out.remove(key);
+  }
+  for (final key in _broadcastNumFields) {
+    final value = out[key];
+    if (value != null && value is! num) out.remove(key);
+  }
+  final index = out['question_index'];
+  if (index != null) {
+    if (index is int) {
+      // olduğu gibi
+    } else if (index is double && index.isFinite && index == index.truncate()) {
+      out['question_index'] = index.toInt();
+    } else {
+      out.remove('question_index');
+    }
+  }
 }
 
 /// Bracket'teki maçlardan sıralama türetir. Final oynandıysa kazanan
