@@ -59,14 +59,14 @@ TX, TX2, ACT, RACE = T["tx"], T["tx2"], T["act"], T["race"]
 
 # (çıktı adı, ham görüntü, başlık). Sıra: önce yarışma, sonra öğrenme.
 SHOTS = [
-    ("01_yaris", "yaris.png", "Arkadaşına meydan oku"),
-    ("02_fotografli_soru", "quiz_photo.png", "Kürt kültürünü sınayan sorular"),
-    ("03_duello_puan", "quiz_4opt.png", "Canlı puanla düello"),
-    ("04_sonuc", "res2.png", "Sonucunu paylaş"),
-    ("05_oda", "room1.png", "Oda kur, kodla davet et"),
-    ("06_ana_ekran", "home3.png", "Günlük hedef, seri ve seviye"),
-    ("07_ders_yolu", "learn.png", "Alfabeden başla"),
-    ("08_sozluk", "dict1.png", "1.119 kelime ve ifade"),
+    ("01_yaris", "yaris_hub.png", "Kürtçe bilgi yarışması"),
+    ("02_duello", "duello.png", "Canlı düello, anlık puan"),
+    ("03_fotografli_soru", "soru_fotograf.png", "Fotoğraflı sorular"),
+    ("04_gunun_turu", "gunun_yarismasi.png", "Her gün yeni bir tur"),
+    ("05_oda", "oda.png", "Oda kur, arkadaşlarını çağır"),
+    ("06_sonuc", "sonuc.png", "Her turda ilerlemeni gör"),
+    ("07_ders_yolu", "ders_yolu.png", "Oynarken Kurmancî öğren"),
+    ("08_hikaye", "hikaye.png", "Kurmancî hikâyelerle öğren"),
 ]
 
 
@@ -233,7 +233,7 @@ def feature_graphic() -> Image.Image:
     fw, fh = 1024, 500
     canvas = background((fw, fh))
     # Sağ: iki aygıt, alt kenardan taşar (kesik görünmesi doğal).
-    for name, left, top, width in (("quiz_photo.png", 790, 60, 215), ("yaris.png", 600, 150, 215)):
+    for name, left, top, width in (("soru_fotograf.png", 790, 60, 215), ("yaris_hub.png", 600, 150, 215)):
         shot = fix_status_clock(Image.open(RAW / name))
         device = device_frame(shot, width)
         drop_shadow(canvas, device, (left, top), blur=24, dy=14, alpha=170)
